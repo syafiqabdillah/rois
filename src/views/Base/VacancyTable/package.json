@@ -1,0 +1,6 @@
+{
+  "name": "VacancyTable",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./VacancyTable.js"
+}
