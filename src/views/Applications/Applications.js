@@ -25,7 +25,8 @@ class Applications extends Component {
     var list_lamaran = this.state.lamaran;
     const list = list_lamaran.map((lamaran) =>
     <tr>
-      <td> {lamaran.token_pelamar} </td>
+      <td> {lamaran.pelamar} </td>
+      <td> {lamaran.lowongan} </td>
       <td> {lamaran.salary_exp} </td>
       <td> {lamaran.tahapan} </td>
       <td> {lamaran.status} </td>
@@ -33,6 +34,9 @@ class Applications extends Component {
     );
     return (
       <div className="animated fadeIn">
+        <div align="center">
+          <h3>Applications</h3>
+        </div>
         <Row>
           <Col>
             <Card>
@@ -43,9 +47,10 @@ class Applications extends Component {
                 <Table hover bordered striped responsive size="sm">
                   <thead>
                   <tr>
-                    <th>Token (nanti diganti)</th>
+                    <th>Candidate's Name</th>
+                    <th>Vacancy</th>
                     <th>Salary Expectation</th>
-                    <th>Tahapan</th>
+                    <th>Current Stage</th>
                     <th>Status</th>
                   </tr>
                   </thead>
@@ -53,18 +58,6 @@ class Applications extends Component {
                     {list}
                   </tbody>
                 </Table>
-                <nav>
-                  <Pagination>
-                    <PaginationItem><PaginationLink previous tag="button">Prev</PaginationLink></PaginationItem>
-                    <PaginationItem active>
-                      <PaginationLink tag="button">1</PaginationLink>
-                    </PaginationItem>
-                    <PaginationItem><PaginationLink tag="button">2</PaginationLink></PaginationItem>
-                    <PaginationItem><PaginationLink tag="button">3</PaginationLink></PaginationItem>
-                    <PaginationItem><PaginationLink tag="button">4</PaginationLink></PaginationItem>
-                    <PaginationItem><PaginationLink next tag="button">Next</PaginationLink></PaginationItem>
-                  </Pagination>
-                </nav>
               </CardBody>
             </Card>
           </Col>

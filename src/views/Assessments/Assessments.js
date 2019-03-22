@@ -26,13 +26,16 @@ class Assessments extends Component {
     const list = list_soal.map((soal) =>
     <tr>
       <td> {soal.nama} </td>
-      <td> {soal.id_lowongan} </td>
+      <td> {soal.lowongan} </td>
       <td> {soal.nama_karyawan} </td>
       <td> {soal.created_date} </td>
     </tr>
     );
     return (
       <div className="animated fadeIn">
+        <div align="center">
+          <h3>Assessments</h3>
+        </div>
         <Row>
           <Col>
             <Card>
@@ -44,27 +47,15 @@ class Assessments extends Component {
                   <thead>
                   <tr>
                     <th>Name</th>
-                    <th>Vacancy ID (nanti diganti)</th>
+                    <th>Vacancy</th>
                     <th>Creator</th>
-                    <th>Crated Date</th>
+                    <th>Created Date</th>
                   </tr>
                   </thead>
                   <tbody>
                     {list}
                   </tbody>
                 </Table>
-                <nav>
-                  <Pagination>
-                    <PaginationItem><PaginationLink previous tag="button">Prev</PaginationLink></PaginationItem>
-                    <PaginationItem active>
-                      <PaginationLink tag="button">1</PaginationLink>
-                    </PaginationItem>
-                    <PaginationItem><PaginationLink tag="button">2</PaginationLink></PaginationItem>
-                    <PaginationItem><PaginationLink tag="button">3</PaginationLink></PaginationItem>
-                    <PaginationItem><PaginationLink tag="button">4</PaginationLink></PaginationItem>
-                    <PaginationItem><PaginationLink next tag="button">Next</PaginationLink></PaginationItem>
-                  </Pagination>
-                </nav>
               </CardBody>
             </Card>
           </Col>

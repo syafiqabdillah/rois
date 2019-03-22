@@ -16,7 +16,9 @@ class AddVacancy extends Component {
 
     return (
       <div>
-        <h3>Add Vacancy</h3>
+        <div align="center">
+          <h3 font-family="Metropolis">Add Vacancy</h3>
+        </div>
         <Card>
           <CardBody>
           <Form action="" method="post">

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use \Illuminate\Http\Request;
 use \Illuminate\Support\Facades\DB;
 
+
+
 class AppointmentController extends Controller
 {
     /**
@@ -14,12 +16,12 @@ class AppointmentController extends Controller
      */
     public function __construct()
     {
-        
+
     }
 
     /**
-     * mengembalikan semua appointment yang ada 
-     * @return array $app 
+     * mengembalikan semua appointment yang ada
+     * @return array $app
      */
     public function getAllAppointment(Request $request){
         $getApp = DB::table('appointment')->select()->get();
@@ -27,10 +29,13 @@ class AppointmentController extends Controller
         $result = array();
         foreach($apps as $app){
             $app = (object) $app;
+            $app = $this->addNamaPelamarPhonePelamarEmailPelamar($app);
             array_push($result, $app);
         }
         return $result;
     }
+
+
 
     /**
      * membuat suatu appointment
@@ -45,13 +50,29 @@ class AppointmentController extends Controller
         $lokasi = $request->lokasi;
 
         $id = DB::table('appointment')->insertGetId(
-            ['id_lamaran' => $id_lamaran, 
-            'date' => $date, 
-            'start' => $start, 
+            ['id_lamaran' => $id_lamaran,
+            'date' => $date,
+            'start' => $start,
             'end' => $end,
             'lokasi' => $lokasi]
         );
         return $id;
+    }
+
+    /**
+     * mengembalikan lamaran yang udah berisi nama lowongan
+     */
+    public function addNamaPelamarPhonePelamarEmailPelamar($arr){
+        $appointment = $arr;
+
+        $lamaran = DB::table('lamaran')->select()->where('id', $appointment->id_lamaran)->get();
+        $token = $lamaran[0]->token_pelamar;
+        $pelamar = DB::table('pelamar')->select('nama', 'phone', 'email')->where('token', $token)->get();
+        $pelamar = $pelamar[0];
+        $appointment->pelamar = $pelamar->nama;
+        $appointment->phone = $pelamar->phone;
+        $appointment->email = $pelamar->email;
+        return $appointment;
     }
 
 }

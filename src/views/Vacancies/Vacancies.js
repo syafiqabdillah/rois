@@ -37,6 +37,9 @@ class Vacancies extends Component {
     );
     return (
       <div className="animated fadeIn">
+        <div align="center">
+          <h3>Vacancies</h3>
+        </div>
         <Row className="align-items-center">
           <Col col="3" sm="4" md="2" xl className="mb-3 mb-xl-0">
 
@@ -67,13 +70,13 @@ class Vacancies extends Component {
                 <Table hover bordered striped responsive size="sm">
                   <thead>
                   <tr>
-                    <th>Nama</th>
-                    <th>Divisi</th>
+                    <th>Name</th>
+                    <th>Division</th>
                     <th>Start Date</th>
                     <th>End Date</th>
                     <th>Publish Date</th>
-                    <th>Lokasi</th>
-                    <th>Tipe</th>
+                    <th>Location</th>
+                    <th>Type</th>
                   </tr>
                   </thead>
                   <tbody>

@@ -27,6 +27,7 @@ class SoalController extends Controller
         $result = array();
         foreach($soals as $soal){
             $soal = (object) $soal;
+            $soal = $this->addNamaLowongan($soal);
             array_push($result, $soal);
         }
         return $result;
@@ -41,7 +42,18 @@ class SoalController extends Controller
         $soal = DB::table('soal')->select()->where('id', $id)->get();
         $soal = json_decode($soal);
         $soal = $soal[0];
+        $soal = $this->addNamaLowongan($soal);
         return json_encode($soal);
+    }
+
+     /**
+     * mengembalikan soal yang udah berisi nama lowongan
+     */
+    public function addNamaLowongan($arr){
+        $soal = $arr;
+        $nama_lowongan = DB::table('lowongan')->select('nama')->where('id', $soal->id_lowongan)->get();
+        $soal->lowongan = $nama_lowongan[0]->nama;
+        return $soal;
     }
 
     /**

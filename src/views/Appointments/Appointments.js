@@ -25,7 +25,9 @@ class Appointments extends Component {
     var list_appointment = this.state.appointment;
     const list = list_appointment.map((appointment) =>
     <tr>
-      <td> {appointment.id_lamaran} </td>
+      <td> {appointment.pelamar} </td>
+      <td> {appointment.phone} </td>
+      <td> {appointment.email} </td>
       <td> {appointment.date} </td>
       <td> {appointment.start} </td>
       <td> {appointment.end} </td>
@@ -34,39 +36,32 @@ class Appointments extends Component {
     );
     return (
       <div className="animated fadeIn">
+        <div align="center">
+          <h3>Appointments</h3>
+        </div>
         <Row>
           <Col>
             <Card>
               <CardHeader>
-                <i className="fa fa-align-justify"></i> Assessment List
+                <i className="fa fa-align-justify"></i> Appointment List
               </CardHeader>
               <CardBody>
                 <Table hover bordered striped responsive size="sm">
                   <thead>
                   <tr>
-                    <th>Application ID (nanti ganti)</th>
+                    <th>Candidate's Name</th>
+                    <th>Phone</th>
+                    <th>Email</th>
                     <th>Date</th>
                     <th>Start</th>
                     <th>End</th>
-                    <th>Lokasi</th>
+                    <th>Location</th>
                   </tr>
                   </thead>
                   <tbody>
                     {list}
                   </tbody>
                 </Table>
-                <nav>
-                  <Pagination>
-                    <PaginationItem><PaginationLink previous tag="button">Prev</PaginationLink></PaginationItem>
-                    <PaginationItem active>
-                      <PaginationLink tag="button">1</PaginationLink>
-                    </PaginationItem>
-                    <PaginationItem><PaginationLink tag="button">2</PaginationLink></PaginationItem>
-                    <PaginationItem><PaginationLink tag="button">3</PaginationLink></PaginationItem>
-                    <PaginationItem><PaginationLink tag="button">4</PaginationLink></PaginationItem>
-                    <PaginationItem><PaginationLink next tag="button">Next</PaginationLink></PaginationItem>
-                  </Pagination>
-                </nav>
               </CardBody>
             </Card>
           </Col>
