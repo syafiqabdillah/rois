@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { Badge, Card, CardBody, CardHeader, Col, Pagination, PaginationItem, PaginationLink, Row, Table } from 'reactstrap';
+import { Button, Badge, Card, CardBody, CardHeader, Col, Pagination, PaginationItem, PaginationLink, Row, Table } from 'reactstrap';
 
 const API = 'http://localhost:8000';
 
@@ -36,6 +37,26 @@ class Vacancies extends Component {
     );
     return (
       <div className="animated fadeIn">
+        <Row className="align-items-center">
+          <Col col="3" sm="4" md="2" xl className="mb-3 mb-xl-0">
+
+            <Link to="/addVacancy">
+
+                <Button block color="primary">Add Vacancy</Button>
+            </Link>
+          </Col>
+          <Col col="3" sm="4" md="2" xl className="mb-3 mb-xl-0">
+          </Col>
+          <Col col="3" sm="4" md="2" xl className="mb-3 mb-xl-0">
+          </Col>
+          <Col col="3" sm="4" md="2" xl className="mb-3 mb-xl-0">
+          </Col>
+          <Col col="3" sm="4" md="2" xl className="mb-3 mb-xl-0">
+          </Col>
+          <Col col="3" sm="4" md="2" xl className="mb-3 mb-xl-0">
+          </Col>
+        </Row>
+        <br></br>
         <Row>
           <Col>
             <Card>
