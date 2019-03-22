@@ -12,6 +12,7 @@ function UserRow(props) {
     return status === 'Active' ? 'success' :
       status === 'Inactive' ? 'secondary' :
         status === 'Pending' ? 'warning' :
+        status === 'Idle' ? 'warning' :
           status === 'Banned' ? 'danger' :
             'primary'
   }

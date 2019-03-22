@@ -37,18 +37,23 @@ class DefaultHeader extends Component {
           <NavItem className="px-3">
             <Link to="/users">Users</Link>
           </NavItem>
+
           <NavItem className="px-3">
-            <Link to="/base/vacancy-table" className="nav-link">Vacancies</Link>
+            <Link to="/vacancies" className="nav-link">Vacancies</Link>
           </NavItem>
+
           <NavItem className="px-3">
-            <NavLink href="#">Applications</NavLink>
+            <Link to="/applications" className="nav-link">Applications</Link>
           </NavItem>
+
           <NavItem className="px-3">
-            <NavLink href="#">Assessments</NavLink>
+            <Link to="/assessments" className="nav-link">Assessments</Link>
           </NavItem>
+
           <NavItem className="px-3">
-            <NavLink href="#">Appointments</NavLink>
+            <Link to="/appointmens" className="nav-link">Appointments</Link>
           </NavItem>
+
         </Nav>
         <Nav className="ml-auto" navbar>
           <NavItem className="d-md-down-none">

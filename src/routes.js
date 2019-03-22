@@ -17,7 +17,10 @@ const ProgressBar = React.lazy(() => import('./views/Base/ProgressBar'));
 const Switches = React.lazy(() => import('./views/Base/Switches'));
 const Tables = React.lazy(() => import('./views/Base/Tables'));
 
-const VacancyTable = React.lazy(() => import('./views/Base/VacancyTable'));
+const Vacancies = React.lazy(() => import('./views/Vacancies'));
+const Applications = React.lazy(() => import('./views/Applications'));
+const Assessments = React.lazy(() => import('./views/Assessments'));
+const Appointments = React.lazy(() => import('./views/Appointments'));
 
 const Tabs = React.lazy(() => import('./views/Base/Tabs'));
 const Tooltips = React.lazy(() => import('./views/Base/Tooltips'));
@@ -53,8 +56,11 @@ const routes = [
   { path: '/base/switches', name: 'Switches', component: Switches },
   { path: '/base/tables', name: 'Tables', component: Tables },
 
-  { path: '/base/vacancy-table', name: 'VacancyTable', component: VacancyTable },
-  
+  { path: '/vacancies', name: 'Vacancies', component: Vacancies },
+  { path: '/applications', name: 'Applications', component: Applications },
+  { path: '/assessments', name: 'Assessments', component: Assessments },
+  { path: '/appointmens', name: 'Appointments', component: Appointments },
+
   { path: '/base/tabs', name: 'Tabs', component: Tabs },
   { path: '/base/breadcrumbs', name: 'Breadcrumbs', component: Breadcrumbs },
   { path: '/base/carousels', name: 'Carousel', component: Carousels },

@@ -20,22 +20,22 @@ export default {
     },
     {
       name: 'Vacancies',
-      url: '/base/vacancy-table',
+      url: '/vacancies',
       icon: 'icon-pie-chart',
     },
     {
       name: 'Applications',
-      url: '/#',
+      url: '/applications',
       icon: 'icon-pie-chart',
     },
     {
       name: 'Assessments',
-      url: '/#',
+      url: '/assessments',
       icon: 'icon-pie-chart',
     },
     {
       name: 'Appointments',
-      url: '/#',
+      url: '/appointmens',
       icon: 'icon-pie-chart',
     },
     {
