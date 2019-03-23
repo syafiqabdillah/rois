@@ -10,7 +10,8 @@ class Vacancies extends Component {
     super(props);
 
     this.state = {
-      lowongan: []
+      lowongan: [],
+      loading: true
     }
   }
 
@@ -18,85 +19,85 @@ class Vacancies extends Component {
     axios.get(API + '/po/all-lowongan')
     .then(res => {
       const lowongan = res.data;
-      this.setState({lowongan})
+      this.setState({
+        lowongan: lowongan,
+        loading: false
+      })
     })
   }
 
   render() {
-    var list_lowongan = this.state.lowongan;
-    const list = list_lowongan.map((lowongan) =>
-    <tr>
-      <td> {lowongan.nama} </td>
-      <td> {lowongan.divisi} </td>
-      <td> {lowongan.start_date} </td>
-      <td> {lowongan.end_date} </td>
-      <td> {lowongan.publish_date} </td>
-      <td> {lowongan.lokasi} </td>
-      <td> {lowongan.tipe} </td>
-    </tr>
-    );
+    let content;
+
+    if (this.state.loading){
+      content = <div align="center"><p>Loading . . .</p></div>;
+    } else {
+      let list_vacancy = this.state.lowongan.map((lowongan) => {
+        return (
+          <tr>
+            <td> {lowongan.nama} </td>
+            <td> {lowongan.divisi} </td>
+            <td> {lowongan.start_date} </td>
+            <td> {lowongan.end_date} </td>
+            <td> {lowongan.publish_date} </td>
+            <td> {lowongan.lokasi} </td>
+            <td> {lowongan.tipe} </td>
+          </tr>
+        );
+      });
+
+      content = (
+        <Table hover bordered striped responsive size="sm">
+          <thead>
+          <tr>
+            <th>Name</th>
+            <th>Division</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Publish Date</th>
+            <th>Location</th>
+            <th>Type</th>
+          </tr>
+          </thead>
+          <tbody>
+            {list_vacancy}
+          </tbody>
+        </Table>
+      );
+    }
+
     return (
       <div className="animated fadeIn">
+
         <div align="center">
           <h3>Vacancies</h3>
         </div>
-        <Row className="align-items-center">
-          <Col col="3" sm="4" md="2" xl className="mb-3 mb-xl-0">
 
-            <Link to="/addVacancy">
 
-                <Button block color="primary">Add Vacancy</Button>
-            </Link>
-          </Col>
-          <Col col="3" sm="4" md="2" xl className="mb-3 mb-xl-0">
-          </Col>
-          <Col col="3" sm="4" md="2" xl className="mb-3 mb-xl-0">
-          </Col>
-          <Col col="3" sm="4" md="2" xl className="mb-3 mb-xl-0">
-          </Col>
-          <Col col="3" sm="4" md="2" xl className="mb-3 mb-xl-0">
-          </Col>
-          <Col col="3" sm="4" md="2" xl className="mb-3 mb-xl-0">
-          </Col>
-        </Row>
+        <Link to="/addVacancy">
+            <Button color="primary">Add Vacancy</Button>
+        </Link>
         <br></br>
+        <br></br>
+
         <Row>
           <Col>
             <Card>
               <CardHeader>
                 <i className="fa fa-align-justify"></i> Vacancy List
               </CardHeader>
+
               <CardBody>
-                <Table hover bordered striped responsive size="sm">
-                  <thead>
-                  <tr>
-                    <th>Name</th>
-                    <th>Division</th>
-                    <th>Start Date</th>
-                    <th>End Date</th>
-                    <th>Publish Date</th>
-                    <th>Location</th>
-                    <th>Type</th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                    {list}
-                  </tbody>
-                </Table>
-                <nav>
-                  <Pagination>
-                    <PaginationItem><PaginationLink previous tag="button">Prev</PaginationLink></PaginationItem>
-                    <PaginationItem active>
-                      <PaginationLink tag="button">1</PaginationLink>
-                    </PaginationItem>
-                    <PaginationItem><PaginationLink tag="button">2</PaginationLink></PaginationItem>
-                    <PaginationItem><PaginationLink tag="button">3</PaginationLink></PaginationItem>
-                    <PaginationItem><PaginationLink tag="button">4</PaginationLink></PaginationItem>
-                    <PaginationItem><PaginationLink next tag="button">Next</PaginationLink></PaginationItem>
-                  </Pagination>
-                </nav>
+                {content}
               </CardBody>
             </Card>
+
+            <div align="right">
+              <Link to="/addVacancy">
+                  <Button color="primary">Add Vacancy</Button>
+              </Link>
+            </div>
+
           </Col>
         </Row>
       </div>

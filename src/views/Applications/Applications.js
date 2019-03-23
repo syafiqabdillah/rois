@@ -9,7 +9,8 @@ class Applications extends Component {
     super(props);
 
     this.state = {
-      lamaran: []
+      lamaran: [],
+      loading: true
     }
   }
 
@@ -17,21 +18,49 @@ class Applications extends Component {
     axios.get(API + '/po/all-lamaran')
     .then(res => {
       const lamaran = res.data;
-      this.setState({lamaran})
+      this.setState({
+        lamaran: lamaran,
+        loading: false
+      })
     })
   }
 
   render() {
-    var list_lamaran = this.state.lamaran;
-    const list = list_lamaran.map((lamaran) =>
-    <tr>
-      <td> {lamaran.pelamar} </td>
-      <td> {lamaran.lowongan} </td>
-      <td> {lamaran.salary_exp} </td>
-      <td> {lamaran.tahapan} </td>
-      <td> {lamaran.status} </td>
-    </tr>
-    );
+    let content;
+
+    if (this.state.loading){
+      content = <div align="center"><p>Loading . . .</p></div>;
+    } else {
+      let list_lamaran = this.state.lamaran.map((lamaran) => {
+        return (
+          <tr>
+            <td> {lamaran.pelamar} </td>
+            <td> {lamaran.lowongan} </td>
+            <td> {lamaran.salary_exp} </td>
+            <td> {lamaran.tahapan} </td>
+            <td> {lamaran.status} </td>
+          </tr>
+        );
+      });
+
+      content = (
+        <Table hover bordered striped responsive size="sm">
+          <thead>
+          <tr>
+            <th>Candidate's Name</th>
+            <th>Vacancy</th>
+            <th>Salary Expectation</th>
+            <th>Current Stage</th>
+            <th>Status</th>
+          </tr>
+          </thead>
+          <tbody>
+            {list_lamaran}
+          </tbody>
+        </Table>
+      );
+    }
+
     return (
       <div className="animated fadeIn">
         <div align="center">
@@ -44,20 +73,7 @@ class Applications extends Component {
                 <i className="fa fa-align-justify"></i> Application List
               </CardHeader>
               <CardBody>
-                <Table hover bordered striped responsive size="sm">
-                  <thead>
-                  <tr>
-                    <th>Candidate's Name</th>
-                    <th>Vacancy</th>
-                    <th>Salary Expectation</th>
-                    <th>Current Stage</th>
-                    <th>Status</th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                    {list}
-                  </tbody>
-                </Table>
+                {content}
               </CardBody>
             </Card>
           </Col>

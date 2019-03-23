@@ -9,7 +9,8 @@ class Appointments extends Component {
     super(props);
 
     this.state = {
-      appointment: []
+      appointment: [],
+      loading: true
     }
   }
 
@@ -17,23 +18,53 @@ class Appointments extends Component {
     axios.get(API + '/po/all-appointment')
     .then(res => {
       const appointment = res.data;
-      this.setState({appointment})
+      this.setState({
+        appointment: appointment,
+        loading: false
+      })
     })
   }
 
   render() {
-    var list_appointment = this.state.appointment;
-    const list = list_appointment.map((appointment) =>
-    <tr>
-      <td> {appointment.pelamar} </td>
-      <td> {appointment.phone} </td>
-      <td> {appointment.email} </td>
-      <td> {appointment.date} </td>
-      <td> {appointment.start} </td>
-      <td> {appointment.end} </td>
-      <td> {appointment.lokasi} </td>
-    </tr>
-    );
+    let content;
+
+    if (this.state.loading){
+      content = <div align="center"><p>Loading . . .</p></div>;
+    } else {
+      let list_appointment = this.state.appointment.map((appointment) => {
+        return (
+          <tr>
+            <td> {appointment.pelamar} </td>
+            <td> {appointment.phone} </td>
+            <td> {appointment.email} </td>
+            <td> {appointment.date} </td>
+            <td> {appointment.start} </td>
+            <td> {appointment.end} </td>
+            <td> {appointment.lokasi} </td>
+          </tr>
+        );
+      });
+
+      content = (
+        <Table hover bordered striped responsive size="sm">
+          <thead>
+          <tr>
+            <th>Candidate's Name</th>
+            <th>Phone</th>
+            <th>Email</th>
+            <th>Date</th>
+            <th>Start</th>
+            <th>End</th>
+            <th>Location</th>
+          </tr>
+          </thead>
+          <tbody>
+            {list_appointment}
+          </tbody>
+        </Table>
+      );
+    }
+
     return (
       <div className="animated fadeIn">
         <div align="center">
@@ -46,22 +77,7 @@ class Appointments extends Component {
                 <i className="fa fa-align-justify"></i> Appointment List
               </CardHeader>
               <CardBody>
-                <Table hover bordered striped responsive size="sm">
-                  <thead>
-                  <tr>
-                    <th>Candidate's Name</th>
-                    <th>Phone</th>
-                    <th>Email</th>
-                    <th>Date</th>
-                    <th>Start</th>
-                    <th>End</th>
-                    <th>Location</th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                    {list}
-                  </tbody>
-                </Table>
+                {content}
               </CardBody>
             </Card>
           </Col>

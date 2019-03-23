@@ -9,7 +9,8 @@ class Assessments extends Component {
     super(props);
 
     this.state = {
-      soal: []
+      soal: [],
+      loading: true
     }
   }
 
@@ -17,20 +18,47 @@ class Assessments extends Component {
     axios.get(API + '/po/all-soal')
     .then(res => {
       const soal = res.data;
-      this.setState({soal})
+      this.setState({
+        soal: soal,
+        loading: false
+      })
     })
   }
 
   render() {
-    var list_soal = this.state.soal;
-    const list = list_soal.map((soal) =>
-    <tr>
-      <td> {soal.nama} </td>
-      <td> {soal.lowongan} </td>
-      <td> {soal.nama_karyawan} </td>
-      <td> {soal.created_date} </td>
-    </tr>
-    );
+    let content;
+
+    if (this.state.loading){
+      content = <div align="center"><p>Loading . . .</p></div>;
+    } else {
+      let list_soal = this.state.soal.map((soal) => {
+        return (
+          <tr>
+            <td> {soal.nama} </td>
+            <td> {soal.lowongan} </td>
+            <td> {soal.nama_karyawan} </td>
+            <td> {soal.created_date} </td>
+          </tr>
+        )
+      });
+
+      content = (
+        <Table hover bordered striped responsive size="sm">
+          <thead>
+          <tr>
+            <th>Name</th>
+            <th>Vacancy</th>
+            <th>Creator</th>
+            <th>Created Date</th>
+          </tr>
+          </thead>
+          <tbody>
+            { list_soal }
+          </tbody>
+        </Table>
+      );
+    }
+
     return (
       <div className="animated fadeIn">
         <div align="center">
@@ -43,19 +71,7 @@ class Assessments extends Component {
                 <i className="fa fa-align-justify"></i> Assessment List
               </CardHeader>
               <CardBody>
-                <Table hover bordered striped responsive size="sm">
-                  <thead>
-                  <tr>
-                    <th>Name</th>
-                    <th>Vacancy</th>
-                    <th>Creator</th>
-                    <th>Created Date</th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                    {list}
-                  </tbody>
-                </Table>
+                {content}
               </CardBody>
             </Card>
           </Col>

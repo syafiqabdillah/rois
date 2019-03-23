@@ -61,7 +61,7 @@ const routes = [
   { path: '/applications', name: 'Applications', component: Applications },
   { path: '/assessments', name: 'Assessments', component: Assessments },
   { path: '/appointmens', name: 'Appointments', component: Appointments },
-  { path: '/addVacancy', name: 'AddVacancy', component: AddVacancy },
+  { path: '/addVacancy', name: 'Add Vacancy', component: AddVacancy },
 
   { path: '/base/tabs', name: 'Tabs', component: Tabs },
   { path: '/base/breadcrumbs', name: 'Breadcrumbs', component: Breadcrumbs },

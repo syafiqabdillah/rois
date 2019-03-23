@@ -15,13 +15,14 @@ class AddVacancy extends Component {
   render() {
 
     return (
-      <div>
+      <div className="animated fadeIn">
         <div align="center">
           <h3 font-family="Metropolis">Add Vacancy</h3>
         </div>
         <Card>
           <CardBody>
-          <Form action="" method="post">
+
+          <Form action="" method="post" size="sm">
 
             <FormGroup>
               <Label htmlFor="nf-email">Name*</Label>
@@ -43,7 +44,9 @@ class AddVacancy extends Component {
               <Input type="text" id="nf-password" name="nf-password" placeholder="Enter Type.." autoComplete="current-password"/>
             </FormGroup>
 
+            <Button color="primary">Submit</Button>
           </Form>
+
           </CardBody>
         </Card>
       </div>
