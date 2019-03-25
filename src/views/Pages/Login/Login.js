@@ -36,6 +36,7 @@ class Login extends Component {
 
       if(response.data.length > 0){
         //ada datanya, ke dashboard
+        localStorage.setItem('token', token);
         window.location.href = '#/dashboard';
       } else {
         //tidak ada, ke register

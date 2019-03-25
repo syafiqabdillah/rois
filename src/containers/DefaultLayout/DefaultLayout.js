@@ -30,10 +30,15 @@ class DefaultLayout extends Component {
 
   signOut(e) {
     e.preventDefault()
-    this.props.history.push('/login')
+    this.props.history.push('/login');
+    localStorage.setItem('token', undefined);
   }
 
-  render() {
+  render() { 
+    if(localStorage.getItem('token') == undefined){
+      return <Redirect to="/login" />
+    }
+
     return (
       <div className="app">
         <AppHeader fixed>
