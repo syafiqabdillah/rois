@@ -17,23 +17,23 @@ class Register extends Component {
 
   componentDidMount(){
     let profile = JSON.parse(localStorage.getItem('profile'));
-  
+
     this.setState({
       name: profile.name
     })
   }
 
   handleSubmit = (e) => {
-    const data = this.state;  
+    const data = this.state;
     e.preventDefault()
     console.log(data)
 
     let profile = JSON.parse(localStorage.getItem('profile'));
-  
+
     let token = profile.googleId;
     let email = profile.email;
 
-    //post it to backend 
+    //post it to backend
     axios.post('http://localhost:8000/register',{
       token: token,
       nama: this.state.name,
@@ -41,9 +41,9 @@ class Register extends Component {
       tempat_lahir: this.state.placeOfBirth,
       tanggal_lahir: this.state.dateOfBirth,
       alamat: this.state.address,
-      email: email, 
+      email: email,
       phone: this.state.phone,
-    }, 
+    },
     {
       headers: {'Content-Type': 'application/x-www-form-urlencoded'}
     })
@@ -111,7 +111,7 @@ class Register extends Component {
                       <Label for="phone">Phone*</Label>
                       <Input type="text" name="phone" id="phone" placeholder="" onChange={this.handleInputChange}/>
                     </FormGroup>
-                    
+
                     <div align="center">
                       <Button color="primary" className="px-4">Create Account</Button>
                     </div>

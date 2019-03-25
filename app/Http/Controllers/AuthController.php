@@ -47,11 +47,11 @@ class AuthController extends Controller
 
 
     public function login(Request $request){
-        //$r = parse_str($)
-        //$pelamar = DB::table('pelamar')->select()->where('token', $token)->get();
+        $token = $request->input('token');
+        $pelamar = DB::table('pelamar')->select()->where('token', $token)->get();
         //return json_encode($request);
         //$qweqw = parse_url($request);
-        return $request; 
+        return $pelamar;
     }
 
 }
