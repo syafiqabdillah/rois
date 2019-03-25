@@ -22,6 +22,7 @@ import routes from '../../routes';
 const DefaultAside = React.lazy(() => import('./DefaultAside'));
 const DefaultFooter = React.lazy(() => import('./DefaultFooter'));
 const DefaultHeader = React.lazy(() => import('./DefaultHeader'));
+const ApplicantHeader = React.lazy(() => import('./ApplicantHeader'));
 
 class DefaultLayout extends Component {
 
@@ -37,7 +38,9 @@ class DefaultLayout extends Component {
       <div className="app">
         <AppHeader fixed>
           <Suspense  fallback={this.loading()}>
+
             <DefaultHeader onLogout={e=>this.signOut(e)}/>
+
           </Suspense>
         </AppHeader>
         <div className="app-body">

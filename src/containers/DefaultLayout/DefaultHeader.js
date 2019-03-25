@@ -33,7 +33,7 @@ class DefaultHeader extends Component {
             <Link to="/" className="nav-link" >Dashboard</Link>
           </NavItem>
           <NavItem className="px-3">
-            <Link to="/users">Users</Link>
+            <Link to="/users" className="nav-link">Users</Link>
           </NavItem>
 
           <NavItem className="px-3">
@@ -80,7 +80,9 @@ class DefaultHeader extends Component {
               <DropdownItem><i className="fa fa-file"></i> Projects<Badge color="primary">42</Badge></DropdownItem>
               <DropdownItem divider />
               <DropdownItem><i className="fa fa-shield"></i> Lock Account</DropdownItem>
+
               <DropdownItem onClick={e => this.props.onLogout(e)}><i className="fa fa-lock"></i> Logout</DropdownItem>
+              
             </DropdownMenu>
           </AppHeaderDropdown>
         </Nav>

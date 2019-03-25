@@ -14,7 +14,7 @@ class PelamarController extends Controller
      */
     public function __construct()
     {
-        
+
     }
 
     public function createPelamar(Request $request){
@@ -25,13 +25,13 @@ class PelamarController extends Controller
         $tanggal_lahir = $request->tanggal_lahir;
         $alamat = $request->alamat;
         $phone = $request->phone;
-        $email = $request->email;  
+        $email = $request->email;
 
         DB::table('pelamar')->insert(
-            ['token' => $token, 
-            'nama' => $nama, 
-            'nik' => $nik, 
-            'tempat_lahir' => $tempat_lahir, 
+            ['token' => $token,
+            'nama' => $nama,
+            'nik' => $nik,
+            'tempat_lahir' => $tempat_lahir,
             'tanggal_lahir' => $tanggal_lahir,
             'alamat'  => $alamat,
             'phone' => $phone,

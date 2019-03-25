@@ -1,36 +1,93 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Card, CardBody, CardGroup, Col, Container, Form, Input, InputGroup, InputGroupAddon, InputGroupText, Row } from 'reactstrap';
+import GoogleLogin from 'react-google-login';
+import axios from 'axios';
 
 class Login extends Component {
+  constructor(props){
+    super(props)
+    this.state = {
+      username: '',
+      password: ''
+    }
+  }
+
+  responseGoogle = (response) => {
+    let profile = response.profileObj;
+    console.log(profile);
+    window.localStorage.setItem('profile',JSON.stringify(profile));
+    //cek apakah token sudah ada, kalo udah ada, tolak, kalo ga, daftar
+    
+    //let token = profile.googleId;
+    let token = '12345qwerty';
+
+    const url = 'http://localhost:8000/login';
+
+    const requestBody = {
+      token: token
+    }
+    
+    const config = {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded; charshet=UTF-8'
+      }
+    }
+    
+    axios.post(url, requestBody, config)
+      .then((response) => {
+        // Do somthing
+        console.log('response ; ' + response.data);
+        if (response.data === undefined || response.data.length == 0) {          
+          console.log('kosong')
+          // ke register 
+          window.location.href = '#/register';
+        } else {
+          console.log(response.data)
+          // ke halaman profile pelamar atau ke halaman lowongan
+          window.location.href = '#/dashboard';
+        }
+      })
+    
+  }
+
+  handleSubmit = (e) => {
+    const data = this.state
+    e.preventDefault()
+    console.log(data)
+  }
+
+  handleInputChange = (e) => {
+    e.preventDefault()
+    this.setState({
+      [e.target.name]: e.target.value
+    })
+  }
+
   render() {
     return (
-      <div className="app flex-row align-items-center">
+      <div className="app flex-row align-items-center animated fadeIn">
         <Container>
           <Row className="justify-content-center">
-            <Col md="8">
+            <Col md="4">
               <CardGroup>
-                <Card className="p-4">
+                {/* <Card className="p-4">
                   <CardBody>
-                    <Form>
+
+                    <Form onSubmit={ this.handleSubmit }>
                       <h1>Login</h1>
                       <p className="text-muted">Sign In to your account</p>
+
                       <InputGroup className="mb-3">
                         <InputGroupAddon addonType="prepend">
                           <InputGroupText>
                             <i className="icon-user"></i>
                           </InputGroupText>
                         </InputGroupAddon>
-                        <Input type="text" placeholder="Username" autoComplete="username" />
+                        <Input type="text" placeholder="Name" autoComplete="name" name="username" onChange={this.handleInputChange}/>
                       </InputGroup>
-                      <InputGroup className="mb-4">
-                        <InputGroupAddon addonType="prepend">
-                          <InputGroupText>
-                            <i className="icon-lock"></i>
-                          </InputGroupText>
-                        </InputGroupAddon>
-                        <Input type="password" placeholder="Password" autoComplete="current-password" />
-                      </InputGroup>
+
+
                       <Row>
                         <Col xs="6">
                           <Button color="primary" className="px-4">Login</Button>
@@ -39,18 +96,32 @@ class Login extends Component {
                           <Button color="link" className="px-0">Forgot password?</Button>
                         </Col>
                       </Row>
+
                     </Form>
+
                   </CardBody>
-                </Card>
-                <Card className="text-white bg-primary py-5 d-md-down-none" style={{ width: '44%' }}>
+                </Card> */}
+                <Card className="text-white bg-primary py-5" style={{ width: '44%' }}>
                   <CardBody className="text-center">
                     <div>
                       <h2>Sign up</h2>
-                      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-                        labore et dolore magna aliqua.</p>
-                      <Link to="/register">
-                        <Button color="primary" className="mt-3" active tabIndex={-1}>Register Now!</Button>
-                      </Link>
+                      <p>Join our team!</p>
+
+                      {/* <div align="center">
+                        <Link to="/register">
+                          <Button color="primary" className="mt-3" active tabIndex={-1}>Register Now!</Button>
+                        </Link>
+                      </div> */}
+
+                      <br></br>
+                      <div align="center">
+                        <GoogleLogin
+                          clientId="814213310620-0arq20th3kurnr37u7srv6hn3fiubj99.apps.googleusercontent.com"
+                          buttonText="Sign up with Google"
+                          onSuccess={this.responseGoogle}
+                          onFailure={this.responseGoogle}
+                        />
+                      </div>
                     </div>
                   </CardBody>
                 </Card>

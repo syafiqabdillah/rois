@@ -1,16 +1,10 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import axios from 'axios';
-import { Button, Badge, Card, CardBody, CardHeader, Col,
-  Form, FormGroup, FormText, Input, Label, Pagination, PaginationItem, PaginationLink, Row, Table } from 'reactstrap';
-
-const API = 'http://localhost:8000';
+//import { Link } from 'react-router-dom';
+//import axios from 'axios';
+import { Button, Card, CardBody,
+  Form, FormGroup, Input, Label} from 'reactstrap';
 
 class AddVacancy extends Component {
-  constructor(props){
-    super(props);
-
-  }
 
   render() {
 
