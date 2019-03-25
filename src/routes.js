@@ -21,6 +21,8 @@ const Vacancies = React.lazy(() => import('./views/Vacancies'));
 const Applications = React.lazy(() => import('./views/Applications'));
 const Assessments = React.lazy(() => import('./views/Assessments'));
 const Appointments = React.lazy(() => import('./views/Appointments'));
+const AddAppointment = React.lazy(() => import('./views/AddAppointment'));
+const AddAnswer = React.lazy(() => import('./views/AddAnswer'));
 const AddVacancy = React.lazy(() => import('./views/AddVacancy'));
 
 const Tabs = React.lazy(() => import('./views/Base/Tabs'));
@@ -61,6 +63,8 @@ const routes = [
   { path: '/applications', name: 'Applications', component: Applications },
   { path: '/assessments', name: 'Assessments', component: Assessments },
   { path: '/appointmens', name: 'Appointments', component: Appointments },
+  { path: '/addappointment', name: 'Add Appointment', component: AddAppointment },
+  { path: '/addanswer', name: 'Add Answer', component: AddAnswer },
   { path: '/addVacancy', name: 'Add Vacancy', component: AddVacancy },
 
   { path: '/base/tabs', name: 'Tabs', component: Tabs },

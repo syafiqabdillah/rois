@@ -1,0 +1,6 @@
+{
+  "name": "AddAppointment",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./AddAppointment.js"
+}
