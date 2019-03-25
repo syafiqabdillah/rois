@@ -19,36 +19,30 @@ class Login extends Component {
     window.localStorage.setItem('profile',JSON.stringify(profile));
     //cek apakah token sudah ada, kalo udah ada, tolak, kalo ga, daftar
     
-    //let token = profile.googleId;
-    let token = '12345qwerty';
+    let token = profile.googleId;
+    //let token = "12345qwerty";
 
     const url = 'http://localhost:8000/login';
 
-    const requestBody = {
-      token: token
-    }
-    
-    const config = {
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded; charshet=UTF-8'
+    var qs = require('qs');
+
+    axios.post(url, qs.stringify({ 'token': token}),{
+      headers:{
+        'Content-Type': 'application/x-www-form-urlencoded'
       }
-    }
-    
-    axios.post(url, requestBody, config)
-      .then((response) => {
-        // Do somthing
-        console.log('response ; ' + response.data);
-        if (response.data === undefined || response.data.length == 0) {          
-          console.log('kosong')
-          // ke register 
-          window.location.href = '#/register';
-        } else {
-          console.log(response.data)
-          // ke halaman profile pelamar atau ke halaman lowongan
-          window.location.href = '#/dashboard';
-        }
-      })
-    
+    })
+    .then(function (response) {
+      console.log(response.data);
+
+      if(response.data.length > 0){
+        //ada datanya, ke dashboard
+        window.location.href = '#/dashboard';
+      } else {
+        //tidak ada, ke register
+        window.location.href = '#/register';
+      }
+    })
+
   }
 
   handleSubmit = (e) => {

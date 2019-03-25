@@ -19,38 +19,33 @@ class AuthController extends Controller
     }
 
     public function register(Request $request){
-        $data = json_decode($request);
-        return $data;
-        // $nama = $request->input('nama');
-        // $nik = $request->input('nik');
-        // $tempat_lahir = $request->input('tempat_lahir');
+        $token = $request->input('token');
+        $nama = $request->input('nama');
+        $nik = $request->input('nik');
+        $tempat_lahir = $request->input('tempat_lahir');
+        $tanggal_lahir = $request->input('tanggal_lahir');
+        $alamat = $request->input('alamat');
+        $phone = $request->input('phone');
+        $email = $request->input('email');
 
-        // $tanggal_lahir = $request->input('tanggal_lahir');
-        // $alamat = $request->input('alamat');
-        // $phone = $request->input('phone');
-        // $email = $request->input('email');
+        DB::table('pelamar')->insert(
+            ['token' => $token,
+            'nama' => $nama,
+            'nik' => $nik,
+            'tempat_lahir' => $tempat_lahir,
+            'tanggal_lahir' => $tanggal_lahir,
+            'alamat'  => $alamat,
+            'phone' => $phone,
+            'email' => $email]
+        );
 
-        // // DB::table('pelamar')->insert(
-        // //     ['token' => $token,
-        // //     'nama' => $nama,
-        // //     'nik' => $nik,
-        // //     'tempat_lahir' => $tempat_lahir,
-
-        // //     'tanggal_lahir' => $tanggal_lahir,
-        // //     'alamat'  => $alamat,
-        // //     'phone' => $phone,
-        // //     'email' => $email]
-        // // );
-
-        // return gettype($request);
+        return $request->input('token');
     }
 
 
     public function login(Request $request){
         $token = $request->input('token');
         $pelamar = DB::table('pelamar')->select()->where('token', $token)->get();
-        //return json_encode($request);
-        //$qweqw = parse_url($request);
         return $pelamar;
     }
 
