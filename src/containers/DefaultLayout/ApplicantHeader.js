@@ -22,32 +22,6 @@ class ApplicantHeader extends Component {
   }
 
   render() {
-    const { isAuthenticated } = this.props.auth;
-
-    const buttonLoggedIn = (
-      <Nav className="ml-auto" navbar>
-        <NavItem className="d-md-down-none">
-          <Link to="/logout" className="nav-link">Logout</Link>
-        </NavItem>
-      </Nav>
-    );
-
-    const buttonLoggedOut = (
-      <Nav className="ml-auto" navbar>
-        <NavItem className="d-md-down-none">
-          <Link to="/" className="nav-link">Login</Link>
-        </NavItem>
-        <NavItem>
-          <GoogleLogin
-            clientId="814213310620-0arq20th3kurnr37u7srv6hn3fiubj99.apps.googleusercontent.com"
-            buttonText="Login with Google"
-            onSuccess={this.responseGoogle}
-            onFailure={this.responseGoogle}
-          />
-        </NavItem>
-      </Nav>
-    );
-
     const menuLoggedIn = (
       <Nav className="d-md-down-none" navbar>
         <NavItem className="px-3">
@@ -59,6 +33,8 @@ class ApplicantHeader extends Component {
       </Nav>
     );
 
+    let profile = JSON.parse(localStorage.getItem('profile'));
+    let imageUrl = profile.imageUrl;
 
     // eslint-disable-next-line
     const { children, ...attributes } = this.props;
@@ -72,18 +48,48 @@ class ApplicantHeader extends Component {
         />
         <AppSidebarToggler className="d-md-down-none" display="lg" />
 
-        { isAuthenticated ? menuLoggedIn : <div></div> }
+        <Nav className="d-md-down-none" navbar>
+          <NavItem className="px-3">
+            <Link to="/" className="nav-link" >Home</Link>
+          </NavItem>
+          <NavItem className="px-3">
+            <Link to="/" className="nav-link">Profile</Link>
+          </NavItem>
+          <NavItem className="px-3">
+            <Link to="/" className="nav-link">My Applications</Link>
+          </NavItem>
 
-        { isAuthenticated ? buttonLoggedIn : buttonLoggedOut }
+        </Nav>
+        <Nav className="ml-auto" navbar>
+          <NavItem className="d-md-down-none">
+            <NavLink href="#"><i className="icon-bell"></i><Badge pill color="danger">5</Badge></NavLink>
+          </NavItem>
+          <NavItem className="d-md-down-none">
+            <NavLink href="#"><i className="icon-list"></i></NavLink>
+          </NavItem>
+          <NavItem className="d-md-down-none">
+            <NavLink href="#"><i className="icon-location-pin"></i></NavLink>
+          </NavItem>
+          <AppHeaderDropdown direction="down">
+            <DropdownToggle nav>
+              <img src={imageUrl} className="img-avatar" alt="admin@bootstrapmaster.com" />
+            </DropdownToggle>
+            <DropdownMenu right style={{ right: 'auto' }}>
+              <DropdownItem><i className="fa fa-user"></i> Profile</DropdownItem>
 
+              <DropdownItem onClick={e => this.props.onLogout(e)}><i className="fa fa-lock"></i> Logout</DropdownItem>
+              
+            </DropdownMenu>
+          </AppHeaderDropdown>
+        </Nav>
+        <AppAsideToggler className="d-md-down-none" />
+        {/*<AppAsideToggler className="d-lg-none" mobile />*/}
       </React.Fragment>
     );
   }
 }
 
-ApplicantHeader.propTypes = {
-  auth: React.PropTypes.object.isRequired
-};
+ApplicantHeader.propTypes = propTypes;
 ApplicantHeader.defaultProps = defaultProps;
 
 export default (ApplicantHeader);

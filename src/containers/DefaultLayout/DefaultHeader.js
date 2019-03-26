@@ -14,8 +14,14 @@ const propTypes = {
 const defaultProps = {};
 
 const profile = JSON.parse(localStorage.getItem('profile'));
-// const imageUrl = '../../assets/img/avatars/6.jpg';
-const imageUrl = profile.imageUrl
+let imageUrl;
+
+if (profile){
+  imageUrl = profile.imageUrl
+}else {
+  imageUrl = '../../assets/img/avatars/6.jpg';
+}
+
 console.log(profile.imageUrl)
 
 class DefaultHeader extends Component {

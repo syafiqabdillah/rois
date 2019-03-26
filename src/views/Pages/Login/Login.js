@@ -33,10 +33,13 @@ class Login extends Component {
     })
     .then(function (response) {
       console.log(response.data);
+      let role = response.data.role;
+      let token = response.data.token;
 
-      if(response.data.length > 0){
+      if(role == 'PELAMAR'){
         //ada datanya, ke dashboard
         localStorage.setItem('token', token);
+        localStorage.setItem('role', role);
         window.location.href = '#/dashboard';
       } else {
         //tidak ada, ke register
@@ -99,7 +102,7 @@ class Login extends Component {
                 <Card className="text-white bg-primary py-5" style={{ width: '44%' }}>
                   <CardBody className="text-center">
                     <div>
-                      <h2>Sign up</h2>
+                      <h2>Sign in</h2>
                       <p>Join our team!</p>
 
                       {/* <div align="center">
@@ -112,7 +115,7 @@ class Login extends Component {
                       <div align="center">
                         <GoogleLogin
                           clientId="814213310620-0arq20th3kurnr37u7srv6hn3fiubj99.apps.googleusercontent.com"
-                          buttonText="Sign up with Google"
+                          buttonText="Sign in with Google"
                           onSuccess={this.responseGoogle}
                           onFailure={this.responseGoogle}
                         />

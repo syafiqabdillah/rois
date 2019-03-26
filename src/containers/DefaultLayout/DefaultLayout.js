@@ -31,8 +31,7 @@ class DefaultLayout extends Component {
   signOut(e) {
     e.preventDefault()
     this.props.history.push('/login');
-    localStorage.setItem('token', undefined);
-    localStorage.setItem('profile', undefined);
+    localStorage.clear();
   }
 
   render() { 
@@ -40,12 +39,19 @@ class DefaultLayout extends Component {
       return <Redirect to="/login" />
     }
 
+    let header;
+    if (localStorage.getItem('role') == 'PELAMAR'){
+      header = <ApplicantHeader onLogout={e=>this.signOut(e)}/>;
+    } else {
+      header = <DefaultHeader onLogout={e=>this.signOut(e)}/>;
+    }
+
     return (
       <div className="app">
         <AppHeader fixed>
           <Suspense  fallback={this.loading()}>
 
-            <DefaultHeader onLogout={e=>this.signOut(e)}/>
+            { header }
 
           </Suspense>
         </AppHeader>
