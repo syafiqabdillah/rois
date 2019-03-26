@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import {
   Badge,
   Button,
@@ -26,37 +27,51 @@ import {
 } from 'reactstrap';
 
 import CountDown from './CountDown';
+import Modals from './Modals';
 
 class AddAnswer extends React.Component{
   constructor(props) {
     super(props);
-
     this.toggle = this.toggle.bind(this);
     this.toggleFade = this.toggleFade.bind(this);
     this.state = {
       collapse: true,
       fadeIn: true,
       timeout: 300,
+      error : null,
+      modals : false,
     };
   }
   handelSubmit = (event) => {
     event.preventDefault()
     const value = event.target.elements.cclinkanswer.value
-    console.log(value)
+    if(!this.getErrorMessage()){
+        this.showModals();
+    }
   }
+
+  showModals = () =>{
+    this.setState({
+      modals : true
+    })
+  }
+
   //
-  // handleChange = (event) => {
-  //   const {value} = event.target
-  //   this.setState({
-  //     error : this.props.getErrorMessage(value)
-  //   })
-  // }
-  //
-  // componentDidMount(){
-  //   this.setState({
-  //     error : this.props.getErrorMessage("")
-  //   })
-  // }
+  handleChange = (event) => {
+    const {value} = event.target
+    this.setState({
+      error : this.getErrorMessage(value)
+    })
+  }
+
+  getErrorMessage = (value) => {
+    const isGitUrl = require('is-git-url');
+    if(isGitUrl(value)){
+      return false
+    } else{
+      return true
+    }
+  }
 
   toggle() {
     this.setState({ collapse: !this.state.collapse });
@@ -68,9 +83,10 @@ class AddAnswer extends React.Component{
 
   render() {
     const {error} = this.state;
+    console.log(error);
     return (
       <div className="animated fadeIn">
-          <Col xs="11" sm="10">
+          <Col xs="15" sm="8">
             <Card>
               <CardHeader>
                 <strong>Submission</strong>
@@ -78,23 +94,23 @@ class AddAnswer extends React.Component{
               <CardBody>
                 <Row>
                   <Col xs="12" align="center">
-                    <CountDown date={`2019-3-30`}/>
+                    <CountDown date={`2019-3-28`}/>
                     <br/>
                   </Col>
                 </Row>
                 <Row>
                   <Col xs="12">
-                    <form onSubmit={this.handelSubmit}>
-                      <Input type="text" name="cclinkanswer" placeholder="Enter Link Github" required />
+                    <form>
+                      <Input type="text" onChange={this.handleChange} name="cclinkanswer" placeholder="Enter Link Github" required />
                       <br/>
-                      <Button color="primary" type="submit" >Submit</Button>
                     </form>
+                    <Modals error={error} />
                   </Col>
                 </Row>
               </CardBody>
             </Card>
           </Col>
-        </div>
+      </div>
       );
     }
 }

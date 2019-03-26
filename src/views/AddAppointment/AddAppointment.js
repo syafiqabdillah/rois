@@ -25,6 +25,8 @@ import {
   Row,
 } from 'reactstrap';
 
+import axios from 'axios';
+
 class AddAppointment extends React.Component{
   constructor(props) {
     super(props);
@@ -34,8 +36,36 @@ class AddAppointment extends React.Component{
     this.state = {
       collapse: true,
       fadeIn: true,
-      timeout: 300
+      timeout: 300,
+      idLamaran: '1',
+      date : '',
+      start : '',
+      end : '',
+      location : '',
     };
+  }
+
+  handleSubmit = (event) => {
+    event.preventDefault()
+    var qs = require('qs');
+    axios.post('http://localhost:8000/po/create-appointment', qs.stringify({
+      'id_lamaran': this.state.idLamaran,
+      'date': this.state.date,
+      'start': this.state.start,
+      'end': this.state.end,
+      'lokasi' : this.state.location
+    }),
+    {
+      headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+    })
+    window.location.href = '/#/appointmens';
+  }
+
+  handleChange = (event) => {
+    event.preventDefault()
+    this.setState({
+      [event.target.name]: event.target.value
+    })
   }
 
   toggle() {
@@ -49,48 +79,49 @@ class AddAppointment extends React.Component{
   render() {
     return (
       <div className="animated fadeIn">
-          <Col xs="11" sm="10">
+          <Col xs="10" sm="10">
             <Card>
               <CardHeader>
-                <strong>Add Appointment</strong>
+                  <strong>Add Appointment</strong>
               </CardHeader>
               <CardBody>
+              <form onSubmit={this.handleSubmit}>
                 <Row>
-                  <Col xs="5">
+                  <Col xs="6">
                     <FormGroup>
-                      <Label htmlFor="ccdate">Date</Label>
-                      <Input type="date" name="ccdate" id="ccdate">
+                      <Label htmlFor="date"><strong>Date</strong></Label>
+                      <Input type="date" name="date" id="date" onChange={this.handleChange}>
                       </Input>
                     </FormGroup>
                   </Col>
                   <Col xs="3">
                     <FormGroup>
-                      <Label htmlFor="ccstart">Start Time</Label>
-                      <Input type="time" name="ccstart" id="ccstart">
+                      <Label htmlFor="start"><strong>Start Time</strong></Label>
+                      <Input type="time" name="start" id="start" onChange={this.handleChange}>
                       </Input>
                     </FormGroup>
                   </Col>
                   <Col xs="3">
                     <FormGroup>
-                      <Label htmlFor="ccfinish">Finish Time</Label>
-                      <Input type="time" name="ccfinish" id="ccfinish"/>
+                      <Label htmlFor="finish"><strong>Finish Time</strong></Label>
+                      <Input type="time" name="end" id="end" onChange={this.handleChange}/>
                     </FormGroup>
                   </Col>
                 </Row>
                 <Row>
                   <Col xs="12">
                     <FormGroup>
-                      <Label htmlFor="cclocation">Location</Label>
-                      <Input type="text" id="cclocation" placeholder="Enter Location" required />
+                      <Label htmlFor="location"><strong>Location</strong></Label>
+                      <Input type="text" id="location" name="location" placeholder="Enter Location" onChange={this.handleChange}/>
                     </FormGroup>
                   </Col>
                 </Row>
                 <Row>
                   <Col xs="12">
                     <FormGroup>
-                      <Label htmlFor="selectInterviewer">Interviewer</Label>
-                      <Input type="select" name="selectInterviewer" id="selectInterviewer">
-                        <option value="0">Please select</option>
+                      <Label htmlFor="selectInterviewer"><strong>Interviewer</strong></Label>
+                      <Input type="select" name="interviewer" id="interviewer">
+                        <option value="0">-- Please select --</option>
                         <option value="1">John Doe</option>
                         <option value="2">Andrew NG</option>
                         <option value="3">Steve Job</option>
@@ -104,9 +135,10 @@ class AddAppointment extends React.Component{
                   <Col xs="4">
                   </Col>
                   <Col xs="4">
-                    <Button block color="primary">Submit</Button>
+                    <Button block color="primary" className="btn-pill" type="submit">Submit</Button>
                   </Col>
                 </Row>
+                </form>
               </CardBody>
             </Card>
           </Col>

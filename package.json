@@ -25,6 +25,7 @@
     "enzyme-adapter-react-16": "^1.10.0",
     "flag-icon-css": "^3.3.0",
     "font-awesome": "^4.7.0",
+    "is-git-url": "^1.0.0",
     "node-sass": "^4.11.0",
     "prop-types": "^15.7.2",
     "qs": "^6.7.0",
