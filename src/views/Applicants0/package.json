@@ -1,0 +1,6 @@
+{
+  "name": "Applicants",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./Applicants.js"
+}
