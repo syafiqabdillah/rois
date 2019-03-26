@@ -32,6 +32,7 @@ class DefaultLayout extends Component {
     e.preventDefault()
     this.props.history.push('/login');
     localStorage.setItem('token', undefined);
+    localStorage.setItem('profile', undefined);
   }
 
   render() { 

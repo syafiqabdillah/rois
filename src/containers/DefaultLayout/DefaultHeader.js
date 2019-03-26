@@ -13,6 +13,11 @@ const propTypes = {
 
 const defaultProps = {};
 
+const profile = JSON.parse(localStorage.getItem('profile'));
+// const imageUrl = '../../assets/img/avatars/6.jpg';
+const imageUrl = profile.imageUrl
+console.log(profile.imageUrl)
+
 class DefaultHeader extends Component {
   render() {
 
@@ -65,7 +70,7 @@ class DefaultHeader extends Component {
           </NavItem>
           <AppHeaderDropdown direction="down">
             <DropdownToggle nav>
-              <img src={'../../assets/img/avatars/6.jpg'} className="img-avatar" alt="admin@bootstrapmaster.com" />
+              <img src={imageUrl} className="img-avatar" alt="admin@bootstrapmaster.com" />
             </DropdownToggle>
             <DropdownMenu right style={{ right: 'auto' }}>
               <DropdownItem header tag="div" className="text-center"><strong>Account</strong></DropdownItem>
