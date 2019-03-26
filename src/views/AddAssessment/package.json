@@ -1,0 +1,7 @@
+{
+    "name": "AddAssessment",
+    "version": "0.0.0",
+    "private": true,
+    "main": "./AddAssessment.js"
+  }
+  
