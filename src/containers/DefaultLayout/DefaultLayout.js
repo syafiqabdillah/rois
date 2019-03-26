@@ -40,7 +40,7 @@ class DefaultLayout extends Component {
     }
 
     let header;
-    if (localStorage.getItem('role') == 'PELAMAR'){
+    if (localStorage.getItem('token') == '100254249103955504539'){ //kalo token gue, 
       header = <ApplicantHeader onLogout={e=>this.signOut(e)}/>;
     } else {
       header = <DefaultHeader onLogout={e=>this.signOut(e)}/>;
