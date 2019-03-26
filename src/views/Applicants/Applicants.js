@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import ChooseCurrentStage from '../ChooseCurrentStage';
+import ChooseStages from '../ChooseStages';
 import { Badge, Card, CardBody, CardHeader, Col, Pagination, PaginationItem, PaginationLink, Row, Table, CardTitle, CardText, Progress } from 'reactstrap';
 
 const API = 'http://localhost:8000';
@@ -78,11 +80,7 @@ class Applicants extends Component {
             </tr>
             <tr>
               <th scope="row">About Me</th>
-              <td>: Lorem ipsum dolor sit amet,
-              consectetur adipiscing elit, sed do eiusmod tempor
-              incididunt ut labore et dolore magna aliqua.
-              Ut enim ad minim veniam, quis nostrud
-              exercitation ullamco.</td>
+              <td>: {this.state.lamaran.cover_letter}</td>
             </tr>
           </tbody>
         </Table>
@@ -100,10 +98,9 @@ class Applicants extends Component {
           </Col>
           <Col lg={6}>
             <div>
-              <Badge className="mr-1" href="#" color="success" pill>Remote Test</Badge>
-              <i className="fa fa-long-arrow-right pr-1"></i>
-              <Badge className="mr-1" href="#" color="warning" pill>Interview</Badge>
+              <Badge className="mr-1" href="#" color="warning" pill>Administrasi</Badge>
             </div>
+            <br />
             <Card >
               <CardHeader>
                 <i className="fa fa-user pr-1"></i>{this.state.lamaran.pelamar} <Badge color="secondary">Candidate {this.state.lamaran.lowongan}</Badge>
@@ -118,6 +115,8 @@ class Applicants extends Component {
                 </Row>
               </CardBody>
             </Card>
+            <ChooseCurrentStage tahapan={this.state.lamaran.tahapan} />
+            <ChooseStages />
           </Col>
           <Col lg={3}>
           </Col>

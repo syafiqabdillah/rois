@@ -99,8 +99,9 @@ class Applications extends Component {
         <div align="center">
           <h3>Applications</h3>
         </div>
+        <br />
         <Row>
-          <Col>
+          <Col lg={12}>
             <Card>
               <CardHeader>
                 <i className="fa fa-align-justify"></i> Application List

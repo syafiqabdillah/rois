@@ -1,0 +1,6 @@
+{
+  "name": "FinalStageNotification",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./FinalStageNotification.js"
+}
