@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { Card, CardBody, CardHeader, Col, Row, Table } from 'reactstrap';
+
+import { Button, Badge, Card, CardBody, CardHeader, Col, Pagination, PaginationItem, PaginationLink, Row, Table } from 'reactstrap';
 
 const API = 'http://localhost:8000';
 
@@ -36,6 +38,7 @@ class Assessments extends Component {
           <tr>
             <td> {soal.nama} </td>
             <td> {soal.lowongan} </td>
+            <td> {soal.file} </td>
             <td> {soal.nama_karyawan} </td>
             <td> {soal.created_date} </td>
           </tr>
@@ -48,6 +51,7 @@ class Assessments extends Component {
           <tr>
             <th>Name</th>
             <th>Vacancy</th>
+            <th>File</th>
             <th>Creator</th>
             <th>Created Date</th>
           </tr>
@@ -61,19 +65,30 @@ class Assessments extends Component {
 
     return (
       <div className="animated fadeIn">
+        
         <div align="center">
           <h3>Assessments</h3>
         </div>
+       
+        
+        <Link to="/addAssessment">
+            <Button color="primary">Add Assessment</Button>
+        </Link>
+        <br></br>
+        <br></br>
+
         <Row>
           <Col>
             <Card>
               <CardHeader>
                 <i className="fa fa-align-justify"></i> Assessment List
               </CardHeader>
+              
               <CardBody>
                 {content}
               </CardBody>
             </Card>
+          
           </Col>
         </Row>
       </div>
