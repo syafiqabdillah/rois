@@ -36,9 +36,27 @@ class AddAnswer extends React.Component{
     this.state = {
       collapse: true,
       fadeIn: true,
-      timeout: 300
+      timeout: 300,
     };
   }
+  handelSubmit = (event) => {
+    event.preventDefault()
+    const value = event.target.elements.cclinkanswer.value
+    console.log(value)
+  }
+  //
+  // handleChange = (event) => {
+  //   const {value} = event.target
+  //   this.setState({
+  //     error : this.props.getErrorMessage(value)
+  //   })
+  // }
+  //
+  // componentDidMount(){
+  //   this.setState({
+  //     error : this.props.getErrorMessage("")
+  //   })
+  // }
 
   toggle() {
     this.setState({ collapse: !this.state.collapse });
@@ -49,6 +67,7 @@ class AddAnswer extends React.Component{
   }
 
   render() {
+    const {error} = this.state;
     return (
       <div className="animated fadeIn">
           <Col xs="11" sm="10">
@@ -60,18 +79,16 @@ class AddAnswer extends React.Component{
                 <Row>
                   <Col xs="12" align="center">
                     <CountDown date={`2019-3-30`}/>
+                    <br/>
                   </Col>
                 </Row>
                 <Row>
                   <Col xs="12">
-                    <FormGroup>
-                      <Input type="text" id="cclinkanswer" placeholder="Enter Link Github" required />
-                    </FormGroup>
-                  </Col>
-                </Row>
-                <Row>
-                  <Col xs="12">
-                    <Button block color="primary">Submit</Button>
+                    <form onSubmit={this.handelSubmit}>
+                      <Input type="text" name="cclinkanswer" placeholder="Enter Link Github" required />
+                      <br/>
+                      <Button color="primary" type="submit" >Submit</Button>
+                    </form>
                   </Col>
                 </Row>
               </CardBody>
