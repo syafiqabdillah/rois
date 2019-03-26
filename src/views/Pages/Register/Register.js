@@ -52,7 +52,7 @@ class Register extends Component {
     .then(function (response) {
         //handle success, munculin data
         console.log(response);
-
+        localStorage.setItem('token', token);
         window.location.href = '#/dashboard';
     })
 

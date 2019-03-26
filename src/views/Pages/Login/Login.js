@@ -26,18 +26,17 @@ class Login extends Component {
 
     var qs = require('qs');
 
-    axios.post(url, qs.stringify({ 'token': token}),{
+    axios.post(url, qs.stringify({'token': token}),{
       headers:{
         'Content-Type': 'application/x-www-form-urlencoded'
       }
     })
     .then(function (response) {
       console.log(response.data);
-      let role = response.data.role;
-      let token = response.data.token;
-
-      if(role == 'PELAMAR'){
+      if(localStorage.getItem('token') != undefined){
         //ada datanya, ke dashboard
+        let role = response.data.role;
+        let token = response.data.token;
         localStorage.setItem('token', token);
         localStorage.setItem('role', role);
         window.location.href = '#/dashboard';
@@ -67,9 +66,9 @@ class Login extends Component {
       <div className="app flex-row align-items-center animated fadeIn">
         <Container>
           <Row className="justify-content-center">
-            <Col md="4">
+            <Col md="8">
               <CardGroup>
-                {/* <Card className="p-4">
+                <Card className="p-4">
                   <CardBody>
 
                     <Form onSubmit={ this.handleSubmit }>
@@ -85,20 +84,28 @@ class Login extends Component {
                         <Input type="text" placeholder="Name" autoComplete="name" name="username" onChange={this.handleInputChange}/>
                       </InputGroup>
 
+                      <InputGroup className="mb-3">
+                        <InputGroupAddon addonType="prepend">
+                          <InputGroupText>
+                            <i className="icon-user"></i>
+                          </InputGroupText>
+                        </InputGroupAddon>
+                        <Input type="text" placeholder="Password" autoComplete="password" name="password" onChange={this.handleInputChange}/>
+                      </InputGroup>
 
                       <Row>
                         <Col xs="6">
                           <Button color="primary" className="px-4">Login</Button>
                         </Col>
-                        <Col xs="6" className="text-right">
+                        {/* <Col xs="6" className="text-right">
                           <Button color="link" className="px-0">Forgot password?</Button>
-                        </Col>
+                        </Col> */}
                       </Row>
 
                     </Form>
 
                   </CardBody>
-                </Card> */}
+                </Card>
                 <Card className="text-white bg-primary py-5" style={{ width: '44%' }}>
                   <CardBody className="text-center">
                     <div>
