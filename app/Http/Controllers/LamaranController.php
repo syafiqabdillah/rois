@@ -19,21 +19,54 @@ class LamaranController extends Controller
 
     }
 
+    public function uploadCV(Request $request){
+        if($request->hasFile('file')){
+            $token = $request->input('token');
+            $id_lowongan = $request->input('id_lowongan');
+            $file = $request->file('file');
+            $extension = $file->getClientOriginalExtension(); // getting image extension
+            $filename =time().'.'.$extension;
+            $filename =$token.'_'.$id_lowongan.'.'.$extension;
+            $file->move('uploads/', $filename);
+            return response()->json(['message'=>'success', 'status'=>200]);
+        } else {
+            return response()->json(['message'=>'failed', 'status'=>500]);
+        }
+        
+    }
+
     public function createLamaran(Request $request){
-        $id_lowongan = $request->id_lowongan;
-        $token_pelamar = $request->token_pelamar;
-        $salary_expectation = $request->salary_expectation;
-        $cover_letter = $request->cover_letter;
-        $id_tahapan = 1;
+        $id_lowongan = $request->input('id_lowongan');
+        $token_pelamar = $request->input('token_pelamar');
+        $salary_expectation = $request->input('salary_expectation');
+        $cover_letter = $request->input('cover_letter');
+        $tahapan = "Administration";
+        $status = "Submitted";
+        $skill = $request->input('skill');
+        $experience = $request->input('experience');
+
+        $file = $request->input('file');
+        // $file = str_replace('data:application/pdf;base64,', '', $file);
+        // $file = str_replace(' ', '+', $file);
+        // $path = "/cv_resume_files/{$id_lowongan}_{$token_pelamar}.pdf";
+        $pdf_decoded = base64_decode ($file);
+        $pdf = fopen ('test.pdf','w');
+        fwrite ($pdf,$pdf_decoded);
+        fclose($pdf);
+        //echo file_put_contents(storage_path()."/files/{$id_lowongan}_{$token_pelamar}.pdf", base64_decode($file));
 
         $id = DB::table('lamaran')->insertGetId(
             ['id_lowongan' => $id_lowongan,
             'token_pelamar' => $token_pelamar,
-            'salary_expectation' => $salary_expectation,
+            'salary_exp' => $salary_expectation,
             'cover_letter' => $cover_letter,
-            'id_tahapan' => $id_tahapan]
+            'tahapan' => $tahapan,
+            'status' => $status,
+            'skill' => $skill,
+            'experience' => $experience
+            ]
         );
-        return $id;
+        return $request;
     }
 
     /**

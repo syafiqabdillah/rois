@@ -37,13 +37,41 @@ class DefaultLayout extends Component {
   render() { 
     if(localStorage.getItem('token') == undefined){
       return <Redirect to="/login" />
-    }
+    } 
 
     let header;
+    let sidebar;
+    let home;
+
     if (localStorage.getItem('token') == '100254249103955504539'){ //kalo token gue, 
-      header = <ApplicantHeader onLogout={e=>this.signOut(e)}/>;
+      header = (<ApplicantHeader onLogout={e=>this.signOut(e)}/>);
+      //sidebar = "";
+      sidebar = (
+        <AppSidebar fixed display="lg">
+          <AppSidebarHeader />
+          <AppSidebarForm />
+          <Suspense>
+            <AppSidebarNav navConfig={navigation} {...this.props} />
+          </Suspense>
+          <AppSidebarFooter />
+          <AppSidebarMinimizer />
+        </AppSidebar>
+      );
+      home = (<Redirect from='/' to="/vacancies-applicant" />);
     } else {
       header = <DefaultHeader onLogout={e=>this.signOut(e)}/>;
+      sidebar = (
+        <AppSidebar fixed display="lg">
+          <AppSidebarHeader />
+          <AppSidebarForm />
+          <Suspense>
+            <AppSidebarNav navConfig={navigation} {...this.props} />
+          </Suspense>
+          <AppSidebarFooter />
+          <AppSidebarMinimizer />
+        </AppSidebar>
+      )
+      home = (<Redirect from="/" to="/dashboard" />);
     }
 
     return (
@@ -56,15 +84,9 @@ class DefaultLayout extends Component {
           </Suspense>
         </AppHeader>
         <div className="app-body">
-          <AppSidebar fixed display="lg">
-            <AppSidebarHeader />
-            <AppSidebarForm />
-            <Suspense>
-            <AppSidebarNav navConfig={navigation} {...this.props} />
-            </Suspense>
-            <AppSidebarFooter />
-            <AppSidebarMinimizer />
-          </AppSidebar>
+
+          { sidebar }
+
           <main className="main">
             <AppBreadcrumb appRoutes={routes}/>
             <Container fluid>
@@ -82,7 +104,9 @@ class DefaultLayout extends Component {
                         )} />
                     ) : (null);
                   })}
-                  <Redirect from="/" to="/dashboard" />
+
+                  { home }
+
                 </Switch>
               </Suspense>
             </Container>

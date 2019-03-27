@@ -53,6 +53,7 @@ $router->delete('po/delete-responsibility', ['middleware' => 'cors', 'uses' => '
 $router->post('pelamar/create-pelamar', ['middleware' => 'cors', 'uses' => 'PelamarController@createPelamar']);
 
 $router->post('pelamar/create-lamaran', ['middleware' => 'cors', 'uses' => 'LamaranController@createLamaran']);
+$router->post('pelamar/upload-cv', ['middleware' => 'cors', 'uses' => 'LamaranController@uploadCV']);
 
 /**
  * UC - 03 : PO Menentukan Tahapan Seleksi Selanjutnya

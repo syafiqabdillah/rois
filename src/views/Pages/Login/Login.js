@@ -15,12 +15,10 @@ class Login extends Component {
 
   responseGoogle = (response) => {
     let profile = response.profileObj;
-    console.log(profile);
     window.localStorage.setItem('profile',JSON.stringify(profile));
-    //cek apakah token sudah ada, kalo udah ada, tolak, kalo ga, daftar
     
     let token = profile.googleId;
-    //let token = "12345qwerty";
+    localStorage.setItem('token', token);
 
     const url = 'http://localhost:8000/login';
 
@@ -32,14 +30,12 @@ class Login extends Component {
       }
     })
     .then(function (response) {
-      console.log(response.data);
-      if(localStorage.getItem('token') != undefined){
-        //ada datanya, ke dashboard
-        let role = response.data.role;
-        let token = response.data.token;
-        localStorage.setItem('token', token);
-        localStorage.setItem('role', role);
-        window.location.href = '#/dashboard';
+      if(response.data.data != ''){
+        if (localStorage.getItem('token') == '100254249103955504539'){
+          window.location.href = '#/vacancies-applicant';  
+        }else {
+          window.location.href = '#/dashboard';
+        }
       } else {
         //tidak ada, ke register
         window.location.href = '#/register';
@@ -97,9 +93,6 @@ class Login extends Component {
                         <Col xs="6">
                           <Button color="primary" className="px-4">Login</Button>
                         </Col>
-                        {/* <Col xs="6" className="text-right">
-                          <Button color="link" className="px-0">Forgot password?</Button>
-                        </Col> */}
                       </Row>
 
                     </Form>

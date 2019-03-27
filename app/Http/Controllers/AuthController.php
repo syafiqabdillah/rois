@@ -46,10 +46,8 @@ class AuthController extends Controller
     public function login(Request $request){
         $token = $request->input('token');
         $pelamar = DB::table('pelamar')->select()->where('token', $token)->get();
-        // $pelamar = json_decode($pelamar);
-        // $pelamar = $pelamar[0];
-        //$pelamar->role='PELAMAR';
-        return json_encode($pelamar);
+        $pelamar = json_decode($pelamar);
+        return response()->json(['data'=>$pelamar]);
     }
 
 }

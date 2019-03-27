@@ -29,33 +29,32 @@ class Register extends Component {
     console.log(data)
 
     let profile = JSON.parse(localStorage.getItem('profile'));
-
     let token = profile.googleId;
     let email = profile.email;
 
-    var qs = require('qs');
-
-    //post it to backend
-    axios.post('http://localhost:8000/register', qs.stringify({
-      'token': token,
-      'nama': this.state.name,
-      'nik': this.state.nik,
-      'tempat_lahir': this.state.placeOfBirth,
-      'tanggal_lahir': this.state.dateOfBirth,
-      'alamat': this.state.address,
-      'email': email,
-      'phone': this.state.phone,
-    }),
-    {
-      headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-    })
-    .then(function (response) {
-        //handle success, munculin data
-        console.log(response);
-        localStorage.setItem('token', token);
-        window.location.href = '#/dashboard';
-    })
-
+    if (window.confirm('Are you sure that you have entered correct data ? ')){
+      //post it to backend
+      var qs = require('qs');
+      axios.post('http://localhost:8000/register', qs.stringify({
+        'token': token,
+        'nama': this.state.name,
+        'nik': this.state.nik,
+        'tempat_lahir': this.state.placeOfBirth,
+        'tanggal_lahir': this.state.dateOfBirth,
+        'alamat': this.state.address,
+        'email': email,
+        'phone': this.state.phone,
+      }),
+      {
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+      })
+      .then(function (response) {
+          //handle success, munculin data
+          console.log(response);
+          localStorage.setItem('token', token);
+          window.location.href = '#/dashboard';
+      })
+    }
   }
 
   handleInputChange = (e) => {
