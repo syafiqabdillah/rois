@@ -22,16 +22,6 @@ class ApplicantHeader extends Component {
   }
 
   render() {
-    const menuLoggedIn = (
-      <Nav className="d-md-down-none" navbar>
-        <NavItem className="px-3">
-          <Link to="/" className="nav-link" >Home</Link>
-        </NavItem>
-        <NavItem className="px-3">
-          <Link to="/pelamar/" className="nav-link">Profile</Link>
-        </NavItem>
-      </Nav>
-    );
 
     let profile = JSON.parse(localStorage.getItem('profile'));
     let imageUrl = profile.imageUrl;
@@ -62,7 +52,6 @@ class ApplicantHeader extends Component {
 
         </Nav>
         <Nav className="ml-auto" navbar>
-          <NavItem> <Link to="/" className="nav-link"> Welcome, {nama} </Link></NavItem>
           <AppHeaderDropdown direction="down">
             <DropdownToggle nav>
               <img src={imageUrl} className="img-avatar" alt="admin@bootstrapmaster.com" />
@@ -72,7 +61,6 @@ class ApplicantHeader extends Component {
               <DropdownItem onClick={e => this.props.onLogout(e)}><i className="fa fa-lock"></i> Logout</DropdownItem>
             </DropdownMenu>
           </AppHeaderDropdown>
-          <NavItem></NavItem>
         </Nav>
       </React.Fragment>
     );
