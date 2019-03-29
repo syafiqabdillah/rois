@@ -52,44 +52,44 @@ class VacanciesPelamar extends Component {
       content = <div align="center"><p>Loading . . .</p></div>;
     } else {
       let list_vacancy = this.state.lowongan.map((lowongan) => { 
-
-        let list_res = lowongan.responsibility.map((res) => {
+        if (lowongan.nama.toLowerCase().includes(this.state.searchKey.toLowerCase())){
+          let list_res = lowongan.responsibility.map((res) => {
+            return (
+              <ul>
+                <li> {res.deskripsi} </li>
+              </ul>
+            );
+          });
+  
+          let list_req = lowongan.requirement.map((req) => {
+            return (
+              <ul>
+                <li> {req.deskripsi} </li>
+              </ul>
+            );
+          });
           return (
-            <ul>
-              <li> {res.deskripsi} </li>
-            </ul>
+            <Card body outline color="primary">
+              <CardBody>
+                <h2>{lowongan.nama}</h2>
+                <br></br>
+                <h5>RESPONSIBILITIES</h5>
+                {list_res}
+                <br></br>
+                <h5>REQUIREMENTS</h5>
+                {list_req}
+  
+                <a href='/'>see details</a>
+                <br></br>
+                <br></br>
+                <div align="center">
+                  <Button color="primary" className="btn-pill" onClick={() => this.handleOnClick(lowongan.id)}>APPLY NOW</Button>
+                </div>
+  
+              </CardBody>
+            </Card>
           );
-        });
-
-        let list_req = lowongan.requirement.map((req) => {
-          return (
-            <ul>
-              <li> {req.deskripsi} </li>
-            </ul>
-          );
-        });
-
-        return (
-          <Card body outline color="primary">
-            <CardBody>
-              <h2>{lowongan.nama}</h2>
-              <br></br>
-              <h5>RESPONSIBILITIES</h5>
-              {list_res}
-              <br></br>
-              <h5>REQUIREMENTS</h5>
-              {list_req}
-
-              <a href='/'>see details</a>
-              <br></br>
-              <br></br>
-              <div align="center">
-                <Button color="primary" className="btn-pill" onClick={() => this.handleOnClick(lowongan.id)}>APPLY NOW</Button>
-              </div>
-
-            </CardBody>
-          </Card>
-        );
+        }
       });
 
       content = (
