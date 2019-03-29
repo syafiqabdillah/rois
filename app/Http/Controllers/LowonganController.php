@@ -34,6 +34,39 @@ class LowonganController extends Controller
         return $result;
     }
 
+  /**
+     * mengembalikan list of lowongan terkait yang memiliki divisi dan tipe tertentu.
+     * dengan requirement dan responsiblity dari lowongan tersebut 
+     * @param string  $id divisi yang ingin diambil related lowongannya
+     * @return      array $lowongan lowongan yang telah terisi requirement dan responsibility 
+     */
+    public function getRelatedLowongan($id){
+        $lowongan_now = $this->getLowongan($id);
+        $lowongan_now = json_decode($lowongan_now);
+        
+         $tipe = $lowongan_now->tipe;
+         $divisi= $lowongan_now->divisi;
+
+
+         $getrelated_lowongan = DB::table('lowongan') 
+         ->where('id', '!=', $id)
+         ->where(function ($query) use ($tipe, $divisi) {
+             $query->where('tipe',$tipe)
+                   ->orWhere('divisi' , $divisi);
+         })
+         ->get();
+
+        $related_lowongan = json_decode($getrelated_lowongan, true);
+         $result = array();
+         foreach($related_lowongan as $lowongan){
+             $lowongan = (object) $lowongan;
+             $lowongan = $this->addRequirementAndResponsibility($lowongan);
+             array_push($result, $lowongan);
+         }
+       return $result;
+        
+    }
+
     /**
      * mengembalikan suatu lowongan dengan id tertentu 
      * dengan requirement dan responsiblity dari lowongan tersebut 
