@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Button,  Badge, DropdownItem, DropdownMenu, DropdownToggle, Nav, NavItem, NavLink } from 'reactstrap';
+import { Button, Badge, DropdownItem, DropdownMenu, DropdownToggle, Nav, NavItem, NavLink } from 'reactstrap';
 import PropTypes from 'prop-types';
 import GoogleLogin from 'react-google-login';
 
@@ -35,7 +35,7 @@ class ApplicantHeader extends Component {
 
     let profile = JSON.parse(localStorage.getItem('profile'));
     let imageUrl = profile.imageUrl;
-    
+    let nama = profile.name;
 
     // eslint-disable-next-line
     const { children, ...attributes } = this.props;
@@ -62,29 +62,18 @@ class ApplicantHeader extends Component {
 
         </Nav>
         <Nav className="ml-auto" navbar>
-          <NavItem className="d-md-down-none">
-            <NavLink href="#"><i className="icon-bell"></i><Badge pill color="danger">5</Badge></NavLink>
-          </NavItem>
-          <NavItem className="d-md-down-none">
-            <NavLink href="#"><i className="icon-list"></i></NavLink>
-          </NavItem>
-          <NavItem className="d-md-down-none">
-            <NavLink href="#"><i className="icon-location-pin"></i></NavLink>
-          </NavItem>
+          <NavItem> <Link to="/" className="nav-link"> Welcome, {nama} </Link></NavItem>
           <AppHeaderDropdown direction="down">
             <DropdownToggle nav>
               <img src={imageUrl} className="img-avatar" alt="admin@bootstrapmaster.com" />
             </DropdownToggle>
             <DropdownMenu right style={{ right: 'auto' }}>
               <DropdownItem><i className="fa fa-user"></i> Profile</DropdownItem>
-
               <DropdownItem onClick={e => this.props.onLogout(e)}><i className="fa fa-lock"></i> Logout</DropdownItem>
-              
             </DropdownMenu>
           </AppHeaderDropdown>
+          <NavItem></NavItem>
         </Nav>
-        <AppAsideToggler className="d-md-down-none" />
-        {/*<AppAsideToggler className="d-lg-none" mobile />*/}
       </React.Fragment>
     );
   }

@@ -18,7 +18,7 @@ if (localStorage.getItem('profile') != undefined) {
   const profile = JSON.parse(localStorage.getItem('profile'));
   imageUrl = profile.imageUrl;
 } else {
-  imageUrl = 'https://image.flaticon.com/icons/png/512/97/97895.png';
+  imageUrl = 'https://cdn0.iconfinder.com/data/icons/elasto-online-store/26/00-ELASTOFONT-STORE-READY_user-circle-512.png';
 }
 
 class DefaultHeader extends Component {

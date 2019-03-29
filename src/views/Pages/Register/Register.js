@@ -81,38 +81,38 @@ class Register extends Component {
 
                     <FormGroup>
                       <Label for="name">Full Name*</Label>
-                      <Input type="text" name="name" id="name" placeholder="Your Full Name" defaultValue={candidate_name} onChange={this.handleInputChange}/>
+                      <Input required type="text" name="name" id="name" placeholder="Your Full Name" defaultValue={candidate_name} onChange={this.handleInputChange}/>
                     </FormGroup>
 
                     <FormGroup>
                       <Label for="nik">NIK*</Label>
-                      <Input type="text" name="nik" id="nik" placeholder="Your 16-digits NIK" onChange={this.handleInputChange}/>
+                      <Input required type="text" maxLength="16" name="nik" id="nik" placeholder="Your 16-digits NIK" onChange={this.handleInputChange}/>
                     </FormGroup>
 
                     <Row form>
                       <Col md={6}>
                         <FormGroup>
                           <Label for="placeOfBirth">Place of Birth*</Label>
-                          <Input type="text" name="placeOfBirth" id="placeOfBirth" placeholder="" onChange={this.handleInputChange}/>
+                          <Input required type="text" name="placeOfBirth" id="placeOfBirth" placeholder="" onChange={this.handleInputChange}/>
                         </FormGroup>
                       </Col>
 
                       <Col md={6}>
                         <FormGroup>
                           <Label for="dateOfBirth">Date of Birth*</Label>
-                          <Input type="date" name="dateOfBirth" id="dateOfBirth" placeholder="" onChange={this.handleInputChange}/>
+                          <Input required type="date" name="dateOfBirth" id="dateOfBirth" placeholder="" onChange={this.handleInputChange}/>
                         </FormGroup>
                       </Col>
                     </Row>
 
                     <FormGroup>
                       <Label for="address">Address*</Label>
-                      <Input type="text" name="address" id="address" placeholder="" onChange={this.handleInputChange}/>
+                      <Input required type="text" name="address" id="address" placeholder="" onChange={this.handleInputChange}/>
                     </FormGroup>
 
                     <FormGroup>
                       <Label for="phone">Phone*</Label>
-                      <Input type="text" name="phone" id="phone" placeholder="" onChange={this.handleInputChange}/>
+                      <Input required type="text" name="phone" id="phone" placeholder="" onChange={this.handleInputChange}/>
                     </FormGroup>
 
                     <div align="center">

@@ -43,7 +43,7 @@ class DefaultLayout extends Component {
     let sidebar;
     let home;
 
-    if (localStorage.getItem('token') == '100254249103955504539'){ //kalo token gue, 
+    if (localStorage.getItem('role') == 'pelamar'){ //kalo token gue, 
       header = (<ApplicantHeader onLogout={e=>this.signOut(e)}/>);
       //sidebar = "";
       sidebar = (
