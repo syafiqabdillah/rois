@@ -35,6 +35,7 @@ class ApplicantHeader extends Component {
 
     let profile = JSON.parse(localStorage.getItem('profile'));
     let imageUrl = profile.imageUrl;
+    
 
     // eslint-disable-next-line
     const { children, ...attributes } = this.props;
@@ -56,7 +57,7 @@ class ApplicantHeader extends Component {
             <Link to="/" className="nav-link">Profile</Link>
           </NavItem>
           <NavItem className="px-3">
-            <Link to="/" className="nav-link">My Applications</Link>
+            <Link to="/myapplications" className="nav-link">My Applications</Link>
           </NavItem>
 
         </Nav>

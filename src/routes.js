@@ -26,7 +26,8 @@ const AddAnswer = React.lazy(() => import('./views/AddAnswer'));
 const AddVacancy = React.lazy(() => import('./views/AddVacancy'));
 const AddAssessment = React.lazy(() => import('./views/AddAssessment'));
 const VacanciesPelamar = React.lazy(() => import('./views/VacanciesPelamar'));
-const ApplicationForm = React.lazy(() => import('./views/ApplicationForm/ApplicationForm'));
+const ApplicationForm = React.lazy(() => import('./views/ApplicationForm'));
+const ApplicationsPelamar = React.lazy(() => import('./views/ApplicationsPelamar'));
 
 const Tabs = React.lazy(() => import('./views/Base/Tabs'));
 const Tooltips = React.lazy(() => import('./views/Base/Tooltips'));
@@ -72,6 +73,7 @@ const routes = [
   { path: '/addAssessment', name: 'Add Assessment', component: AddAssessment },
   { path: '/vacancies-applicant', name: 'Vacancies', component: VacanciesPelamar },
   { path: '/apply/:id', name: 'Application Form', component: ApplicationForm },
+  { path: '/myapplications', name: 'My Applications', component: ApplicationsPelamar },
 
   { path: '/base/tabs', name: 'Tabs', component: Tabs },
   { path: '/base/breadcrumbs', name: 'Breadcrumbs', component: Breadcrumbs },

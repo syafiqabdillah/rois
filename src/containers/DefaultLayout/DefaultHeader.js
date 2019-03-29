@@ -13,16 +13,13 @@ const propTypes = {
 
 const defaultProps = {};
 
-const profile = JSON.parse(localStorage.getItem('profile'));
 let imageUrl;
-
-if (profile){
-  imageUrl = profile.imageUrl
-}else {
-  imageUrl = '../../assets/img/avatars/6.jpg';
+if (localStorage.getItem('profile') != undefined) {
+  const profile = JSON.parse(localStorage.getItem('profile'));
+  imageUrl = profile.imageUrl;
+} else {
+  imageUrl = 'https://image.flaticon.com/icons/png/512/97/97895.png';
 }
-
-console.log(profile.imageUrl)
 
 class DefaultHeader extends Component {
   render() {
@@ -75,9 +72,11 @@ class DefaultHeader extends Component {
             <NavLink href="#"><i className="icon-location-pin"></i></NavLink>
           </NavItem>
           <AppHeaderDropdown direction="down">
+
             <DropdownToggle nav>
               <img src={imageUrl} className="img-avatar" alt="admin@bootstrapmaster.com" />
             </DropdownToggle>
+
             <DropdownMenu right style={{ right: 'auto' }}>
               <DropdownItem header tag="div" className="text-center"><strong>Account</strong></DropdownItem>
               <DropdownItem><i className="fa fa-bell-o"></i> Updates<Badge color="info">42</Badge></DropdownItem>
@@ -93,7 +92,7 @@ class DefaultHeader extends Component {
               <DropdownItem><i className="fa fa-shield"></i> Lock Account</DropdownItem>
 
               <DropdownItem onClick={e => this.props.onLogout(e)}><i className="fa fa-lock"></i> Logout</DropdownItem>
-              
+
             </DropdownMenu>
           </AppHeaderDropdown>
         </Nav>

@@ -13,6 +13,9 @@ class Login extends Component {
     }
   }
 
+  /**
+   * handle login pelamar
+   */
   responseGoogle = (response) => {
     let profile = response.profileObj;
     window.localStorage.setItem('profile',JSON.stringify(profile));
@@ -31,11 +34,9 @@ class Login extends Component {
     })
     .then(function (response) {
       if(response.data.data != ''){
-        if (localStorage.getItem('token') == '100254249103955504539'){
-          window.location.href = '#/vacancies-applicant';  
-        }else {
-          window.location.href = '#/dashboard';
-        }
+        // datanya pelamar sudah ada di DB, masuk 
+        window.localStorage.setItem('role', 'pelamar');
+        window.location.href = '#/vacancies-applicant'
       } else {
         //tidak ada, ke register
         window.location.href = '#/register';
@@ -44,10 +45,35 @@ class Login extends Component {
 
   }
 
+  /**
+   * handle login admin atau PO
+   */
   handleSubmit = (e) => {
-    const data = this.state
     e.preventDefault()
-    console.log(data)
+
+    if (this.state.username == "admin" && this.state.password == "admin"){
+      localStorage.setItem('role', 'ADMIN');
+      localStorage.setItem('token', 'tokensementara');
+      window.location.href = '#/dashboard';
+    }
+    
+    // var qs = require('qs');
+    // const data = qs.stringify(this.state)
+
+    // const config = {
+    //   headers:{
+    //     'Content-Type': 'application/x-www-form-urlencoded'
+    //   }
+    // }
+
+    // const url = 'http://localhost:8000/login-admin'
+
+    // axios.post(url, data, config)
+    // .then(function (response){
+    //   console.log(response)
+    // })
+    // cek username sama password untuk karyawan 
+
   }
 
   handleInputChange = (e) => {
@@ -77,16 +103,21 @@ class Login extends Component {
                             <i className="icon-user"></i>
                           </InputGroupText>
                         </InputGroupAddon>
-                        <Input type="text" placeholder="Name" autoComplete="name" name="username" onChange={this.handleInputChange}/>
+                        <Input type="text" placeholder="Name" autoComplete="name" name="username" onChange={this.handleInputChange} required/>
                       </InputGroup>
 
                       <InputGroup className="mb-3">
                         <InputGroupAddon addonType="prepend">
                           <InputGroupText>
-                            <i className="icon-user"></i>
+                            <i className="icon-key"></i>
                           </InputGroupText>
                         </InputGroupAddon>
-                        <Input type="text" placeholder="Password" autoComplete="password" name="password" onChange={this.handleInputChange}/>
+                        <Input type="password" 
+                        placeholder="Password" 
+                        //pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" 
+                        name="password"
+                        title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" required
+                        onChange={this.handleInputChange} />
                       </InputGroup>
 
                       <Row>
