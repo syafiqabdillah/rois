@@ -69,7 +69,7 @@ class VacanciesPelamar extends Component {
             );
           });
           return (
-            <Card body outline color="primary">
+            <Card body outline color="primary" className="animated fadeIn">
               <CardBody>
                 <h2>{lowongan.nama}</h2>
                 <br></br>
