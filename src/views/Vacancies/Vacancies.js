@@ -2,10 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { Button, Card, CardBody, CardHeader, Col, Row, Table } from 'reactstrap';
-<<<<<<< HEAD
-=======
 import VacancyDetail from './VacancyDetail';
->>>>>>> ea770926a24118d175219dc70a6b6b5106c50b8f
 
 const API = 'http://localhost:8000';
 
