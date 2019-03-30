@@ -31,9 +31,9 @@ class Appointments extends Component {
     if (this.state.loading){
       content = <div align="center"><p>Loading . . .</p></div>;
     } else {
-      let list_appointment = this.state.appointment.map((appointment) => {
+      let list_appointment = this.state.appointment.map((appointment, index) => {
         return (
-          <tr>
+          <tr key={index}>
             <td> {appointment.pelamar} </td>
             <td> {appointment.phone} </td>
             <td> {appointment.email} </td>

@@ -11,7 +11,7 @@ class AddVacancy extends Component {
     return (
       <div className="animated fadeIn">
         <div align="center">
-          <h3 font-family="Metropolis">Add Vacancy</h3>
+          <h3 fontFamily="Metropolis">Add Vacancy</h3>
         </div>
         <Card>
           <CardBody>

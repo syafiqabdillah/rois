@@ -39,7 +39,7 @@ class DefaultLayout extends Component {
     if (localStorage.getItem('token') == undefined) {
       //diminta login
       return <Redirect to="/login" />
-    }
+    } 
 
     let header;
     let sidebar;

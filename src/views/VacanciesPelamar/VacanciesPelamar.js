@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import axios from 'axios';
 import {
-  Button, Card, CardBody, CardHeader, Col, Row, Table, CardImg, CardTitle, CardText, CardDeck, CardGroup,
-  CardSubtitle, CardColumns, Form, FormGroup, Label, Input
+  Button, Card, CardBody, Col, Row, CardColumns, Form, FormGroup, Input
 } from 'reactstrap';
 
 const API = 'http://localhost:8000';
@@ -51,27 +49,27 @@ class VacanciesPelamar extends Component {
     if (this.state.loading) {
       content = <div align="center"><p>Loading . . .</p></div>;
     } else {
-      let list_vacancy = this.state.lowongan.map((lowongan) => { 
+      let list_vacancy = this.state.lowongan.map((lowongan, index) => { 
         if (lowongan.nama.toLowerCase().includes(this.state.searchKey.toLowerCase())){
           let url_detail = '#/vacancy/' + lowongan.id;
 
-          let list_res = lowongan.responsibility.map((res) => {
+          let list_res = lowongan.responsibility.map((res, index) => {
             return (
-              <ul>
+              <ul key={index}>
                 <li> {res.deskripsi} </li>
               </ul>
             );
           });
   
-          let list_req = lowongan.requirement.map((req) => {
+          let list_req = lowongan.requirement.map((req, index) => {
             return (
-              <ul>
+              <ul key={index}>
                 <li> {req.deskripsi} </li>
               </ul>
             );
           });
           return (
-            <Card body outline color="primary" className="animated fadeIn">
+            <Card body outline color="primary" className="animated fadeIn" key={index}>
               <CardBody>
                 <h2>{lowongan.nama}</h2>
                 <br></br>
@@ -91,6 +89,8 @@ class VacanciesPelamar extends Component {
               </CardBody>
             </Card>
           );
+        } else {
+          return '';
         }
       });
 

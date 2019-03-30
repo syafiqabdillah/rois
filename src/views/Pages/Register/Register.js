@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Label, FormGroup, Button, Card, CardBody, CardFooter, Col, Container, Form, Input, InputGroup, InputGroupAddon, InputGroupText, Row } from 'reactstrap';
+import { Label, FormGroup, Button, Card, CardBody, Col, Container, Form, Input, Row } from 'reactstrap';
 import axios from 'axios';
 
 class Register extends Component {

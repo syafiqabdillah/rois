@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
-import { Button, Badge, Card, CardBody, CardHeader, Col, Pagination, PaginationItem, PaginationLink, Row, Table } from 'reactstrap';
+import { Button, Card, CardBody, CardHeader, Col, Row, Table } from 'reactstrap';
 
 const API = 'http://localhost:8000';
 
@@ -33,9 +33,9 @@ class Assessments extends Component {
     if (this.state.loading){
       content = <div align="center"><p>Loading . . .</p></div>;
     } else {
-      let list_soal = this.state.soal.map((soal) => {
+      let list_soal = this.state.soal.map((soal, index) => {
         return (
-          <tr>
+          <tr key={index}>
             <td> {soal.nama} </td>
             <td> {soal.lowongan} </td>
             <td> {soal.file} </td>

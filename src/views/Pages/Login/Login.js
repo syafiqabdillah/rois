@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import { Button, Card, CardBody, CardGroup, Col, Container, Form, Input, InputGroup, InputGroupAddon, InputGroupText, Row } from 'reactstrap';
 import GoogleLogin from 'react-google-login';
 import axios from 'axios';
@@ -33,9 +32,9 @@ class Login extends Component {
       }
     })
     .then(function (response) {
-      if(response.data.data != ''){
+      window.localStorage.setItem('role', 'pelamar');
+      if(response.data.data.length !== 0){
         // datanya pelamar sudah ada di DB, masuk 
-        window.localStorage.setItem('role', 'pelamar');
         window.location.href = '#/vacancies-applicant'
       } else {
         //tidak ada, ke register
@@ -51,8 +50,8 @@ class Login extends Component {
   handleSubmit = (e) => {
     e.preventDefault()
 
-    if (this.state.username == "admin" && this.state.password == "admin"){
-      localStorage.setItem('role', 'ADMIN');
+    if (this.state.username === "admin" && this.state.password === "admin"){
+      localStorage.setItem('role', 'admin');
       localStorage.setItem('token', 'tokensementara');
       window.location.href = '#/dashboard';
     }

@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { Vacancies } from './Vacancies';
-import { Button, Badge, Card, CardTitle, CardDeck, CardText, CardBody, CardHeader, Col, Pagination, PaginationItem, PaginationLink, Row, Table } from 'reactstrap';
+import { Button, CardBody} from 'reactstrap';
 
 const API = 'http://localhost:8000';
 
@@ -19,8 +18,6 @@ class VacancyDetail extends Component {
   }
 
   componentDidMount() {
-
-
     axios.all([
       axios.get(API + '/po/lowongan/' + this.props.match.params.id),
       axios.get(API + '/po/lowongan/related/' + this.props.match.params.id)
@@ -33,7 +30,6 @@ class VacancyDetail extends Component {
           lowongan: lowongan,
           related_low: related_lowongan,
           loading: false
-
         })
       }));
 
@@ -65,7 +61,6 @@ class VacancyDetail extends Component {
   }
 
   render() {
-    let content;
     let content_vacancy;
     let content_other;
     let content_related;
@@ -73,34 +68,34 @@ class VacancyDetail extends Component {
     let content_button_apply;
 
     if (this.state.loading) {
-      content = <div align="center"><p>Loading . . .</p></div>;
+      return( <div align="center"><p>Loading . . .</p></div>);
     } else {
       let lowongan = this.state.lowongan;
       localStorage.setItem('id_lowongan', lowongan.id);
 
-      let requirements = lowongan.requirement.map((requirement) => {
+      let requirements = lowongan.requirement.map((requirement, index) => {
         return (
-          <li>{requirement.deskripsi}</li>
+          <li key={index}>{requirement.deskripsi}</li>
         );
       });
 
-      let responsibilities = lowongan.responsibility.map((responsibility) => {
+      let responsibilities = lowongan.responsibility.map((responsibility, index) => {
         return (
-          <li>{responsibility.deskripsi}</li>
+          <li key={index}>{responsibility.deskripsi}</li>
         );
       });
 
 
-      let rltd_lwngn = this.state.related_low.map((related) => {
+      let rltd_lwngn = this.state.related_low.map((related, index) => {
         return (
-          <li><Link to={"/vacancy/" + lowongan.id} >{lowongan.nama}</Link></li>
+          <li key={index}><Link to={"/vacancy/" + lowongan.id} >{lowongan.nama}</Link></li>
         );
 
 
       });
 
       //kalau pelamar, ada button apply 
-      if (localStorage.getItem('role') == 'pelamar') {
+      if (localStorage.getItem('role') === 'pelamar') {
         content_button_apply = (
           <div align="center">
             <Button color="primary" className="btn-pill" onClick={this.handleApply}>APPLY NOW</Button>
@@ -175,9 +170,9 @@ class VacancyDetail extends Component {
         </div>
       )
 
-      if (localStorage.getItem('role') != 'pelamar') {
+      if (localStorage.getItem('role') !== 'pelamar') {
         content_button_edit_delete = (
-          <div class="col-12">
+          <div className="col-12">
             <Link to="/editVacancy">
               <Button className="btn-pill" color="primary">Edit Vacancy</Button>
             </Link>
@@ -191,25 +186,25 @@ class VacancyDetail extends Component {
 
     return (
       <div className="animated fadeIn">
-        <div class="row">
+        <div className="row">
           {content_button_edit_delete}
           <br></br>
           <br></br>
           <br></br>
-          <div class="col-8">
-            <div class="card mb-4">
+          <div className="col-8">
+            <div className="card mb-4">
               <CardBody>
                 {content_vacancy}
               </CardBody>
             </div>
           </div>
-          <div class="col-4">
-            <div class="card mb-4">
+          <div className="col-4">
+            <div className="card mb-4">
               <CardBody>
                 {content_other}
               </CardBody>
             </div>
-            <div class="card mb-4">
+            <div className="card mb-4">
               <CardBody>
                 {content_related}
               </CardBody>

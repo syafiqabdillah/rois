@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { Button, Badge, Card, CardBody, CardHeader, Col,
-  Form, FormGroup, FormText, Input, Label, Pagination, PaginationItem, PaginationLink, Row, Table, } from 'reactstrap';
-
-const API = 'http://localhost:8000';
+import { Button, Card, CardBody, Form, FormGroup, Input, Label} from 'reactstrap';
 
 class AddAssessment extends Component {
   constructor(props){
@@ -24,16 +20,16 @@ class AddAssessment extends Component {
   }
 
   render() {
-    let list_vacancy = this.state.lowongan.map((lowongan) => {
+    let list_vacancy = this.state.lowongan.map((lowongan, index) => {
       return (
-        <option value={lowongan.nama}>{lowongan.nama}</option>
+        <option key={index} value={lowongan.nama}>{lowongan.nama}</option>
       );
     });
     
     return (
       <div className="animated fadeIn">
         <div align="center">
-          <h3 font-family="Metropolis">Add Assessment</h3>
+          <h3 fontFamily="Metropolis">Add Assessment</h3>
         </div>
         <Card>
           <CardBody>
@@ -48,7 +44,7 @@ class AddAssessment extends Component {
             <FormGroup>
               <Label htmlFor="ccmonth">Vacancy*</Label>
               <Input type="select" name="ccmonth" id="ccmonth" required> 
-                <option selected disabled>Select Vacancy..</option>
+                <option disabled>Select Vacancy..</option>
                 {list_vacancy}
               </Input>
             </FormGroup>

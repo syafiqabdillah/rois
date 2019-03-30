@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Button, Badge, DropdownItem, DropdownMenu, DropdownToggle, Nav, NavItem, NavLink } from 'reactstrap';
+import { DropdownItem, DropdownMenu, DropdownToggle, Nav, NavItem } from 'reactstrap';
 import PropTypes from 'prop-types';
-import GoogleLogin from 'react-google-login';
 
-import { AppAsideToggler, AppHeaderDropdown, AppNavbarBrand, AppSidebarToggler } from '@coreui/react';
+import { AppHeaderDropdown, AppNavbarBrand, AppSidebarToggler } from '@coreui/react';
 import sirclo from '../../assets/img/brand/sirclo.png'
 import sygnet from '../../assets/img/brand/sygnet.svg'
 
@@ -25,7 +24,6 @@ class ApplicantHeader extends Component {
 
     let profile = JSON.parse(localStorage.getItem('profile'));
     let imageUrl = profile.imageUrl;
-    let nama = profile.name;
 
     // eslint-disable-next-line
     const { children, ...attributes } = this.props;

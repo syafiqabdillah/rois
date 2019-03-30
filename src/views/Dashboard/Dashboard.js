@@ -1,5 +1,6 @@
 import React, { Component, lazy, Suspense } from 'react';
 import { Bar, Line } from 'react-chartjs-2';
+import { Redirect} from 'react-router-dom';
 import {
   Badge,
   Button,
@@ -480,6 +481,9 @@ class Dashboard extends Component {
   loading = () => <div className="animated fadeIn pt-1 text-center">Loading...</div>
 
   render() {
+    if (localStorage.getItem('role') != 'admin') {
+      return <Redirect to="/vacancies-applicant" />
+    }
 
     return (
       <div className="animated fadeIn">

@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import axios from 'axios';
 import {
-  Button, Card, CardBody, CardHeader, Col, Row, Table, CardImg, CardTitle, CardText, CardDeck, CardGroup,
-  CardSubtitle, CardColumns, Form, FormGroup, Label, Input
+  Card, CardBody, CardHeader, Col, Row
 } from 'reactstrap';
 import '../../css/jquery.dataTables.css'
 

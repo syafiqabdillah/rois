@@ -54,7 +54,6 @@ class ApplicationForm extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault()
-    const data = this.state;
 
     if (window.confirm('Are you sure you have entered correct data ?')){
       //upload cv nya 

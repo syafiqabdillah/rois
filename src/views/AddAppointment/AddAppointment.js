@@ -1,26 +1,13 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { Redirect} from 'react-router-dom';
 import {
-  Badge,
   Button,
-  ButtonDropdown,
   Card,
   CardBody,
-  CardFooter,
   CardHeader,
   Col,
-  Collapse,
-  DropdownItem,
-  DropdownMenu,
-  DropdownToggle,
-  Fade,
-  Form,
   FormGroup,
-  FormText,
-  FormFeedback,
   Input,
-  InputGroup,
-  InputGroupAddon,
-  InputGroupText,
   Label,
   Row,
 } from 'reactstrap';
@@ -77,6 +64,10 @@ class AddAppointment extends React.Component{
   }
 
   render() {
+    if (localStorage.getItem('role') != 'admin') {
+      return <Redirect to="/vacancies-applicant" />
+    }
+
     return (
       <div className="animated fadeIn">
           <Col xs="10" sm="10">
