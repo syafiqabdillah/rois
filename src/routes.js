@@ -18,6 +18,7 @@ const Switches = React.lazy(() => import('./views/Base/Switches'));
 const Tables = React.lazy(() => import('./views/Base/Tables'));
 
 const Vacancies = React.lazy(() => import('./views/Vacancies'));
+const VacancyDetail = React.lazy(() => import('./views/Vacancies/VacancyDetail'));
 const Applications = React.lazy(() => import('./views/Applications'));
 const Assessments = React.lazy(() => import('./views/Assessments'));
 const Appointments = React.lazy(() => import('./views/Appointments'));
@@ -70,10 +71,15 @@ const routes = [
   { path: '/addappointment', name: 'Add Appointment', component: AddAppointment },
   { path: '/addanswer', name: 'Add Answer', component: AddAnswer },
   { path: '/addVacancy', name: 'Add Vacancy', component: AddVacancy },
+<<<<<<< HEAD
   { path: '/addAssessment', name: 'Add Assessment', component: AddAssessment },
   { path: '/vacancies-applicant', name: 'Vacancies', component: VacanciesPelamar },
   { path: '/apply/:id', name: 'Application Form', component: ApplicationForm },
   { path: '/myapplications', name: 'My Applications', component: ApplicationsPelamar },
+=======
+  { path: '/vacancy/:id', name: 'Vacancy Detail', component: VacancyDetail },
+
+>>>>>>> ea770926a24118d175219dc70a6b6b5106c50b8f
 
   { path: '/base/tabs', name: 'Tabs', component: Tabs },
   { path: '/base/breadcrumbs', name: 'Breadcrumbs', component: Breadcrumbs },

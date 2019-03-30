@@ -45,6 +45,10 @@ $router->post('po/create-responsibility', ['middleware' => 'cors', 'uses' => 'Re
 $router->post('po/update-responsibility', ['middleware' => 'cors', 'uses' => 'ResponsibilityController@updateResponsibility']); //checked
 $router->delete('po/delete-responsibility', ['middleware' => 'cors', 'uses' => 'ResponsibilityController@deleteResponsibility']);
 
+$router->get('po/lowongan/related/{id}', ['middleware' => 'cors', 'uses' => 'LowonganController@getRelatedLowongan']);
+
+
+
 /**
  *  UC - 02 : Pelamar Melamar Pekerjaan
  * Author : Syafiq A U
