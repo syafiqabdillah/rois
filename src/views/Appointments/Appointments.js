@@ -46,6 +46,7 @@ class Appointments extends Component {
       });
 
       content = (
+
         <Table hover bordered striped responsive size="sm">
           <thead>
           <tr>
