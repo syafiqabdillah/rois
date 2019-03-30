@@ -34,18 +34,22 @@ class DefaultLayout extends Component {
     localStorage.clear();
   }
 
-  render() { 
-    if(localStorage.getItem('token') == undefined){
+  render() {
+    //kalau belum ada token -> belum login
+    if (localStorage.getItem('token') == undefined) {
+      //diminta login
       return <Redirect to="/login" />
-    } 
+    }
 
     let header;
     let sidebar;
     let home;
 
-    if (localStorage.getItem('role') == 'pelamar'){ //kalo token gue, 
-      header = (<ApplicantHeader onLogout={e=>this.signOut(e)}/>);
-      //sidebar = "";
+    //jika pelamar
+    if (localStorage.getItem('role') == 'pelamar') {
+      //header pelamar
+      header = (<ApplicantHeader onLogout={e => this.signOut(e)} />);
+      //sidebar pelamar
       sidebar = (
         <AppSidebar fixed display="lg">
           <AppSidebarHeader />
@@ -57,9 +61,12 @@ class DefaultLayout extends Component {
           <AppSidebarMinimizer />
         </AppSidebar>
       );
+      //redirect home pelamar
       home = (<Redirect from='/' to="/vacancies-applicant" />);
     } else {
-      header = <DefaultHeader onLogout={e=>this.signOut(e)}/>;
+      //header admin po
+      header = <DefaultHeader onLogout={e => this.signOut(e)} />;
+      //sidebar admin po
       sidebar = (
         <AppSidebar fixed display="lg">
           <AppSidebarHeader />
@@ -71,24 +78,25 @@ class DefaultLayout extends Component {
           <AppSidebarMinimizer />
         </AppSidebar>
       )
+      //redirect admin po
       home = (<Redirect from="/" to="/dashboard" />);
     }
 
     return (
       <div className="app">
         <AppHeader fixed>
-          <Suspense  fallback={this.loading()}>
+          <Suspense fallback={this.loading()}>
 
-            { header }
+            {header}
 
           </Suspense>
         </AppHeader>
         <div className="app-body">
 
-          { sidebar }
+          {sidebar}
 
           <main className="main">
-            <AppBreadcrumb appRoutes={routes}/>
+            <AppBreadcrumb appRoutes={routes} />
             <Container fluid>
               <Suspense fallback={this.loading()}>
                 <Switch>
@@ -105,7 +113,7 @@ class DefaultLayout extends Component {
                     ) : (null);
                   })}
 
-                  { home }
+                  {home}
 
                 </Switch>
               </Suspense>

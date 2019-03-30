@@ -77,7 +77,7 @@ class ApplicationForm extends Component {
       })
       .then(function (response) {
           console.log(response);
-          window.location.href = '#/';
+          window.location.href = '#/myapplications';
       })
     }
   }

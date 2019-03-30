@@ -53,6 +53,8 @@ class VacanciesPelamar extends Component {
     } else {
       let list_vacancy = this.state.lowongan.map((lowongan) => { 
         if (lowongan.nama.toLowerCase().includes(this.state.searchKey.toLowerCase())){
+          let url_detail = '#/vacancy/' + lowongan.id;
+
           let list_res = lowongan.responsibility.map((res) => {
             return (
               <ul>
@@ -79,7 +81,7 @@ class VacanciesPelamar extends Component {
                 <h5>REQUIREMENTS</h5>
                 {list_req}
   
-                <a href='/'>see details</a>
+                <a href={url_detail}>see details</a>
                 <br></br>
                 <br></br>
                 <div align="center">

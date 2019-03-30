@@ -11,9 +11,9 @@ class VacancyDetail extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      
+
       lowongan: [],
-      related_low:[],
+      related_low: [],
       loading: true
     }
   }
@@ -25,17 +25,17 @@ class VacancyDetail extends Component {
       axios.get(API + '/po/lowongan/' + this.props.match.params.id),
       axios.get(API + '/po/lowongan/related/' + this.props.match.params.id)
     ])
-    .then(axios.spread((lowonganres, relatedres) => {
-      // do something with both responses
-      const lowongan = lowonganres.data;
-      const related_lowongan = relatedres.data;
-      this.setState({
-        lowongan: lowongan,
-        related_low: related_lowongan,
-        loading:false
+      .then(axios.spread((lowonganres, relatedres) => {
+        // do something with both responses
+        const lowongan = lowonganres.data;
+        const related_lowongan = relatedres.data;
+        this.setState({
+          lowongan: lowongan,
+          related_low: related_lowongan,
+          loading: false
 
-      })
-    }));
+        })
+      }));
 
 
     // axios.get(API + '/po/lowongan/' + this.props.match.params.id)
@@ -59,57 +59,76 @@ class VacancyDetail extends Component {
     // //  })
   }
 
+  handleApply = () => {
+    const id_lowongan = localStorage.getItem('id_lowongan');
+    window.location.href = '#/apply/' + id_lowongan;
+  }
+
   render() {
     let content;
     let content_vacancy;
     let content_other;
     let content_related;
-   
+    let content_button_edit_delete;
+    let content_button_apply;
+
     if (this.state.loading) {
       content = <div align="center"><p>Loading . . .</p></div>;
     } else {
       let lowongan = this.state.lowongan;
-      
-      let requirements = lowongan.requirement.map((requirement) =>{
-        return(
+      localStorage.setItem('id_lowongan', lowongan.id);
+
+      let requirements = lowongan.requirement.map((requirement) => {
+        return (
           <li>{requirement.deskripsi}</li>
         );
       });
 
-       let responsibilities = lowongan.responsibility.map((responsibility) =>{
-         return(
-           <li>{responsibility.deskripsi}</li>
-         );
-        });
+      let responsibilities = lowongan.responsibility.map((responsibility) => {
+        return (
+          <li>{responsibility.deskripsi}</li>
+        );
+      });
 
 
-         let rltd_lwngn =this.state.related_low.map((related) =>{
-          return(
-            <li><Link to ={"/vacancy/"+ lowongan.id} >{lowongan.nama}</Link></li>
-          );
- 
-
-       });
+      let rltd_lwngn = this.state.related_low.map((related) => {
+        return (
+          <li><Link to={"/vacancy/" + lowongan.id} >{lowongan.nama}</Link></li>
+        );
 
 
+      });
 
-      content_vacancy= (
+      //kalau pelamar, ada button apply 
+      if (localStorage.getItem('role') == 'pelamar') {
+        content_button_apply = (
+          <div align="center">
+            <Button color="primary" className="btn-pill" onClick={this.handleApply}>APPLY NOW</Button>
+          </div>
+        );
+      }
+
+
+
+      content_vacancy = (
         <div>
           <dl>
             <h2 className="col-sm-10">{lowongan.nama}</h2>
             <br></br>
-           <div>
-             <h5>Requirements</h5>
-             {requirements}
-           </div> 
+            <div>
+              <h5>Requirements</h5>
+              {requirements}
+            </div>
 
-           <br></br>
-           <br></br>
+            <br></br>
+            <br></br>
 
-           <div>
-             <h5>Responsibilities</h5>
-             {responsibilities} 
-           </div> 
+            <div>
+              <h5>Responsibilities</h5>
+              {responsibilities}
+            </div>
+
+            {content_button_apply}
           </dl>
         </div>
 
@@ -149,32 +168,34 @@ class VacancyDetail extends Component {
 
       )
 
-      content_related =(
+      content_related = (
         <div>
-        <h4>Related Jobs</h4>
-        {rltd_lwngn}
+          <h4>Related Jobs</h4>
+          {rltd_lwngn}
         </div>
-
-
       )
-    }
 
+      if (localStorage.getItem('role') != 'pelamar') {
+        content_button_edit_delete = (
+          <div class="col-12">
+            <Link to="/editVacancy">
+              <Button className="btn-pill" color="primary">Edit Vacancy</Button>
+            </Link>
+            <Link to="/deleteVacancy">
+              <Button className="btn-pill" align="right" color="danger">Delete Vacancy</Button>
+            </Link>
+          </div>
+        )
+      }
+    }
 
     return (
       <div className="animated fadeIn">
         <div class="row">
-        <div class = "col-12">
-        <Link to="/editVacancy">
-            <Button className="btn-pill" color="primary">Edit Vacancy</Button>
-          </Link>
-          <Link to="/deleteVacancy">
-            <Button className="btn-pill" align="right" color="danger">Delete Vacancy</Button>
-          </Link>
-          
-        </div>
-        <br></br>
-        <br></br>
-        <br></br>
+          {content_button_edit_delete}
+          <br></br>
+          <br></br>
+          <br></br>
           <div class="col-8">
             <div class="card mb-4">
               <CardBody>
