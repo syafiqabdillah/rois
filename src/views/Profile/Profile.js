@@ -44,7 +44,6 @@ class Profile extends Component {
     } else {
       let profile = JSON.parse(localStorage.getItem('profile'));
       let pelamar = this.state.pelamar
-      console.log(pelamar);
       let image = (
         <img id='profileImg' src={profile.imageUrl}></img>
       )
@@ -57,7 +56,7 @@ class Profile extends Component {
           </div>
           <Row>
             <Col sm="12" md={{ size: 6, offset: 3 }}>
-              <Card>
+              <Card outline color="primary">
                 <CardBody>
 
                   <div align="center">

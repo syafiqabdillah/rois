@@ -13,17 +13,17 @@ export default {
     {
       name: 'Home',
       url: '/vacancies-applicant',
-      icon: 'icon-pie-chart',
+      icon: 'icon-home',
     },
     {
       name: 'Profile',
       url: '/profile/' + token,
-      icon: 'icon-pie-chart',
+      icon: 'icon-user',
     },
     {
-      name: 'My Applications',
+      name: 'Applications',
       url: '/myapplications',
-      icon: 'icon-pie-chart',
+      icon: 'icon-envelope-letter',
     }
   ],
 };

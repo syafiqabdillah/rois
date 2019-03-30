@@ -67,7 +67,7 @@ class ApplicationsPelamar extends Component {
         </div>
         <Row>
           <Col sm="14" md={{ size: 6, offset: 3 }}>
-            <Card>
+            <Card outline color="primary">
               {/* <CardHeader>
                 <i className="fa fa-align-justify"></i> Application List
               </CardHeader> */}

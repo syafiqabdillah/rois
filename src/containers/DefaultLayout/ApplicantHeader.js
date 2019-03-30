@@ -20,6 +20,11 @@ class ApplicantHeader extends Component {
     console.log(profile);
   }
 
+  toProfile = () =>{
+    let token = localStorage.getItem('token');
+    window.location.href = '#/profile/' + token;
+  }
+
   render() {
 
     let profile = JSON.parse(localStorage.getItem('profile'));
@@ -46,7 +51,7 @@ class ApplicantHeader extends Component {
             <Link to={profileUrl} className="nav-link">Profile</Link>
           </NavItem>
           <NavItem className="px-3">
-            <Link to="/myapplications" className="nav-link">My Applications</Link>
+            <Link to="/myapplications" className="nav-link">Applications</Link>
           </NavItem>
 
         </Nav>
@@ -56,7 +61,7 @@ class ApplicantHeader extends Component {
               <img src={imageUrl} className="img-avatar" alt="admin@bootstrapmaster.com" />
             </DropdownToggle>
             <DropdownMenu right style={{ right: 'auto' }}>
-              <DropdownItem><i className="fa fa-user"></i> Profile</DropdownItem>
+              <DropdownItem onClick={this.toProfile}><i className="fa fa-user"></i>Profile</DropdownItem>
               <DropdownItem onClick={e => this.props.onLogout(e)}><i className="fa fa-lock"></i> Logout</DropdownItem>
             </DropdownMenu>
           </AppHeaderDropdown>

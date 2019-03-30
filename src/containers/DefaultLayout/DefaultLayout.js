@@ -19,6 +19,7 @@ import navigation from '../../_nav';
 import navigationPelamar from '../../_nav_pelamar';
 // routes config
 import routes from '../../routes';
+import { createFalse } from 'typescript';
 
 const DefaultAside = React.lazy(() => import('./DefaultAside'));
 const DefaultFooter = React.lazy(() => import('./DefaultFooter'));
@@ -53,7 +54,7 @@ class DefaultLayout extends Component {
       //sidebar pelamar
       sidebar = ''
       sidebar = (
-        <AppSidebar fixed display="lg">
+        <AppSidebar fixed isOpen={createFalse} display="lg">
           <AppSidebarHeader />
           <AppSidebarForm />
           <Suspense>

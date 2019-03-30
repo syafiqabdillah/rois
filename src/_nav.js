@@ -21,22 +21,22 @@ export default {
     {
       name: 'Vacancies',
       url: '/vacancies',
-      icon: 'icon-pie-chart',
+      icon: 'icon-briefcase',
     },
     {
       name: 'Applications',
       url: '/applications',
-      icon: 'icon-pie-chart',
+      icon: 'icon-envelope-letter',
     },
     {
       name: 'Assessments',
       url: '/assessments',
-      icon: 'icon-pie-chart',
+      icon: 'icon-list',
     },
     {
       name: 'Appointments',
       url: '/appointmens',
-      icon: 'icon-pie-chart',
+      icon: 'icon-people',
     },
     {
       title: true,
