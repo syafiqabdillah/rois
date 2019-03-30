@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 import { AppHeaderDropdown, AppNavbarBrand, AppSidebarToggler } from '@coreui/react';
 import sirclo from '../../assets/img/brand/sirclo.png'
-import sygnet from '../../assets/img/brand/sygnet.svg'
+import logo from '../../assets/img/brand/logo.svg'
 
 const propTypes = {
   children: PropTypes.node,
@@ -23,8 +23,9 @@ class ApplicantHeader extends Component {
   render() {
 
     let profile = JSON.parse(localStorage.getItem('profile'));
+    let token = localStorage.getItem('token');
     let imageUrl = profile.imageUrl;
-
+    let profileUrl = '/profile/' + token;
     // eslint-disable-next-line
     const { children, ...attributes } = this.props;
 
@@ -33,7 +34,7 @@ class ApplicantHeader extends Component {
         <AppSidebarToggler className="d-lg-none" display="md" mobile />
         <AppNavbarBrand
           full={{ src: sirclo, width: 89, height: 35, alt: 'SIRCLO Logo' }}
-          minimized={{ src: sygnet, width: 30, height: 30, alt: 'SIRCLO Logo' }}
+          minimized={{ src: sirclo, width: 44, height: 17, alt: 'SIRCLO Logo' }}
         />
         <AppSidebarToggler className="d-md-down-none" display="lg" />
 
@@ -42,7 +43,7 @@ class ApplicantHeader extends Component {
             <Link to="/" className="nav-link" >Home</Link>
           </NavItem>
           <NavItem className="px-3">
-            <Link to="/" className="nav-link">Profile</Link>
+            <Link to={profileUrl} className="nav-link">Profile</Link>
           </NavItem>
           <NavItem className="px-3">
             <Link to="/myapplications" className="nav-link">My Applications</Link>

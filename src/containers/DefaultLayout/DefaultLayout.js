@@ -1,6 +1,6 @@
 import React, { Component, Suspense } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
-import { Container } from 'reactstrap';
+import { Container, Spinner } from 'reactstrap';
 
 import {
   AppAside,
@@ -16,6 +16,7 @@ import {
 } from '@coreui/react';
 // sidebar nav config
 import navigation from '../../_nav';
+import navigationPelamar from '../../_nav_pelamar';
 // routes config
 import routes from '../../routes';
 
@@ -26,7 +27,7 @@ const ApplicantHeader = React.lazy(() => import('./ApplicantHeader'));
 
 class DefaultLayout extends Component {
 
-  loading = () => <div className="animated fadeIn pt-1 text-center">Loading...</div>
+  loading = () => <div align="center"><Spinner color="primary" style={{ width: '3rem', height: '3rem' }} /></div>
 
   signOut(e) {
     e.preventDefault()
@@ -50,12 +51,13 @@ class DefaultLayout extends Component {
       //header pelamar
       header = (<ApplicantHeader onLogout={e => this.signOut(e)} />);
       //sidebar pelamar
+      sidebar = ''
       sidebar = (
         <AppSidebar fixed display="lg">
           <AppSidebarHeader />
           <AppSidebarForm />
           <Suspense>
-            <AppSidebarNav navConfig={navigation} {...this.props} />
+            <AppSidebarNav navConfig={navigationPelamar} {...this.props} />
           </Suspense>
           <AppSidebarFooter />
           <AppSidebarMinimizer />

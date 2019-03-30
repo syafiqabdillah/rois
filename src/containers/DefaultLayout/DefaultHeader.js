@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 import { AppAsideToggler, AppHeaderDropdown, AppNavbarBrand, AppSidebarToggler } from '@coreui/react';
 import sirclo from '../../assets/img/brand/sirclo.png'
-import sygnet from '../../assets/img/brand/sygnet.svg'
+import logo from '../../assets/img/brand/logo.svg'
 
 const propTypes = {
   children: PropTypes.node,
@@ -32,7 +32,7 @@ class DefaultHeader extends Component {
         <AppSidebarToggler className="d-lg-none" display="md" mobile />
         <AppNavbarBrand
           full={{ src: sirclo, width: 89, height: 35, alt: 'SIRCLO Logo' }}
-          minimized={{ src: sygnet, width: 30, height: 30, alt: 'SIRCLO Logo' }}
+          minimized={{ src: sirclo, width: 44, height: 17, alt: 'SIRCLO Logo' }}
         />
         <AppSidebarToggler className="d-md-down-none" display="lg" />
 

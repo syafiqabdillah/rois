@@ -30,6 +30,7 @@ const VacanciesPelamar = React.lazy(() => import('./views/VacanciesPelamar'));
 const ApplicationForm = React.lazy(() => import('./views/ApplicationForm'));
 const ApplicationsPelamar = React.lazy(() => import('./views/ApplicationsPelamar'));
 const Applicants = React.lazy(() => import('./views/Applicants'));
+const Profile = React.lazy(() => import('./views/Profile'));
 
 const Tabs = React.lazy(() => import('./views/Base/Tabs'));
 const Tooltips = React.lazy(() => import('./views/Base/Tooltips'));
@@ -77,7 +78,7 @@ const routes = [
   { path: '/apply/:id', name: 'Application Form', component: ApplicationForm },
   { path: '/myapplications', name: 'My Applications', component: ApplicationsPelamar },
   { path: '/vacancy/:id', name: 'Vacancy Detail', component: VacancyDetail },
-
+  { path: '/profile/:token', name: 'Profile', component: Profile },
   { path: '/applicants/:id', exact: true, name: 'Applicants', component: Applicants },
 
   { path: '/base/tabs', name: 'Tabs', component: Tabs },

@@ -25,6 +25,12 @@ class PelamarController extends Controller
         return $nama;
     }
 
+    public function getPelamar($token){
+        $pelamar = DB::table('pelamar')->select()->where('token', $token)->get();
+        $pelamar = json_decode($pelamar);
+        return $pelamar;
+    }
+
     public function getLamaran($token){
         $lamaran = DB::table('lamaran')->select()->where('token_pelamar', $token)->get();
         $lamaran = json_decode($lamaran);

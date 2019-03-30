@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import {
-  Card, CardBody, CardHeader, Col, Row
+  Card, CardBody, Col, Row, Spinner
 } from 'reactstrap';
 import '../../css/jquery.dataTables.css'
 
@@ -36,7 +36,7 @@ class ApplicationsPelamar extends Component {
               { title: "Vacancy" },
               { title: "Phase" },
               { title: "Status" }
-            ]
+            ],
           }
         )
       })
@@ -48,7 +48,9 @@ class ApplicationsPelamar extends Component {
 
     let table;
     if (this.state.loading) {
-      table = <div>Loading...</div>;
+      table = (<div align="center">
+        <Spinner color="primary" style={{ width: '3rem', height: '3rem' }} />
+      </div>)
     } else {
       table = (
         <table className="display" width="100%" ref={el => this.el = el}>
@@ -66,9 +68,9 @@ class ApplicationsPelamar extends Component {
         <Row>
           <Col sm="14" md={{ size: 6, offset: 3 }}>
             <Card>
-              <CardHeader>
+              {/* <CardHeader>
                 <i className="fa fa-align-justify"></i> Application List
-              </CardHeader>
+              </CardHeader> */}
               <CardBody>
                 {table}
               </CardBody>

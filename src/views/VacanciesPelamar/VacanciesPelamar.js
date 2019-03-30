@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import {
-  Button, Card, CardBody, Col, Row, CardColumns, Form, FormGroup, Input
+  Button, Card, CardBody, Col, Row, CardColumns, Form, FormGroup, Input, Spinner
 } from 'reactstrap';
 
 const API = 'http://localhost:8000';
@@ -47,10 +47,12 @@ class VacanciesPelamar extends Component {
     let content;
 
     if (this.state.loading) {
-      content = <div align="center"><p>Loading . . .</p></div>;
+      content = (<div align="center">
+        <Spinner color="primary" style={{ width: '3rem', height: '3rem' }} />
+      </div>);
     } else {
-      let list_vacancy = this.state.lowongan.map((lowongan, index) => { 
-        if (lowongan.nama.toLowerCase().includes(this.state.searchKey.toLowerCase())){
+      let list_vacancy = this.state.lowongan.map((lowongan, index) => {
+        if (lowongan.nama.toLowerCase().includes(this.state.searchKey.toLowerCase())) {
           let url_detail = '#/vacancy/' + lowongan.id;
 
           let list_res = lowongan.responsibility.map((res, index) => {
@@ -60,7 +62,7 @@ class VacanciesPelamar extends Component {
               </ul>
             );
           });
-  
+
           let list_req = lowongan.requirement.map((req, index) => {
             return (
               <ul key={index}>
@@ -78,14 +80,14 @@ class VacanciesPelamar extends Component {
                 <br></br>
                 <h5>REQUIREMENTS</h5>
                 {list_req}
-  
+
                 <a href={url_detail}>see details</a>
                 <br></br>
                 <br></br>
                 <div align="center">
                   <Button color="primary" className="btn-pill" onClick={() => this.handleOnClick(lowongan.id)}>APPLY NOW</Button>
                 </div>
-  
+
               </CardBody>
             </Card>
           );

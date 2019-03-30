@@ -12,15 +12,13 @@ class Login extends Component {
     }
   }
 
-  /**
-   * handle login pelamar
-   */
   responseGoogle = (response) => {
     let profile = response.profileObj;
-    window.localStorage.setItem('profile',JSON.stringify(profile));
+    localStorage.setItem('profile',JSON.stringify(profile));
     
     let token = profile.googleId;
     localStorage.setItem('token', token);
+    sessionStorage.setItem('token', token)
 
     const url = 'http://localhost:8000/login';
 
@@ -32,7 +30,7 @@ class Login extends Component {
       }
     })
     .then(function (response) {
-      window.localStorage.setItem('role', 'pelamar');
+      localStorage.setItem('role', 'pelamar');
       if(response.data.data.length !== 0){
         // datanya pelamar sudah ada di DB, masuk 
         window.location.href = '#/vacancies-applicant'

@@ -61,6 +61,8 @@ $router->post('pelamar/upload-cv', ['middleware' => 'cors', 'uses' => 'LamaranCo
 
 $router->get('pelamar/get-lamaran/{token}', ['middleware' => 'cors', 'uses' => 'PelamarController@getLamaran']);
 
+$router->get('pelamar/get-profile/{token}', ['middleware' => 'cors', 'uses' => 'PelamarController@getPelamar']);
+
 /**
  * UC - 03 : PO Menentukan Tahapan Seleksi Selanjutnya
  * Author : M Raffi A
