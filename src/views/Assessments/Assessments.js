@@ -27,6 +27,16 @@ class Assessments extends Component {
     })
   }
 
+  onClick (soal){
+    localStorage.setItem('soal', JSON.stringify(soal));
+    window.location.href = '#/updateAssessment/' + soal.id;
+  }
+
+  onClick2 (soal){
+    localStorage.setItem('soal', JSON.stringify(soal));
+    window.location.href = '#/deleteAssessment/' + soal.id;
+  }
+
   render() {
     let content;
 
@@ -38,9 +48,12 @@ class Assessments extends Component {
           <tr>
             <td> {soal.nama} </td>
             <td> {soal.lowongan} </td>
-            <td> {soal.file} </td>
+            <td> {soal.link} </td>
             <td> {soal.nama_karyawan} </td>
             <td> {soal.created_date} </td>
+            <td> 
+              <Button color="primary" onClick={() => this.onClick(soal)}>Update</Button>
+            </td>
           </tr>
         )
       });
@@ -51,9 +64,10 @@ class Assessments extends Component {
           <tr>
             <th>Name</th>
             <th>Vacancy</th>
-            <th>File</th>
+            <th>Link</th>
             <th>Creator</th>
             <th>Created Date</th>
+            <th>Action </th>
           </tr>
           </thead>
           <tbody>
@@ -70,7 +84,6 @@ class Assessments extends Component {
           <h3>Assessments</h3>
         </div>
        
-        
         <Link to="/addAssessment">
             <Button color="primary">Add Assessment</Button>
         </Link>
