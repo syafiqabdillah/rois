@@ -17,10 +17,11 @@ class AddAssessment extends Component {
   }
 
   componentDidMount(){
-    let profile = JSON.parse(localStorage.getItem('profile'));
+    let role = localStorage.getItem('role');
+    console.log(role);
 
     this.setState({
-      creator: profile.name
+      creator: role
     })
 
     axios.get('http://localhost:8000/po/all-lowongan')
@@ -87,6 +88,7 @@ class AddAssessment extends Component {
               <Label for="vacancyID">Vacancy*</Label>
               <Input type="select" name="vacancyID" id="vacancyID" required onChange={this.handleInputChange}> 
                 <option value={isNull} selected disabled>Select Vacancy..</option>
+                {/* <option defaultValue={null} disabled>Select Vacancy..</option> */}
                 {list_vacancy}
               </Input>
             </FormGroup>

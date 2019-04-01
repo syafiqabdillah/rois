@@ -18,7 +18,7 @@ class UpdateAssessment extends Component {
   }
 
   componentDidMount(){
-    let profile = JSON.parse(localStorage.getItem('profile'));
+    let profile = localStorage.getItem('role');
     let soal = JSON.parse(localStorage.getItem('soal'));
 
     this.setState({
@@ -26,7 +26,7 @@ class UpdateAssessment extends Component {
       name: soal.nama,
       link: soal.link,
       vacancyID: soal.id_lowongan,
-      creator: profile.name,
+      creator: profile,
     })
 
     axios.get('http://localhost:8000/po/all-lowongan')
@@ -69,16 +69,16 @@ class UpdateAssessment extends Component {
   }
 
   render() {
-    let list_vacancy = this.state.lowongan.map((lowongan) => {
+    let list_vacancy = this.state.lowongan.map((lowongan, index) => {
       return (
-        <option selected={this.state.vacancyID==lowongan.id} value={lowongan.id}>{lowongan.nama}</option>
+        <option key={index} selected={this.state.vacancyID==lowongan.id} value={lowongan.id}>{lowongan.nama}</option>
       );
     });
     
     return (
       <div className="animated fadeIn">
         <div align="center">
-          <h3 font-family="Metropolis">Add Assessment</h3>
+          <h3 fontFamily="Metropolis">Add Assessment</h3>
         </div>
         <Card>
           <CardBody>
