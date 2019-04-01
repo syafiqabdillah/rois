@@ -40,14 +40,8 @@ class AddAnswer extends React.Component{
       timeout: 300,
       error : null,
       modals : false,
+      link : '',
     };
-  }
-  handelSubmit = (event) => {
-    event.preventDefault()
-    const value = event.target.elements.cclinkanswer.value
-    if(!this.getErrorMessage()){
-        this.showModals();
-    }
   }
 
   showModals = () =>{
@@ -58,9 +52,10 @@ class AddAnswer extends React.Component{
 
   //
   handleChange = (event) => {
-    const {value} = event.target
+    const {value} = event.target;
     this.setState({
-      error : this.getErrorMessage(value)
+      error : this.getErrorMessage(value),
+      link : value,
     })
   }
 
@@ -81,9 +76,12 @@ class AddAnswer extends React.Component{
     this.setState((prevState) => { return { fadeIn: !prevState }});
   }
 
+
   render() {
-    const {error} = this.state;
-    console.log(error);
+    const {error, link} = this.state;
+    const textStyle = {
+      color : "#979797",
+    };
     return (
       <div className="animated fadeIn">
           <Col xs="15" sm="8">
@@ -94,8 +92,9 @@ class AddAnswer extends React.Component{
               <CardBody>
                 <Row>
                   <Col xs="12" align="center">
-                    <CountDown date={`2019-3-28`}/>
+                    <CountDown date={`2019-4-15`}/>
                     <br/>
+                    <p style={textStyle}> Submission format : https://github.com/johndoe/submission.git </p>
                   </Col>
                 </Row>
                 <Row>
@@ -104,8 +103,12 @@ class AddAnswer extends React.Component{
                       <Input type="text" onChange={this.handleChange} name="cclinkanswer" placeholder="Enter Link Github" required />
                       <br/>
                     </form>
-                    <Modals error={error} />
                   </Col>
+                </Row>
+                <Row>
+                  <Col xs="6" sm="4"></Col>
+                  <Col xs="6" sm="4"></Col>
+                  <Col sm="4"><Modals error={error} link={this.state.link}/></Col>
                 </Row>
               </CardBody>
             </Card>
