@@ -35,15 +35,15 @@ $router->post('/login', ['middleware' => 'cors', 'uses' => 'AuthController@login
 $router->get('po/lowongan/{id}', ['middleware' => 'cors', 'uses' => 'LowonganController@getLowongan']); //checked
 $router->post('po/create-lowongan', ['middleware' => 'cors', 'uses' => 'LowonganController@createLowongan']); //checked
 $router->post('po/update-lowongan', ['middleware' => 'cors', 'uses' => 'LowonganController@updateLowongan']); //checked
-$router->delete('po/delete-lowongan', ['middleware' => 'cors', 'uses' => 'LowonganController@deleteLowongan']);
+$router->post('po/delete-lowongan', ['middleware' => 'cors', 'uses' => 'LowonganController@deleteLowongan']);
 
 $router->post('po/create-requirement', ['middleware' => 'cors', 'uses' => 'RequirementController@createRequirement']); //checked
 $router->post('po/update-requirement', ['middleware' => 'cors', 'uses' => 'RequirementController@updateRequirement']); //checked
-$router->delete('po/delete-requirement', ['middleware' => 'cors', 'uses' => 'RequirementController@deleteRequirement']);
+$router->post('po/delete-requirement', ['middleware' => 'cors', 'uses' => 'RequirementController@deleteRequirement']);
 
 $router->post('po/create-responsibility', ['middleware' => 'cors', 'uses' => 'ResponsibilityController@createResponsibility']); //checked
 $router->post('po/update-responsibility', ['middleware' => 'cors', 'uses' => 'ResponsibilityController@updateResponsibility']); //checked
-$router->delete('po/delete-responsibility', ['middleware' => 'cors', 'uses' => 'ResponsibilityController@deleteResponsibility']);
+$router->post('po/delete-responsibility', ['middleware' => 'cors', 'uses' => 'ResponsibilityController@deleteResponsibility']);
 
 $router->get('po/lowongan/related/{id}', ['middleware' => 'cors', 'uses' => 'LowonganController@getRelatedLowongan']);
 

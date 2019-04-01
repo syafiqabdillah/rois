@@ -103,9 +103,9 @@ class SoalController extends Controller
      * menghapus suatu soal
      */
     public function deleteSoal(Request $request){
-        $id_soal = $request->id_soal;
-        DB::table('soal')->delete($id_soal);
-        return $id_soal;
+        $id_soal = $request->id;
+        $response = DB::table('soal')->delete($id_soal);
+        return $response;
     }
 
 }
