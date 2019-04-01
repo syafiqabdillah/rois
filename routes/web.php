@@ -85,7 +85,7 @@ $router->get('po/all-soal', ['middleware' => 'cors', 'uses' => 'SoalController@g
 $router->get('po/soal/{id}', ['middleware' => 'cors', 'uses' => 'SoalController@getSoal']);
 $router->post('po/create-soal', ['middleware' => 'cors', 'uses' => 'SoalController@createSoal']);
 $router->post('po/update-soal', ['middleware' => 'cors', 'uses' => 'SoalController@updateSoal']);
-$router->delete('po/delete-soal', ['middleware' => 'cors', 'uses' => 'SoalController@deleteSoal']);
+$router->post('po/delete-soal', ['middleware' => 'cors', 'uses' => 'SoalController@deleteSoal']); //checked
 
 /**
  * UC - 05 : PO Membuat Appointment Interview
@@ -101,3 +101,4 @@ $router->post('po/create-appointment', ['middleware' => 'cors', 'uses' => 'Appoi
  */
 
 $router->post('pelamar/submit-jawaban', ['middleware' => 'cors', 'uses' => 'RemoteTestController@submitJawaban']);
+

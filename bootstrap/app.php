@@ -66,7 +66,9 @@ $app->singleton(
 $app->routeMiddleware([
     'auth' => App\Http\Middleware\Authenticate::class,
     'age' => App\Http\Middleware\Age::class,
-    'cors' => App\Http\Middleware\CorsMiddleware::class
+    'cors' => App\Http\Middleware\CorsMiddleware::class,
+    'roleadmin' => App\Http\Middleware\RoleAdmin::class,
+    'rolepelamar' => App\Http\Middleware\RolePelamar::class,
 ]);
 
 /*

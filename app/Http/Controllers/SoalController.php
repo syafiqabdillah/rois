@@ -99,18 +99,13 @@ class SoalController extends Controller
         return $result;
     }
 
-    // /**
-    //  * menghapus suatu lowongan
-    //  * @param request  $request berisi $id dari lowongan yang ingin dihapus
-    //  * @return long $id id dari hasil penghapusan lowongan di database
-    //  */
-    // public function deleteLowongan(Request $request){
-    //     $id = $request->id;
-        
-    //     $response = DB::table('lowongan')
-    //     ->where('id', $id)
-    //     ->delete();       
-    //     return $response;
-    // }
+    /**
+     * menghapus suatu soal
+     */
+    public function deleteSoal(Request $request){
+        $id_soal = $request->id_soal;
+        DB::table('soal')->delete($id_soal);
+        return $id_soal;
+    }
 
 }

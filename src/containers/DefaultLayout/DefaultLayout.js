@@ -54,7 +54,7 @@ class DefaultLayout extends Component {
       //sidebar pelamar
       sidebar = ''
       sidebar = (
-        <AppSidebar fixed isOpen={createFalse} display="lg">
+        <AppSidebar fixed isOpen={false} display="lg">
           <AppSidebarHeader />
           <AppSidebarForm />
           <Suspense>

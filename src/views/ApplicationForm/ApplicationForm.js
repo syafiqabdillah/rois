@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Container, Button, Card, CardBody, FormText, Row, Col,
   Form, FormGroup, Input, Label} from 'reactstrap';
+import { Redirect} from 'react-router-dom';
 import axios from 'axios';
 
 class ApplicationForm extends Component {
@@ -76,9 +77,10 @@ class ApplicationForm extends Component {
       })
       .then(function (response) {
           console.log(response);
-          window.location.href = '#/myapplications';
       })
-    }
+    } 
+
+    window.location.href ='#/myapplications'
   }
 
   componentDidMount(){
