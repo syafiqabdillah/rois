@@ -23,6 +23,11 @@ const Assessments = React.lazy(() => import('./views/Assessments'));
 const Appointments = React.lazy(() => import('./views/Appointments'));
 const AddVacancy = React.lazy(() => import('./views/AddVacancy'));
 const Applicants = React.lazy(() => import('./views/Applicants'));
+const FinalStage = React.lazy(() => import('./views/FinalStage'));
+const FinalStageNotification = React.lazy(() => import('./views/FinalStageNotification'));
+const RemoteTestForm = React.lazy(() => import('./views/RemoteTestForm'));
+const RemoteTestStandby = React.lazy(() => import('./views/RemoteTestNotification'));
+const RemoteTestNotification = React.lazy(() => import('./views/RemoteTestNotification'));
 
 const Tabs = React.lazy(() => import('./views/Base/Tabs'));
 const Tooltips = React.lazy(() => import('./views/Base/Tooltips'));
@@ -64,6 +69,11 @@ const routes = [
   { path: '/appointmens', name: 'Appointments', component: Appointments },
   { path: '/addVacancy', name: 'Add Vacancy', component: AddVacancy },
   { path: '/applicants/:id', exact: true, name: 'Applicants', component: Applicants },
+  { path: '/finalStage/:id', exact: true, name: 'FinalStage', component: FinalStage },
+  { path: '/finalStageNotification/:id', exact: true, name: 'FinalStageNotification', component: FinalStageNotification },
+  { path: '/remoteTestForm/:id', exact: true, name: 'RemoteTestForm', component: RemoteTestForm },
+  { path: '/remoteTestStandby/:id', exact: true, name: 'RemoteTestStandby', component: RemoteTestStandby },
+  { path: '/remoteTestNotification/:id', exact: true, name: 'RemoteTestNotification', component: RemoteTestNotification },
 
   { path: '/base/tabs', name: 'Tabs', component: Tabs },
   { path: '/base/breadcrumbs', name: 'Breadcrumbs', component: Breadcrumbs },

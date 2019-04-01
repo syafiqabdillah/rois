@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Badge, Card, CardBody, CardHeader, Col, Pagination, PaginationItem, PaginationLink, Row, Table, CardTitle, CardText, Progress, Button } from 'reactstrap';
+import ChooseCurrentStage from '../ChooseCurrentStage';
+import ChooseStages from '../ChooseStages';
+import { Badge, Card, CardBody, CardHeader, Col, Pagination, PaginationItem, PaginationLink, Row, Table, CardTitle, CardText, Progress } from 'reactstrap';
 
 const API = 'http://localhost:8000';
 
@@ -9,13 +11,20 @@ class RemoteTestNotification extends Component {
     super(props);
 
     this.state = {
+      lamaran: [],
       loading: true
     }
   }
 
   componentDidMount(){
-    this.setState({
-      loading: false
+    axios.get(API + '/po/lamaran/' + this.props.match.params.id)
+    .then(res => {
+      const lamaran = res.data;
+      console.log(lamaran);
+      this.setState({
+        lamaran: lamaran,
+        loading: false
+      })
     })
   }
 
@@ -28,35 +37,36 @@ class RemoteTestNotification extends Component {
 
       content = (
         <div>
-          <p>Choose the next action for this applicant to take: </p>
-          <Row>
-            <Col lg={1}>
-            </Col>
-            <Col lg={4}>
-              <Button className="btn-pill" color="primary" size="sm" block>Interview</Button>
-            </Col>
-            <Col lg={4}>
-              <Button className="btn-pill" color="info" size="sm" block>Remote Test</Button>
-            </Col>
-            <Col lg={2}>
-              <Button outline className="btn-pill" color="success" size="sm" block>Hire</Button>
-            </Col>
-            <Col lg={1}>
-            </Col>
-          </Row>
+          yeet
         </div>
       );
     }
 
     return (
       <div className="animated fadeIn">
+        <div align="center">
+          <h3>Reject</h3>
+        </div>
+        <br />
         <Row>
-          <Col lg={12}>
+          <Col lg={3}>
+          </Col>
+          <Col lg={6}>
             <Card >
-              <CardBody className="text-center">
-                {content}
+              <CardHeader>
+                <i className="fa fa-user pr-1"></i>{this.state.lamaran.pelamar} <Badge color="secondary">Candidate {this.state.lamaran.lowongan}</Badge>
+              </CardHeader>
+              <CardBody>
+                <CardTitle>
+                  The applicant above will be <strong>rejected</strong> from the recruitment process. <br /> A notification email will be sent to the applicant.
+                </CardTitle>
+                <CardText>
+                  {content}
+                </CardText>
               </CardBody>
             </Card>
+          </Col>
+          <Col lg={3}>
           </Col>
         </Row>
       </div>
