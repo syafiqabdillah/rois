@@ -1,41 +1,45 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { Button, Badge, Card, CardBody, CardHeader, Col, Pagination, PaginationItem, PaginationLink, Row, Table } from 'reactstrap';
+import { Button, Card, CardBody, CardHeader, Col, Row, Table } from 'reactstrap';
 
 const API = 'http://localhost:8000';
 
-class Vacancies extends Component {
-  constructor(props){
+export class Vacancies extends Component {
+  constructor(props) {
     super(props);
 
     this.state = {
       lowongan: [],
-      loading: true
+      loading: true,
+      id: ''
     }
   }
 
-  componentDidMount(){
+  componentDidMount() {
     axios.get(API + '/po/all-lowongan')
-    .then(res => {
-      const lowongan = res.data;
-      this.setState({
-        lowongan: lowongan,
-        loading: false
+      .then(res => {
+        console.log(res);
+        const lowongan = res.data;
+        this.setState({
+          lowongan: lowongan,
+          loading: false
+        })
       })
-    })
   }
+
+
 
   render() {
     let content;
 
-    if (this.state.loading){
+    if (this.state.loading) {
       content = <div align="center"><p>Loading . . .</p></div>;
     } else {
-      let list_vacancy = this.state.lowongan.map((lowongan) => {
+      let list_vacancy = this.state.lowongan.map((lowongan, index) => {
         return (
-          <tr>
-            <td> {lowongan.nama} </td>
+          <tr key={index}>
+            <td> <Link to={"/vacancy/" + lowongan.id} >{lowongan.nama}</Link> </td>
             <td> {lowongan.divisi} </td>
             <td> {lowongan.start_date} </td>
             <td> {lowongan.end_date} </td>
@@ -49,15 +53,15 @@ class Vacancies extends Component {
       content = (
         <Table hover bordered striped responsive size="sm">
           <thead>
-          <tr>
-            <th>Name</th>
-            <th>Division</th>
-            <th>Start Date</th>
-            <th>End Date</th>
-            <th>Publish Date</th>
-            <th>Location</th>
-            <th>Type</th>
-          </tr>
+            <tr>
+              <th>Name</th>
+              <th>Division</th>
+              <th>Start Date</th>
+              <th>End Date</th>
+              <th>Publish Date</th>
+              <th>Location</th>
+              <th>Type</th>
+            </tr>
           </thead>
           <tbody>
             {list_vacancy}
@@ -75,7 +79,7 @@ class Vacancies extends Component {
 
 
         <Link to="/addVacancy">
-            <Button color="primary">Add Vacancy</Button>
+          <Button color="primary">Add Vacancy</Button>
         </Link>
         <br></br>
         <br></br>
@@ -94,7 +98,7 @@ class Vacancies extends Component {
 
             <div align="right">
               <Link to="/addVacancy">
-                  <Button color="primary">Add Vacancy</Button>
+                <Button color="primary">Add Vacancy</Button>
               </Link>
             </div>
 

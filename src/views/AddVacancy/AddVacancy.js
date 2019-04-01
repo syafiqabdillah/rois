@@ -1,23 +1,17 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import axios from 'axios';
-import { Button, Badge, Card, CardBody, CardHeader, Col,
-  Form, FormGroup, FormText, Input, Label, Pagination, PaginationItem, PaginationLink, Row, Table } from 'reactstrap';
-
-const API = 'http://localhost:8000';
+//import { Link } from 'react-router-dom';
+//import axios from 'axios';
+import { Button, Card, CardBody,
+  Form, FormGroup, Input, Label} from 'reactstrap';
 
 class AddVacancy extends Component {
-  constructor(props){
-    super(props);
-
-  }
 
   render() {
 
     return (
       <div className="animated fadeIn">
         <div align="center">
-          <h3 font-family="Metropolis">Add Vacancy</h3>
+          <h3 fontFamily="Metropolis">Add Vacancy</h3>
         </div>
         <Card>
           <CardBody>

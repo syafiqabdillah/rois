@@ -1,0 +1,6 @@
+{
+  "name": "AddAnswer",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./AddAnswer.js"
+}

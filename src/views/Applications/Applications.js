@@ -72,7 +72,7 @@ class Applications extends Component {
     if (this.state.loading) {
       content = <div align="center"><p>Loading . . .</p></div>;
     } else {
-      let list_lamaran = this.state.lamaran.map((lamaran) => {
+      let list_lamaran = this.state.lamaran.map((lamaran, index) => {
         return (
           {
             pelamar: lamaran.pelamar,

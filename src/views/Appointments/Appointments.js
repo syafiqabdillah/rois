@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Badge, Card, CardBody, CardHeader, Col, Pagination, PaginationItem, PaginationLink, Row, Table } from 'reactstrap';
+import { Card, CardBody, CardHeader, Col, Row, Table } from 'reactstrap';
 
 const API = 'http://localhost:8000';
 
@@ -31,9 +31,9 @@ class Appointments extends Component {
     if (this.state.loading){
       content = <div align="center"><p>Loading . . .</p></div>;
     } else {
-      let list_appointment = this.state.appointment.map((appointment) => {
+      let list_appointment = this.state.appointment.map((appointment, index) => {
         return (
-          <tr>
+          <tr key={index}>
             <td> {appointment.pelamar} </td>
             <td> {appointment.phone} </td>
             <td> {appointment.email} </td>

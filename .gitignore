@@ -28,3 +28,6 @@ yarn-debug.log*
 yarn-error.log*
 
 /vendor
+
+# uploaded cv and resume
+/public/uploads

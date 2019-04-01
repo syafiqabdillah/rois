@@ -14,7 +14,35 @@ class PelamarController extends Controller
      */
     public function __construct()
     {
-        
+
+    }
+
+    public function getLowonganName($id_lowongan){
+        $nama = DB::table('lowongan')->select('nama')->where('id', $id_lowongan)->get();
+        $nama = json_decode($nama);
+        $nama = $nama[0];
+        $nama = $nama->nama;
+        return $nama;
+    }
+
+    public function getPelamar($token){
+        $pelamar = DB::table('pelamar')->select()->where('token', $token)->get();
+        $pelamar = json_decode($pelamar);
+        return $pelamar;
+    }
+
+    public function getLamaran($token){
+        $lamaran = DB::table('lamaran')->select()->where('token_pelamar', $token)->get();
+        $lamaran = json_decode($lamaran);
+        $lamaranArr = array();
+        foreach($lamaran as $l){
+            $newarr = array();
+            $id_lowongan = (int) $l->id_lowongan;
+            $nama_lowongan = $this->getLowonganName($id_lowongan);
+            array_push($newarr, $nama_lowongan, $l->tahapan, $l->status, $l->id);
+            array_push($lamaranArr, $newarr);
+        }
+        return $lamaranArr;
     }
 
     public function createPelamar(Request $request){
@@ -25,13 +53,13 @@ class PelamarController extends Controller
         $tanggal_lahir = $request->tanggal_lahir;
         $alamat = $request->alamat;
         $phone = $request->phone;
-        $email = $request->email;  
+        $email = $request->email;
 
         DB::table('pelamar')->insert(
-            ['token' => $token, 
-            'nama' => $nama, 
-            'nik' => $nik, 
-            'tempat_lahir' => $tempat_lahir, 
+            ['token' => $token,
+            'nama' => $nama,
+            'nik' => $nik,
+            'tempat_lahir' => $tempat_lahir,
             'tanggal_lahir' => $tanggal_lahir,
             'alamat'  => $alamat,
             'phone' => $phone,

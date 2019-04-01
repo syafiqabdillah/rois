@@ -1,6 +1,6 @@
 import React, { Component, Suspense } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
-import { Container } from 'reactstrap';
+import { Container, Spinner } from 'reactstrap';
 
 import {
   AppAside,
@@ -16,42 +16,90 @@ import {
 } from '@coreui/react';
 // sidebar nav config
 import navigation from '../../_nav';
+import navigationPelamar from '../../_nav_pelamar';
 // routes config
 import routes from '../../routes';
+import { createFalse } from 'typescript';
 
 const DefaultAside = React.lazy(() => import('./DefaultAside'));
 const DefaultFooter = React.lazy(() => import('./DefaultFooter'));
 const DefaultHeader = React.lazy(() => import('./DefaultHeader'));
+const ApplicantHeader = React.lazy(() => import('./ApplicantHeader'));
 
 class DefaultLayout extends Component {
 
-  loading = () => <div className="animated fadeIn pt-1 text-center">Loading...</div>
+  loading = () => <div align="center"><Spinner color="primary" style={{ width: '3rem', height: '3rem' }} /></div>
 
   signOut(e) {
     e.preventDefault()
-    this.props.history.push('/login')
+    this.props.history.push('/login');
+    localStorage.clear();
   }
 
   render() {
+    //kalau belum ada token -> belum login
+    if (localStorage.getItem('token') == undefined) {
+      //diminta login
+      return <Redirect to="/login" />
+    } 
+
+    let header;
+    let sidebar;
+    let home;
+
+    //jika pelamar
+    if (localStorage.getItem('role') == 'pelamar') {
+      //header pelamar
+      header = (<ApplicantHeader onLogout={e => this.signOut(e)} />);
+      //sidebar pelamar
+      sidebar = ''
+      sidebar = (
+        <AppSidebar fixed isOpen={false} display="lg">
+          <AppSidebarHeader />
+          <AppSidebarForm />
+          <Suspense>
+            <AppSidebarNav navConfig={navigationPelamar} {...this.props} />
+          </Suspense>
+          <AppSidebarFooter />
+          <AppSidebarMinimizer />
+        </AppSidebar>
+      );
+      //redirect home pelamar
+      home = (<Redirect from='/' to="/vacancies-applicant" />);
+    } else {
+      //header admin po
+      header = <DefaultHeader onLogout={e => this.signOut(e)} />;
+      //sidebar admin po
+      sidebar = (
+        <AppSidebar fixed display="lg">
+          <AppSidebarHeader />
+          <AppSidebarForm />
+          <Suspense>
+            <AppSidebarNav navConfig={navigation} {...this.props} />
+          </Suspense>
+          <AppSidebarFooter />
+          <AppSidebarMinimizer />
+        </AppSidebar>
+      )
+      //redirect admin po
+      home = (<Redirect from="/" to="/dashboard" />);
+    }
+
     return (
       <div className="app">
         <AppHeader fixed>
-          <Suspense  fallback={this.loading()}>
-            <DefaultHeader onLogout={e=>this.signOut(e)}/>
+          <Suspense fallback={this.loading()}>
+
+            {header}
+
           </Suspense>
         </AppHeader>
         <div className="app-body">
-          <AppSidebar fixed display="lg">
-            <AppSidebarHeader />
-            <AppSidebarForm />
-            <Suspense>
-            <AppSidebarNav navConfig={navigation} {...this.props} />
-            </Suspense>
-            <AppSidebarFooter />
-            <AppSidebarMinimizer />
-          </AppSidebar>
+
+          {sidebar}
+
           <main className="main">
-            <AppBreadcrumb appRoutes={routes}/>
+            <AppBreadcrumb appRoutes={routes} />
             <Container fluid>
               <Suspense fallback={this.loading()}>
                 <Switch>
@@ -67,7 +115,9 @@ class DefaultLayout extends Component {
                         )} />
                     ) : (null);
                   })}
-                  <Redirect from="/" to="/dashboard" />
+
+                  {home}
+
                 </Switch>
               </Suspense>
             </Container>

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { Badge, Card, CardBody, CardHeader, Col, Pagination, PaginationItem, PaginationLink, Row, Table } from 'reactstrap';
+
+import { Button, Card, CardBody, CardHeader, Col, Row, Table } from 'reactstrap';
 
 const API = 'http://localhost:8000';
 
@@ -25,19 +27,33 @@ class Assessments extends Component {
     })
   }
 
+  onClick (soal){
+    localStorage.setItem('soal', JSON.stringify(soal));
+    window.location.href = '#/updateAssessment/' + soal.id;
+  }
+
+  onClick2 (soal){
+    localStorage.setItem('soal', JSON.stringify(soal));
+    window.location.href = '#/deleteAssessment/' + soal.id;
+  }
+
   render() {
     let content;
 
     if (this.state.loading){
       content = <div align="center"><p>Loading . . .</p></div>;
     } else {
-      let list_soal = this.state.soal.map((soal) => {
+      let list_soal = this.state.soal.map((soal, index) => {
         return (
-          <tr>
+          <tr key={index}>
             <td> {soal.nama} </td>
             <td> {soal.lowongan} </td>
+            <td> {soal.link} </td>
             <td> {soal.nama_karyawan} </td>
             <td> {soal.created_date} </td>
+            <td> 
+              <Button color="primary" onClick={() => this.onClick(soal)}>Update</Button>
+            </td>
           </tr>
         )
       });
@@ -48,8 +64,10 @@ class Assessments extends Component {
           <tr>
             <th>Name</th>
             <th>Vacancy</th>
+            <th>Link</th>
             <th>Creator</th>
             <th>Created Date</th>
+            <th>Action </th>
           </tr>
           </thead>
           <tbody>
@@ -61,19 +79,29 @@ class Assessments extends Component {
 
     return (
       <div className="animated fadeIn">
+        
         <div align="center">
           <h3>Assessments</h3>
         </div>
+       
+        <Link to="/addAssessment">
+            <Button color="primary">Add Assessment</Button>
+        </Link>
+        <br></br>
+        <br></br>
+
         <Row>
           <Col>
             <Card>
               <CardHeader>
                 <i className="fa fa-align-justify"></i> Assessment List
               </CardHeader>
+              
               <CardBody>
                 {content}
               </CardBody>
             </Card>
+          
           </Col>
         </Row>
       </div>

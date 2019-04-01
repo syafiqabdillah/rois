@@ -18,16 +18,25 @@ const Switches = React.lazy(() => import('./views/Base/Switches'));
 const Tables = React.lazy(() => import('./views/Base/Tables'));
 
 const Vacancies = React.lazy(() => import('./views/Vacancies'));
+const VacancyDetail = React.lazy(() => import('./views/Vacancies/VacancyDetail'));
 const Applications = React.lazy(() => import('./views/Applications'));
 const Assessments = React.lazy(() => import('./views/Assessments'));
 const Appointments = React.lazy(() => import('./views/Appointments'));
+const AddAppointment = React.lazy(() => import('./views/AddAppointment'));
+const AddAnswer = React.lazy(() => import('./views/AddAnswer'));
 const AddVacancy = React.lazy(() => import('./views/AddVacancy'));
+const AddAssessment = React.lazy(() => import('./views/AddAssessment'));
+const VacanciesPelamar = React.lazy(() => import('./views/VacanciesPelamar'));
+const ApplicationForm = React.lazy(() => import('./views/ApplicationForm'));
+const ApplicationsPelamar = React.lazy(() => import('./views/ApplicationsPelamar'));
 const Applicants = React.lazy(() => import('./views/Applicants'));
 const FinalStage = React.lazy(() => import('./views/FinalStage'));
 const FinalStageNotification = React.lazy(() => import('./views/FinalStageNotification'));
 const RemoteTestForm = React.lazy(() => import('./views/RemoteTestForm'));
 const RemoteTestStandby = React.lazy(() => import('./views/RemoteTestNotification'));
 const RemoteTestNotification = React.lazy(() => import('./views/RemoteTestNotification'));
+const Profile = React.lazy(() => import('./views/Profile'));
+const UpdateAssessment = React.lazy(() => import('./views/UpdateAssessment'));
 
 const Tabs = React.lazy(() => import('./views/Base/Tabs'));
 const Tooltips = React.lazy(() => import('./views/Base/Tooltips'));
@@ -67,13 +76,22 @@ const routes = [
   { path: '/applications', name: 'Applications', component: Applications },
   { path: '/assessments', name: 'Assessments', component: Assessments },
   { path: '/appointmens', name: 'Appointments', component: Appointments },
+  { path: '/addappointment', name: 'Add Appointment', component: AddAppointment },
+  { path: '/addanswer', name: 'Add Answer', component: AddAnswer },
   { path: '/addVacancy', name: 'Add Vacancy', component: AddVacancy },
+  { path: '/addAssessment', name: 'Add Assessment', component: AddAssessment },
+  { path: '/vacancies-applicant', name: 'Vacancies', component: VacanciesPelamar },
+  { path: '/apply/:id', name: 'Application Form', component: ApplicationForm },
+  { path: '/myapplications', name: 'My Applications', component: ApplicationsPelamar },
+  { path: '/vacancy/:id', name: 'Vacancy Detail', component: VacancyDetail },
+  { path: '/profile/:token', name: 'Profile', component: Profile },
   { path: '/applicants/:id', exact: true, name: 'Applicants', component: Applicants },
   { path: '/finalStage/:id', exact: true, name: 'FinalStage', component: FinalStage },
   { path: '/finalStageNotification/:id', exact: true, name: 'FinalStageNotification', component: FinalStageNotification },
   { path: '/remoteTestForm/:id', exact: true, name: 'RemoteTestForm', component: RemoteTestForm },
   { path: '/remoteTestStandby/:id', exact: true, name: 'RemoteTestStandby', component: RemoteTestStandby },
   { path: '/remoteTestNotification/:id', exact: true, name: 'RemoteTestNotification', component: RemoteTestNotification },
+  { path: '/updateAssessment/:id', name: 'Update Assessment', component: UpdateAssessment },
 
   { path: '/base/tabs', name: 'Tabs', component: Tabs },
   { path: '/base/breadcrumbs', name: 'Breadcrumbs', component: Breadcrumbs },
