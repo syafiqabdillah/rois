@@ -57,8 +57,7 @@ class ApplicationForm extends Component {
     e.preventDefault()
 
     if (window.confirm('Are you sure you have entered correct data ?')){
-      //upload cv nya 
-      this.fileUpload();
+      console.log(this.state);
 
       // axios post 
       var qs = require('qs');
@@ -76,11 +75,15 @@ class ApplicationForm extends Component {
         headers: {'Content-Type': 'application/x-www-form-urlencoded'}
       })
       .then(function (response) {
-          console.log(response);
+          console.log(response.data);
       })
+
+      //upload cv nya 
+      this.fileUpload();
     } 
 
     window.location.href ='#/myapplications'
+    window.location.reload()
   }
 
   componentDidMount(){
