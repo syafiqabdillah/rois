@@ -39,7 +39,7 @@ class PelamarController extends Controller
             $newarr = array();
             $id_lowongan = (int) $l->id_lowongan;
             $nama_lowongan = $this->getLowonganName($id_lowongan);
-            array_push($newarr, $nama_lowongan, $l->tahapan, $l->status);
+            array_push($newarr, $nama_lowongan, $l->tahapan, $l->status, $l->id);
             array_push($lamaranArr, $newarr);
         }
         return $lamaranArr;

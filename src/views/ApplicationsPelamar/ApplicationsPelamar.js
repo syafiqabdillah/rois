@@ -31,8 +31,8 @@ class ApplicationsPelamar extends Component {
       })
   }
 
-  handleRowClick(e) {
-    window.location = "/#/applicants/" + e.id;
+  handleRowClick(id) {
+    window.location = "/#/applicants/" + id;
   };
 
   render() {
@@ -49,7 +49,7 @@ class ApplicationsPelamar extends Component {
             lowongan: lamaran[0],
             tahapan: lamaran[1],
             status: lamaran[2],
-            clickEvent: () => this.handleRowClick(lamaran),
+            clickEvent: () => this.handleRowClick(lamaran[3]),
           }
         );
       });
