@@ -44,6 +44,8 @@ class LamaranController extends Controller
         $status = "Submitted";
         $skill = $request->input('skill');
         $experience = $request->input('experience');
+        date_default_timezone_set('Asia/Jakarta');
+        $created_date = date('Y-m-d H:i:s', time());
 
         //$file = $request->input('file');
         
@@ -61,7 +63,8 @@ class LamaranController extends Controller
             'tahapan' => $tahapan,
             'status' => $status,
             'skill' => $skill,
-            'experience' => $experience
+            'experience' => $experience,
+            'created_date' => $created_date
             ]
         );
         

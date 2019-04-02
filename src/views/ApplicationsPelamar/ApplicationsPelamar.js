@@ -49,6 +49,7 @@ class ApplicationsPelamar extends Component {
             lowongan: lamaran[0],
             tahapan: lamaran[1],
             status: lamaran[2],
+            created_date: lamaran[4],
             clickEvent: () => this.handleRowClick(lamaran[3]),
           }
         );
@@ -101,6 +102,12 @@ const data = {
     {
       label: 'Status',
       field: 'status',
+      sort: 'asc',
+      width: 200
+    },
+    {
+      label: 'Submitted Date',
+      field: 'created_date',
       sort: 'asc',
       width: 200
     }

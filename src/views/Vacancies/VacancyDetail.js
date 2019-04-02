@@ -98,7 +98,7 @@ class VacancyDetail extends Component {
       if (localStorage.getItem('role') === 'pelamar') {
         content_button_apply = (
           <div align="center">
-            <Button color="primary" className="btn-pill" onClick={this.handleApply}>APPLY NOW</Button>
+            <Button color="primary" size="lg" className="btn-pill" onClick={this.handleApply}>APPLY NOW</Button>
           </div>
         );
       }
