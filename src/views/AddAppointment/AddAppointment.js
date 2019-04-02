@@ -1,24 +1,14 @@
 import React, { Component } from 'react';
 import {
-  Badge,
-  ButtonDropdown,
   Card,
   CardBody,
-  CardFooter,
   CardHeader,
   Col,
-  Collapse,
-  DropdownItem,
-  DropdownMenu,
-  DropdownToggle,
-  Fade,
-  Label,
-  Row,
 } from 'reactstrap';
 
 import 'antd/dist/antd.css';
+import { Form } from 'antd';
 import  AppointmentForm from './AppointmentForm';
-import moment from 'moment';
 
 
 class AddAppointment extends React.Component{

@@ -75,7 +75,7 @@ export default class AppointmentForm extends React.Component {
     return (
       <Form labelCol={{ span: 5 }} wrapperCol={{ span: 12 }} onSubmit={this.handleSubmit}>
         <Form.Item
-          label="date"
+          label="Date"
         >
           {getFieldDecorator('date', {
             rules: [{ type: 'object', required: true, message: 'Please select date!' }],
@@ -111,7 +111,7 @@ export default class AppointmentForm extends React.Component {
           )}
         </Form.Item>
         <Form.Item
-          label="Gender"
+          label="Interviewer"
         >
           {getFieldDecorator('interviewer', {
             rules: [{ required: true, message: 'Please select Interviewer' }],
