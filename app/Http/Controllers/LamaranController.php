@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use \Illuminate\Http\Request;
 use \Illuminate\Support\Facades\DB;
+use \Illuminate\Support\Facades\Mail;
 
 setlocale(LC_MONETARY, 'id_ID');
 
@@ -17,6 +18,24 @@ class LamaranController extends Controller
     public function __construct()
     {
 
+    }
+
+    public function sendMailLamaran(){
+        // $nama = $data->nama;
+        // $email = $data->email;
+        
+        $nama = "Syafiq Abdillah";
+        $email = "abdillah.syafiq@gmail.com";
+        $text = 'Dear ' . $nama . ', your application has been submitted. We will evaluate it soon. \n Best Regards \n SIRCLO HR';
+        $data = array('email'=>$email, 'text'=>$text);
+
+        Mail::send([], $data, function($message) use ($data) {
+            $message->to($data['email'], '')
+            ->subject('SIRCLO Application Success')
+            ->setBody($data['text']);
+            $message->from('second.umarghanis@gmail.com', 'Career SIRCLO');
+        });
+        
     }
 
     public function uploadCV(Request $request){
@@ -70,25 +89,17 @@ class LamaranController extends Controller
         
         $id_lamaran = (int) $id_lamaran;
 
-        $skills = explode(",", $skill);
-        foreach($skills as $s){
-            //create skill
-            DB::table('skill')->insertGetId(
-                ['deskripsi' => $s,
-                'id_lamaran' => $id_lamaran]
-            );
-        }
+        //kirim email ke pelamar dan ke PO
+        $pelamar = DB::table('pelamar')->select()->where($token_pelamar)->get();
+        $pelamar = json_decode($pelamar);
+        $pelamar = $pelamar[0];
+        $nama = $pelamar->nama;
+        $email = $pelamar->email;
 
-        $experiences = explode(",", $experience);
-        foreach($experiences as $e){
-            //create experience 
-            DB::table('experience')->insertGetId(
-                ['deskripsi'=>$e,
-                'id_lamaran'=>$id_lamaran]
-            );
-        }
+        $data = array('nama'=>$nama, 'email'=>$email);
+        $this->sendMailLamaran($data);
 
-        return $skills;
+        return $id_lamaran;
     }
 
     /**

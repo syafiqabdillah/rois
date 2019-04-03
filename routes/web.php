@@ -16,6 +16,8 @@ $router->get('/', function () {
     return 'Hello, Welcome to SIRCLO\'s Recruitment and Onboarding Information System ';
 });
 
+$router->get('testmail', ['middleware' => 'cors', 'uses' => 'LamaranController@sendMailLamaran']);
+
 /**
  * Modul Recruitment
  */
