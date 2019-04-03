@@ -90,14 +90,14 @@ class LamaranController extends Controller
         $id_lamaran = (int) $id_lamaran;
 
         //kirim email ke pelamar dan ke PO
-        $pelamar = DB::table('pelamar')->select()->where($token_pelamar)->get();
-        $pelamar = json_decode($pelamar);
-        $pelamar = $pelamar[0];
-        $nama = $pelamar->nama;
-        $email = $pelamar->email;
+        // $pelamar = DB::table('pelamar')->select()->where($token_pelamar)->get();
+        // $pelamar = json_decode($pelamar);
+        // $pelamar = $pelamar[0];
+        // $nama = $pelamar->nama;
+        // $email = $pelamar->email;
 
-        $data = array('nama'=>$nama, 'email'=>$email);
-        $this->sendMailLamaran($data);
+        // $data = array('nama'=>$nama, 'email'=>$email);
+        // $this->sendMailLamaran($data);
 
         return $id_lamaran;
     }
