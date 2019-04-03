@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { Button, CardBody} from 'reactstrap';
+import { Button, CardBody,Label, Form, Input, Modal, ModalBody, Row, ModalHeader} from 'reactstrap';
 
 const API = 'http://localhost:8000';
 
@@ -10,12 +10,18 @@ class VacancyDetail extends Component {
   constructor(props) {
     super(props);
     this.state = {
-
       lowongan: [],
       related_low: [],
-      loading: true
-    }
+      deskripsi:'',
+      loading: true,
+      link_post:"",
+      info_res: false,
+      info_req: false
+    };
+    this.toggleInfoRes = this.toggleInfoRes.bind(this);
+    this.toggleInfoReq = this.toggleInfoReq.bind(this);
   }
+ 
 
   componentDidMount() {
     axios.all([
@@ -32,27 +38,18 @@ class VacancyDetail extends Component {
           loading: false
         })
       }));
+  }
 
+  toggleInfoRes() {
+    this.setState({
+      info_res: !this.state.info_res,
+    });
+  }
 
-    // axios.get(API + '/po/lowongan/' + this.props.match.params.id)
-    //   .then(res => {
-    //   const lowongan = res.data;
-    //    this.setState({
-    //     lowongan: lowongan,
-    //     loading:false
-    //   })
-    //  })
-    //  let lowongann = this.state.lowongan;
-    //  console.log(lowongann.tipe);
-    //  console.log(lowongann.divisi);
-    // // axios.get(API + '/po/lowongan/'+ this.state.lowongan.divisi+'/'+ this.state.lowongan.tipe)
-    // //  .then(res=>{
-    // //  const rel_lowongan = res.data;
-    // //    this.setState({
-    // //      related_lowongan:rel_lowongan,
-    // //      loading: false
-    // //    })
-    // //  })
+  toggleInfoReq() {
+    this.setState({
+      info_req: !this.state.info_req,
+    });
   }
 
   handleApply = () => {
@@ -60,12 +57,56 @@ class VacancyDetail extends Component {
     window.location.href = '#/apply/' + id_lowongan;
   }
 
+  // handle delete
+  handleDelete(id) {
+    // remove from local state
+    
+    axios.delete(API+ `/po/delete-lowongan`);
+}
+
+handleSubmit = (event) => {
+  let link_responsibility = 'http://localhost:8000/po/create-responsibility';
+  let link_requirement = 'http://localhost:8000/po/create-requirement';
+  event.preventDefault()
+  var qs = require('qs');
+  axios.post(this.state.link_post, qs.stringify({
+    'id_lowongan':  this.props.match.params.id,
+    'deskripsi': this.state.deskripsi
+  }),
+    {
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+    })
+    .then(response => {
+      console.log(response)
+    })
+    .catch(error => {
+      console.log(error.response)
+    });
+  let redirect = '#/vacancies/';
+  window.location.href = redirect;
+}
+
+
+handleChange = (event) => {
+  
+  event.preventDefault()
+  this.setState({
+    [event.target.name]: event.target.value,
+    link_post : 'http://localhost:8000/po/create-'+ event.target.id
+  })
+
+}
+
+
+
   render() {
     let content_vacancy;
     let content_other;
     let content_related;
     let content_button_edit_delete;
     let content_button_apply;
+    let formAddResponsibilities;
+    let formAddRequirement;
 
     if (this.state.loading) {
       return( <div align="center"><p>Loading . . .</p></div>);
@@ -88,7 +129,7 @@ class VacancyDetail extends Component {
 
       let rltd_lwngn = this.state.related_low.map((related, index) => {
         return (
-          <li key={index}><Link to={"/vacancy/" + lowongan.id} >{lowongan.nama}</Link></li>
+          <li key={index}><Link to={"/vacancy/" + related.id} >{related.nama}</Link></li>
         );
 
 
@@ -170,15 +211,53 @@ class VacancyDetail extends Component {
         </div>
       )
 
+      formAddResponsibilities = (
+        <Modal isOpen={this.state.info_res} toggle={this.toggleInfoRes}
+        className={'modal-info ' + this.props.className}>
+   <ModalHeader toggle={this.toggleInfoRes}>Add Responsibilities</ModalHeader>
+   <ModalBody>
+   <Form onSubmit={this.handleSubmit}>
+             <Label htmlFor="nf-password">Responsibilities*</Label>
+                <Input type="text" id="responsibility" name="deskripsi" placeholder="Enter Responsibilities" onChange={this.handleChange} required />
+              
+            <br></br>
+
+          
+            <Button className="btn-pill" color="primary" type="submit">Submit</Button></Form>
+   </ModalBody>
+ </Modal>
+        
+        
+      )
+
+      formAddRequirement = (
+        <Modal isOpen={this.state.info_req} toggle={this.toggleInfoReq}
+        className={'modal-info ' + this.props.className}>
+   <ModalHeader toggle={this.toggleInfoReq}>Add Requirement</ModalHeader>
+   <ModalBody>
+   <Form onSubmit={this.handleSubmit}>
+             <Label htmlFor="nf-password">Requirements*</Label>
+                <Input type="text" id="requirement" name="deskripsi" placeholder="Enter Requirement" onChange={this.handleChange} required />
+              
+            <br></br>
+
+          
+            <Button className="btn-pill" color="primary" type="submit">Submit</Button></Form>
+   </ModalBody>
+ </Modal>
+        
+        
+      )
+
       if (localStorage.getItem('role') !== 'pelamar') {
         content_button_edit_delete = (
           <div className="col-12">
             <Link to="/editVacancy">
               <Button className="btn-pill" color="primary">Edit Vacancy</Button>
             </Link>
-            <Link to="/deleteVacancy">
-              <Button className="btn-pill" align="right" color="danger">Delete Vacancy</Button>
-            </Link>
+            
+              <Button onClick={() => this.handleDelete(lowongan.id)} className="btn-pill float-right"  color="danger">Delete Vacancy</Button>
+        
           </div>
         )
       }
@@ -196,7 +275,16 @@ class VacancyDetail extends Component {
               <CardBody>
                 {content_vacancy}
               </CardBody>
+             
             </div>
+            <div>
+            <Row>
+            <Button color="info" onClick={this.toggleInfoRes} className="mr-1 btn-pill" color = "primary">Add Responsibility</Button>
+            <Button color="info" onClick={this.toggleInfoReq} className="mr-1 btn-pill" color = "primary">Add Requirement</Button>
+            </Row>
+                   {formAddResponsibilities}
+                   {formAddRequirement}
+        </div>
           </div>
           <div className="col-4">
             <div className="card mb-4">
@@ -209,6 +297,7 @@ class VacancyDetail extends Component {
                 {content_related}
               </CardBody>
             </div>
+           
           </div>
         </div>
       </div>

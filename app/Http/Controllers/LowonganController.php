@@ -94,6 +94,8 @@ class LowonganController extends Controller
         $divisi = $request->divisi;
         $lokasi = $request->lokasi;
         $tipe = $request->tipe;
+        // $list_requirement = $request->requirements;
+        // $list_responsibilities = $request->responsibility;
 
         $id = DB::table('lowongan')->insertGetId(
             ['nama' => $nama, 
@@ -103,8 +105,43 @@ class LowonganController extends Controller
             'divisi' => $divisi,
             'lokasi' => $lokasi,
             'tipe' => $tipe]
+        
+        // $id = DB::table('requirement')-> insertGetId(
+
+        //     // ['deskripsi' =>....,
+        //     // 'id_lowongan'=>.... ]
+        // ),
+        // $id= DB::table('responsibility')-> insertGetId(
+        //     // ['deskripsi' =>....,
+        //     // 'id_lowongan'=>.... ]
         );
         return $id;
+    }
+
+    public function createResponsibility(Request $request){
+        $id_lowongan = $request->id_lowongan;
+        $deskripsi = $request -> deskripsi;
+
+        $id= DB :: table('responsibility') -> insertGetId(
+            [
+            'id_lowongan' => $id_lowongan,
+            'deskripsi' => $deskripsi
+            ]
+            );
+            return $id;
+    }
+
+    public function createRequirement(Request $request){
+        $id_lowongan = $request->id_lowongan;
+        $deskripsi = $request -> deskripsi;
+
+        $id= DB :: table('requirement') -> insertGetId(
+            [
+            'id_lowongan' => $id_lowongan,
+            'deskripsi' => $deskripsi
+            ]
+            );
+            return $id;
     }
 
     /**
