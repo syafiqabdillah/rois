@@ -2,7 +2,7 @@
 import React from 'react';
 import 'antd/dist/antd.css';
 import {
-  Form, Select, Input, Button, DatePicker, TimePicker
+  Form, Select, Input, Button, DatePicker, TimePicker, message
 } from 'antd';
 import moment from 'moment';
 import axios from 'axios';
@@ -25,18 +25,22 @@ export default class AppointmentForm extends React.Component {
       if (!err) {
         console.log('Received values of form: ', values);
         console.log(values['date'].format('YYYY-MM-DD'));
-        // var qs = require('qs');
-        // axios.post('http://localhost:8000/po/create-appointment', qs.stringify({
-        //   'id_lamaran': this.state.idLamaran,
-        //   'date': this.state.date,
-        //   'start': this.state.starttime,
-        //   'end': this.state.finishtime,
-        //   'lokasi' : this.state.location
-        // }),
-        // {
-        //   headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-        // })
-        // window.location.href = '/#/appointmens';
+        var qs = require('qs');
+        axios.post('http://localhost:8000/po/create-appointment', qs.stringify({
+          'id_lamaran': 1,
+          'date': values['date'].format('YYYY-MM-DD'),
+          'start': values['start-time'].format('HH:mm'),
+          'end': values['finish-time'].format('HH:mm'),
+          'lokasi' : values['location'],
+        }),
+        {
+          headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+        })
+        message.info('Message', 9);
+        message.loading('Saving...', 4)
+        .then(() => message.success('Saving finished', 2.5))
+        .then(() => message.success('Appointment Saved', 2.5))
+        .then(() => window.location.href = '/#/appointmens');
       }
     });
   }

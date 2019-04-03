@@ -86,10 +86,8 @@ class AddAnswer extends React.Component{
                 </Row>
                 <Row>
                   <Col xs="12">
-                    <form>
-                      <Input type="text" onChange={this.handleChange} name="cclinkanswer" placeholder="Enter Link Github" required />
-                      <br/>
-                    </form>
+                    <Input type="text" onChange={this.handleChange} name="cclinkanswer" placeholder="Enter Link Github" required />
+                    <br/>
                   </Col>
                 </Row>
                 <Row>

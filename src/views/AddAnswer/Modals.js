@@ -1,5 +1,6 @@
 import React from 'react';
 import { Modal, ModalHeader, ModalBody, ModalFooter, ButtonGroup, Col, Row } from 'reactstrap';
+import 'antd/dist/antd.css';
 import { message, Button } from 'antd';
 
 class Modals extends React.Component {
@@ -29,9 +30,13 @@ class Modals extends React.Component {
   // }
 
   onSubmit(){
-    message.loading('Saving...', 2.5)
+    this.setState(prevState => ({
+      modal: !prevState.modal
+    }));
+    message.info('Message', 9);
+    message.loading('Saving...', 4)
     .then(() => message.success('Saving finished', 2.5))
-    .then(() => message.info('Your submission have been recorded', 2.5));
+    .then(() => message.success('Your submission have been recorded', 2.5));
   }
 
   render() {
