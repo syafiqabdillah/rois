@@ -33,8 +33,8 @@ class AddAssessment extends Component {
 
   handleSubmit = (e) => {
     const data = this.state;
-    e.preventDefault()
-    console.log(data)
+    e.preventDefault();
+    console.log(data);
 
     var qs = require('qs');
 
@@ -52,6 +52,7 @@ class AddAssessment extends Component {
       //handle success, munculin data
       console.log(response);
       window.location.href = '#/assessments';
+      window.location.reload();
     })
   }
 
@@ -76,31 +77,35 @@ class AddAssessment extends Component {
         </div>
         <Card>
           <CardBody>
-
-          <Form onSubmit={this.handleSubmit}>
-
-            <FormGroup>
-              <Label for="name">Name*</Label>
-              <Input type="text" name="name" id="name" placeholder="Enter Assessment Name.." required onChange={this.handleInputChange}/>
-            </FormGroup>
-
-            <FormGroup>
-              <Label for="vacancyID">Vacancy*</Label>
-              <Input type="select" name="vacancyID" id="vacancyID" required onChange={this.handleInputChange}> 
-                <option value={isNull} selected disabled>Select Vacancy..</option>
-                {/* <option defaultValue={null} disabled>Select Vacancy..</option> */}
-                {list_vacancy}
-              </Input>
-            </FormGroup>
-
-            <FormGroup>
-              <Label for="link">Link*</Label>
-              <Input type="text" id="link" name="link" placeholder="Enter Assessment Link.." required onChange={this.handleInputChange}/>
-            </FormGroup>
-
-            <Button color="primary">Submit</Button>
-          </Form>
-
+            <Form onSubmit={this.handleSubmit}>
+              <FormGroup>
+                <Label for="name">Name*</Label>
+                <Input type="text" name="name" id="name" placeholder="Enter Assessment Name" required onChange={this.handleInputChange}/>
+              </FormGroup>
+              <FormGroup>
+                <Label for="vacancyID">Vacancy*</Label>
+                <Input type="select" name="vacancyID" id="vacancyID" required onChange={this.handleInputChange}> 
+                  <option value={isNull} selected disabled>-- Select Vacancy --</option>
+                  {list_vacancy}
+                </Input>
+              </FormGroup>
+              <FormGroup>
+                <Label for="link">Link*</Label>
+                <Input type="text" id="link" name="link" placeholder="Enter Assessment Link" pattern="https?://.+" required onChange={this.handleInputChange}/>
+                <FormText color="muted">
+                  eg. https://www.google.com
+                </FormText>              
+              </FormGroup>
+              <Row>
+                <Col xs="4">
+                </Col>
+                <Col xs="4">
+                </Col>
+                <Col xs="4">
+                  <Button block color="primary" className="btn-pill" type="submit">Submit</Button>
+                </Col>
+              </Row>
+            </Form>
           </CardBody>
         </Card>
       </div>

@@ -58,6 +58,7 @@ class UpdateAssessment extends Component {
       //handle success, munculin data
       console.log(response);
       window.location.href = '#/assessments';
+      window.location.reload();
     })
   }
 
@@ -82,30 +83,35 @@ class UpdateAssessment extends Component {
         </div>
         <Card>
           <CardBody>
-
-          <Form onSubmit={this.handleSubmit}>
-
-            <FormGroup>
-              <Label for="name">Name*</Label>
-              <Input type="text" name="name" id="name" placeholder="Enter Assessment Name.." required defaultValue={this.state.name} onChange={this.handleInputChange}/>
-            </FormGroup>
-
-            <FormGroup>
-              <Label for="vacancyID">Vacancy*</Label>
-              <Input type="select" name="vacancyID" id="vacancyID" required onChange={this.handleInputChange}> 
-                <option value={isNull} disabled>Select Vacancy..</option>
-                {list_vacancy}
-              </Input>
-            </FormGroup>
-
-            <FormGroup>
-              <Label for="link">Link*</Label>
-              <Input type="text" id="link" name="link" placeholder="Enter Assessment Link.." required defaultValue={this.state.link} onChange={this.handleInputChange}/>
-            </FormGroup>
-
-            <Button color="primary">Submit</Button>
-          </Form>
-
+            <Form onSubmit={this.handleSubmit}>
+              <FormGroup>
+                <Label for="name">Name*</Label>
+                <Input type="text" name="name" id="name" placeholder="Enter Assessment Name.." required defaultValue={this.state.name} onChange={this.handleInputChange}/>
+              </FormGroup>
+              <FormGroup>
+                <Label for="vacancyID">Vacancy*</Label>
+                <Input type="select" name="vacancyID" id="vacancyID" required onChange={this.handleInputChange}> 
+                  <option value={isNull} disabled>Select Vacancy..</option>
+                  {list_vacancy}
+                </Input>
+              </FormGroup>
+              <FormGroup>
+                <Label for="link">Link*</Label>
+                <Input type="text" id="link" name="link" placeholder="Enter Assessment Link.." required defaultValue={this.state.link} onChange={this.handleInputChange}/>
+                <FormText color="muted">
+                  eg. https://www.google.com
+                </FormText> 
+              </FormGroup>
+              <Row>
+                  <Col xs="4">
+                  </Col>
+                  <Col xs="4">
+                  </Col>
+                  <Col xs="4">
+                    <Button block color="primary" className="btn-pill" type="submit">Submit</Button>
+                  </Col>
+              </Row>
+            </Form>
           </CardBody>
         </Card>
       </div>
