@@ -4,11 +4,12 @@ import { Button, Badge, Card, CardBody, CardHeader, Col,
   Form, FormGroup, FormText, Input, Label, Pagination, PaginationItem, PaginationLink, Row, Table, } from 'reactstrap';
 import { isNull } from 'util';
 
-class AddAssessment extends Component {
+class UpdateAssessment extends Component {
   constructor(props){
     super(props);
     this.state = {
       lowongan: [],
+      id: '',
       name: '',
       link: '',
       vacancyID: '',
@@ -17,11 +18,15 @@ class AddAssessment extends Component {
   }
 
   componentDidMount(){
-    let role = localStorage.getItem('role');
-    console.log(role);
+    let profile = localStorage.getItem('role');
+    let soal = JSON.parse(localStorage.getItem('soal'));
 
     this.setState({
-      creator: role
+      id: soal.id,
+      name: soal.nama,
+      link: soal.link,
+      vacancyID: soal.id_lowongan,
+      creator: profile,
     })
 
     axios.get('http://localhost:8000/po/all-lowongan')
@@ -39,7 +44,8 @@ class AddAssessment extends Component {
     var qs = require('qs');
 
     //post to backend
-    axios.post('http://localhost:8000/po/create-soal', qs.stringify({
+    axios.post('http://localhost:8000/po/update-soal', qs.stringify({
+      'id': this.state.id,
       'nama': this.state.name,
       'link': this.state.link,
       'id_lowongan': this.state.vacancyID,
@@ -65,7 +71,7 @@ class AddAssessment extends Component {
   render() {
     let list_vacancy = this.state.lowongan.map((lowongan, index) => {
       return (
-        <option value={lowongan.id}>{lowongan.nama}</option>
+        <option key={index} selected={this.state.vacancyID==lowongan.id} value={lowongan.id}>{lowongan.nama}</option>
       );
     });
     
@@ -81,21 +87,20 @@ class AddAssessment extends Component {
 
             <FormGroup>
               <Label for="name">Name*</Label>
-              <Input type="text" name="name" id="name" placeholder="Enter Assessment Name.." required onChange={this.handleInputChange}/>
+              <Input type="text" name="name" id="name" placeholder="Enter Assessment Name.." required defaultValue={this.state.name} onChange={this.handleInputChange}/>
             </FormGroup>
 
             <FormGroup>
               <Label for="vacancyID">Vacancy*</Label>
               <Input type="select" name="vacancyID" id="vacancyID" required onChange={this.handleInputChange}> 
-                <option value={isNull} selected disabled>Select Vacancy..</option>
-                {/* <option defaultValue={null} disabled>Select Vacancy..</option> */}
+                <option value={isNull} disabled>Select Vacancy..</option>
                 {list_vacancy}
               </Input>
             </FormGroup>
 
             <FormGroup>
               <Label for="link">Link*</Label>
-              <Input type="text" id="link" name="link" placeholder="Enter Assessment Link.." required onChange={this.handleInputChange}/>
+              <Input type="text" id="link" name="link" placeholder="Enter Assessment Link.." required defaultValue={this.state.link} onChange={this.handleInputChange}/>
             </FormGroup>
 
             <Button color="primary">Submit</Button>
@@ -108,4 +113,4 @@ class AddAssessment extends Component {
   }
 }
 
-export default AddAssessment;
+export default UpdateAssessment;

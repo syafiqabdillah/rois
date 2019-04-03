@@ -70,7 +70,7 @@ class VacancyDetail extends Component {
   handleDelete = (event) => {
     event.preventDefault()
     var qs = require('qs');
-    axios.delete('http://localhost:8000/po/delete-lowongan' , qs.stringify({
+    axios.post('http://localhost:8000/po/delete-lowongan' , qs.stringify({
       'id':  this.props.match.params.id,
     }),
       {
@@ -82,11 +82,12 @@ class VacancyDetail extends Component {
       .catch(error => {
         console.log(error.response)
       });
+
     let redirect = '#/vacancies/';
     window.location.href = redirect;
   }
 
-  
+
 handleSubmit = (event) => {
   event.preventDefault()
   var qs = require('qs');
@@ -161,7 +162,7 @@ handleChange = (event) => {
       if (localStorage.getItem('role') === 'pelamar') {
         content_button_apply = (
           <div align="center">
-            <Button color="primary" className="btn-pill" onClick={this.handleApply}>APPLY NOW</Button>
+            <Button color="primary" size="lg" className="btn-pill" onClick={this.handleApply}>APPLY NOW</Button>
           </div>
         );
       }

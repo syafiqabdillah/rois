@@ -4,10 +4,6 @@ import {
   Card, CardBody, CardHeader, Col, Row, Spinner
 } from 'reactstrap';
 import '../../css/jquery.dataTables.css'
-import { CardText } from 'mdbreact';
-
-const $ = require('jquery');
-$.DataTable = require('datatables.net');
 
 const API = 'http://localhost:8000';
 const TOKEN = localStorage.getItem('token');

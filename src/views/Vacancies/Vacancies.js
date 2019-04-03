@@ -19,7 +19,7 @@ export class Vacancies extends Component {
   componentDidMount() {
     axios.get(API + '/po/all-lowongan')
       .then(res => {
-
+        console.log(res);
         const lowongan = res.data;
         this.setState({
           lowongan: lowongan,

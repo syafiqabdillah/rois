@@ -178,11 +178,7 @@ class LowonganController extends Controller
      */
     public function deleteLowongan(Request $request){
         $id = $request->id;
-        echo($id);
-        
-        $response = DB::table('lowongan')
-        ->where('id', $id)
-        ->delete();       
+        $response = DB::table('lowongan')->delete($id);
         return $response;
     }
 

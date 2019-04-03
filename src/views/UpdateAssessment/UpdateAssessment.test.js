@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import AddAssessment from './AddAssessment';
+import UpdateAssessment from './UpdateAssessment';
 
 it('renders without crashing', () => {
   const div = document.createElement('div');
-  ReactDOM.render(<AddAssessment />, div);
+  ReactDOM.render(<UpdateAssessment />, div);
   ReactDOM.unmountComponentAtNode(div);
 });

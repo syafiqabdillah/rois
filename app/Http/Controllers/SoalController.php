@@ -47,7 +47,7 @@ class SoalController extends Controller
     }
 
      /**
-     * mengembalikan soal yang udah berisi nama lowongan
+     * mengembalikan soal yang udah berisi nama soal
      */
     public function addNamaLowongan($arr){
         $soal = $arr;
@@ -59,12 +59,13 @@ class SoalController extends Controller
     /**
      * membuat suatu soal
      * @param request  $request berisi $nama, $start_date, $end_date, $publish_date dan $image_name
-     * @return long $id id dari hasil penambahan lowongan di database
+     * @return long $id id dari hasil penambahan soal di database
      */
     public function createSoal(Request $request){
         $nama = $request->nama;
         $id_lowongan = $request->id_lowongan;
         $nama_karyawan = $request->nama_karyawan;
+        $link = $request->link;
         date_default_timezone_set('Asia/Jakarta');
         $created_date = date('Y-m-d H:i:s', time());
 
@@ -72,7 +73,8 @@ class SoalController extends Controller
             ['nama' => $nama, 
             'id_lowongan' => $id_lowongan, 
             'nama_karyawan' => $nama_karyawan, 
-            'created_date' => $created_date]
+            'created_date' => $created_date,
+            'link' => $link]
         );
         return $id;
     }
@@ -87,6 +89,7 @@ class SoalController extends Controller
         $nama = $request->nama;
         $id_lowongan = $request->id_lowongan;
         $nama_karyawan = $request->nama_karyawan;
+        $link = $request->link;
         date_default_timezone_set('Asia/Jakarta');
         $created_date = date('Y-m-d H:i:s', time());
 
@@ -95,22 +98,18 @@ class SoalController extends Controller
             ->update(['nama' => $nama, 
             'id_lowongan' => $id_lowongan, 
             'nama_karyawan' => $nama_karyawan, 
-            'created_date' => $created_date]);
+            'created_date' => $created_date,
+            'link' => $link]);
         return $result;
     }
 
-    // /**
-    //  * menghapus suatu lowongan
-    //  * @param request  $request berisi $id dari lowongan yang ingin dihapus
-    //  * @return long $id id dari hasil penghapusan lowongan di database
-    //  */
-    // public function deleteLowongan(Request $request){
-    //     $id = $request->id;
-        
-    //     $response = DB::table('lowongan')
-    //     ->where('id', $id)
-    //     ->delete();       
-    //     return $response;
-    // }
+    /**
+     * menghapus suatu soal
+     */
+    public function deleteSoal(Request $request){
+        $id_soal = $request->id;
+        $response = DB::table('soal')->delete($id_soal);
+        return $response;
+    }
 
 }

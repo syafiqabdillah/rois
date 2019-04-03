@@ -3,18 +3,18 @@ import axios from 'axios';
 import {
   Card, CardBody, Col, Row, Spinner
 } from 'reactstrap';
-import '../../css/jquery.dataTables.css'
-
-const $ = require('jquery');
-$.DataTable = require('datatables.net');
+import { MDBDataTable } from 'mdbreact';
 
 const API = 'http://localhost:8000';
 const TOKEN = localStorage.getItem('token');
+
+
 class ApplicationsPelamar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      loading: true
+      loading: true,
+      lamaran: []
     }
   }
 
@@ -23,26 +23,17 @@ class ApplicationsPelamar extends Component {
     axios.get(url)
       .then((response) => {
         this.setState({
-          loading: false
+          loading: false,
+          lamaran: response.data
         })
-
         console.log(response.data)
-
-        this.$el = $(this.el);
-        this.$el.DataTable(
-          {
-            data: response.data,
-            columns: [
-              { title: "Vacancy" },
-              { title: "Phase" },
-              { title: "Status" }
-            ],
-          }
-        )
+        console.log(this.state)
       })
-
   }
 
+  handleRowClick(id) {
+    window.location = "/#/applicants/" + id;
+  };
 
   render() {
 
@@ -52,10 +43,25 @@ class ApplicationsPelamar extends Component {
         <Spinner color="primary" style={{ width: '3rem', height: '3rem' }} />
       </div>)
     } else {
+      let list_lamaran = this.state.lamaran.map((lamaran, index) => {
+        return (
+          {
+            lowongan: lamaran[0],
+            tahapan: lamaran[1],
+            status: lamaran[2],
+            created_date: lamaran[4],
+            clickEvent: () => this.handleRowClick(lamaran[3]),
+          }
+        );
+      });
+
+      for (var i = 0; i < list_lamaran.length; i++) {
+        data.rows.push(list_lamaran[i]);
+      }
+
       table = (
-        <table className="display" width="100%" ref={el => this.el = el}>
-        </table>
-      )
+        <MDBDataTable borderless striped hover small btn data={data} />
+      );
     }
 
     return (
@@ -68,9 +74,6 @@ class ApplicationsPelamar extends Component {
         <Row>
           <Col sm="14" md={{ size: 6, offset: 3 }}>
             <Card outline color="primary">
-              {/* <CardHeader>
-                <i className="fa fa-align-justify"></i> Application List
-              </CardHeader> */}
               <CardBody>
                 {table}
               </CardBody>
@@ -81,6 +84,36 @@ class ApplicationsPelamar extends Component {
     );
   }
 }
+
+const data = {
+  columns: [
+    {
+      label: "Vacancy",
+      field: 'lowongan',
+      sort: 'asc',
+      width: 150
+    },
+    {
+      label: 'Phase',
+      field: 'tahapan',
+      sort: 'asc',
+      width: 270
+    },
+    {
+      label: 'Status',
+      field: 'status',
+      sort: 'asc',
+      width: 200
+    },
+    {
+      label: 'Submitted Date',
+      field: 'created_date',
+      sort: 'asc',
+      width: 200
+    }
+  ],
+  rows: []
+};
 
 export default ApplicationsPelamar;
 

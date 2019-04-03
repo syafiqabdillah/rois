@@ -1,4 +1,3 @@
-let token = localStorage.getItem('token')
 export default {
   items: [
     {
@@ -17,7 +16,7 @@ export default {
     },
     {
       name: 'Profile',
-      url: '/profile/' + token,
+      url: '/profile/' + localStorage.getItem('token'),
       icon: 'icon-user',
     },
     {

@@ -44,18 +44,18 @@ class LamaranController extends Controller
         $status = "Submitted";
         $skill = $request->input('skill');
         $experience = $request->input('experience');
+        date_default_timezone_set('Asia/Jakarta');
+        $created_date = date('Y-m-d H:i:s', time());
 
-        $file = $request->input('file');
-        // $file = str_replace('data:application/pdf;base64,', '', $file);
-        // $file = str_replace(' ', '+', $file);
-        // $path = "/cv_resume_files/{$id_lowongan}_{$token_pelamar}.pdf";
-        $pdf_decoded = base64_decode ($file);
-        $pdf = fopen ('test.pdf','w');
-        fwrite ($pdf,$pdf_decoded);
-        fclose($pdf);
-        //echo file_put_contents(storage_path()."/files/{$id_lowongan}_{$token_pelamar}.pdf", base64_decode($file));
+        //$file = $request->input('file');
+        
+        // $pdf_decoded = base64_decode ($file);
+        // $pdf = fopen ('test.pdf','w');
+        // fwrite ($pdf,$pdf_decoded);
+        // fclose($pdf);
+        
 
-        $id = DB::table('lamaran')->insertGetId(
+        $id_lamaran = DB::table('lamaran')->insertGetId(
             ['id_lowongan' => $id_lowongan,
             'token_pelamar' => $token_pelamar,
             'salary_exp' => $salary_expectation,
@@ -63,10 +63,32 @@ class LamaranController extends Controller
             'tahapan' => $tahapan,
             'status' => $status,
             'skill' => $skill,
-            'experience' => $experience
+            'experience' => $experience,
+            'created_date' => $created_date
             ]
         );
-        return $request;
+        
+        $id_lamaran = (int) $id_lamaran;
+
+        $skills = explode(",", $skill);
+        foreach($skills as $s){
+            //create skill
+            DB::table('skill')->insertGetId(
+                ['deskripsi' => $s,
+                'id_lamaran' => $id_lamaran]
+            );
+        }
+
+        $experiences = explode(",", $experience);
+        foreach($experiences as $e){
+            //create experience 
+            DB::table('experience')->insertGetId(
+                ['deskripsi'=>$e,
+                'id_lamaran'=>$id_lamaran]
+            );
+        }
+
+        return $skills;
     }
 
     /**

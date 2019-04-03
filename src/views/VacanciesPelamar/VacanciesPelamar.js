@@ -85,7 +85,7 @@ class VacanciesPelamar extends Component {
                 <br></br>
                 <br></br>
                 <div align="center">
-                  <Button color="primary" className="btn-pill" onClick={() => this.handleOnClick(lowongan.id)}>APPLY NOW</Button>
+                  <Button color="primary" size="lg" className="btn-pill" onClick={() => this.handleOnClick(lowongan.id)}>APPLY NOW</Button>
                 </div>
 
               </CardBody>
