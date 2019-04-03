@@ -36,7 +36,8 @@ export class Vacancies extends Component {
     if (this.state.loading) {
       content = <div align="center"><p>Loading . . .</p></div>;
     } else {
-      let list_vacancy = this.state.lowongan.map((lowongan, index) => {
+     console.log(this.state.lowongan)
+     let list_vacancy = this.state.lowongan.map((lowongan, index) => {
         return (
           <tr key={index}>
             <td> <Link to={"/vacancy/" + lowongan.id} >{lowongan.nama}</Link> </td>
