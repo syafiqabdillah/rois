@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { Button, CardBody,Label, Form, Input, Modal, ModalBody, Row, ModalHeader} from 'reactstrap';
+import { Button, CardBody,Label, Form, Input, Modal, ModalBody, ModalFooter, Row, ModalHeader} from 'reactstrap';
 
 const API = 'http://localhost:8000';
 
@@ -16,10 +16,12 @@ class VacancyDetail extends Component {
       loading: true,
       link_post:"",
       info_res: false,
-      info_req: false
+      info_req: false,
+      danger:false
     };
     this.toggleInfoRes = this.toggleInfoRes.bind(this);
     this.toggleInfoReq = this.toggleInfoReq.bind(this);
+    this.toggleDanger = this.toggleDanger.bind(this);
   }
  
 
@@ -52,21 +54,40 @@ class VacancyDetail extends Component {
     });
   }
 
+  toggleDanger() {
+    this.setState({
+      danger: !this.state.danger,
+    });
+  }
+
+
   handleApply = () => {
     const id_lowongan = localStorage.getItem('id_lowongan');
     window.location.href = '#/apply/' + id_lowongan;
   }
 
   // handle delete
-  handleDelete(id) {
-    // remove from local state
-    
-    axios.delete(API+ `/po/delete-lowongan`);
-}
+  handleDelete = (event) => {
+    event.preventDefault()
+    var qs = require('qs');
+    axios.delete('http://localhost:8000/po/delete-lowongan' , qs.stringify({
+      'id':  this.props.match.params.id,
+    }),
+      {
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+      })
+      .then(response => {
+        console.log(response)
+      })
+      .catch(error => {
+        console.log(error.response)
+      });
+    let redirect = '#/vacancies/';
+    window.location.href = redirect;
+  }
 
+  
 handleSubmit = (event) => {
-  let link_responsibility = 'http://localhost:8000/po/create-responsibility';
-  let link_requirement = 'http://localhost:8000/po/create-requirement';
   event.preventDefault()
   var qs = require('qs');
   axios.post(this.state.link_post, qs.stringify({
@@ -107,6 +128,7 @@ handleChange = (event) => {
     let content_button_apply;
     let formAddResponsibilities;
     let formAddRequirement;
+    let modalConfirmDelete;
 
     if (this.state.loading) {
       return( <div align="center"><p>Loading . . .</p></div>);
@@ -245,7 +267,20 @@ handleChange = (event) => {
             <Button className="btn-pill" color="primary" type="submit">Submit</Button></Form>
    </ModalBody>
  </Modal>
-        
+      )
+
+      modalConfirmDelete = (
+<Modal isOpen={this.state.danger} toggle={this.toggleDanger}
+                       className={'modal-danger ' + this.props.className}>
+                  <ModalHeader toggle={this.toggleDanger}>Delete Vacancy</ModalHeader>
+                  <ModalBody>
+                   You just clicked delete button, do you really want to delete this vacancy?
+                  </ModalBody>
+                  <ModalFooter>
+                    <Button color="danger" onClick={this.handleDelete}>Yes, I Do </Button>
+                    <Button color="secondary" onClick={this.toggleDanger}>Cancel</Button>
+                  </ModalFooter>
+                </Modal>
         
       )
 
@@ -256,7 +291,8 @@ handleChange = (event) => {
               <Button className="btn-pill" color="primary">Edit Vacancy</Button>
             </Link>
             
-              <Button onClick={() => this.handleDelete(lowongan.id)} className="btn-pill float-right"  color="danger">Delete Vacancy</Button>
+              <Button  onClick={this.toggleDanger}  className="btn-pill float-right"  color="danger">Delete Vacancy</Button>
+              {modalConfirmDelete}
         
           </div>
         )
