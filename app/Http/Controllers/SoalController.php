@@ -27,16 +27,29 @@ class SoalController extends Controller
         $result = array();
         foreach($soals as $soal){
             $soal = (object) $soal;
+            $isDirujuk = $this->isDirujuk($soal->id);
             $soal = $this->addNamaLowongan($soal);
+            $soal->isDirujuk = $isDirujuk;
             array_push($result, $soal);
         }
         return $result;
     }
 
+    public function isDirujuk($id_soal){
+        $remote_test = DB::table('remote_test')->select()->where('id_soal', $id_soal)->get();
+        $remote_test = json_decode($remote_test);
+        $len = sizeof($remote_test);
+        if ($len == 0){
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     /**
      * mengembalikan suatu soal dengan id tertentu 
      * @param long  $id id dari soal yang ingin diambil 
-     * @return      array $soal 
+     * @return array $soal 
      */
     public function getSoal($id){
         $soal = DB::table('soal')->select()->where('id', $id)->get();
@@ -47,7 +60,7 @@ class SoalController extends Controller
     }
 
      /**
-     * mengembalikan soal yang udah berisi nama soal
+     * mengembalikan soal yang udah berisi nama lowongan
      */
     public function addNamaLowongan($arr){
         $soal = $arr;
@@ -105,11 +118,12 @@ class SoalController extends Controller
 
     /**
      * menghapus suatu soal
+     * @param request  $request berisi $id dari soal yang ingin dihapus
+     * @return long $id id dari hasil penghapusan soal di database
      */
     public function deleteSoal(Request $request){
-        $id_soal = $request->id;
-        $response = DB::table('soal')->delete($id_soal);
+        $id = $request->id;
+        $response = DB::table('soal')->delete($id);
         return $response;
     }
-
 }
