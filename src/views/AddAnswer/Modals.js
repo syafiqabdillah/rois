@@ -1,5 +1,6 @@
 import React from 'react';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter, ButtonGroup, Col, Row } from 'reactstrap';
+import { Modal, ModalHeader, ModalBody, ModalFooter, ButtonGroup, Col, Row } from 'reactstrap';
+import { message, Button } from 'antd';
 
 class Modals extends React.Component {
   constructor(props) {
@@ -28,7 +29,9 @@ class Modals extends React.Component {
   // }
 
   onSubmit(){
-    console.log(this.props.link);
+    message.loading('Saving...', 2.5)
+    .then(() => message.success('Saving finished', 2.5))
+    .then(() => message.info('Your submission have been recorded', 2.5));
   }
 
   render() {
@@ -37,7 +40,7 @@ class Modals extends React.Component {
     };
     return (
       <div>
-        <Button disabled={Boolean(this.props.error)} color="primary" onClick={this.toggle} size="lg" className="btn-pill" block>Submit</Button>
+        <Button disabled={Boolean(this.props.error)} type="primary" onClick={this.toggle} shape="round" block>Submit</Button>
         <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
           <ModalHeader toggle={this.toggle}>
           </ModalHeader>
@@ -59,7 +62,7 @@ class Modals extends React.Component {
           <Row>
             <Col xs="6" sm="2"></Col>
             <Col xs="6" sm="8">
-                <Button color="primary" size="lg" onClick={this.onSubmit.bind(this)} className="btn-pill" block>Yes, I am sure</Button>{' '}
+                <Button type="primary" size="lg" onClick={this.onSubmit.bind(this)} shape="round" block>Yes, I am sure</Button>{' '}
             </Col>
             <Col sm="2"></Col>
           </Row>
@@ -67,7 +70,7 @@ class Modals extends React.Component {
           <Row>
             <Col xs="6" sm="2"></Col>
             <Col xs="6" sm="8">
-                <Button outline color="danger" size="lg" onClick={this.toggle} className="btn-pill" block>No, I don't</Button>
+                <Button type="danger" size="lg" onClick={this.toggle} shape="round" block ghost>No, I don't</Button>
             </Col>
             <Col sm="2"></Col>
           </Row>

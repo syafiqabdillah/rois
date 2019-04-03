@@ -32,6 +32,11 @@ class AddAnswer extends React.Component{
     })
   }
 
+  componentDidMount(){
+    this.setState({
+      error : true,
+    })
+  }
   //
   handleChange = (event) => {
     const {value} = event.target;
