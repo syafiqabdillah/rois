@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import ChooseCurrentStage from '../ChooseCurrentStage';
-import ChooseStages from '../ChooseStages';
-import { Badge, Card, CardBody, CardHeader, Col, Pagination, PaginationItem, PaginationLink, Row, Table, CardTitle, CardText, Progress } from 'reactstrap';
+import ChooseCurrentStage from '../Applicants';
+import ChooseStages from '../Applicants';
+import { Badge, Card, CardBody, CardHeader, Col, Pagination, PaginationItem,
+  Form, FormGroup, Label, Input, Button, PaginationLink, Row, Table, CardTitle,
+  CardText, Progress, FormText } from 'reactstrap';
 
 const API = 'http://localhost:8000';
 
-class FinalStage extends Component {
+class RemoteTestStandby extends Component {
   constructor(props){
     super(props);
 
@@ -37,7 +39,13 @@ class FinalStage extends Component {
 
       content = (
         <div>
-          yeet
+          <Row>
+            <Col lg={9}>
+            </Col>
+            <Col lg={3}>
+              <p><u>go to applicant's profile</u></p>
+            </Col>
+          </Row>
         </div>
       );
     }
@@ -45,7 +53,7 @@ class FinalStage extends Component {
     return (
       <div className="animated fadeIn">
         <div align="center">
-          <h3>Reject</h3>
+          <h3>Hire</h3>
         </div>
         <br />
         <Row>
@@ -58,9 +66,10 @@ class FinalStage extends Component {
               </CardHeader>
               <CardBody>
                 <CardTitle>
-                  The applicant above will be <strong>rejected</strong> from the recruitment process. <br /> A notification email will be sent to the applicant.
+                  The answers for the assessment remote test of the applicant above is not available yet. <br/> Please be patient and <strong>wait for further notification.</strong>
                 </CardTitle>
                 <CardText>
+                  <br/>
                   {content}
                 </CardText>
               </CardBody>
@@ -74,4 +83,4 @@ class FinalStage extends Component {
   }
 }
 
-export default FinalStage;
+export default RemoteTestStandby;

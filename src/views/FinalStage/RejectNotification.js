@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import ChooseCurrentStage from '../ChooseCurrentStage';
-import ChooseStages from '../ChooseStages';
-import { Badge, Card, CardBody, CardHeader, Col, Pagination, PaginationItem, PaginationLink, Row, Table, CardTitle, CardText, Progress } from 'reactstrap';
+import ChooseCurrentStage from '../Applicants';
+import ChooseStages from '../Applicants';
+import { Badge, Card, CardBody, CardHeader, Col, Pagination, PaginationItem,
+  Form, FormGroup, Label, Input, Button, PaginationLink, Row, Table, CardTitle,
+  CardText, Progress, FormText } from 'reactstrap';
 
 const API = 'http://localhost:8000';
 
-class FinalStageNotification extends Component {
+class RejectNotification extends Component {
   constructor(props){
     super(props);
 
@@ -37,7 +39,13 @@ class FinalStageNotification extends Component {
 
       content = (
         <div>
-          yeet
+          <Row>
+            <Col lg={9}>
+            </Col>
+            <Col lg={3}>
+              <p><u>back to applications list</u></p>
+            </Col>
+          </Row>
         </div>
       );
     }
@@ -45,7 +53,7 @@ class FinalStageNotification extends Component {
     return (
       <div className="animated fadeIn">
         <div align="center">
-          <h3>Reject</h3>
+          <h3>Hire</h3>
         </div>
         <br />
         <Row>
@@ -58,9 +66,10 @@ class FinalStageNotification extends Component {
               </CardHeader>
               <CardBody>
                 <CardTitle>
-                  The applicant above will be <strong>rejected</strong> from the recruitment process. <br /> A notification email will be sent to the applicant.
+                  The applicant above will be has been rejected from SIRCLO's recruitment process. <br/>
                 </CardTitle>
                 <CardText>
+                  <br/>
                   {content}
                 </CardText>
               </CardBody>
@@ -74,4 +83,4 @@ class FinalStageNotification extends Component {
   }
 }
 
-export default FinalStageNotification;
+export default RejectNotification;

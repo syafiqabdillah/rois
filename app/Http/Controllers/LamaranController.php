@@ -32,7 +32,7 @@ class LamaranController extends Controller
         } else {
             return response()->json(['message'=>'failed', 'status'=>500]);
         }
-        
+
     }
 
     public function createLamaran(Request $request){
@@ -46,12 +46,12 @@ class LamaranController extends Controller
         $experience = $request->input('experience');
 
         //$file = $request->input('file');
-        
+
         // $pdf_decoded = base64_decode ($file);
         // $pdf = fopen ('test.pdf','w');
         // fwrite ($pdf,$pdf_decoded);
         // fclose($pdf);
-        
+
 
         $id_lamaran = DB::table('lamaran')->insertGetId(
             ['id_lowongan' => $id_lowongan,
@@ -64,7 +64,7 @@ class LamaranController extends Controller
             'experience' => $experience
             ]
         );
-        
+
         $id_lamaran = (int) $id_lamaran;
 
         $skills = explode(",", $skill);
@@ -78,7 +78,7 @@ class LamaranController extends Controller
 
         $experiences = explode(",", $experience);
         foreach($experiences as $e){
-            //create experience 
+            //create experience
             DB::table('experience')->insertGetId(
                 ['deskripsi'=>$e,
                 'id_lamaran'=>$id_lamaran]

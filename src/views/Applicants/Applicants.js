@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import ChooseCurrentStage from '../ChooseCurrentStage';
-import ChooseStages from '../ChooseStages';
+import ChooseCurrentStage from './ChooseCurrentStage';
+import ChooseStages from './ChooseStages';
 import { Badge, Card, CardBody, CardHeader, Col, Pagination, PaginationItem, PaginationLink, Row, Table, CardTitle, CardText, Progress } from 'reactstrap';
 
 const API = 'http://localhost:8000';
@@ -92,15 +92,12 @@ class Applicants extends Component {
         <div align="center">
           <h3>Applicant's Profile</h3>
         </div>
-        <br />
+        <br/>
         <Row>
-          <Col lg={3}>
-          </Col>
-          <Col lg={6}>
+          <Col lg={8}>
             <div>
               <Badge className="mr-1" href="#" color="warning" pill>Administrasi</Badge>
             </div>
-            <br />
             <Card >
               <CardHeader>
                 <i className="fa fa-user pr-1"></i>{this.state.lamaran.pelamar} <Badge color="secondary">Candidate {this.state.lamaran.lowongan}</Badge>
@@ -115,10 +112,10 @@ class Applicants extends Component {
                 </Row>
               </CardBody>
             </Card>
-            <ChooseCurrentStage tahapan={this.state.lamaran.tahapan} />
-            <ChooseStages />
           </Col>
-          <Col lg={3}>
+          <Col lg={4}>
+            <ChooseCurrentStage tahapan={this.state.lamaran.tahapan} id={this.state.lamaran.id}/>
+            <ChooseStages id={this.state.lamaran.id} />
           </Col>
         </Row>
       </div>

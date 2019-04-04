@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { Badge, Card, CardBody, CardHeader, Col, Pagination, PaginationItem, PaginationLink, Row, Table, CardTitle, CardText, Progress, Button } from 'reactstrap';
 
@@ -31,18 +32,33 @@ class ChooseStages extends Component {
           <Row>
             <Col lg={1}>
             </Col>
-            <Col lg={4}>
-              <Button className="btn-pill" color="primary" size="sm" block>Interview</Button>
-            </Col>
-            <Col lg={4}>
-              <Button className="btn-pill" color="info" size="sm" block>Remote Test</Button>
-            </Col>
-            <Col lg={2}>
-              <Button outline className="btn-pill" color="success" size="sm" block>Hire</Button>
+            <Col lg={10}>
+              <Link to="/addappointment/"> <Button className="btn-pill" color="primary"  block>Interview</Button> </Link>
             </Col>
             <Col lg={1}>
             </Col>
           </Row>
+          <br/>
+          <Row>
+            <Col lg={1}>
+            </Col>
+            <Col lg={10}>
+              <Link to={"/remoteTestForm/" + this.props.id}> <Button className="btn-pill" color="info"  block>Remote Test</Button> </Link>
+            </Col>
+            <Col lg={1}>
+            </Col>
+          </Row>
+          <br/>
+          <Row>
+            <Col lg={1}>
+            </Col>
+            <Col lg={10}>
+              <Link to={"/hire/" + this.props.id}> <Button outline className="btn-pill" color="success"  block>Hire</Button> </Link>
+            </Col>
+            <Col lg={1}>
+            </Col>
+          </Row>
+          <br/>
         </div>
       );
     }

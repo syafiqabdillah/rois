@@ -30,11 +30,13 @@ const VacanciesPelamar = React.lazy(() => import('./views/VacanciesPelamar'));
 const ApplicationForm = React.lazy(() => import('./views/ApplicationForm'));
 const ApplicationsPelamar = React.lazy(() => import('./views/ApplicationsPelamar'));
 const Applicants = React.lazy(() => import('./views/Applicants'));
-const FinalStage = React.lazy(() => import('./views/FinalStage'));
-const FinalStageNotification = React.lazy(() => import('./views/FinalStageNotification'));
-const RemoteTestForm = React.lazy(() => import('./views/RemoteTestForm'));
-const RemoteTestStandby = React.lazy(() => import('./views/RemoteTestNotification'));
-const RemoteTestNotification = React.lazy(() => import('./views/RemoteTestNotification'));
+const Hire = React.lazy(() => import('./views/FinalStage'));
+const HireNotification = React.lazy(() => import('./views/FinalStage/HireNotification'));
+const Reject = React.lazy(() => import('./views/FinalStage/Reject'));
+const RejectNotification = React.lazy(() => import('./views/FinalStage/RejectNotification'));
+const RemoteTestForm = React.lazy(() => import('./views/RemoteTest'));
+const RemoteTestStandby = React.lazy(() => import('./views/RemoteTest/RemoteTestStandby'));
+const RemoteTestNotification = React.lazy(() => import('./views/RemoteTest/RemoteTestNotification'));
 const Profile = React.lazy(() => import('./views/Profile'));
 const UpdateAssessment = React.lazy(() => import('./views/UpdateAssessment'));
 
@@ -86,8 +88,10 @@ const routes = [
   { path: '/vacancy/:id', name: 'Vacancy Detail', component: VacancyDetail },
   { path: '/profile/:token', name: 'Profile', component: Profile },
   { path: '/applicants/:id', exact: true, name: 'Applicants', component: Applicants },
-  { path: '/finalStage/:id', exact: true, name: 'FinalStage', component: FinalStage },
-  { path: '/finalStageNotification/:id', exact: true, name: 'FinalStageNotification', component: FinalStageNotification },
+  { path: '/hire/:id', exact: true, name: 'Hire', component: Hire },
+  { path: '/hireNotification/:id', exact: true, name: 'HireNotification', component: HireNotification },
+  { path: '/reject/:id', exact: true, name: 'Reject', component: Reject },
+  { path: '/rejectNotification/:id', exact: true, name: 'RejectNotification', component: RejectNotification },
   { path: '/remoteTestForm/:id', exact: true, name: 'RemoteTestForm', component: RemoteTestForm },
   { path: '/remoteTestStandby/:id', exact: true, name: 'RemoteTestStandby', component: RemoteTestStandby },
   { path: '/remoteTestNotification/:id', exact: true, name: 'RemoteTestNotification', component: RemoteTestNotification },

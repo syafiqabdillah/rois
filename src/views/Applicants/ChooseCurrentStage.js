@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { Badge, Card, CardBody, CardHeader, Col, Pagination, PaginationItem, PaginationLink, Row, Table, CardTitle, CardText, Progress, Button } from 'reactstrap';
 
 const API = 'http://localhost:8000';
 
-class RemoteTestForm extends Component {
+class ChooseCurrentStage extends Component {
   constructor(props){
     super(props);
 
@@ -25,25 +26,29 @@ class RemoteTestForm extends Component {
     if (this.state.loading){
       content = <div align="center"><p>Loading . . .</p></div>;
     } else {
-
       content = (
         <div>
-          <p>Choose the next action for this applicant to take: </p>
+          <p>This applicant is at the <strong>{this.props.tahapan}</strong> phase, choose one action: </p>
           <Row>
             <Col lg={1}>
             </Col>
-            <Col lg={4}>
-              <Button className="btn-pill" color="primary" size="sm" block>Interview</Button>
-            </Col>
-            <Col lg={4}>
-              <Button className="btn-pill" color="info" size="sm" block>Remote Test</Button>
-            </Col>
-            <Col lg={2}>
-              <Button outline className="btn-pill" color="success" size="sm" block>Hire</Button>
+            <Col lg={10}>
+              <Link to={"/reject/" + this.props.id}> <Button outline className="btn-pill" color="danger" block>Reject</Button> </Link>
             </Col>
             <Col lg={1}>
             </Col>
           </Row>
+          <br/>
+          <Row>
+            <Col lg={1}>
+            </Col>
+            <Col lg={10}>
+              <Button outline className="btn-pill" color="success" block>Pass</Button>
+            </Col>
+            <Col lg={1}>
+            </Col>
+          </Row>
+          <br/>
         </div>
       );
     }
@@ -64,4 +69,4 @@ class RemoteTestForm extends Component {
   }
 }
 
-export default RemoteTestForm;
+export default ChooseCurrentStage;
