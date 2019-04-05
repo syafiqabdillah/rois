@@ -84,6 +84,25 @@ class RemoteTestForm extends Component {
           console.log(response.data);
       })
 
+      axios.post('http://localhost:8000/po/update-tahapan-lamaran', qs.stringify({
+        'id': this.state.lamaran.id,
+        'tahapan': 'Remote Test',
+        'status': 'Assinged',
+      }),
+      {
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+      })
+      .then(function (response) {
+          console.log(response.data);
+      })
+
+      this.setState({
+        lamaran: {
+          tahapan: 'Remote Test',
+          status: 'Assinged',
+        }
+      })
+
       window.location.href ='#/remoteTestStandby/' + this.state.lamaran.id
       window.location.reload()
 

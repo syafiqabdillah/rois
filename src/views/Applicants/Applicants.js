@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import ChooseCurrentStage from './ChooseCurrentStage';
 import ChooseStages from './ChooseStages';
-import { Badge, Card, CardBody, CardHeader, Col, Pagination, PaginationItem, PaginationLink, Row, Table, CardTitle, CardText, Progress } from 'reactstrap';
+import { Badge, Card, CardBody, CardHeader, Col, Pagination, PaginationItem, PaginationLink, Row, Table, CardTitle, CardText, Progress, Tooltip } from 'reactstrap';
 
 const API = 'http://localhost:8000';
 
@@ -12,8 +12,13 @@ class Applicants extends Component {
 
     this.state = {
       lamaran: [],
-      loading: true
+      loading: true,
+      toolTipPhase: false,
+      toolTipStatus: false,
     }
+
+    this.togglePhase = this.togglePhase.bind(this);
+    this.toggleStatus = this.toggleStatus.bind(this);
   }
 
   componentDidMount(){
@@ -26,6 +31,18 @@ class Applicants extends Component {
         loading: false
       })
     })
+  }
+
+  togglePhase() {
+    this.setState({
+      toolTipPhase: !this.state.toolTipPhase
+    });
+  }
+
+  toggleStatus() {
+    this.setState({
+      toolTipStatus: !this.state.toolTipStatus
+    });
   }
 
   render() {
@@ -97,7 +114,16 @@ class Applicants extends Component {
           <Col lg={8}>
             <Card >
               <CardHeader>
-                <i className="fa fa-user pr-1"></i> {this.state.lamaran.pelamar} <Badge color="secondary">Candidate {this.state.lamaran.lowongan}</Badge> <Badge href="#" color="info" pill>{this.state.lamaran.tahapan}</Badge> <Badge href="#" color="warning" pill>{this.state.lamaran.status}</Badge>
+                <i className="fa fa-user pr-1"></i> {this.state.lamaran.pelamar} <Badge color="secondary">
+                Candidate {this.state.lamaran.lowongan}</Badge> <Badge href="#" color="info" pill id="Phase">
+                {this.state.lamaran.tahapan}</Badge> <Badge href="#" color="warning" pill id="Status">
+                {this.state.lamaran.status}</Badge>
+                <Tooltip placement="top" isOpen={this.state.toolTipPhase} target="Phase" toggle={this.togglePhase}>
+                  Current phase
+                </Tooltip>
+                <Tooltip placement="right" isOpen={this.state.toolTipStatus} target="Status" toggle={this.toggleStatus}>
+                  Status of the current phase
+                </Tooltip>
               </CardHeader>
               <CardBody>
                 <Row>
