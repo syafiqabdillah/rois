@@ -40,18 +40,16 @@ class LamaranController extends Controller
 
     public function uploadCV(Request $request){
         if($request->hasFile('file')){
-            $token = $request->input('token');
-            $id_lowongan = $request->input('id_lowongan');
             $file = $request->file('file');
-            $extension = $file->getClientOriginalExtension(); // getting image extension
-            $filename =time().'.'.$extension;
-            $filename =$token.'_'.$id_lowongan.'.'.$extension;
+            $id_lamaran = $request->input('id_lamaran');
+            $extension = $file->getClientOriginalExtension(); 
+            $filename =$id_lamaran.'.'.$extension;
+
             $file->move('uploads/', $filename);
             return response()->json(['message'=>'success', 'status'=>200]);
         } else {
             return response()->json(['message'=>'failed', 'status'=>500]);
-        }
-        
+        }  
     }
 
     public function createLamaran(Request $request){
@@ -65,14 +63,6 @@ class LamaranController extends Controller
         $experience = $request->input('experience');
         date_default_timezone_set('Asia/Jakarta');
         $created_date = date('Y-m-d H:i:s', time());
-
-        //$file = $request->input('file');
-        
-        // $pdf_decoded = base64_decode ($file);
-        // $pdf = fopen ('test.pdf','w');
-        // fwrite ($pdf,$pdf_decoded);
-        // fclose($pdf);
-        
 
         $id_lamaran = DB::table('lamaran')->insertGetId(
             ['id_lowongan' => $id_lowongan,
