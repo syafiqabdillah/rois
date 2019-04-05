@@ -78,6 +78,7 @@ $router->get('po/all-remote-test', ['middleware' => 'cors', 'uses' => 'RemoteTes
 $router->get('po/remote-test/{id}', ['middleware' => 'cors', 'uses' => 'RemoteTestController@getRemoteTest']);
 $router->post('po/create-remote-test', ['middleware' => 'cors', 'uses' => 'RemoteTestController@createRemoteTest']);
 
+$router->get('po/download-cv/{id}', ['middleware' => 'cors', 'uses' => 'LamaranController@downloadCV']);
 /**
  * UC - 04 : PO Mengelola Soal
  * Author : Hauri S Z

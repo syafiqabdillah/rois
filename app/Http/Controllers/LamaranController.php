@@ -52,6 +52,11 @@ class LamaranController extends Controller
         }  
     }
 
+    public function downloadCV($id){
+        $file = 'uploads/' . $id . '.pdf';
+        return response()->download($file, 123);
+    }
+
     public function createLamaran(Request $request){
         $id_lowongan = $request->input('id_lowongan');
         $token_pelamar = $request->input('token_pelamar');
