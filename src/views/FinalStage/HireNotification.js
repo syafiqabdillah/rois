@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import ChooseCurrentStage from '../Applicants';
 import ChooseStages from '../Applicants';
+import { Link } from 'react-router-dom';
 import { Badge, Card, CardBody, CardHeader, Col, Pagination, PaginationItem,
   Form, FormGroup, Label, Input, Button, PaginationLink, Row, Table, CardTitle,
   CardText, Progress, FormText } from 'reactstrap';
@@ -40,10 +41,10 @@ class HireNotification extends Component {
       content = (
         <div>
           <Row>
-            <Col lg={9}>
+            <Col lg={8}>
             </Col>
-            <Col lg={3}>
-              <p><u>back to applications list</u></p>
+            <Col lg={4}>
+              <Link to={"/applications"}> <p>back to applications list</p> </Link>
             </Col>
           </Row>
         </div>
@@ -66,12 +67,10 @@ class HireNotification extends Component {
               </CardHeader>
               <CardBody>
                 <CardTitle>
-                  The applicant above will be has been successfully recruited as a SIRCLO's staff. <br/>
+                  The applicant above has been successfully recruited as a SIRCLO's staff. <br/>
                 </CardTitle>
-                <CardText>
                   <br/>
                   {content}
-                </CardText>
               </CardBody>
             </Card>
           </Col>

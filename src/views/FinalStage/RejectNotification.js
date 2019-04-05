@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import ChooseCurrentStage from '../Applicants';
 import ChooseStages from '../Applicants';
+import { Link } from 'react-router-dom';
 import { Badge, Card, CardBody, CardHeader, Col, Pagination, PaginationItem,
   Form, FormGroup, Label, Input, Button, PaginationLink, Row, Table, CardTitle,
   CardText, Progress, FormText } from 'reactstrap';
@@ -40,10 +41,10 @@ class RejectNotification extends Component {
       content = (
         <div>
           <Row>
-            <Col lg={9}>
+            <Col lg={8}>
             </Col>
-            <Col lg={3}>
-              <p><u>back to applications list</u></p>
+            <Col lg={4}>
+              <Link to={"/applications"}> <p>back to applications list</p> </Link>
             </Col>
           </Row>
         </div>
@@ -53,7 +54,7 @@ class RejectNotification extends Component {
     return (
       <div className="animated fadeIn">
         <div align="center">
-          <h3>Hire</h3>
+          <h3>Reject</h3>
         </div>
         <br />
         <Row>
@@ -66,12 +67,10 @@ class RejectNotification extends Component {
               </CardHeader>
               <CardBody>
                 <CardTitle>
-                  The applicant above will be has been rejected from SIRCLO's recruitment process. <br/>
+                  The applicant above has been rejected from SIRCLO's recruitment process. <br/>
                 </CardTitle>
-                <CardText>
                   <br/>
                   {content}
-                </CardText>
               </CardBody>
             </Card>
           </Col>

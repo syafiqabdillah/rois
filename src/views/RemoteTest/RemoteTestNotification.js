@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import ChooseCurrentStage from '../Applicants';
 import ChooseStages from '../Applicants';
+import { Link } from 'react-router-dom';
 import { Badge, Card, CardBody, CardHeader, Col, Pagination, PaginationItem,
   Form, FormGroup, Label, Input, Button, PaginationLink, Row, Table, CardTitle,
   CardText, Progress, FormText } from 'reactstrap';
@@ -40,10 +41,10 @@ class RemoteTestStandby extends Component {
       content = (
         <div>
           <Row>
-            <Col lg={9}>
+            <Col lg={8}>
             </Col>
-            <Col lg={3}>
-              <p><u>go to applicant's profile</u></p>
+            <Col lg={4}>
+              <Link to={"/applicants/" + this.state.lamaran.id}> <p>go to applicant's profile</p> </Link>
             </Col>
           </Row>
         </div>
@@ -53,7 +54,7 @@ class RemoteTestStandby extends Component {
     return (
       <div className="animated fadeIn">
         <div align="center">
-          <h3>Hire</h3>
+          <h3>Remote Test Notification</h3>
         </div>
         <br />
         <Row>

@@ -123,6 +123,24 @@ class LamaranController extends Controller
         $lamaran = json_decode($lamaran);
         $lamaran = $lamaran[0];
         $lamaran = $this->addNamaLowonganNamaPelamar($lamaran);
+
+        $token = $lamaran->token_pelamar;
+        $pelamar = DB::table('pelamar')->select()->where('token', $token)->get();
+        $pelamar = json_decode($pelamar);
+        $pelamar = $pelamar[0];
+
+        $experience = DB::table('experience')->select()->where('token_pelamar', $token)->get();
+        $experience = json_decode($experience);
+        $experience = $experience[0];
+
+        $skill = DB::table('skill')->select()->where('token_pelamar', $token)->get();
+        $skill = json_decode($skill);
+        $skill = $skill[0];
+
+        $lamaran->detail_pelamar = $pelamar;
+        $lamaran->experience = $experience;
+        $lamaran->skill = $skill;
+
         return json_encode($lamaran);
     }
 

@@ -17,6 +17,8 @@ class Hire extends Component {
       lamaran: [],
       loading: true
     }
+
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentDidMount(){
@@ -31,6 +33,42 @@ class Hire extends Component {
     })
   }
 
+  handleSubmit = (e) => {
+    e.preventDefault()
+
+    if (window.confirm('Are you sure you want to hire this applicant ?')){
+      console.log(this.state);
+
+      // axios post
+      var qs = require('qs');
+
+      //post it to backend
+      axios.post('http://localhost:8000/po/update-tahapan-lamaran', qs.stringify({
+        'id': this.state.lamaran.id,
+        'tahapan': 'Hired',
+        'status': 'Hired',
+      }),
+      {
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+      })
+      .then(function (response) {
+          console.log(response.data);
+      })
+
+      this.setState({
+        lamaran: {
+          tahapan: 'Hired',
+          status: 'Hired',
+        }
+      })
+
+      window.location.href ='#/HireNotification/' + this.state.lamaran.id
+      window.location.reload()
+
+    }
+
+  }
+
   render() {
     let content;
 
@@ -40,7 +78,7 @@ class Hire extends Component {
 
       content = (
         <div>
-          <Form>
+          <Form method="post" onSubmit={this.handleSubmit}>
             <FormGroup row>
               <Label for="offeringLetter" sm={3}>Offering Letter</Label>
               <Col sm={9}>
@@ -91,10 +129,8 @@ class Hire extends Component {
                 <CardTitle>
                   The applicant above will be <strong>hired</strong> from the recruitment process. A notification email will be sent to the applicant.
                 </CardTitle>
-                <CardText>
                   <br/>
                   {content}
-                </CardText>
               </CardBody>
             </Card>
           </Col>

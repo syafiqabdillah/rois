@@ -14,12 +14,12 @@ class RemoteTestController extends Controller
      */
     public function __construct()
     {
-        
+
     }
 
     /**
-     * mengembalikan semua remote test yang ada 
-     * @return array $remote test 
+     * mengembalikan semua remote test yang ada
+     * @return array $remote test
      */
     public function getAllRemoteTest(Request $request){
         $getRT = DB::table('remote_test')->select()->get();
@@ -33,9 +33,9 @@ class RemoteTestController extends Controller
     }
 
     /**
-     * mengembalikan suatu remote test dengan id tertentu 
-     * @param long  $id id dari remote test yang ingin diambil 
-     * @return      array $remote test 
+     * mengembalikan suatu remote test dengan id tertentu
+     * @param long  $id id dari remote test yang ingin diambil
+     * @return      array $remote test
      */
     public function getRemoteTest($id){
         $rt = DB::table('remote_test')->select()->where('id', $id)->get();
@@ -46,29 +46,31 @@ class RemoteTestController extends Controller
 
     /**
      * membuat suatu remote test
-     * @param request  $request berisi id_lamaran, duration, tester_email, expired_in, id_soal, start_date, link_jawaban
+     * @param request  $request berisi id_lamaran, duration, tester_email, expired_date, id_soal, start_date, link_jawaban
      * @return long $id dari hasil penambahan remote test di database
      */
     public function createRemoteTest(Request $request){
         $id_lamaran = $request->id_lamaran;
         $duration = $request->duration;
         $tester_email = $request->tester_email;
-        $expired_in = $request->expired_in;
+        $expired_date = $request->expired_date;
         $id_soal = $request->id_soal;
+        $status = 'Assinged';
 
         $id = DB::table('remote_test')->insertGetId(
-            ['id_lamaran' => $id_lamaran, 
-            'duration' => $duration, 
-            'tester_email' => $tester_email, 
-            'expired_in' => $expired_in,
-            'id_soal' => $id_soal]
+            ['id_lamaran' => $id_lamaran,
+            'duration' => $duration,
+            'tester_email' => $tester_email,
+            'expired_date' => $expired_date,
+            'id_soal' => $id_soal,
+            'status' => $status]
         );
         return $id;
     }
 
     /**
      * submit jawaban remote test
-     * @param request  
+     * @param request
      * @return long $id dari hasil penambahan remote test di database
      */
     public function submitJawaban(Request $request){

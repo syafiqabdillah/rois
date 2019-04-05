@@ -44,31 +44,31 @@ class Applicants extends Component {
             </tr>
             <tr>
               <th scope="row">Place, Date of Birth</th>
-              <td>: -</td>
+              <td>: {this.state.lamaran.detail_pelamar.tempat_lahir}, {this.state.lamaran.detail_pelamar.tanggal_lahir}</td>
             </tr>
             <tr>
               <th scope="row">NIK</th>
-              <td>: -</td>
+              <td>: {this.state.lamaran.detail_pelamar.nik}</td>
             </tr>
             <tr>
               <th scope="row">Address</th>
-              <td>: -</td>
+              <td>: {this.state.lamaran.detail_pelamar.alamat}</td>
             </tr>
             <tr>
               <th scope="row">Email</th>
-              <td>: -</td>
+              <td>: {this.state.lamaran.detail_pelamar.email}</td>
             </tr>
             <tr>
               <th scope="row">Handphone</th>
-              <td>: -</td>
+              <td>: {this.state.lamaran.detail_pelamar.phone}</td>
             </tr>
             <tr>
               <th scope="row">Experiences</th>
-              <td>: -</td>
+              <td>: {this.state.lamaran.experience.deskripsi}</td>
             </tr>
             <tr>
               <th scope="row">Skills</th>
-              <td>: -</td>
+              <td>: {this.state.lamaran.skill.deskripsi}</td>
             </tr>
             <tr>
               <th scope="row">Expected Salary</th>
@@ -95,12 +95,9 @@ class Applicants extends Component {
         <br/>
         <Row>
           <Col lg={8}>
-            <div>
-              <Badge className="mr-1" href="#" color="warning" pill>Administrasi</Badge>
-            </div>
             <Card >
               <CardHeader>
-                <i className="fa fa-user pr-1"></i>{this.state.lamaran.pelamar} <Badge color="secondary">Candidate {this.state.lamaran.lowongan}</Badge>
+                <i className="fa fa-user pr-1"></i> {this.state.lamaran.pelamar} <Badge color="secondary">Candidate {this.state.lamaran.lowongan}</Badge> <Badge href="#" color="info" pill>{this.state.lamaran.tahapan}</Badge>
               </CardHeader>
               <CardBody>
                 <Row>
@@ -114,8 +111,8 @@ class Applicants extends Component {
             </Card>
           </Col>
           <Col lg={4}>
-            <ChooseCurrentStage tahapan={this.state.lamaran.tahapan} id={this.state.lamaran.id}/>
-            <ChooseStages id={this.state.lamaran.id} />
+            <ChooseCurrentStage lamaran={this.state.lamaran} />
+            <ChooseStages lamaran={this.state.lamaran} />
           </Col>
         </Row>
       </div>

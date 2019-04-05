@@ -22,7 +22,7 @@ class RemoteTestForm extends Component {
       loading: true,
       duration: 0,
       tester_email: '',
-      expired_in: 0,
+      expired_date: null,
       id_soal: 1,
       start_date: today,
       link_jawaban: ''
@@ -72,18 +72,20 @@ class RemoteTestForm extends Component {
       //post it to backend
       axios.post('http://localhost:8000/po/create-remote-test', qs.stringify({
         'id_lamaran': this.state.lamaran.id,
-        'duration': this.state.lamaran.duration,
+        'duration': this.state.duration,
         'tester_email': this.state.tester_email,
-        'expired_in': this.state.expired_in,
+        'expired_date': this.state.expired_date,
         'id_soal': this.state.id_soal,
-        'start_date': this.state.start_date,
       }),
       {
-        headers: {'Content-Type': 'remotetest/x-www-form-urlencoded'}
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
       })
       .then(function (response) {
           console.log(response.data);
       })
+
+      window.location.href ='#/remoteTestStandby/' + this.state.lamaran.id
+      window.location.reload()
 
     }
 
@@ -132,12 +134,12 @@ class RemoteTestForm extends Component {
               </Col>
             </FormGroup>
             <FormGroup row>
-              <Label for="expired_in" sm={3}>Expire Date</Label>
+              <Label for="expired_date" sm={3}>Expire Date</Label>
               <Col sm={9}>
                 <Input
                   type="date"
-                  name="expired_in"
-                  id="expired_in"
+                  name="expired_date"
+                  id="expired_date"
                   onChange={this.handleInputChange}
                   required
                 />

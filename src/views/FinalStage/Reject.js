@@ -17,6 +17,8 @@ class Reject extends Component {
       lamaran: [],
       loading: true
     }
+
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentDidMount(){
@@ -31,6 +33,42 @@ class Reject extends Component {
     })
   }
 
+  handleSubmit = (e) => {
+    e.preventDefault()
+
+    if (window.confirm('Are you sure you want to reject this applicant ?')){
+      console.log(this.state);
+
+      // axios post
+      var qs = require('qs');
+
+      //post it to backend
+      axios.post('http://localhost:8000/po/update-tahapan-lamaran', qs.stringify({
+        'id': this.state.lamaran.id,
+        'tahapan': 'Rejected',
+        'status': 'Rejected',
+      }),
+      {
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+      })
+      .then(function (response) {
+          console.log(response.data);
+      })
+
+      this.setState({
+        lamaran: {
+          tahapan: 'Rejected',
+          status: 'Rejected',
+        }
+      })
+
+      window.location.href ='#/RejectNotification/' + this.state.lamaran.id
+      window.location.reload()
+
+    }
+
+  }
+
   render() {
     let content;
 
@@ -40,7 +78,7 @@ class Reject extends Component {
 
       content = (
         <div>
-          <Form>
+          <Form method="post" onSubmit={this.handleSubmit}>
             <FormGroup row>
               <Label for="additionalMessage" sm={3}>Additional Message</Label>
               <Col sm={9}>
@@ -82,10 +120,8 @@ class Reject extends Component {
                 <CardTitle>
                   The applicant above will be <strong>rejected</strong> from the recruitment process. A notification email will be sent to the applicant. <br/>
                 </CardTitle>
-                <CardText>
                   <br/>
                   {content}
-                </CardText>
               </CardBody>
             </Card>
           </Col>
