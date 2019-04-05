@@ -20,18 +20,19 @@ class LamaranController extends Controller
 
     }
 
-    public function sendMailLamaran(){
-        // $nama = $data->nama;
-        // $email = $data->email;
-        
-        $nama = "Syafiq Abdillah";
-        $email = "abdillah.syafiq@gmail.com";
-        $text = 'Dear ' . $nama . ', your application has been submitted. We will evaluate it soon. \n Best Regards \n SIRCLO HR';
+    public function sendMailLamaran($data){
+        $nama = $data['nama'];
+        $email = $data['email'];
+        $lowongan = $data['lowongan'];
+
+        $text = 'Dear ' . $nama . ', your application as '. $lowongan .'has been submitted. We will evaluate it soon. 
+        Best Regards 
+        SIRCLO HR';
         $data = array('email'=>$email, 'text'=>$text);
 
         Mail::send([], $data, function($message) use ($data) {
             $message->to($data['email'], '')
-            ->subject('SIRCLO Application Success')
+            ->subject('SIRCLO | Your Application has Submitted')
             ->setBody($data['text']);
             $message->from('second.umarghanis@gmail.com', 'Career SIRCLO');
         });
@@ -85,14 +86,20 @@ class LamaranController extends Controller
         $id_lamaran = (int) $id_lamaran;
 
         //kirim email ke pelamar dan ke PO
-        // $pelamar = DB::table('pelamar')->select()->where($token_pelamar)->get();
-        // $pelamar = json_decode($pelamar);
-        // $pelamar = $pelamar[0];
-        // $nama = $pelamar->nama;
-        // $email = $pelamar->email;
+        $pelamar = DB::table('pelamar')->select()->where('token', $token_pelamar)->get();
+        $pelamar = json_decode($pelamar);
+        $pelamar = $pelamar[0];
+        $nama = $pelamar->nama;
+        $email = $pelamar->email;
 
-        // $data = array('nama'=>$nama, 'email'=>$email);
-        // $this->sendMailLamaran($data);
+        $lowongan = DB::table('lowongan')->select()->where('id', $id_lowongan)->get();
+        $lowongan = json_decode($lowongan);
+        $lowongan = $lowongan[0];
+        $lowongan = $lowongan->nama;
+
+        $data = array('nama'=>$nama, 'email'=>$email, 'lowongan'=>$lowongan);
+
+        $this->sendMailLamaran($data);
 
         return $id_lamaran;
     }
