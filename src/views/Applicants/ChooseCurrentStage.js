@@ -12,12 +12,46 @@ class ChooseCurrentStage extends Component {
     this.state = {
       loading: true
     }
+
+    this.handleClick = this.handleClick.bind(this);
   }
 
   componentDidMount(){
     this.setState({
       loading: false
     })
+  }
+
+  handleClick = () => {
+
+    if (window.confirm('Are you sure you want to pass this applicant on the current phase ?')) {
+      console.log(this.props);
+
+      // axios post
+      var qs = require('qs');
+
+      //post it to backend
+      axios.post('http://localhost:8000/po/update-tahapan-lamaran', qs.stringify({
+        'id': this.props.lamaran.id,
+        'tahapan': this.props.lamaran.tahapan,
+        'status': 'Passed',
+      }),
+      {
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+      })
+      .then(function (response) {
+          console.log(response.data);
+      })
+
+      this.setState({
+        lamaran: {
+          status: 'Passed',
+        }
+      })
+
+      window.location.reload();
+
+    }
   }
 
   render() {
@@ -28,12 +62,12 @@ class ChooseCurrentStage extends Component {
     } else {
       content = (
         <div>
-          <p>This applicant is at the <strong>{this.props.tahapan}</strong> phase, choose one action: </p>
+          <p>This applicant is at the <strong>{this.props.lamaran.tahapan}</strong> phase, choose one action: </p>
           <Row>
             <Col lg={1}>
             </Col>
             <Col lg={10}>
-              <Link to={"/reject/" + this.props.id}> <Button outline className="btn-pill" color="danger" block>Reject</Button> </Link>
+              <Link to={"/reject/" + this.props.lamaran.id}> <Button outline className="btn-pill" color="danger" block>Reject</Button> </Link>
             </Col>
             <Col lg={1}>
             </Col>
@@ -43,7 +77,7 @@ class ChooseCurrentStage extends Component {
             <Col lg={1}>
             </Col>
             <Col lg={10}>
-              <Button outline className="btn-pill" color="success" block>Pass</Button>
+              <Button outline className="btn-pill" color="success" onClick={this.handleClick} block>Pass</Button>
             </Col>
             <Col lg={1}>
             </Col>
@@ -67,6 +101,7 @@ class ChooseCurrentStage extends Component {
       </div>
     );
   }
+  
 }
 
 export default ChooseCurrentStage;

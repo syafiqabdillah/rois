@@ -12,50 +12,12 @@ class ChooseStages extends Component {
     this.state = {
       loading: true
     }
-
-    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentDidMount(){
     this.setState({
       loading: false
     })
-  }
-
-  handleSubmit = (e) => {
-    e.preventDefault()
-
-    if (window.confirm('Are you sure you want to hire this applicant ?')){
-      console.log(this.state);
-
-      // axios post
-      var qs = require('qs');
-
-      //post it to backend
-      axios.post('http://localhost:8000/po/update-tahapan-lamaran', qs.stringify({
-        'id': this.state.lamaran.id,
-        'tahapan': 'Hired',
-        'status': 'Hired',
-      }),
-      {
-        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-      })
-      .then(function (response) {
-          console.log(response.data);
-      })
-
-      this.setState({
-        lamaran: {
-          tahapan: 'Hired',
-          status: 'Hired',
-        }
-      })
-
-      window.location.href ='#/' +  + '/' + this.state.lamaran.id
-      window.location.reload()
-
-    }
-
   }
 
   render() {

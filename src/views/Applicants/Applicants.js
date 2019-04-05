@@ -97,7 +97,7 @@ class Applicants extends Component {
           <Col lg={8}>
             <Card >
               <CardHeader>
-                <i className="fa fa-user pr-1"></i> {this.state.lamaran.pelamar} <Badge color="secondary">Candidate {this.state.lamaran.lowongan}</Badge> <Badge href="#" color="info" pill>{this.state.lamaran.tahapan}</Badge>
+                <i className="fa fa-user pr-1"></i> {this.state.lamaran.pelamar} <Badge color="secondary">Candidate {this.state.lamaran.lowongan}</Badge> <Badge href="#" color="info" pill>{this.state.lamaran.tahapan}</Badge> <Badge href="#" color="warning" pill>{this.state.lamaran.status}</Badge>
               </CardHeader>
               <CardBody>
                 <Row>
