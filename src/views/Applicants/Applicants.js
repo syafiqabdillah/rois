@@ -116,7 +116,7 @@ class Applicants extends Component {
         stage = (
           <div>
             <ChooseCurrentStage lamaran={this.state.lamaran} />
-            <Widget02 header="Assigned" mainText="Waiting for applicant's answer" icon="fa fa-hourglass" color="warning" />
+            <Widget02 header="Assigned" mainText="Waiting for applicant's answer" icon="fa fa-clock-o" color="warning" />
           </div>
         );
       } else if (this.state.lamaran.tahapan === 'Remote Test' &&  this.state.lamaran.status === 'Answered') {
@@ -126,19 +126,23 @@ class Applicants extends Component {
             <Widget02 header="Answered" mainText="Click here to see the applicant's answer" icon="fa fa-check" color="info" />
           </div>
         );
-      } else if (this.state.lamaran.tahapan === 'Interview') {
+      } else if (this.state.lamaran.tahapan === 'Hired') {
+        stage = (
+          <Widget04 icon="fa fa-thumbs-up" color="success" header="Hired" value="0" invert>
+            This applicant have passed all the SIRCLO's recruitment process
+          </Widget04>
+        );
+      } else if (this.state.lamaran.tahapan === 'Rejected') {
+        stage = (
+          <Widget04 icon="fa fa-thumbs-down" color="danger" header="Rejected" value="0" invert>
+            This applicant have been rejected from the SIRCLO's recruitment process
+          </Widget04>
+        );
+      } else {
         stage = (
           <div>
             <ChooseCurrentStage lamaran={this.state.lamaran} />
           </div>
-        );
-      } else if (this.state.lamaran.tahapan === 'Hired') {
-        stage = (
-          <Widget04 icon="fa fa-thumbs-up" color="success" header="Hired" value="0" invert>This applicant have passed all the SIRCLO's recruitment process</Widget04>
-        );
-      } else if (this.state.lamaran.tahapan === 'Rejected') {
-        stage = (
-          <Widget04 icon="fa fa-thumbs-down" color="danger" header="Rejected" value="0" invert>This applicant have been rejected from the SIRCLO's recruitment process</Widget04>
         );
       }
 
