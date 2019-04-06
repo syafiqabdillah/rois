@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import ChooseCurrentStage from '../ChooseCurrentStage';
-import ChooseStages from '../ChooseStages';
-import { Badge, Card, CardBody, CardHeader, Col, Pagination, PaginationItem, PaginationLink, Row, Table, CardTitle, CardText, Progress } from 'reactstrap';
+import ChooseCurrentStage from './ChooseCurrentStage';
+import ChooseStages from './ChooseStages';
+import { Badge, Card, CardBody, CardHeader, Col, Pagination, PaginationItem, PaginationLink, Row, Table, CardTitle, CardText, Progress, Tooltip } from 'reactstrap';
 
 const API = 'http://localhost:8000';
 
@@ -12,8 +12,13 @@ class Applicants extends Component {
 
     this.state = {
       lamaran: [],
-      loading: true
+      loading: true,
+      toolTipPhase: false,
+      toolTipStatus: false,
     }
+
+    this.togglePhase = this.togglePhase.bind(this);
+    this.toggleStatus = this.toggleStatus.bind(this);
   }
 
   componentDidMount(){
@@ -26,6 +31,18 @@ class Applicants extends Component {
         loading: false
       })
     })
+  }
+
+  togglePhase() {
+    this.setState({
+      toolTipPhase: !this.state.toolTipPhase
+    });
+  }
+
+  toggleStatus() {
+    this.setState({
+      toolTipStatus: !this.state.toolTipStatus
+    });
   }
 
   render() {
@@ -44,31 +61,31 @@ class Applicants extends Component {
             </tr>
             <tr>
               <th scope="row">Place, Date of Birth</th>
-              <td>: -</td>
+              <td>: {this.state.lamaran.detail_pelamar.tempat_lahir}, {this.state.lamaran.detail_pelamar.tanggal_lahir}</td>
             </tr>
             <tr>
               <th scope="row">NIK</th>
-              <td>: -</td>
+              <td>: {this.state.lamaran.detail_pelamar.nik}</td>
             </tr>
             <tr>
               <th scope="row">Address</th>
-              <td>: -</td>
+              <td>: {this.state.lamaran.detail_pelamar.alamat}</td>
             </tr>
             <tr>
               <th scope="row">Email</th>
-              <td>: -</td>
+              <td>: {this.state.lamaran.detail_pelamar.email}</td>
             </tr>
             <tr>
               <th scope="row">Handphone</th>
-              <td>: -</td>
+              <td>: {this.state.lamaran.detail_pelamar.phone}</td>
             </tr>
             <tr>
               <th scope="row">Experiences</th>
-              <td>: -</td>
+              <td>: {this.state.lamaran.experience.deskripsi}</td>
             </tr>
             <tr>
               <th scope="row">Skills</th>
-              <td>: -</td>
+              <td>: {this.state.lamaran.skill.deskripsi}</td>
             </tr>
             <tr>
               <th scope="row">Expected Salary</th>
@@ -92,18 +109,21 @@ class Applicants extends Component {
         <div align="center">
           <h3>Applicant's Profile</h3>
         </div>
-        <br />
+        <br/>
         <Row>
-          <Col lg={3}>
-          </Col>
-          <Col lg={6}>
-            <div>
-              <Badge className="mr-1" href="#" color="warning" pill>Administrasi</Badge>
-            </div>
-            <br />
+          <Col lg={8}>
             <Card >
               <CardHeader>
-                <i className="fa fa-user pr-1"></i>{this.state.lamaran.pelamar} <Badge color="secondary">Candidate {this.state.lamaran.lowongan}</Badge>
+                <i className="fa fa-user pr-1"></i> {this.state.lamaran.pelamar} <Badge color="secondary">
+                Candidate {this.state.lamaran.lowongan}</Badge> <Badge href="#" color="info" pill id="Phase">
+                {this.state.lamaran.tahapan}</Badge> <Badge href="#" color="warning" pill id="Status">
+                {this.state.lamaran.status}</Badge>
+                <Tooltip placement="top" isOpen={this.state.toolTipPhase} target="Phase" toggle={this.togglePhase}>
+                  Current phase
+                </Tooltip>
+                <Tooltip placement="right" isOpen={this.state.toolTipStatus} target="Status" toggle={this.toggleStatus}>
+                  Status of the current phase
+                </Tooltip>
               </CardHeader>
               <CardBody>
                 <Row>
@@ -115,10 +135,10 @@ class Applicants extends Component {
                 </Row>
               </CardBody>
             </Card>
-            <ChooseCurrentStage tahapan={this.state.lamaran.tahapan} />
-            <ChooseStages />
           </Col>
-          <Col lg={3}>
+          <Col lg={4}>
+            <ChooseCurrentStage lamaran={this.state.lamaran} />
+            <ChooseStages lamaran={this.state.lamaran} />
           </Col>
         </Row>
       </div>
