@@ -28,7 +28,7 @@ class ChooseStages extends Component {
     } else {
       content = (
         <div>
-          <p>Choose the next action for this applicant to take: </p>
+          <p>This applicant is currently <strong>not assigned to anything.</strong> Please choose the next step for this applicant to take: </p>
           <Row>
             <Col lg={1}>
             </Col>
