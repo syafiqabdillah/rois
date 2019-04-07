@@ -86,13 +86,28 @@ class LamaranController extends Controller
             'cover_letter' => $cover_letter,
             'tahapan' => $tahapan,
             'status' => $status,
-            'skill' => $skill,
-            'experience' => $experience,
             'created_date' => $created_date
             ]
         );
 
         $id_lamaran = (int) $id_lamaran;
+
+        $skills = explode(",", $skill);
+        foreach($skills as $s){
+            DB::table('skill')->insertGetId(
+                ['deskripsi'=>$s,
+                'id_lamaran'=>$id_lamaran]
+            );
+        }
+
+        $experiences = explode(",", $experience);
+        foreach($experiences as $e){
+            //create experience
+            DB::table('experience')->insertGetId(
+                ['deskripsi'=>$e,
+                'id_lamaran'=>$id_lamaran]
+            );
+        }
 
         //kirim email ke pelamar dan ke PO
         $pelamar = DB::table('pelamar')->select()->where('token', $token_pelamar)->get();
@@ -109,14 +124,6 @@ class LamaranController extends Controller
         $data = array('nama'=>$nama, 'email'=>$email, 'lowongan'=>$lowongan);
 
         $this->sendMailLamaran($data);
-        $experiences = explode(",", $experience);
-        foreach($experiences as $e){
-            //create experience
-            DB::table('experience')->insertGetId(
-                ['deskripsi'=>$e,
-                'id_lamaran'=>$id_lamaran]
-            );
-        }
 
         return $id_lamaran;
     }
@@ -162,11 +169,11 @@ class LamaranController extends Controller
         $pelamar = json_decode($pelamar);
         $pelamar = $pelamar[0];
 
-        $experience = DB::table('experience')->select()->where('token_pelamar', $token)->get();
+        $experience = DB::table('experience')->select()->where('id_lamaran', $id)->get();
         $experience = json_decode($experience);
         $experience = $experience[0];
 
-        $skill = DB::table('skill')->select()->where('token_pelamar', $token)->get();
+        $skill = DB::table('skill')->select()->where('id_lamaran', $id)->get();
         $skill = json_decode($skill);
         $skill = $skill[0];
 
