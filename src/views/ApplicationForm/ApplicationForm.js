@@ -35,6 +35,7 @@ class ApplicationForm extends Component {
       })
     } else {
       alert('file size must be less than 2 MB')
+      e.target.value = ""
     }
   }
 

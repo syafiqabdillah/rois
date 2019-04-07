@@ -14,7 +14,7 @@ const propTypes = {
 const defaultProps = {};
 
 let imageUrl;
-if (localStorage.getItem('profile')) {
+if (localStorage.getItem('profile') != undefined) {
   const profile = JSON.parse(localStorage.getItem('profile'));
   imageUrl = profile.imageUrl;
 } else {
