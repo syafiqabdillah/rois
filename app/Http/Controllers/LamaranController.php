@@ -101,7 +101,6 @@ class LamaranController extends Controller
         $nama = $pelamar->nama;
         $email = $pelamar->email;
 
-<<<<<<< HEAD
         $lowongan = DB::table('lowongan')->select()->where('id', $id_lowongan)->get();
         $lowongan = json_decode($lowongan);
         $lowongan = $lowongan[0];
@@ -110,7 +109,6 @@ class LamaranController extends Controller
         $data = array('nama'=>$nama, 'email'=>$email, 'lowongan'=>$lowongan);
 
         $this->sendMailLamaran($data);
-=======
         $experiences = explode(",", $experience);
         foreach($experiences as $e){
             //create experience
@@ -119,7 +117,6 @@ class LamaranController extends Controller
                 'id_lamaran'=>$id_lamaran]
             );
         }
->>>>>>> 656d7bcf06d068f6ab75ea18a46ca2f750cb7d41
 
         return $id_lamaran;
     }
