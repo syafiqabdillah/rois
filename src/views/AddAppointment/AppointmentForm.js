@@ -77,7 +77,7 @@ export default class AppointmentForm extends React.Component {
     }
 
     return (
-      <Form labelCol={{ span: 5 }} wrapperCol={{ span: 12 }} onSubmit={this.handleSubmit}>
+      <Form labelCol={{ span: 8 }} wrapperCol={{ span: 10 }} onSubmit={this.handleSubmit}>
         <Form.Item
           label="Date"
         >
@@ -129,7 +129,7 @@ export default class AppointmentForm extends React.Component {
           )}
         </Form.Item>
         <Form.Item
-          wrapperCol={{ span: 12, offset: 5 }}
+          wrapperCol={{ span: 12, offset: 15 }}
         >
           <Button type="primary" htmlType="submit">
             Submit

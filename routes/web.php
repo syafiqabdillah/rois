@@ -101,6 +101,5 @@ $router->post('po/create-appointment', ['middleware' => 'cors', 'uses' => 'Appoi
  * UC - 06 : Pelamar Membuat Jawaban
  * Author : Fairuz Y
  */
-
+$router->post('pelamar/record-start-test', ['middleware' => 'cors', 'uses' => 'RemoteTestController@startDateRecord']);
 $router->post('pelamar/submit-jawaban', ['middleware' => 'cors', 'uses' => 'RemoteTestController@submitJawaban']);
-
