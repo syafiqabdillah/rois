@@ -44,7 +44,7 @@ export default class ConfirmationStartTest extends React.Component {
     };
     return (
       <div>
-        <Button type="primary" onClick={this.toggle} shape="round">Start Test</Button>
+        <Button type="primary" onClick={this.toggle} shape="round" block>Start Test</Button>
         <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
           <ModalHeader toggle={this.toggle}>
           </ModalHeader>

@@ -3,17 +3,13 @@ import {
   Card,
   CardBody,
   CardHeader,
-  Col,
-  Input,
-  Row,
   Badge
 } from 'reactstrap';
 
 import 'antd/dist/antd.css';
-import { Icon } from 'antd';
+import { Icon, Row, Col, Form } from 'antd';
 import axios from 'axios';
 import CountDown from './CountDown';
-import { Form } from 'antd';
 import  AnswerForm from './AnswerForm';
 import ConfirmationStartTest from './ConfirmationStartTest';
 
@@ -122,13 +118,14 @@ class AddAnswer extends React.Component{
     let startTest =
       <div>
         <Row>
-          <Col xs="12" align="center">
-            <h4>Congratulation, you have on remote test phase</h4>
-            <p>To get coding task click button below</p>
+          <Col align="center">
+            <h4>Congratulation</h4>
+            <h4>You have on remote test phase</h4>
+            <p>Click button below to start coding test</p>
           </Col>
         </Row>
         <Row>
-          <Col sm="2" md={{ size: 5, offset: 5 }}>
+          <Col span={5} offset={10}>
             <ConfirmationStartTest idRemoteTest= {this.props.match.params.id}/>
           </Col>
         </Row>
@@ -137,13 +134,14 @@ class AddAnswer extends React.Component{
     let answer =
       <div>
         <Row>
-          <Col xs="12" align="center">
+          <Col align="center">
             <CountDown endDate={`${this.state.endDateAnswer}`}/>
             <p style={textStyle}> Submission format : https://github.com/johndoe/submission.git </p>
+            <a href="https://tirto.id/mengenang-keampuhan-taktik-san-antonio-spurs-di-final-nba-dlgJ">Coding Task</a>
           </Col>
         </Row>
         <Row>
-          <Col xs="12">
+          <Col>
             <FormAnswer />
           </Col>
         </Row>
@@ -151,15 +149,15 @@ class AddAnswer extends React.Component{
     let success =
     <div>
     <Row>
-      <Col sm="2" md={{ size: 7, offset: 5 }}>
+      <Col span={12} offset={10}>
         <Icon type="check-circle" theme="twoTone" twoToneColor="#52c41a" style={{ fontSize: '64px'}}/>
         <br/>
       </Col>
     </Row>
       <Row>
-        <Col sm="2" md={{ size: 8, offset: 3 }}>
+        <Col span={12} offset={7}>
           <br/>
-          <h4>You have submit remote test answer</h4>
+          <h5>You have submit remote test answer</h5>
         </Col>
       </Row>
     </div>;
@@ -177,12 +175,12 @@ class AddAnswer extends React.Component{
     return (
       <div className="animated fadeIn">
           <Row>
-            <Col sm="2" md={{ size: 4, offset: 5 }}>
-              <h3><strong>Remote Test Assesment</strong></h3>
+            <Col align="center">
+              <h3><strong>Remote Test</strong></h3>
             </Col>
           </Row>
           <Row>
-          <Col sm="10" md={{ size: 7, offset: 3 }}>
+          <Col span={12} offset={6}>
             <Card>
               <CardHeader>
                 {/*<strong>Submission</strong>*/}

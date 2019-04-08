@@ -4,12 +4,10 @@ import {
   Card,
   CardBody,
   CardHeader,
-  Col,
-  Row
 } from 'reactstrap';
 
 import 'antd/dist/antd.css';
-import { Form } from 'antd';
+import { Form, Col, Row } from 'antd';
 import  AppointmentForm from './AppointmentForm';
 
 
@@ -43,12 +41,12 @@ class AddAppointment extends React.Component{
     return (
       <div className="animated fadeIn">
           <Row>
-            <Col sm="5" md={{ size: 5, offset: 5 }}>
+            <Col align="center">
               <h2><strong>Add Appointment</strong></h2>
             </Col>
           </Row>
           <Row>
-          <Col sm="10" md={{ size: 7, offset: 3 }}>
+          <Col span={12} offset={6}>
             <Card>
               <CardHeader>
                   <strong>Add Appointment</strong>
