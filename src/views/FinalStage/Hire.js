@@ -62,7 +62,6 @@ class Hire extends Component {
         }
       })
 
-      window.location.href ='#/HireNotification/' + this.state.lamaran.id
       window.location.reload()
 
     }
@@ -76,39 +75,65 @@ class Hire extends Component {
       content = <div align="center"><p>Loading . . .</p></div>;
     } else {
 
-      content = (
-        <div>
-          <Form method="post" onSubmit={this.handleSubmit}>
-            <FormGroup row>
-              <Label for="offeringLetter" sm={3}>Offering Letter</Label>
-              <Col sm={9}>
-                <Input type="file" name="file" id="offeringLetter" />
-                <FormText color="muted">
-                  File size must not exceed 2MB.
-                </FormText>
-              </Col>
-            </FormGroup>
-            <FormGroup row>
-              <Label for="additionalMessage" sm={3}>Additional Message</Label>
-              <Col sm={9}>
-                <Input type="textarea" name="text" id="additionalMessage" />
-              </Col>
-            </FormGroup>
+      if (this.state.lamaran.tahapan === 'Hired' && localStorage.getItem('role') === 'admin') {
+
+        content = (
+          <div>
+            <CardTitle>
+              The applicant above has been successfully recruited as a SIRCLO's staff. <br/>
+            </CardTitle>
             <br/>
             <Row>
-              <Col lg={6}>
-                <p><u>see preview email</u></p>
+              <Col lg={8}>
               </Col>
-              <Col lg={3}>
-                <Link to={"/applicants/" + this.state.lamaran.id}> <Button className="btn-pill" outline color="danger" block>Cancel</Button> </Link>
-              </Col>
-              <Col lg={3}>
-                <Button className="btn-pill" color="primary" block>Confirm</Button>
+              <Col lg={4}>
+                <Link to={"/applications"}> <p>back to applications list</p> </Link>
               </Col>
             </Row>
-          </Form>
-        </div>
-      );
+          </div>
+        );
+
+      } else {
+
+        content = (
+          <div>
+            <CardTitle>
+              The applicant above will be <strong>hired</strong> from the recruitment process. A notification email will be sent to the applicant.
+            </CardTitle>
+            <br/>
+            <Form method="post" onSubmit={this.handleSubmit}>
+              <FormGroup row>
+                <Label for="offeringLetter" sm={3}>Offering Letter</Label>
+                <Col sm={9}>
+                  <Input type="file" name="file" id="offeringLetter" />
+                  <FormText color="muted">
+                    File size must not exceed 2MB.
+                  </FormText>
+                </Col>
+              </FormGroup>
+              <FormGroup row>
+                <Label for="additionalMessage" sm={3}>Additional Message</Label>
+                <Col sm={9}>
+                  <Input type="textarea" name="text" id="additionalMessage" />
+                </Col>
+              </FormGroup>
+              <br/>
+              <Row>
+                <Col lg={6}>
+                  <p><u>see preview email</u></p>
+                </Col>
+                <Col lg={3}>
+                  <Link to={"/applicants/" + this.state.lamaran.id}> <Button className="btn-pill" outline color="danger" block>Cancel</Button> </Link>
+                </Col>
+                <Col lg={3}>
+                  <Button className="btn-pill" color="primary" block>Confirm</Button>
+                </Col>
+              </Row>
+            </Form>
+          </div>
+        );
+
+      }
     }
 
     return (
@@ -126,11 +151,7 @@ class Hire extends Component {
                 <i className="fa fa-user pr-1"></i>{this.state.lamaran.pelamar} <Badge color="secondary">Candidate {this.state.lamaran.lowongan}</Badge>
               </CardHeader>
               <CardBody>
-                <CardTitle>
-                  The applicant above will be <strong>hired</strong> from the recruitment process. A notification email will be sent to the applicant.
-                </CardTitle>
-                  <br/>
-                  {content}
+                {content}
               </CardBody>
             </Card>
           </Col>

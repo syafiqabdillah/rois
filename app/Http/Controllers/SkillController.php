@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use \Illuminate\Http\Request;
 use \Illuminate\Support\Facades\DB;
 
-class RequirementController extends Controller
+class SkillController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -14,11 +14,11 @@ class RequirementController extends Controller
      */
     public function __construct()
     {
-        
+
     }
 
     /**
-     * membuat suatu requirement untuk suatu lowongan 
+     * membuat suatu requirement untuk suatu lowongan
      * @param request  $request berisi $nama, $id_lowongan
      * @return long $id id dari hasil penambahan requirement di database
      */
@@ -27,7 +27,7 @@ class RequirementController extends Controller
         $id_lowongan = $request->id_lowongan;
 
         $id = DB::table('requirement')->insertGetId(
-            ['nama' => $nama, 
+            ['nama' => $nama,
             'id_lowongan' => $id_lowongan]
         );
         return $id;
@@ -42,10 +42,10 @@ class RequirementController extends Controller
         $id = $request->id;
         $nama = $request->nama;
         $id_lowongan = $request->id_lowongan;
-        
+
         $result = DB::table('requirement')
             ->where('id', $id)
-            ->update(['nama' => $nama, 
+            ->update(['nama' => $nama,
             'id_lowongan' => $id_lowongan]);
         return $result;
     }
@@ -57,11 +57,11 @@ class RequirementController extends Controller
      */
     public function deleteRequirement(Request $request){
         $id = $request->id;
-        
+
         $response = DB::table('requirement')
         ->where('id', $id)
-        ->delete();       
+        ->delete();
         return $response;
     }
-    
+
 }
