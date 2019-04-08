@@ -49,13 +49,15 @@ class AppointmentController extends Controller
         $start = $request->start;
         $end = $request->end;
         $lokasi = $request->lokasi;
+        $interviewer = $request->interviewer;
 
         $id = DB::table('appointment')->insertGetId(
             ['id_lamaran' => $id_lamaran,
             'date' => $date,
             'start' => $start,
             'end' => $end,
-            'lokasi' => $lokasi]
+            'lokasi' => $lokasi,
+            'interviewer' => $interviewer]
         );
 
         $data = array('date'=>$date, 'start'=>$end, 'end'=>$end, 'location'=>$lokasi);

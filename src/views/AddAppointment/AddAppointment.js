@@ -38,34 +38,20 @@ export default class AddAppointment extends React.Component{
   }
 
   componentDidMount(){
-    this.getDetailLamaran();
+    this.getDetailApplicant();
   }
 
-  getDetailLamaran = () => {
-    axios.get('http://localhost:8000' + '/po/lamaran/' + this.props.match.params.id)
+  getDetailApplicant = () => {
+    axios.get('http://localhost:8000' + '/po/get-detail-applicant/' + this.props.match.params.id)
       .then((response) => {
-        const idLowongan = response.data.id_lowongan;
-        const tokenPelamar = response.data.token_pelamar;
-        this.getDetailApplicant(idLowongan, tokenPelamar);
-      });
-  }
-
-  getDetailApplicant = (idLowongan, tokenPelamar) => {
-    axios.all([
-      axios.get('http://localhost:8000' + '/po/lowongan/' + idLowongan),
-      axios.get('http://localhost:8000' + '/pelamar/get-profile/' + tokenPelamar)
-    ])
-      .then(axios.spread((lowongan, pelamar) => {
-        // do something with both responses
-        const namaLowongan = lowongan.data.nama;
-        const namaPelamar = pelamar.data[0].nama;
-        console.log(pelamar);
+        const namaLowongan = response.data.lowongan;
+        const namaPelamar = response.data.nama_pelamar;
         this.setState({
           lowonganDidaftar : namaLowongan,
           namaPelamar : namaPelamar,
           loading: false
         });
-      }));
+      });
   }
 
   render() {
@@ -92,7 +78,7 @@ export default class AddAppointment extends React.Component{
                 </div>
               </CardHeader>
               <CardBody>
-                <FormAppointment />
+                <FormAppointment idLamaran={this.props.match.params.id}/>
               </CardBody>
             </Card>
           </Col>

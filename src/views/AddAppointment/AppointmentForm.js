@@ -27,19 +27,20 @@ export default class AppointmentForm extends React.Component {
         console.log(values['date'].format('YYYY-MM-DD'));
         var qs = require('qs');
         axios.post('http://localhost:8000/po/create-appointment', qs.stringify({
-          'id_lamaran': 1,
+          'id_lamaran': this.props.idLamaran,
           'date': values['date'].format('YYYY-MM-DD'),
           'start': values['start-time'].format('HH:mm'),
           'end': values['finish-time'].format('HH:mm'),
           'lokasi' : values['location'],
+          'interviewer' : values['interviewer']
         }),
         {
           headers: {'Content-Type': 'application/x-www-form-urlencoded'}
         })
         message.info('Message', 9);
-        message.loading('Saving...', 4)
-        .then(() => message.success('Saving finished', 2.5))
-        .then(() => message.success('invitation Sent', 2.5))
+        message.loading('Saving...', 3)
+        .then(() => message.success('Saving finished', 2))
+        .then(() => message.success('Invitation Sent', 2))
         .then(() => window.location.href = '/#/appointmens');
       }
     });

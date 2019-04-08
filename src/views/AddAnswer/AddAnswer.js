@@ -29,7 +29,8 @@ class AddAnswer extends React.Component{
       endDateAnswer : '',
       namaPelamar : '',
       lowonganDidaftar : '',
-      link : '',
+      soalLink : '',
+      answerLink : '',
     };
   }
 
@@ -51,46 +52,45 @@ class AddAnswer extends React.Component{
         if(response.data.start_date){
             startDate = new Date(response.data.start_date).toISOString();
         }
-        console.log(response.data.start_date);
         const duration = response.data.duration;
         const endDate = this.getEndTime(startDate, duration)
         const idLamaran = response.data.id_lamaran;
+        const idSoal = response.data.id_soal;
         const answerLink = response.data.link_jawaban;
         this.setState({
           startDateAnswer : startDate,
           endDateAnswer : endDate,
-          link : answerLink
+          answerLink : answerLink,
         });
-        this.getDetailLamaran(idLamaran);
+        this.getDetailApplicant(idLamaran);
+        this.getLinkSoal(idSoal);
       });
   }
 
-  getDetailLamaran = (idLamaran) => {
-    axios.get('http://localhost:8000' + '/po/lamaran/' + idLamaran)
+  getDetailApplicant = (idLamaran) => {
+    axios.get('http://localhost:8000' + '/po/get-detail-applicant/' + idLamaran)
       .then((response) => {
-        const idLowongan = response.data.id_lowongan;
-        const tokenPelamar = response.data.token_pelamar;
-        this.getDetailApplicant(idLowongan, tokenPelamar);
-      });
-  }
-
-  getDetailApplicant = (idLowongan, tokenPelamar) => {
-    axios.all([
-      axios.get('http://localhost:8000' + '/po/lowongan/' + idLowongan),
-      axios.get('http://localhost:8000' + '/pelamar/get-profile/' + tokenPelamar)
-    ])
-      .then(axios.spread((lowongan, pelamar) => {
-        // do something with both responses
-        const namaLowongan = lowongan.data.nama;
-        const namaPelamar = pelamar.data[0].nama;
-        console.log(pelamar);
+        const namaLowongan = response.data.lowongan;
+        const namaPelamar = response.data.nama_pelamar;
         this.setState({
           lowonganDidaftar : namaLowongan,
           namaPelamar : namaPelamar,
           loading: false
         });
-      }));
+      });
   }
+
+  getLinkSoal = (idSoal) => {
+    axios.get('http://localhost:8000' + '/po/soal/' + idSoal)
+      .then((response) => {
+        const linkSoal = response.data.link;
+        this.setState({
+          soalLink : linkSoal,
+        })
+      });
+  }
+
+
 
   getEndTime = (startTime, duration) => {
     const starttime = new Date(startTime);
@@ -137,7 +137,7 @@ class AddAnswer extends React.Component{
           <Col align="center">
             <CountDown endDate={`${this.state.endDateAnswer}`}/>
             <p style={textStyle}> Submission format : https://github.com/johndoe/submission.git </p>
-            <a href="https://tirto.id/mengenang-keampuhan-taktik-san-antonio-spurs-di-final-nba-dlgJ">Coding Task</a>
+            <a href={this.state.soalLink}>Coding Task</a>
           </Col>
         </Row>
         <Row>
@@ -162,8 +162,8 @@ class AddAnswer extends React.Component{
       </Row>
     </div>;
     if(this.state.startDateAnswer){
-      console.log(Boolean(this.state.startDateAnswer))
-      const value = this.state.link;
+      const value = this.state.answerLink;
+      console.log(value);
       if(value){
         body = success;
       } else{

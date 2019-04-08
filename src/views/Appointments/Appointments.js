@@ -49,6 +49,12 @@ const data = {
       sort: 'asc',
       width: 150
     },
+    {
+      label: 'Interviewer',
+      field: 'interviewer',
+      sort: 'asc',
+      width: 150
+    },
   ],
   rows: []
 };
@@ -90,6 +96,7 @@ class Appointments extends Component {
           start_time : appointment.start,
           finish_time : appointment.end,
           location : appointment.lokasi,
+          interviewer : appointment.interviewer
           }
         );
       });
