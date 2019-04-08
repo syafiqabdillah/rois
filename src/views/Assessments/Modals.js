@@ -1,7 +1,9 @@
 import React from 'react';
 import axios from 'axios';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter, ButtonGroup, Col, Row } from 'reactstrap';
+import { Button, Modal, ModalHeader, ModalBody, Col, Row } from 'reactstrap';
 import Tooltip from '@material-ui/core/Tooltip';
+import 'antd/dist/antd.css';
+import { message } from 'antd';
 
 class Modals extends React.Component {
   constructor(props) {
@@ -30,17 +32,26 @@ class Modals extends React.Component {
       'id': this.props.id
     }),
     {
-      headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+      // headers: {'Content-Type': 'application/x-www-form-urlencoded'}
     })
-    .then(function (response) {
-      //handle success, munculin data
-      console.log(response);
-      window.location.href = '#/assessments';
-      window.location.reload();
-    })
-    .catch(function(response){
-      window.alert('gaga hapus karena ada soal')
-    })
+    this.setState(prevState => ({
+      modal: !prevState.modal
+    }));
+    message.info('Message', 5.5)
+    message.loading('Deleting...', 3)
+    .then(() => message.success(this.props.name + ' has successfully deleted', 2.5))
+    .then(() => window.location.reload())
+
+    // .then(function (response) {
+    //   //handle success, munculin data
+    //   // console.log(response);
+    //   message.info('Message', 9);
+    //   message.loading('Saving...', 4)
+    //   .then(() => message.success('Saving finished', 2.5))
+    //   .then(() => message.success('Your submission have been recorded', 2.5));  
+    //   // window.location.href = '#/assessments';
+    //   // window.location.reload();
+    // })
   }
 
 
@@ -52,19 +63,22 @@ class Modals extends React.Component {
     let buttonDelete;
     if(this.props.isDirujuk){
       buttonDelete = (
-        <Tooltip title="You don't have permission to do this">
+        <Tooltip title="There's a remote test referring to this assessment" >
           <span>
-            <Button disabled={Boolean(this.props.isDirujuk)} color="danger" onClick={this.toggle} className="btn-pill" block>Delete</Button>
+            <Button disabled={Boolean(this.props.isDirujuk)} color="danger" className="cui-trash icons">
+              {/* <i className="cui-trash icons"></i> */}
+            </Button>
           </span>
         </Tooltip>
       );
     } else {
       buttonDelete = (
-        <span>
-            <Button disabled={Boolean(this.props.isDirujuk)} color="danger" onClick={this.toggle} className="btn-pill" block>Delete</Button>
-          </span>
+        <Button disabled={Boolean(this.props.isDirujuk)} color="danger" onClick={this.toggle} className="cui-trash icons">
+          {/* <i className="cui-trash icons"></i> */}
+        </Button>
       )
     }
+    
     return (
       <div>
         {buttonDelete}
@@ -89,7 +103,7 @@ class Modals extends React.Component {
           <Row>
             <Col xs="6" sm="2"></Col>
             <Col xs="6" sm="8">
-                <Button color="primary" size="lg" onClick={this.handleSubmit} className="btn-pill" block>Yes, I am sure</Button>{' '}
+                <Button color="primary" size="lg" onClick={this.handleSubmit.bind(this)} className="btn-pill" block>Yes, I am sure</Button>{' '}
             </Col>
             <Col sm="2"></Col>
           </Row>

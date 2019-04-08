@@ -13,36 +13,30 @@ const data = {
       label: "Assessment's Name",
       field: 'nama',
       sort: 'asc',
-      width: 150
     },
     {
       label: "Vacancy",
       field: 'lowongan',
       sort: 'asc',
-      width: 200
     },
     {
       label: "Link",
       field: 'link',
       sort: 'asc',
-      width: 270
     },
     {
       label: "Creator",
       field: 'nama_karyawan',
       sort: 'asc',
-      width: 150
     },
     {
       label: "Created Date",
       field: 'created_date',
       sort: 'asc',
-      width: 150
     },
     {
       label: "Action",
       field: 'action',
-      width: 150
     }
   ],
   rows: []
@@ -55,18 +49,8 @@ class Assessments extends Component {
       soal: [],
       loading: true,
       modals : false,
-      // remoteTest: [],
-      // remoteTestStatus: null
     }
   }
-
-  // getRemoteTestStatus = (value) => {
-  //   let list_remote_test = this.state.remoteTest.map((remoteTest, index)) => {
-  //     if (remoteTest.idSoal == ){
-  //       this.state.remoteTestStatus = false; //ada remote test yang menggunakan soal tsb
-  //     }
-  //   } 
-  // }
 
   componentDidMount(){
     axios.get(API + '/po/all-soal')
@@ -77,13 +61,6 @@ class Assessments extends Component {
         loading: false
       })
     })
-    // axios.get (API + '/po/all-remote-test')
-    // .then(res => {
-    //   const remoteTest = res.data;
-    //   this.setState({
-    //     remoteTest: remoteTest,
-    //   })
-    // })
   }
 
   onClick (soal){
@@ -97,20 +74,30 @@ class Assessments extends Component {
     if (this.state.loading){
       content = <div align="center"><p>Loading . . .</p></div>;
     } else {
-      let list_soal = this.state.soal.map((soal, index) => {
+      let list_soal = this.state.soal.map((soal) => {
         return (
           {
             nama: soal.nama,
+                        
             lowongan: soal.lowongan,
+
             link: 
-              <a href={soal.link}>{soal.link}</a>,
+            <div style={{wordWrap: 'break-word', width:250, overflow: 'hidden'}}>
+              <a href={soal.link}>{soal.link}</a>
+            </div>,    
+            
             nama_karyawan: soal.nama_karyawan,
+            
             created_date: soal.created_date,
+            
             action: 
               <div>
-                <Button color="primary" className="btn-pill" onClick={() => this.onClick(soal)}>Update</Button>
-                <Modals isDirujuk={soal.isDirujuk} name={soal.nama} id={soal.id}/>
-              </div> 
+                <Button color="primary" onClick={() => this.onClick(soal)}>
+                  <i className="cui-pencil icons"></i>
+                </Button>
+                
+                <Modals isDirujuk={soal.isDirujuk} name={soal.nama} id={soal.id} />
+              </div>, 
           }
         );
       });
@@ -120,7 +107,12 @@ class Assessments extends Component {
       }
 
       content = (
-        <MDBDataTable borderless striped hover small btn data={data} />
+        <MDBDataTable borderless
+                      striped
+                      hover 
+                      small 
+                      btn
+                      data={data} />
       );
     }
 
@@ -129,8 +121,9 @@ class Assessments extends Component {
         <div align="center">
           <h3>Assessments</h3>
         </div>
+        <br></br>
         <Link to="/addAssessment">
-            <Button color="primary">Add Assessment</Button>
+            <Button color="primary" className="btn-pill">Add Assessment</Button>
         </Link>
         <br></br>
         <br></br>
@@ -144,7 +137,6 @@ class Assessments extends Component {
                 {content}
               </CardBody>
             </Card>
-          
           </Col>
         </Row>
       </div>
