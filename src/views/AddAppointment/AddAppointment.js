@@ -4,14 +4,16 @@ import {
   Card,
   CardBody,
   CardHeader,
+  Badge
 } from 'reactstrap';
 
 import 'antd/dist/antd.css';
 import { Form, Col, Row } from 'antd';
+import axios from 'axios';
 import  AppointmentForm from './AppointmentForm';
 
 
-class AddAppointment extends React.Component{
+export default class AddAppointment extends React.Component{
   constructor(props) {
     super(props);
 
@@ -21,6 +23,9 @@ class AddAppointment extends React.Component{
       collapse: true,
       fadeIn: true,
       timeout: 300,
+      loading : true,
+      lowonganDidaftar : '',
+      namaPelamar : '',
     };
   }
 
@@ -30,6 +35,37 @@ class AddAppointment extends React.Component{
 
   toggleFade() {
     this.setState((prevState) => { return { fadeIn: !prevState }});
+  }
+
+  componentDidMount(){
+    this.getDetailLamaran();
+  }
+
+  getDetailLamaran = () => {
+    axios.get('http://localhost:8000' + '/po/lamaran/' + this.props.match.params.id)
+      .then((response) => {
+        const idLowongan = response.data.id_lowongan;
+        const tokenPelamar = response.data.token_pelamar;
+        this.getDetailApplicant(idLowongan, tokenPelamar);
+      });
+  }
+
+  getDetailApplicant = (idLowongan, tokenPelamar) => {
+    axios.all([
+      axios.get('http://localhost:8000' + '/po/lowongan/' + idLowongan),
+      axios.get('http://localhost:8000' + '/pelamar/get-profile/' + tokenPelamar)
+    ])
+      .then(axios.spread((lowongan, pelamar) => {
+        // do something with both responses
+        const namaLowongan = lowongan.data.nama;
+        const namaPelamar = pelamar.data[0].nama;
+        console.log(pelamar);
+        this.setState({
+          lowonganDidaftar : namaLowongan,
+          namaPelamar : namaPelamar,
+          loading: false
+        });
+      }));
   }
 
   render() {
@@ -49,7 +85,11 @@ class AddAppointment extends React.Component{
           <Col span={12} offset={6}>
             <Card>
               <CardHeader>
-                  <strong>Add Appointment</strong>
+                <div>
+                  <i className="fa fa-user pr-1"></i>
+                  <Badge color="light">{this.state.namaPelamar}</Badge>
+                  <Badge color="secondary">{this.state.lowonganDidaftar}</Badge>
+                </div>
               </CardHeader>
               <CardBody>
                 <FormAppointment />
@@ -61,4 +101,3 @@ class AddAppointment extends React.Component{
       );
     }
 }
-export default AddAppointment;

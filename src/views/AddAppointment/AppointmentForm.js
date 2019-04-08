@@ -39,7 +39,7 @@ export default class AppointmentForm extends React.Component {
         message.info('Message', 9);
         message.loading('Saving...', 4)
         .then(() => message.success('Saving finished', 2.5))
-        .then(() => message.success('Appointment Saved', 2.5))
+        .then(() => message.success('invitation Sent', 2.5))
         .then(() => window.location.href = '/#/appointmens');
       }
     });

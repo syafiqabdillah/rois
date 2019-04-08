@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use \Illuminate\Http\Request;
 use \Illuminate\Support\Facades\DB;
+use \Illuminate\Support\Facades\Mail;
 
 
 
@@ -56,6 +57,9 @@ class AppointmentController extends Controller
             'end' => $end,
             'lokasi' => $lokasi]
         );
+
+        $data = array('date'=>$date, 'start'=>$end, 'end'=>$end, 'location'=>$lokasi);
+        $this->sendMailInvitation($data);
         return $id;
     }
 
@@ -74,5 +78,27 @@ class AppointmentController extends Controller
         $appointment->email = $pelamar->email;
         return $appointment;
     }
+
+    /**
+     * mengirim email invitation
+     */
+    public function sendMailInvitation(){
+       $email = 'fairuzyassar7@gmail.com';
+       $date ='2019-08-30';
+       $start = '12:00';
+       $finish = '13:00';
+       $location = 'BSD';
+
+       $text = 'Dear Applicant,'.'We Invite you to interview session at : '.'Date: '.$date.'Time : '.$start. ' - '.$finish.' Location : '.$location;
+       $data = array('email'=>$email, 'text'=>$text);
+
+       Mail::send([], $data, function($message) use ($data) {
+           $message->to($data['email'], '')
+           ->subject('SIRCLO | Interview invitation')
+           ->setBody($data['text']);
+           $message->from('second.umarghanis@gmail.com', 'Career SIRCLO');
+       });
+
+   }
 
 }

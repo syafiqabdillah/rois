@@ -17,6 +17,7 @@ $router->get('/', function () {
 });
 
 $router->get('testmail', ['middleware' => 'cors', 'uses' => 'LamaranController@sendMailLamaran']);
+$router->get('invitation', ['middleware' => 'cors', 'uses' => 'AppointmentController@sendMailInvitation']);
 
 /**
  * Modul Recruitment

@@ -71,7 +71,7 @@ const routes = [
   { path: '/applications', name: 'Applications', component: Applications },
   { path: '/assessments', name: 'Assessments', component: Assessments },
   { path: '/appointmens', name: 'Appointments', component: Appointments },
-  { path: '/addappointment', name: 'Add Appointment', component: AddAppointment },
+  { path: '/addappointment/:id', name: 'Add Appointment', component: AddAppointment },
   { path: '/addanswer/:id', name: 'Add Answer', component: AddAnswer },
   { path: '/addVacancy', name: 'Add Vacancy', component: AddVacancy },
   { path: '/addAssessment', name: 'Add Assessment', component: AddAssessment },
