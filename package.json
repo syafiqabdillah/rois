@@ -51,7 +51,10 @@
     "reactstrap": "^7.1.0",
     "redux": "^2.0.0",
     "simple-line-icons": "^2.4.1",
-    "typescript": "^3.3.4000"
+    "text": "^0.1.0",
+    "typescript": "^3.3.4000",
+    "word-wrap": "^1.2.3",
+    "wordwrap": "^1.0.0"
   },
   "devDependencies": {
     "react-scripts": "^2.1.8"
