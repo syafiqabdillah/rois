@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 //import { Link } from 'react-router-dom';
+import VacancyForm from './VacancyForm';
 import axios from 'axios';
 import {
   Button, Card, CardBody,
-  Form, FormGroup, Input, Label, Col, Row
+  FormGroup, Input, Label, Col, Row
 } from 'reactstrap';
+import 'antd/dist/antd.css';
+import { Form } from 'antd';
 
 class AddVacancy extends Component {
 
@@ -71,15 +74,34 @@ class AddVacancy extends Component {
 
 
   render() {
+    const FormVacancy = Form.create({ name: 'vacancy' })(VacancyForm);
+   
+   
+    // const prefixSelector = getFieldDecorator('prefix', {
+    //   initialValue: '86',
+    // })(
+    //   <Select style={{ width: 70 }}>
+    //     <Option value="86">+86</Option>
+    //     <Option value="87">+87</Option>
+    //   </Select>
+    // );
+   
     return (
       <div className="animated fadeIn">
         <div align="center">
           <h3 fontFamily="Metropolis">Add Vacancy</h3>
+          <br></br>
         </div>
-        <Card>
-          <CardBody>
+        
+        <Row>
+          <Col sm="2">
+          </Col>
 
-            <Form onSubmit={this.handleSubmit}>
+          <Col sm="8">
+            <Card >
+              <CardBody>
+
+            {/* <Form onSubmit={this.handleSubmit}>
 
               <FormGroup>
 
@@ -151,10 +173,15 @@ class AddVacancy extends Component {
 
 
               <Button className="btn-pill" color="primary" type="submit">Submit</Button>
-            </Form>
-
-          </CardBody>
-        </Card>
+            </Form> */}
+            {/* <Button className=> Submit </Button> */}
+              <FormVacancy />
+            </CardBody>
+          </Card>
+          </Col>
+            <Col sm="2">
+          </Col>
+        </Row>
       </div>
     );
   }

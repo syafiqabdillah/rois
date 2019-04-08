@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { Button, Card, CardBody, CardHeader, Col, Row, Table } from 'reactstrap';
+import ModalDelete from './ModalDelete';
 
 const API = 'http://localhost:8000';
 
@@ -36,8 +37,8 @@ export class Vacancies extends Component {
     if (this.state.loading) {
       content = <div align="center"><p>Loading . . .</p></div>;
     } else {
-     console.log(this.state.lowongan)
      let list_vacancy = this.state.lowongan.map((lowongan, index) => {
+       console.log(lowongan.isDirujuk)
         return (
           <tr key={index}>
             <td> <Link to={"/vacancy/" + lowongan.id} >{lowongan.nama}</Link> </td>
@@ -47,6 +48,20 @@ export class Vacancies extends Component {
             <td> {lowongan.publish_date} </td>
             <td> {lowongan.lokasi} </td>
             <td> {lowongan.tipe} </td>
+            <td>
+              <Row>
+              <Col>
+              <Link to = {"/vacancy/edit/"+ lowongan.id}  className=" btn btn-primary btn-pill">
+              <i className="cui-pencil icons "></i>
+              </Link>
+              </Col>
+              <Col>
+              <ModalDelete isDirujuk={lowongan.isDirujuk} name={lowongan.nama} id={lowongan.id}/>
+            
+              </Col>
+              </Row>
+             
+              </td>
           </tr>
         );
       });
@@ -62,6 +77,7 @@ export class Vacancies extends Component {
               <th>Publish Date</th>
               <th>Location</th>
               <th>Type</th>
+              <th> Action</th>
             </tr>
           </thead>
           <tbody>
@@ -80,7 +96,7 @@ export class Vacancies extends Component {
 
 
         <Link to="/addVacancy">
-          <Button color="primary">Add Vacancy</Button>
+          <Button color="primary" className="btn-pill">Add Vacancy</Button>
         </Link>
         <br></br>
         <br></br>
@@ -96,12 +112,6 @@ export class Vacancies extends Component {
                 {content}
               </CardBody>
             </Card>
-
-            <div align="right">
-              <Link to="/addVacancy">
-                <Button color="primary">Add Vacancy</Button>
-              </Link>
-            </div>
 
           </Col>
         </Row>
