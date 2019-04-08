@@ -1,15 +1,11 @@
 import React from 'react';
-import { Redirect} from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import {
-  Button,
   Card,
   CardBody,
   CardHeader,
   Col,
-  FormGroup,
-  Input,
-  Label,
-  Row,
+  Row
 } from 'reactstrap';
 
 import 'antd/dist/antd.css';
@@ -46,7 +42,13 @@ class AddAppointment extends React.Component{
     const FormAppointment = Form.create({ name: 'appointment' })(AppointmentForm);
     return (
       <div className="animated fadeIn">
-          <Col xs="10" sm="10">
+          <Row>
+            <Col sm="5" md={{ size: 5, offset: 5 }}>
+              <h2><strong>Add Appointment</strong></h2>
+            </Col>
+          </Row>
+          <Row>
+          <Col sm="10" md={{ size: 7, offset: 3 }}>
             <Card>
               <CardHeader>
                   <strong>Add Appointment</strong>
@@ -56,6 +58,7 @@ class AddAppointment extends React.Component{
               </CardBody>
             </Card>
           </Col>
+          </Row>
         </div>
       );
     }

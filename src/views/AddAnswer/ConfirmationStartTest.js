@@ -1,22 +1,18 @@
 import React from 'react';
 import { Modal, ModalHeader, ModalBody, Col, Row } from 'reactstrap';
 import 'antd/dist/antd.css';
-import { message, Button } from 'antd';
+import { Button } from 'antd';
 import axios from 'axios';
-import { Redirect } from 'react-router-dom'
+import moment from 'moment';
 
-class Modals extends React.Component {
+export default class ConfirmationStartTest extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       modal: false,
-      remoteTest : this.props.remoteTest
-      //linkGit : '',
-
+      idRemoteTest : this.props.idRemoteTest,
     };
-
     this.toggle = this.toggle.bind(this);
-    //this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   toggle() {
@@ -25,34 +21,21 @@ class Modals extends React.Component {
     }));
   }
 
-  // handleSubmit = (link) => {
-  //   this.setState({
-  //     linkGit: link
-  //   });
-  //   console.log(this.state.linkGit)
-  // }
-
   onSubmit(){
     this.setState(prevState => ({
       modal: !prevState.modal
     }));
-    message.info('Message', 6);
+    const startTime = new Date();
+    console.log(moment(startTime).format('YYYY-MM-DD HH:mm:ss'));
     var qs = require('qs');
-    axios.post('http://localhost:8000/pelamar/submit-jawaban', qs.stringify({
-      'id': this.state.remoteTest,
-      'link_jawaban' : this.props.link,
+    axios.post('http://localhost:8000/pelamar/record-start-test', qs.stringify({
+      'id': this.state.idRemoteTest,
+      'start_date' : moment(startTime).format("YYYY-MM-DD HH:mm:ss"),
     }),
     {
       headers: {'Content-Type': 'application/x-www-form-urlencoded'}
     });
-    message.loading('Saving...', 3)
-    .then(() => message.success('Your submission have been recorded', 3))
-    .then(() => window.location.reload());
-  }
-
-  renderRedirect = () => {
-    let link = '/#/addanswer/'+ this.state.remoteTest;
-    return <Redirect to={link} />
+    window.location.reload();
   }
 
   render() {
@@ -61,7 +44,7 @@ class Modals extends React.Component {
     };
     return (
       <div>
-        <Button disabled={Boolean(this.props.error)} type="primary" onClick={this.toggle} shape="round">Submit</Button>
+        <Button type="primary" onClick={this.toggle} shape="round">Start Test</Button>
         <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
           <ModalHeader toggle={this.toggle}>
           </ModalHeader>
@@ -69,14 +52,7 @@ class Modals extends React.Component {
           <Row>
             <Col xs="6" sm="2"></Col>
             <Col xs="6" sm="8">
-              <h4><strong>Are you sure want to submit?</strong></h4>
-            </Col>
-            <Col sm="2"></Col>
-          </Row>
-          <Row>
-            <Col xs="6" sm="2"></Col>
-            <Col xs="6" sm="8">
-              <p style={textStyle}>if you choose yes, you can't change submission</p>
+              <h4><strong>Are you sure want to start test?</strong></h4>
             </Col>
             <Col sm="2"></Col>
           </Row>
@@ -102,5 +78,3 @@ class Modals extends React.Component {
     );
   }
 }
-
-export default Modals;

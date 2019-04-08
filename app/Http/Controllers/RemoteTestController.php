@@ -61,9 +61,8 @@ class RemoteTestController extends Controller
             ['id_lamaran' => $id_lamaran,
             'duration' => $duration,
             'tester_email' => $tester_email,
-            'expired_date' => $expired_date,
-            'id_soal' => $id_soal,
-            'status' => $status]
+            'expired_in' => $expired_in,
+            'id_soal' => $id_soal]
         );
         return $id;
     }
@@ -80,6 +79,21 @@ class RemoteTestController extends Controller
         $result = DB::table('remote_test')
             ->where('id', $id)
             ->update(['link_jawaban' => $link_jawaban]);
+        return $result;
+    }
+
+    /**
+     * mulai remote test
+     * @param request
+     * @return long $id dari hasil penambahan remote test di database
+     */
+    public function startDateRecord(Request $request){
+        $id = $request->id;
+        $start_date = $request->start_date;
+
+        $result = DB::table('remote_test')
+            ->where('id', $id)
+            ->update(['start_date' => $start_date]);
         return $result;
     }
 
