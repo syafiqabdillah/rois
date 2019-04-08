@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Modal, ModalHeader, ModalBody, ModalFooter, Container, Button, Card, CardBody, FormText, Row, Col, Form, FormGroup, Input, Label } from 'reactstrap';
 import axios from 'axios';
+import 'antd/dist/antd.css';
+import { message } from 'antd';
 
 class ApplicationForm extends Component {
   constructor(props) {
@@ -40,6 +42,8 @@ class ApplicationForm extends Component {
   }
 
   fileUpload = () => {
+    this.toggle();
+
     const url = 'http://localhost:8000/pelamar/upload-cv';
 
     const formData = new FormData();
@@ -55,9 +59,13 @@ class ApplicationForm extends Component {
     axios.post(url, formData, config)
       .then(function (response) {
         console.log(response.data);
-        window.location.href = '#/myapplications'
-        window.location.reload()
       })
+      message.info('Message', 5.5)
+
+      message.loading('Saving...', 3)
+      .then(() => message.success('Your application has successfully been submitted', 2.5))
+      .then(() => window.location.href = '#/myapplications')
+      .then(() => window.location.reload())
   }
 
   toggle = (e) => {

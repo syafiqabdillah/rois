@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { Button, CardBody,Label, Form, Input, Col, Card, Modal, ModalBody, ModalFooter, Row, ModalHeader} from 'reactstrap';
+import { Button, CardBody, Label, Form, Input, Col, Card, Modal, ModalBody, ModalFooter, Row, ModalHeader } from 'reactstrap';
 import ModalDelete from './ModalDelete';
 
 const API = 'http://localhost:8000';
@@ -13,18 +13,18 @@ class VacancyDetail extends Component {
     this.state = {
       lowongan: [],
       related_low: [],
-      deskripsi:'',
+      deskripsi: '',
       loading: true,
-      link_post:"",
+      link_post: "",
       info_res: false,
       info_req: false,
-      danger:false
+      danger: false
     };
     this.toggleInfoRes = this.toggleInfoRes.bind(this);
     this.toggleInfoReq = this.toggleInfoReq.bind(this);
     this.toggleDanger = this.toggleDanger.bind(this);
   }
- 
+
 
   componentDidMount() {
     axios.all([
@@ -71,8 +71,8 @@ class VacancyDetail extends Component {
   handleDelete = (event) => {
     event.preventDefault()
     var qs = require('qs');
-    axios.post('http://localhost:8000/po/delete-lowongan' , qs.stringify({
-      'id':  this.props.match.params.id,
+    axios.post('http://localhost:8000/po/delete-lowongan', qs.stringify({
+      'id': this.props.match.params.id,
     }),
       {
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
@@ -89,36 +89,36 @@ class VacancyDetail extends Component {
   }
 
 
-handleSubmit = (event) => {
-  event.preventDefault()
-  var qs = require('qs');
-  axios.post(this.state.link_post, qs.stringify({
-    'id_lowongan':  this.props.match.params.id,
-    'deskripsi': this.state.deskripsi
-  }),
-    {
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+  handleSubmit = (event) => {
+    event.preventDefault()
+    var qs = require('qs');
+    axios.post(this.state.link_post, qs.stringify({
+      'id_lowongan': this.props.match.params.id,
+      'deskripsi': this.state.deskripsi
+    }),
+      {
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+      })
+      .then(response => {
+        console.log(response)
+      })
+      .catch(error => {
+        console.log(error.response)
+      });
+    let redirect = '#/vacancies/';
+    window.location.href = redirect;
+  }
+
+
+  handleChange = (event) => {
+
+    event.preventDefault()
+    this.setState({
+      [event.target.name]: event.target.value,
+      link_post: 'http://localhost:8000/po/create-' + event.target.id
     })
-    .then(response => {
-      console.log(response)
-    })
-    .catch(error => {
-      console.log(error.response)
-    });
-  let redirect = '#/vacancies/';
-  window.location.href = redirect;
-}
 
-
-handleChange = (event) => {
-  
-  event.preventDefault()
-  this.setState({
-    [event.target.name]: event.target.value,
-    link_post : 'http://localhost:8000/po/create-'+ event.target.id
-  })
-
-}
+  }
 
 
 
@@ -139,7 +139,7 @@ handleChange = (event) => {
     let name = this.state.nama;
 
     if (this.state.loading) {
-      return( <div align="center"><p>Loading . . .</p></div>);
+      return (<div align="center"><p>Loading . . .</p></div>);
     } else {
       let lowongan = this.state.lowongan;
       localStorage.setItem('id_lowongan', lowongan.id);
@@ -241,100 +241,118 @@ handleChange = (event) => {
         </div>
       )
 
-      formAddResponsibilities = (
-        <Modal isOpen={this.state.info_res} toggle={this.toggleInfoRes}
-        className={'modal-info ' + this.props.className}>
-   <ModalHeader toggle={this.toggleInfoRes}>Add Responsibilities</ModalHeader>
-   <ModalBody>
-   <Form onSubmit={this.handleSubmit}>
-             <Label htmlFor="nf-password">Responsibilities*</Label>
+      let formAddResponsibilities;
+      if (localStorage.getItem('role') === 'admin') {
+        formAddResponsibilities = (
+          <Modal isOpen={this.state.info_res} toggle={this.toggleInfoRes}
+            className={'modal-info ' + this.props.className}>
+            <ModalHeader toggle={this.toggleInfoRes}>Add Responsibilities</ModalHeader>
+            <ModalBody>
+              <Form onSubmit={this.handleSubmit}>
+                <Label htmlFor="nf-password">Responsibilities*</Label>
                 <Input type="text" id="responsibility" name="deskripsi" placeholder="Enter Responsibilities" onChange={this.handleChange} required />
-              
-            <br></br>
 
-          
-            <Button className="btn-pill" color="primary" type="submit">Submit</Button></Form>
-   </ModalBody>
- </Modal>
-        
-        
-      )
+                <br></br>
 
-      formAddRequirement = (
-        <Modal isOpen={this.state.info_req} toggle={this.toggleInfoReq}
-        className={'modal-info ' + this.props.className}>
-   <ModalHeader toggle={this.toggleInfoReq}>Add Requirement</ModalHeader>
-   <ModalBody>
-   <Form onSubmit={this.handleSubmit}>
-             <Label htmlFor="nf-password">Requirements*</Label>
+
+                <Button className="btn-pill" color="primary" type="submit">Submit</Button></Form>
+            </ModalBody>
+          </Modal>
+        )
+      } else {
+        formAddResponsibilities = '';
+      }
+
+      let formAddRequirement;
+      if (localStorage.getItem('role') === 'admin') {
+        formAddRequirement = (
+          <Modal isOpen={this.state.info_req} toggle={this.toggleInfoReq}
+            className={'modal-info ' + this.props.className}>
+            <ModalHeader toggle={this.toggleInfoReq}>Add Requirement</ModalHeader>
+            <ModalBody>
+              <Form onSubmit={this.handleSubmit}>
+                <Label htmlFor="nf-password">Requirements*</Label>
                 <Input type="text" id="requirement" name="deskripsi" placeholder="Enter Requirement" onChange={this.handleChange} required />
-              
-            <br></br>
 
-          
-            <Button className="btn-pill" color="primary" type="submit">Submit</Button></Form>
-   </ModalBody>
- </Modal>
-      )
+                <br></br>
 
-//       modalConfirmDelete = (
-// <Modal isOpen={this.state.danger} toggle={this.toggleDanger}
-//                        className={'modal-danger ' + this.props.className}>
-//                   <ModalHeader toggle={this.toggleDanger}>Delete Vacancy</ModalHeader>
-//                   <ModalBody>
-//                    You just clicked delete button, do you really want to delete this vacancy?
-//                   </ModalBody>
-//                   <ModalFooter>
-//                     <Button color="danger" onClick={this.handleDelete}>Yes, I Do </Button>
-//                     <Button color="secondary" onClick={this.toggleDanger}>Cancel</Button>
-//                   </ModalFooter>
-//                 </Modal>
-        
-//       )
+
+                <Button className="btn-pill" color="primary" type="submit">Submit</Button></Form>
+            </ModalBody>
+          </Modal>
+        )
+      } else {
+        formAddRequirement = '';
+      }
+
+
+      //       modalConfirmDelete = (
+      // <Modal isOpen={this.state.danger} toggle={this.toggleDanger}
+      //                        className={'modal-danger ' + this.props.className}>
+      //                   <ModalHeader toggle={this.toggleDanger}>Delete Vacancy</ModalHeader>
+      //                   <ModalBody>
+      //                    You just clicked delete button, do you really want to delete this vacancy?
+      //                   </ModalBody>
+      //                   <ModalFooter>
+      //                     <Button color="danger" onClick={this.handleDelete}>Yes, I Do </Button>
+      //                     <Button color="secondary" onClick={this.toggleDanger}>Cancel</Button>
+      //                   </ModalFooter>
+      //                 </Modal>
+
+      //       )
 
       if (localStorage.getItem('role') !== 'pelamar') {
         content_button_edit = (
-            <Link to="/editVacancy">
-              <Button className="btn-pill" color="primary">Edit Vacancy</Button>
-            </Link>
-            
-          
+          <Link to="/editVacancy">
+            <Button className="btn-pill" color="primary">Edit Vacancy</Button>
+          </Link>
+
+
         )
-        content_button_delete=(
-          <ModalDelete className="float-right" isDirujuk= {isDirujuk} name={name} id={id}/>
-         
+        content_button_delete = (
+          <ModalDelete className="float-right" isDirujuk={isDirujuk} name={name} id={id} />
+
         )
       }
     }
 
+    let buttonAddResAddReq;
+    if (localStorage.getItem('role') !== 'pelamar') {
+      buttonAddResAddReq = (
+        <Row>
+          <Button color="info" onClick={this.toggleInfoRes} className="mr-1 btn-pill" color="primary">Add Responsibility</Button>
+          <Button color="info" onClick={this.toggleInfoReq} className="mr-1 btn-pill" color="primary">Add Requirement</Button>
+        </Row>
+      );
+    } else {
+      buttonAddResAddReq = '';
+    }
+
     return (
       <div className="animated fadeIn">
-      <Row>
-       {content_button_edit}
-       {content_button_delete}
-      </Row>
-        
-     
-        
+        <Row>
+          {content_button_edit}
+          {content_button_delete}
+        </Row>
+
+
+
         <br></br>
-      <Row>
+        <Row>
           <Col sm="8">
             <Col mb="4">
-            <Card>
-              <CardBody>
-                {content_vacancy}
-              </CardBody>
-            </Card>
-           </Col>
+              <Card>
+                <CardBody>
+                  {content_vacancy}
+                </CardBody>
+              </Card>
+            </Col>
 
 
             <div>
-            <Row>
-            <Button color="info" onClick={this.toggleInfoRes} className="mr-1 btn-pill" color = "primary">Add Responsibility</Button>
-            <Button color="info" onClick={this.toggleInfoReq} className="mr-1 btn-pill" color = "primary">Add Requirement</Button>
-            </Row>
-                   {formAddResponsibilities}
-                   {formAddRequirement}
+              {buttonAddResAddReq}
+              {formAddResponsibilities}
+              {formAddRequirement}
             </div>
           </Col>
 
@@ -357,9 +375,9 @@ handleChange = (event) => {
             </Col>
           </Col>
 
-      </Row>
-        </div>
-  
+        </Row>
+      </div>
+
 
     );
   }
