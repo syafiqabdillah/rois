@@ -108,42 +108,44 @@ class Applicants extends Component {
         </Table>
       );
 
-      if (this.state.lamaran.status === 'Passed') {
+      if (this.state.lamaran.status === 'Passed' && localStorage.getItem('role') === 'admin') {
         stage = (
           <ChooseStages lamaran={this.state.lamaran} />
         );
-      } else if (this.state.lamaran.tahapan === 'Remote Test' &&  this.state.lamaran.status === 'Assigned') {
+      } else if (this.state.lamaran.tahapan === 'Remote Test' &&  this.state.lamaran.status === 'Assigned' && localStorage.getItem('role') === 'admin') {
         stage = (
           <div>
             <ChooseCurrentStage lamaran={this.state.lamaran} />
             <Widget02 header="Assigned" mainText="Waiting for applicant's answer" icon="fa fa-clock-o" color="warning" />
           </div>
         );
-      } else if (this.state.lamaran.tahapan === 'Remote Test' &&  this.state.lamaran.status === 'Answered') {
+      } else if (this.state.lamaran.tahapan === 'Remote Test' &&  this.state.lamaran.status === 'Answered' && localStorage.getItem('role') === 'admin') {
         stage  = (
           <div>
             <ChooseCurrentStage lamaran={this.state.lamaran} />
             <Widget02 header="Answered" mainText="Click here to see the applicant's answer" icon="fa fa-check" color="info" />
           </div>
         );
-      } else if (this.state.lamaran.tahapan === 'Hired') {
+      } else if (this.state.lamaran.tahapan === 'Hired' && localStorage.getItem('role') === 'admin') {
         stage = (
           <Widget04 icon="fa fa-thumbs-up" color="success" header="Hired" value="0" invert>
             This applicant have passed all the SIRCLO's recruitment process
           </Widget04>
         );
-      } else if (this.state.lamaran.tahapan === 'Rejected') {
+      } else if (this.state.lamaran.tahapan === 'Rejected' && localStorage.getItem('role') === 'admin') {
         stage = (
           <Widget04 icon="fa fa-thumbs-down" color="danger" header="Rejected" value="0" invert>
             This applicant have been rejected from the SIRCLO's recruitment process
           </Widget04>
         );
-      } else {
+      } else if (localStorage.getItem('role') === 'admin') {
         stage = (
           <div>
             <ChooseCurrentStage lamaran={this.state.lamaran} />
           </div>
         );
+      } else {
+        stage = '';
       }
 
     }
