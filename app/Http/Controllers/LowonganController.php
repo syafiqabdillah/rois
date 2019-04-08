@@ -28,10 +28,26 @@ class LowonganController extends Controller
         $result = array();
         foreach($lowongans as $lowongan){
             $lowongan = (object) $lowongan;
+            $isDirujuk = $this->isDirujuk($lowongan->id);
             $lowongan = $this->addRequirementAndResponsibility($lowongan);
+            $lowongan->isDirujuk = $isDirujuk;
             array_push($result, $lowongan);
         }
         return $result;
+    }
+
+    public function isDirujuk($id_lowongan){
+        $lamaran = DB::table('lamaran')->select()->where('id_lowongan', $id_lowongan)->get();
+        $lamaran = json_decode($lamaran);
+        $soal = DB::table('soal')->select()->where('id_lowongan', $id_lowongan)->get();
+        $soal = json_decode($soal);
+
+        $len = sizeof($lamaran)+sizeof($soal);
+        if ($len == 0){
+            return false;
+        } else {
+            return true;
+        }
     }
 
   /**
@@ -77,7 +93,11 @@ class LowonganController extends Controller
         $lowongan = DB::table('lowongan')->select()->where('id', $id)->get();
         $lowongan = json_decode($lowongan);
         $lowongan = $lowongan[0];
+        $isDirujuk = $this->isDirujuk($lowongan->id);
+        $lowongan->isDirujuk = $isDirujuk;
         $lowongan = $this->addRequirementAndResponsibility($lowongan);
+
+        
         return json_encode($lowongan);
     }
 
@@ -181,6 +201,8 @@ class LowonganController extends Controller
         $response = DB::table('lowongan')->delete($id);
         return $response;
     }
+
+  
 
     /**
      * mengembalikan lowongan dengan requirement dan responsiblity yang bersangkutan 

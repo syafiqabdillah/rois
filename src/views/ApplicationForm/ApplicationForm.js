@@ -28,9 +28,15 @@ class ApplicationForm extends Component {
   }
 
   handleInputFile = (e) => {
-    this.setState({
-      file: e.target.files[0]
-    })
+    let size = e.target.files[0].size / 1024 / 1024;
+    if (size < 2) {
+      this.setState({
+        file: e.target.files[0]
+      })
+    } else {
+      alert('file size must be less than 2 MB')
+      e.target.value = ""
+    }
   }
 
   fileUpload = () => {
@@ -38,8 +44,7 @@ class ApplicationForm extends Component {
 
     const formData = new FormData();
     formData.append('file', this.state.file)
-    formData.append('token', localStorage.getItem('token'));
-    formData.append('id_lowongan', localStorage.getItem('id_lowongan'));
+    formData.append('id_lamaran', localStorage.getItem('id_lamaran'));
 
     const config = {
       headers: {
@@ -50,10 +55,13 @@ class ApplicationForm extends Component {
     axios.post(url, formData, config)
       .then(function (response) {
         console.log(response.data);
-      });
+        window.location.href = '#/myapplications'
+        window.location.reload()
+      })
   }
 
-  toggle = () => {
+  toggle = (e) => {
+    e.preventDefault()
     this.setState(prevState => ({
       modal: !prevState.modal
     }));
@@ -75,13 +83,12 @@ class ApplicationForm extends Component {
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
       })
       .then(function (response) {
-        console.log(response.data);
+        let id_lamaran = response.data;
+        localStorage.setItem('id_lamaran', id_lamaran);
       })
+
     //upload cv nya 
     this.fileUpload();
-
-    window.location.href = '#/myapplications'
-    window.location.reload()
   }
 
   componentDidMount() {
@@ -95,7 +102,6 @@ class ApplicationForm extends Component {
           nama_lowongan: lowongan.nama
         })
       })
-    console.log(this.state)
   }
 
 
@@ -113,10 +119,10 @@ class ApplicationForm extends Component {
             <Col md="9" lg="7" xl="6">
               <Card>
                 <CardBody>
-                  <Form>
+                  <Form onSubmit={this.toggle}>
                     <FormGroup>
                       <Label htmlFor="skill">Skill*</Label>
-                      <Input type="text" id="skill" name="skill" placeholder="Separate with comma" autoComplete="skill" onChange={this.handleInputChange} />
+                      <Input required type="text" id="skill" name="skill" placeholder="Separate with comma" autoComplete="skill" onChange={this.handleInputChange} />
                       <FormText color="muted">
                         eg. Python, Broadcasting, etc.
                       </FormText>
@@ -124,7 +130,7 @@ class ApplicationForm extends Component {
 
                     <FormGroup>
                       <Label htmlFor="experience">Experience*</Label>
-                      <Input type="text" id="experience" name="experience" placeholder="Separate with comma" autoComplete="experience" onChange={this.handleInputChange} />
+                      <Input required type="text" id="experience" name="experience" placeholder="Separate with comma" autoComplete="experience" onChange={this.handleInputChange} />
                       <FormText color="muted">
                         eg. UI/UX Researcher 2014-2015, Backend Developer 2010-2013
                       </FormText>
@@ -132,24 +138,24 @@ class ApplicationForm extends Component {
 
                     <FormGroup>
                       <Label htmlFor="expectedSalary">Expected Salary(Rp)*</Label>
-                      <Input type="number" id="expectedSalary" name="expectedSalary" autoComplete="expected-salary" onChange={this.handleInputChange} />
+                      <Input required type="number" id="expectedSalary" name="expectedSalary" autoComplete="expected-salary" onChange={this.handleInputChange} />
                     </FormGroup>
 
                     <FormGroup>
                       <Label for="file">CV/Resume*</Label>
-                      <Input type="file" onChange={this.handleInputFile} />
+                      <Input required type="file" onChange={this.handleInputFile} />
                       <FormText color="muted">
                         File size should be less than 2MB.
                       </FormText>
                     </FormGroup>
 
                     <FormGroup>
-                      <Label htmlFor="coverLetter">Why Should We Hire You ?*</Label>
-                      <Input type="text" id="coverLetter" name="coverLetter" placeholder="" onChange={this.handleInputChange} />
+                      <Label htmlFor="coverLetter">Tell Us Something About You *</Label>
+                      <Input required type="text" id="coverLetter" name="coverLetter" placeholder="" onChange={this.handleInputChange} />
                     </FormGroup>
 
-                    <div align="center">
-                      <Button color="primary" size="lg" className="btn-pill" onClick={this.toggle} block>Submit</Button>
+                    <div align="right">
+                      <Button color="primary" size="lg" className="btn-pill" >Submit</Button>
                     </div>
                   </Form>
                 </CardBody>
@@ -161,14 +167,31 @@ class ApplicationForm extends Component {
         <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
           <ModalHeader toggle={this.toggle}>Confirmation</ModalHeader>
           <ModalBody>
-            <h4>Are you sure that you have entered the correct data?</h4>
+            <Row>
+              <Col xs="6" sm="2"></Col>
+              <Col xs="6" sm="8">
+                <h4><strong>Are you sure you have entered correct data ?</strong></h4>
+              </Col>
+              <Col sm="2"></Col>
+            </Row>
+            <Row>
+              <Col xs="6" sm="2"></Col>
+              <Col xs="6" sm="8">
+                <Button color="primary" size="lg" onClick={this.handleSubmit} className="btn-pill" block>Yes, I'm sure</Button>
+              </Col>
+              <Col sm="2"></Col>
+            </Row>
+            <br />
+            <Row>
+              <Col xs="6" sm="2"></Col>
+              <Col xs="6" sm="8">
+                <Button color="danger" size="lg" onClick={this.toggle} className="btn-pill" block>Cancel</Button>
+              </Col>
+              <Col sm="2"></Col>
+            </Row>
+            <br />
           </ModalBody>
-          <ModalFooter>
-            <Button color="primary" size="lg" onClick={this.handleSubmit} className="btn-pill" block>Yes, I'm sure</Button>
-            <Button color="danger" size="lg"onClick={this.toggle} className="btn-pill" block>Cancel</Button>
-          </ModalFooter>
         </Modal>
-
       </div>
     );
   }

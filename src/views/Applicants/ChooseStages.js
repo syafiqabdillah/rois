@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { Badge, Card, CardBody, CardHeader, Col, Pagination, PaginationItem, PaginationLink, Row, Table, CardTitle, CardText, Progress, Button } from 'reactstrap';
 
 const API = 'http://localhost:8000';
 
-class FinalStageNotification extends Component {
+class ChooseStages extends Component {
   constructor(props){
     super(props);
 
@@ -25,25 +26,39 @@ class FinalStageNotification extends Component {
     if (this.state.loading){
       content = <div align="center"><p>Loading . . .</p></div>;
     } else {
-
       content = (
         <div>
-          <p>Choose the next action for this applicant to take: </p>
+          <p>This applicant is currently <strong>not assigned to anything.</strong> Please choose the next step for this applicant to take: </p>
           <Row>
             <Col lg={1}>
             </Col>
-            <Col lg={4}>
-              <Button className="btn-pill" color="primary" size="sm" block>Interview</Button>
-            </Col>
-            <Col lg={4}>
-              <Button className="btn-pill" color="info" size="sm" block>Remote Test</Button>
-            </Col>
-            <Col lg={2}>
-              <Button outline className="btn-pill" color="success" size="sm" block>Hire</Button>
+            <Col lg={10}>
+              <Link to="/addappointment/"> <Button className="btn-pill" color="primary"  block>Interview</Button> </Link>
             </Col>
             <Col lg={1}>
             </Col>
           </Row>
+          <br/>
+          <Row>
+            <Col lg={1}>
+            </Col>
+            <Col lg={10}>
+              <Link to={"/remoteTestForm/" + this.props.lamaran.id}> <Button className="btn-pill" color="info"  block>Remote Test</Button> </Link>
+            </Col>
+            <Col lg={1}>
+            </Col>
+          </Row>
+          <br/>
+          <Row>
+            <Col lg={1}>
+            </Col>
+            <Col lg={10}>
+              <Link to={"/hire/" + this.props.lamaran.id}> <Button outline className="btn-pill" color="success"  block>Hire</Button> </Link>
+            </Col>
+            <Col lg={1}>
+            </Col>
+          </Row>
+          <br/>
         </div>
       );
     }
@@ -64,4 +79,4 @@ class FinalStageNotification extends Component {
   }
 }
 
-export default FinalStageNotification;
+export default ChooseStages;

@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { Button, CardBody,Label, Form, Input, Modal, ModalBody, ModalFooter, Row, ModalHeader} from 'reactstrap';
+import { Button, CardBody,Label, Form, Input, Col, Card, Modal, ModalBody, ModalFooter, Row, ModalHeader} from 'reactstrap';
+import ModalDelete from './ModalDelete';
 
 const API = 'http://localhost:8000';
 
@@ -125,11 +126,17 @@ handleChange = (event) => {
     let content_vacancy;
     let content_other;
     let content_related;
-    let content_button_edit_delete;
+
+    let content_button_edit;
+    let content_button_delete;
     let content_button_apply;
+
     let formAddResponsibilities;
     let formAddRequirement;
-    let modalConfirmDelete;
+
+    let isDirujuk = this.state.lowongan.isDirujuk;
+    let id = this.state.lowongan.id;
+    let name = this.state.nama;
 
     if (this.state.loading) {
       return( <div align="center"><p>Loading . . .</p></div>);
@@ -197,28 +204,28 @@ handleChange = (event) => {
         <div className="bd-example">
           <dl className="row">
 
-            <dt className="col-sm-4">
-              <i align="center" className="cui-location-pin icons font-2xl d-block mt-4"></i>
+            <dt className="col-sm-6">
+              <i align="center" className="cui-location-pin icons font-2xl d-block "></i>
               <div align="center">Location</div>
             </dt>
-            <dd className="col-sm-8">
+            <dd className="col-sm-6">
               <p className="mt-4">{lowongan.lokasi}</p>
             </dd>
 
 
-            <dt className="col-sm-4">
-              <i align="center" className="cui-briefcase icons font-2xl d-block mt-4"></i>
+            <dt className="col-sm-6">
+              <i align="center" className="cui-briefcase icons font-2xl d-block"></i>
               <div align="center"> Job Type </div>
             </dt>
-            <dd className="col-sm-8">
+            <dd className="col-sm-6">
               <p className="mt-4">{lowongan.tipe}</p>
             </dd>
 
-            <dt className="col-sm-4">
-              <i align="center" className="cui-calendar icons font-2xl d-block mt-4"></i>
+            <dt className="col-sm-6">
+              <i align="center" className="cui-calendar icons font-2xl d-block "></i>
               <div align="center"> Application Deadline</div>
             </dt>
-            <dd className="col-sm-8">
+            <dd className="col-sm-6">
               <p className="mt-4">{lowongan.end_date}</p>
             </dd>
 
@@ -270,50 +277,57 @@ handleChange = (event) => {
  </Modal>
       )
 
-      modalConfirmDelete = (
-<Modal isOpen={this.state.danger} toggle={this.toggleDanger}
-                       className={'modal-danger ' + this.props.className}>
-                  <ModalHeader toggle={this.toggleDanger}>Delete Vacancy</ModalHeader>
-                  <ModalBody>
-                   You just clicked delete button, do you really want to delete this vacancy?
-                  </ModalBody>
-                  <ModalFooter>
-                    <Button color="danger" onClick={this.handleDelete}>Yes, I Do </Button>
-                    <Button color="secondary" onClick={this.toggleDanger}>Cancel</Button>
-                  </ModalFooter>
-                </Modal>
+//       modalConfirmDelete = (
+// <Modal isOpen={this.state.danger} toggle={this.toggleDanger}
+//                        className={'modal-danger ' + this.props.className}>
+//                   <ModalHeader toggle={this.toggleDanger}>Delete Vacancy</ModalHeader>
+//                   <ModalBody>
+//                    You just clicked delete button, do you really want to delete this vacancy?
+//                   </ModalBody>
+//                   <ModalFooter>
+//                     <Button color="danger" onClick={this.handleDelete}>Yes, I Do </Button>
+//                     <Button color="secondary" onClick={this.toggleDanger}>Cancel</Button>
+//                   </ModalFooter>
+//                 </Modal>
         
-      )
+//       )
 
       if (localStorage.getItem('role') !== 'pelamar') {
-        content_button_edit_delete = (
-          <div className="col-12">
+        content_button_edit = (
             <Link to="/editVacancy">
               <Button className="btn-pill" color="primary">Edit Vacancy</Button>
             </Link>
             
-              <Button  onClick={this.toggleDanger}  className="btn-pill float-right"  color="danger">Delete Vacancy</Button>
-              {modalConfirmDelete}
-        
-          </div>
+          
+        )
+        content_button_delete=(
+          <ModalDelete className="float-right" isDirujuk= {isDirujuk} name={name} id={id}/>
+         
         )
       }
     }
 
     return (
       <div className="animated fadeIn">
-        <div className="row">
-          {content_button_edit_delete}
-          <br></br>
-          <br></br>
-          <br></br>
-          <div className="col-8">
-            <div className="card mb-4">
+      <Row>
+       {content_button_edit}
+       {content_button_delete}
+      </Row>
+        
+     
+        
+        <br></br>
+      <Row>
+          <Col sm="8">
+            <Col mb="4">
+            <Card>
               <CardBody>
                 {content_vacancy}
               </CardBody>
-             
-            </div>
+            </Card>
+           </Col>
+
+
             <div>
             <Row>
             <Button color="info" onClick={this.toggleInfoRes} className="mr-1 btn-pill" color = "primary">Add Responsibility</Button>
@@ -321,23 +335,31 @@ handleChange = (event) => {
             </Row>
                    {formAddResponsibilities}
                    {formAddRequirement}
-        </div>
-          </div>
-          <div className="col-4">
-            <div className="card mb-4">
-              <CardBody>
-                {content_other}
-              </CardBody>
             </div>
-            <div className="card mb-4">
-              <CardBody>
-                {content_related}
-              </CardBody>
-            </div>
-           
-          </div>
+          </Col>
+
+
+          <Col sm="4">
+            <Col mb="4">
+              <Card>
+                <CardBody>
+                  {content_other}
+                </CardBody>
+              </Card>
+            </Col>
+
+            <Col mb="4">
+              <Card>
+                <CardBody>
+                  {content_related}
+                </CardBody>
+              </Card>
+            </Col>
+          </Col>
+
+      </Row>
         </div>
-      </div>
+  
 
     );
   }

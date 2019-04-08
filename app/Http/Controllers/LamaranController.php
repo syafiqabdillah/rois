@@ -20,18 +20,17 @@ class LamaranController extends Controller
 
     }
 
-    public function sendMailLamaran(){
-        // $nama = $data->nama;
-        // $email = $data->email;
-        
-        $nama = "Syafiq Abdillah";
-        $email = "abdillah.syafiq@gmail.com";
-        $text = 'Dear ' . $nama . ', your application has been submitted. We will evaluate it soon. \n Best Regards \n SIRCLO HR';
+    public function sendMailLamaran($data){
+        $nama = $data['nama'];
+        $email = $data['email'];
+        $lowongan = $data['lowongan'];
+
+        $text = 'Dear ' . $nama . ', your application as '. $lowongan .' has been submitted. We will evaluate it soon. You can check the progress of your application(s) at our system.';
         $data = array('email'=>$email, 'text'=>$text);
 
         Mail::send([], $data, function($message) use ($data) {
             $message->to($data['email'], '')
-            ->subject('SIRCLO Application Success')
+            ->subject('SIRCLO | Your Application has been Submitted')
             ->setBody($data['text']);
             $message->from('second.umarghanis@gmail.com', 'Career SIRCLO');
         });
@@ -40,18 +39,22 @@ class LamaranController extends Controller
 
     public function uploadCV(Request $request){
         if($request->hasFile('file')){
-            $token = $request->input('token');
-            $id_lowongan = $request->input('id_lowongan');
             $file = $request->file('file');
-            $extension = $file->getClientOriginalExtension(); // getting image extension
-            $filename =time().'.'.$extension;
-            $filename =$token.'_'.$id_lowongan.'.'.$extension;
+            $id_lamaran = $request->input('id_lamaran');
+            $extension = $file->getClientOriginalExtension(); 
+            $filename =$id_lamaran.'.'.$extension;
+
             $file->move('uploads/', $filename);
             return response()->json(['message'=>'success', 'status'=>200]);
         } else {
             return response()->json(['message'=>'failed', 'status'=>500]);
-        }
-        
+        }  
+    }
+
+    public function downloadCV($id){
+        $file = 'uploads/' . $id . '.pdf';
+        return response()->download($file, 123);
+
     }
 
     public function createLamaran(Request $request){
@@ -67,12 +70,12 @@ class LamaranController extends Controller
         $created_date = date('Y-m-d H:i:s', time());
 
         //$file = $request->input('file');
-        
+
         // $pdf_decoded = base64_decode ($file);
         // $pdf = fopen ('test.pdf','w');
         // fwrite ($pdf,$pdf_decoded);
         // fclose($pdf);
-        
+
 
         $id_lamaran = DB::table('lamaran')->insertGetId(
             ['id_lowongan' => $id_lowongan,
@@ -81,23 +84,44 @@ class LamaranController extends Controller
             'cover_letter' => $cover_letter,
             'tahapan' => $tahapan,
             'status' => $status,
-            'skill' => $skill,
-            'experience' => $experience,
             'created_date' => $created_date
             ]
         );
-        
+
         $id_lamaran = (int) $id_lamaran;
 
-        //kirim email ke pelamar dan ke PO
-        // $pelamar = DB::table('pelamar')->select()->where($token_pelamar)->get();
-        // $pelamar = json_decode($pelamar);
-        // $pelamar = $pelamar[0];
-        // $nama = $pelamar->nama;
-        // $email = $pelamar->email;
+        $skills = explode(",", $skill);
+        foreach($skills as $s){
+            DB::table('skill')->insertGetId(
+                ['deskripsi'=>$s,
+                'id_lamaran'=>$id_lamaran]
+            );
+        }
 
-        // $data = array('nama'=>$nama, 'email'=>$email);
-        // $this->sendMailLamaran($data);
+        $experiences = explode(",", $experience);
+        foreach($experiences as $e){
+            //create experience
+            DB::table('experience')->insertGetId(
+                ['deskripsi'=>$e,
+                'id_lamaran'=>$id_lamaran]
+            );
+        }
+
+        //kirim email ke pelamar dan ke PO
+        $pelamar = DB::table('pelamar')->select()->where('token', $token_pelamar)->get();
+        $pelamar = json_decode($pelamar);
+        $pelamar = $pelamar[0];
+        $nama = $pelamar->nama;
+        $email = $pelamar->email;
+
+        $lowongan = DB::table('lowongan')->select()->where('id', $id_lowongan)->get();
+        $lowongan = json_decode($lowongan);
+        $lowongan = $lowongan[0];
+        $lowongan = $lowongan->nama;
+
+        $data = array('nama'=>$nama, 'email'=>$email, 'lowongan'=>$lowongan);
+
+        $this->sendMailLamaran($data);
 
         return $id_lamaran;
     }
@@ -137,6 +161,24 @@ class LamaranController extends Controller
         $lamaran = json_decode($lamaran);
         $lamaran = $lamaran[0];
         $lamaran = $this->addNamaLowonganNamaPelamar($lamaran);
+
+        $token = $lamaran->token_pelamar;
+        $pelamar = DB::table('pelamar')->select()->where('token', $token)->get();
+        $pelamar = json_decode($pelamar);
+        $pelamar = $pelamar[0];
+
+        $experience = DB::table('experience')->select()->where('id_lamaran', $id)->get();
+        $experience = json_decode($experience);
+        $experience = $experience[0];
+
+        $skill = DB::table('skill')->select()->where('id_lamaran', $id)->get();
+        $skill = json_decode($skill);
+        $skill = $skill[0];
+
+        $lamaran->detail_pelamar = $pelamar;
+        $lamaran->experience = $experience;
+        $lamaran->skill = $skill;
+
         return json_encode($lamaran);
     }
 
