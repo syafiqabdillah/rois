@@ -71,7 +71,7 @@ class DefaultLayout extends Component {
       header = <DefaultHeader onLogout={e => this.signOut(e)} />;
       //sidebar admin po
       sidebar = (
-        <AppSidebar fixed display="lg">
+        <AppSidebar fixed display="lg" isOpen={false}>
           <AppSidebarHeader />
           <AppSidebarForm />
           <Suspense>

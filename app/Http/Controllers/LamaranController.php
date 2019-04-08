@@ -25,14 +25,12 @@ class LamaranController extends Controller
         $email = $data['email'];
         $lowongan = $data['lowongan'];
 
-        $text = 'Dear ' . $nama . ', your application as '. $lowongan .'has been submitted. We will evaluate it soon. 
-        Best Regards 
-        SIRCLO HR';
+        $text = 'Dear ' . $nama . ', your application as '. $lowongan .' has been submitted. We will evaluate it soon. You can check the progress of your application(s) at our system.';
         $data = array('email'=>$email, 'text'=>$text);
 
         Mail::send([], $data, function($message) use ($data) {
             $message->to($data['email'], '')
-            ->subject('SIRCLO | Your Application has Submitted')
+            ->subject('SIRCLO | Your Application has been Submitted')
             ->setBody($data['text']);
             $message->from('second.umarghanis@gmail.com', 'Career SIRCLO');
         });
