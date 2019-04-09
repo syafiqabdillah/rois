@@ -33,7 +33,7 @@ class ChooseStages extends Component {
             <Col lg={1}>
             </Col>
             <Col lg={10}>
-              <Link to="/addappointment/"> <Button className="btn-pill" color="primary"  block>Interview</Button> </Link>
+              <Link to={"/addappointment/" + this.props.lamaran.id}> <Button className="btn-pill" color="primary"  block>Interview</Button> </Link>
             </Col>
             <Col lg={1}>
             </Col>

@@ -3,17 +3,13 @@ import {
   Card,
   CardBody,
   CardHeader,
-  Col,
-  Input,
-  Row,
   Badge
 } from 'reactstrap';
 
 import 'antd/dist/antd.css';
-import { Icon } from 'antd';
+import { Icon, Row, Col, Form } from 'antd';
 import axios from 'axios';
 import CountDown from './CountDown';
-import { Form } from 'antd';
 import  AnswerForm from './AnswerForm';
 import ConfirmationStartTest from './ConfirmationStartTest';
 
@@ -33,7 +29,8 @@ class AddAnswer extends React.Component{
       endDateAnswer : '',
       namaPelamar : '',
       lowonganDidaftar : '',
-      link : '',
+      soalLink : '',
+      answerLink : '',
     };
   }
 
@@ -55,46 +52,45 @@ class AddAnswer extends React.Component{
         if(response.data.start_date){
             startDate = new Date(response.data.start_date).toISOString();
         }
-        console.log(response.data.start_date);
         const duration = response.data.duration;
         const endDate = this.getEndTime(startDate, duration)
         const idLamaran = response.data.id_lamaran;
+        const idSoal = response.data.id_soal;
         const answerLink = response.data.link_jawaban;
         this.setState({
           startDateAnswer : startDate,
           endDateAnswer : endDate,
-          link : answerLink
+          answerLink : answerLink,
         });
-        this.getDetailLamaran(idLamaran);
+        this.getDetailApplicant(idLamaran);
+        this.getLinkSoal(idSoal);
       });
   }
 
-  getDetailLamaran = (idLamaran) => {
-    axios.get('http://localhost:8000' + '/po/lamaran/' + idLamaran)
+  getDetailApplicant = (idLamaran) => {
+    axios.get('http://localhost:8000' + '/po/get-detail-applicant/' + idLamaran)
       .then((response) => {
-        const idLowongan = response.data.id_lowongan;
-        const tokenPelamar = response.data.token_pelamar;
-        this.getDetailApplicant(idLowongan, tokenPelamar);
-      });
-  }
-
-  getDetailApplicant = (idLowongan, tokenPelamar) => {
-    axios.all([
-      axios.get('http://localhost:8000' + '/po/lowongan/' + idLowongan),
-      axios.get('http://localhost:8000' + '/pelamar/get-profile/' + tokenPelamar)
-    ])
-      .then(axios.spread((lowongan, pelamar) => {
-        // do something with both responses
-        const namaLowongan = lowongan.data.nama;
-        const namaPelamar = pelamar.data[0].nama;
-        console.log(pelamar);
+        const namaLowongan = response.data.lowongan;
+        const namaPelamar = response.data.nama_pelamar;
         this.setState({
           lowonganDidaftar : namaLowongan,
           namaPelamar : namaPelamar,
           loading: false
         });
-      }));
+      });
   }
+
+  getLinkSoal = (idSoal) => {
+    axios.get('http://localhost:8000' + '/po/soal/' + idSoal)
+      .then((response) => {
+        const linkSoal = response.data.link;
+        this.setState({
+          soalLink : linkSoal,
+        })
+      });
+  }
+
+
 
   getEndTime = (startTime, duration) => {
     const starttime = new Date(startTime);
@@ -122,13 +118,14 @@ class AddAnswer extends React.Component{
     let startTest =
       <div>
         <Row>
-          <Col xs="12" align="center">
-            <h4>Congratulation, you have on remote test phase</h4>
-            <p>To get coding task click button below</p>
+          <Col align="center">
+            <h4>Congratulation</h4>
+            <h4>You have on remote test phase</h4>
+            <p>Click button below to start coding test</p>
           </Col>
         </Row>
         <Row>
-          <Col sm="2" md={{ size: 5, offset: 5 }}>
+          <Col span={5} offset={10}>
             <ConfirmationStartTest idRemoteTest= {this.props.match.params.id}/>
           </Col>
         </Row>
@@ -137,13 +134,14 @@ class AddAnswer extends React.Component{
     let answer =
       <div>
         <Row>
-          <Col xs="12" align="center">
+          <Col align="center">
             <CountDown endDate={`${this.state.endDateAnswer}`}/>
             <p style={textStyle}> Submission format : https://github.com/johndoe/submission.git </p>
+            <a href={this.state.soalLink}>Coding Task</a>
           </Col>
         </Row>
         <Row>
-          <Col xs="12">
+          <Col>
             <FormAnswer />
           </Col>
         </Row>
@@ -151,21 +149,21 @@ class AddAnswer extends React.Component{
     let success =
     <div>
     <Row>
-      <Col sm="2" md={{ size: 7, offset: 5 }}>
+      <Col span={12} offset={10}>
         <Icon type="check-circle" theme="twoTone" twoToneColor="#52c41a" style={{ fontSize: '64px'}}/>
         <br/>
       </Col>
     </Row>
       <Row>
-        <Col sm="2" md={{ size: 8, offset: 3 }}>
+        <Col span={12} offset={7}>
           <br/>
-          <h4>You have submit remote test answer</h4>
+          <h5>You have submit remote test answer</h5>
         </Col>
       </Row>
     </div>;
     if(this.state.startDateAnswer){
-      console.log(Boolean(this.state.startDateAnswer))
-      const value = this.state.link;
+      const value = this.state.answerLink;
+      console.log(value);
       if(value){
         body = success;
       } else{
@@ -177,12 +175,12 @@ class AddAnswer extends React.Component{
     return (
       <div className="animated fadeIn">
           <Row>
-            <Col sm="2" md={{ size: 4, offset: 5 }}>
-              <h3><strong>Remote Test Assesment</strong></h3>
+            <Col align="center">
+              <h3><strong>Remote Test</strong></h3>
             </Col>
           </Row>
           <Row>
-          <Col sm="10" md={{ size: 7, offset: 3 }}>
+          <Col span={12} offset={6}>
             <Card>
               <CardHeader>
                 {/*<strong>Submission</strong>*/}

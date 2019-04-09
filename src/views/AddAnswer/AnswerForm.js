@@ -3,6 +3,7 @@ import {
   Form, Icon, Input, Button,
 } from 'antd';
 import Modals from './Modals';
+import { Col } from 'antd';
 
 
 export default class AnswerForm extends React.Component {
@@ -57,13 +58,7 @@ export default class AnswerForm extends React.Component {
           )}
         </Form.Item>
         <Form.Item>
-          {/*<Button
-            type="primary"
-            htmlType="submit"
-            disabled={this.state.hasErrors}
-          > Submit
-          </Button>*/}
-          <Modals error={this.state.hasErrors} link={this.state.link} remoteTest={3}/>
+          <Col span={5} offset={19}><Modals error={this.state.hasErrors} link={this.state.link} remoteTest={3}/></Col>
         </Form.Item>
       </Form>
     );

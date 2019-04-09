@@ -21,6 +21,10 @@ class LamaranController extends Controller
     }
 
     public function sendMailLamaran($data){
+        // $nama = $request->input('nama');
+        // $email = $request->input('email');
+        // $lowongan = $request->input('lowongan');
+
         $nama = $data['nama'];
         $email = $data['email'];
         $lowongan = $data['lowongan'];
@@ -69,14 +73,6 @@ class LamaranController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         $created_date = date('Y-m-d H:i:s', time());
 
-        //$file = $request->input('file');
-
-        // $pdf_decoded = base64_decode ($file);
-        // $pdf = fopen ('test.pdf','w');
-        // fwrite ($pdf,$pdf_decoded);
-        // fclose($pdf);
-
-
         $id_lamaran = DB::table('lamaran')->insertGetId(
             ['id_lowongan' => $id_lowongan,
             'token_pelamar' => $token_pelamar,
@@ -84,39 +80,42 @@ class LamaranController extends Controller
             'cover_letter' => $cover_letter,
             'tahapan' => $tahapan,
             'status' => $status,
-            'created_date' => $created_date
+            'created_date' => $created_date,
+            'skills'=>$skill,
+            'experiences'=>$experience
             ]
         );
 
         $id_lamaran = (int) $id_lamaran;
 
-        $skills = explode(",", $skill);
-        foreach($skills as $s){
-            DB::table('skill')->insertGetId(
-                ['deskripsi'=>$s,
-                'id_lamaran'=>$id_lamaran]
-            );
-        }
+        // $skills = explode(",", $skill);
+        // foreach($skills as $s){
+        //     DB::table('skill')->insertGetId(
+        //         ['deskripsi'=>$s,
+        //         'id_lamaran'=>$id_lamaran]
+        //     );
+        // }
 
-        $experiences = explode(",", $experience);
-        foreach($experiences as $e){
-            //create experience
-            DB::table('experience')->insertGetId(
-                ['deskripsi'=>$e,
-                'id_lamaran'=>$id_lamaran]
-            );
-        }
+        // $experiences = explode(",", $experience);
+        // foreach($experiences as $e){
+        //     //create experience
+        //     DB::table('experience')->insertGetId(
+        //         ['deskripsi'=>$e,
+        //         'id_lamaran'=>$id_lamaran]
+        //     );
+        // }
 
-        //kirim email ke pelamar dan ke PO
+        //kirim email
         $pelamar = DB::table('pelamar')->select()->where('token', $token_pelamar)->get();
         $pelamar = json_decode($pelamar);
         $pelamar = $pelamar[0];
-        $nama = $pelamar->nama;
-        $email = $pelamar->email;
 
         $lowongan = DB::table('lowongan')->select()->where('id', $id_lowongan)->get();
         $lowongan = json_decode($lowongan);
         $lowongan = $lowongan[0];
+
+        $nama = $pelamar->nama;
+        $email = $pelamar->email;
         $lowongan = $lowongan->nama;
 
         $data = array('nama'=>$nama, 'email'=>$email, 'lowongan'=>$lowongan);
@@ -167,17 +166,17 @@ class LamaranController extends Controller
         $pelamar = json_decode($pelamar);
         $pelamar = $pelamar[0];
 
-        $experience = DB::table('experience')->select()->where('token_pelamar', $token)->get();
-        $experience = json_decode($experience);
-        $experience = $experience[0];
+        // // $experience = DB::table('experience')->select()->where('id_lamaran', $id)->get();
+        // // $experience = json_decode($experience);
+        // // $experience = $experience[0];
 
-        $skill = DB::table('skill')->select()->where('token_pelamar', $token)->get();
-        $skill = json_decode($skill);
-        $skill = $skill[0];
+        // // $skill = DB::table('skill')->select()->where('id_lamaran', $id)->get();
+        // // $skill = json_decode($skill);
+        // // $skill = $skill[0];
 
         $lamaran->detail_pelamar = $pelamar;
-        $lamaran->experience = $experience;
-        $lamaran->skill = $skill;
+        // $lamaran->experience = $experience;
+        // $lamaran->skill = $skill;
 
         return json_encode($lamaran);
     }
@@ -197,6 +196,15 @@ class LamaranController extends Controller
         $lamaran->pelamar = $nama_pelamar[0]->nama;
 
         return $lamaran;
+    }
+
+    public function getDetailApplicant($id){
+      $lamaran = DB::table('lamaran')->select()->where('id', $id)->get();
+      $lamaran = json_decode($lamaran);
+      $lamaran = $lamaran[0];
+      $lamaran = $this->addNamaLowonganNamaPelamar($lamaran);
+      $lamaran = array("lowongan" => $lamaran->lowongan, "nama_pelamar"=> $lamaran->pelamar);
+      return json_encode($lamaran);
     }
 
 }

@@ -5,18 +5,16 @@ import { message, Button } from 'antd';
 import axios from 'axios';
 import { Redirect } from 'react-router-dom'
 
-class Modals extends React.Component {
+export default class Modals extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       modal: false,
       remoteTest : this.props.remoteTest
-      //linkGit : '',
 
     };
 
     this.toggle = this.toggle.bind(this);
-    //this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   toggle() {
@@ -25,18 +23,11 @@ class Modals extends React.Component {
     }));
   }
 
-  // handleSubmit = (link) => {
-  //   this.setState({
-  //     linkGit: link
-  //   });
-  //   console.log(this.state.linkGit)
-  // }
-
   onSubmit(){
     this.setState(prevState => ({
       modal: !prevState.modal
     }));
-    message.info('Message', 6);
+    message.info('Message', 5);
     var qs = require('qs');
     axios.post('http://localhost:8000/pelamar/submit-jawaban', qs.stringify({
       'id': this.state.remoteTest,
@@ -46,7 +37,7 @@ class Modals extends React.Component {
       headers: {'Content-Type': 'application/x-www-form-urlencoded'}
     });
     message.loading('Saving...', 3)
-    .then(() => message.success('Your submission have been recorded', 3))
+    .then(() => message.success('Your submission have been recorded', 2))
     .then(() => window.location.reload());
   }
 
@@ -61,7 +52,7 @@ class Modals extends React.Component {
     };
     return (
       <div>
-        <Button disabled={Boolean(this.props.error)} type="primary" onClick={this.toggle} shape="round">Submit</Button>
+        <Button disabled={Boolean(this.props.error)} type="primary" onClick={this.toggle} shape="round" block>Submit</Button>
         <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
           <ModalHeader toggle={this.toggle}>
           </ModalHeader>
@@ -102,5 +93,3 @@ class Modals extends React.Component {
     );
   }
 }
-
-export default Modals;

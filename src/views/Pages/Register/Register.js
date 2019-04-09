@@ -85,19 +85,19 @@ class Register extends Component {
 
                     <FormGroup>
                       <Label for="name">Full Name*</Label>
-                      <Input required type="text" name="name" id="name" placeholder="Your Full Name" defaultValue={candidate_name} onChange={this.handleInputChange} />
+                      <Input required type="text" title="must only contain letters" pattern="[A-Za-z\s]+" name="name" id="name" placeholder="Your Full Name" defaultValue={candidate_name} onChange={this.handleInputChange} />
                     </FormGroup>
 
                     <FormGroup>
                       <Label for="nik">NIK*</Label>
-                      <Input required type="text" maxLength="16" name="nik" id="nik" placeholder="Your 16-digits NIK" onChange={this.handleInputChange} />
+                      <Input required type="text" title="must only contain numbers" pattern="[0-9]+" maxLength="16" name="nik" id="nik" placeholder="Your 16-digits NIK" onChange={this.handleInputChange} />
                     </FormGroup>
 
                     <Row form>
                       <Col md={6}>
                         <FormGroup>
                           <Label for="placeOfBirth">Place of Birth*</Label>
-                          <Input required type="text" name="placeOfBirth" id="placeOfBirth" placeholder="" onChange={this.handleInputChange} />
+                          <Input required type="text" title="must only contain letters" pattern="[A-Za-z\s]+" name="placeOfBirth" id="placeOfBirth" placeholder="" onChange={this.handleInputChange} />
                         </FormGroup>
                       </Col>
 
@@ -116,11 +116,11 @@ class Register extends Component {
 
                     <FormGroup>
                       <Label for="phone">Phone*</Label>
-                      <Input required type="text" name="phone" id="phone" placeholder="" onChange={this.handleInputChange} />
+                      <Input required type="text" title="must only contain numbers" pattern="[0-9]+" name="phone" id="phone" placeholder="" onChange={this.handleInputChange} />
                     </FormGroup>
 
                     <div align="center">
-                      <Button color="primary" className="px-4" >Create Account</Button>
+                      <Button color="primary" className="px-4" className="btn-pill">Create Account</Button>
                     </div>
 
                   </Form>
