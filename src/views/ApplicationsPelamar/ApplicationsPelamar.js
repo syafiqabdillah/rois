@@ -53,6 +53,8 @@ class ApplicationsPelamar extends Component {
         );
       });
 
+      data.rows = [];
+
       for (var i = 0; i < list_lamaran.length; i++) {
         data.rows.push(list_lamaran[i]);
       }
@@ -114,4 +116,3 @@ const data = {
 };
 
 export default ApplicationsPelamar;
-

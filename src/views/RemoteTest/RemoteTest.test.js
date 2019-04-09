@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import RemoteTestStandby from './RemoteTestStandby';
+import RemoteTest from './RemoteTest';
 
 it('renders without crashing', () => {
   const div = document.createElement('div');
-  ReactDOM.render(<RemoteTestStandby />, div);
+  ReactDOM.render(<RemoteTest />, div);
   ReactDOM.unmountComponentAtNode(div);
 });

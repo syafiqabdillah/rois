@@ -43,7 +43,7 @@ class ChooseStages extends Component {
             <Col lg={1}>
             </Col>
             <Col lg={10}>
-              <Link to={"/remoteTestForm/" + this.props.lamaran.id}> <Button className="btn-pill" color="info"  block>Remote Test</Button> </Link>
+              <Link to={"/remoteTest/" + this.props.lamaran.id}> <Button className="btn-pill" color="info"  block>Remote Test</Button> </Link>
             </Col>
             <Col lg={1}>
             </Col>

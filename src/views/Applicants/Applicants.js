@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import ChooseCurrentStage from './ChooseCurrentStage';
 import ChooseStages from './ChooseStages';
-import HireNotification from '../FinalStage/HireNotification';
-import RejectNotification from '../FinalStage/RejectNotification';
 import Widget02 from '../Widgets/Widget02';
 import Widget04 from '../Widgets/Widget04';
 import { Badge, Card, CardBody, CardHeader, Col, Pagination, PaginationItem, PaginationLink, Row, Table, CardTitle, CardText, Progress, Tooltip } from 'reactstrap';
@@ -19,6 +18,7 @@ class Applicants extends Component {
       loading: true,
       toolTipPhase: false,
       toolTipStatus: false,
+      idActiveRemoteTest : null
     }
 
     this.togglePhase = this.togglePhase.bind(this);
@@ -33,6 +33,15 @@ class Applicants extends Component {
       this.setState({
         lamaran: lamaran,
         loading: false
+      })
+    })
+  }
+
+  getIdRemoteTest = () => {
+    axios.get(API + '/po/get-id-remote-test/' + this.props.match.params.id)
+    .then(res => {
+      this.setState({
+        idActiveRemoteTest: res.data.id_remote_test,
       })
     })
   }
@@ -116,14 +125,18 @@ class Applicants extends Component {
         stage = (
           <div>
             <ChooseCurrentStage lamaran={this.state.lamaran} />
-            <Widget02 header="Assigned" mainText="Waiting for applicant's answer" icon="fa fa-clock-o" color="warning" />
+            <Link to={"/remoteTest/" + this.state.lamaran.id}>
+              <Widget02 header="Assigned" mainText="Waiting for applicant's answer" icon="fa fa-clock-o" color="warning" />
+            </Link>
           </div>
         );
       } else if (this.state.lamaran.tahapan === 'Remote Test' &&  this.state.lamaran.status === 'Answered' && localStorage.getItem('role') === 'admin') {
         stage  = (
           <div>
             <ChooseCurrentStage lamaran={this.state.lamaran} />
-            <Widget02 header="Answered" mainText="Click here to see the applicant's answer" icon="fa fa-check" color="info" />
+            <Link to={"/remoteTest/" + this.state.lamaran.id}>
+              <Widget02 header="Answered" mainText="Click here to see the applicant's answer" icon="fa fa-check" color="info" />
+            </Link>
           </div>
         );
       } else if (this.state.lamaran.tahapan === 'Hired' && localStorage.getItem('role') === 'admin') {
@@ -144,8 +157,13 @@ class Applicants extends Component {
             <ChooseCurrentStage lamaran={this.state.lamaran} />
           </div>
         );
-      } else {
-        stage = '';
+      } else if (localStorage.getItem('role') === 'pelamar' && this.state.lamaran.tahapan === 'Remote Test' &&  this.state.lamaran.status === 'Assigned') {
+        this.getIdRemoteTest();
+        stage = (
+          <Link to={"/addanswer/" + this.state.idActiveRemoteTest}>
+            <Widget02 header="Coding Test" mainText="Click here to start test" icon="fa fa-code" color="info" />
+          </Link>
+        );
       }
 
     }
@@ -160,9 +178,7 @@ class Applicants extends Component {
           <Col lg={8}>
             <Card >
               <CardHeader>
-                <i className="fa fa-user pr-1"></i> {this.state.lamaran.pelamar} <Badge color="secondary">
-                Candidate {this.state.lamaran.lowongan}</Badge> <Badge color="info" pill id="Phase">
-                {this.state.lamaran.tahapan}: {this.state.lamaran.status}</Badge>
+                <i className="fa fa-user pr-1"></i> {this.state.lamaran.pelamar} <Badge color="secondary">Candidate {this.state.lamaran.lowongan}</Badge> <Badge color="info" pill id="Phase">{this.state.lamaran.tahapan}: {this.state.lamaran.status}</Badge>
                 <Tooltip placement="top" isOpen={this.state.toolTipPhase} target="Phase" toggle={this.togglePhase}>
                   Current phase and its status
                 </Tooltip>

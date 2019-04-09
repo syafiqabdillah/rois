@@ -73,27 +73,32 @@ class ApplicationForm extends Component {
   handleSubmit = (e) => {
     this.toggle(e);
 
-    // axios post 
-    var qs = require('qs');
-    //post it to backend
-    axios.post('http://localhost:8000/pelamar/create-lamaran', qs.stringify({
-      'id_lowongan': localStorage.getItem('id_lowongan'),
-      'token_pelamar': localStorage.getItem('token'),
-      'salary_expectation': this.state.expectedSalary,
-      'cover_letter': this.state.coverLetter,
-      'skill': this.state.skill,
-      'experience': this.state.experience,
-    }),
-      {
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-      })
-      .then(function (response) {
-        let id_lamaran = response.data;
-        localStorage.setItem('id_lamaran', id_lamaran);
-      })
+    // axios post
+    const url = 'http://localhost:8000/pelamar/create-lamaran'
 
-    //upload cv nya 
-    this.fileUpload();
+    const formData = new FormData();
+    formData.append('token_pelamar', localStorage.getItem('token'))
+    formData.append('id_lowongan', localStorage.getItem('id_lowongan'))
+    formData.append('salary_expectation', this.state.expectedSalary)
+    formData.append('cover_letter', this.state.coverLetter)
+    formData.append('skill', this.state.skill,)
+    formData.append('experience', this.state.experience)
+    formData.append('file', this.state.file)
+
+    const config = {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    }
+
+    axios.post(url, formData, config)
+      .then(function (response) {
+        console.log(response.data)
+
+        window.location.href = '#/myapplications'
+        window.location.reload()
+        window.alert("Your Application Has Been Successfully Submitted !")
+      })
   }
 
   componentDidMount() {

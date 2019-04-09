@@ -61,6 +61,7 @@ export default class AddAnswer extends React.Component{
         const answerLink = response.data.link_jawaban;
         const expiredDate = response.data.expired_date;
         const endDate = this.getEndTime(startDate, duration);
+        console.log(endDate);
 
         this.setState({
           startDateAnswer : startDate,
@@ -161,7 +162,7 @@ export default class AddAnswer extends React.Component{
         </Row>
         <Row>
           <Col>
-            <FormAnswer />
+            <FormAnswer idRemoteTest={this.props.match.params.id} />
           </Col>
         </Row>
       </div>;
@@ -186,14 +187,17 @@ export default class AddAnswer extends React.Component{
     //conditional rendering
     var today = moment(new Date()).format('YYYY-MM-DD');
     var expiredDate = moment(this.state.expiredDate).format('YYYY-MM-DD');
-    var endDateForSubmit = moment(this.state.endDate).format('YYYY-MM-DD');
+    var endDateForSubmit = moment(this.state.endDateAnswer).format('YYYY-MM-DD');
+    console.log("today: ",today,"expired: ", expiredDate, "endDate: ",endDateForSubmit);
 
-    if(this.state.startDateAnswer){ //applicant has start test
+    if(this.state.startDateAnswer){
+      console.log(moment(today).isBefore(endDateForSubmit));
       if(this.state.answerLink){
         body = success;
-      } else if(!this.state.answerLink && today.isBefore(endDateForSubmit)){
+      } else if(!this.state.answerLink && moment(today).isBefore(endDateForSubmit)){
+        console.log("masuk");
         body = answer;
-      } else if(!this.state.answerLink && today.isAfter(endDateForSubmit)){
+      } else if(!this.state.answerLink && moment(today).isAfter(endDateForSubmit)){
         body = expired;
       }
     } else { //aplicant not start test
