@@ -56,8 +56,10 @@ class ApplicationForm extends Component {
     axios.post(url, formData, config)
       .then(function (response) {
         console.log(response.data);
+        // redirect sambil nunggu cvnya diupload
         window.location.href = '#/myapplications'
         window.location.reload()
+        window.alert("Your Application Has Been Successfully Submitted !")
       })
   }
 
@@ -68,7 +70,9 @@ class ApplicationForm extends Component {
     }));
   }
 
-  handleSubmit = () => {
+  handleSubmit = (e) => {
+    this.toggle(e);
+
     // axios post 
     var qs = require('qs');
     //post it to backend
