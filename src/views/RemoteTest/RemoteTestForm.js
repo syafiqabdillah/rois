@@ -87,7 +87,7 @@ class RemoteTestForm extends Component {
       axios.post('http://localhost:8000/po/update-tahapan-lamaran', qs.stringify({
         'id': this.state.lamaran.id,
         'tahapan': 'Remote Test',
-        'status': 'Assinged',
+        'status': 'Assigned',
       }),
       {
         headers: {'Content-Type': 'application/x-www-form-urlencoded'}
