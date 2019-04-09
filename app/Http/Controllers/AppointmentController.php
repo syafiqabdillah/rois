@@ -61,6 +61,11 @@ class AppointmentController extends Controller
             'interviewer' => $interviewer]
         );
 
+        $result = DB::table('lamaran')
+            ->where('id', $id)
+            ->update(['tahapan' => 'Interview',
+            'status' => 'On going']);
+
         $data = array('email'=>$email, 'date'=>$date, 'start'=>$end, 'end'=>$end, 'location'=>$lokasi);
         $this->sendMailInvitation($data);
         return $id;
