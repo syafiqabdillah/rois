@@ -34,7 +34,10 @@ export default class ConfirmationStartTest extends React.Component {
     }),
     {
       headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-    });
+    })
+    .then(function(response){
+      console.log(response)
+    })
     window.location.reload();
   }
 

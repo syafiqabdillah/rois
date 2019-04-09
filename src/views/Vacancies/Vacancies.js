@@ -3,8 +3,57 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { Button, Card, CardBody, CardHeader, Col, Row, Table } from 'reactstrap';
 import ModalDelete from './ModalDelete';
+import { MDBDataTable } from 'mdbreact';
 
 const API = 'http://localhost:8000';
+
+const data = {
+  columns: [
+    {
+      label: "Vacancy's Name",
+      field: 'nama',
+      sort: 'asc',
+      width: 200
+    },
+    {
+      label: "Division",
+      field: 'divisi',
+      sort: 'asc',
+      width: 150
+    },
+    {
+      label: "Start Date",
+      field: 'start_date',
+      sort: 'asc',
+      width: 200
+    },
+    {
+      label: "End Date",
+      field: 'end_date',
+      sort: 'asc',
+      width: 200
+    },
+    {
+      label: "Location",
+      field: 'lokasi',
+      sort: 'asc',
+      width: 150
+    },
+    {
+      label: "Type",
+      field: 'tipe',
+      width: 150
+    },
+    {
+      label: "Action",
+      field: 'action',
+      width: 50
+    }
+
+  ],
+  rows: []
+}
+
 
 export class Vacancies extends Component {
   constructor(props) {
@@ -20,7 +69,6 @@ export class Vacancies extends Component {
   componentDidMount() {
     axios.get(API + '/po/all-lowongan')
       .then(res => {
-        console.log(res);
         const lowongan = res.data;
         this.setState({
           lowongan: lowongan,
@@ -38,20 +86,20 @@ export class Vacancies extends Component {
       content = <div align="center"><p>Loading . . .</p></div>;
     } else {
      let list_vacancy = this.state.lowongan.map((lowongan, index) => {
-       console.log(lowongan.isDirujuk)
         return (
-          <tr key={index}>
-            <td> <Link to={"/vacancy/" + lowongan.id} >{lowongan.nama}</Link> </td>
-            <td> {lowongan.divisi} </td>
-            <td> {lowongan.start_date} </td>
-            <td> {lowongan.end_date} </td>
-            <td> {lowongan.publish_date} </td>
-            <td> {lowongan.lokasi} </td>
-            <td> {lowongan.tipe} </td>
-            <td>
-              <Row>
+          {
+            nama:
+            <Link to={"/vacancy/" + lowongan.id} >{lowongan.nama}</Link>,
+           
+            divisi:lowongan.divisi,
+            start_date:lowongan.start_date,
+            end_date:lowongan.end_date,
+            lokasi:lowongan.lokasi,
+            tipe:lowongan.tipe,
+            action:
+            <Row>
               <Col>
-              <Link to = {"/vacancy/edit/"+ lowongan.id}  className=" btn btn-primary btn-pill">
+              <Link to = {"/vacancy/update/"+ lowongan.id}  className=" btn btn-primary btn-pill">
               <i className="cui-pencil icons "></i>
               </Link>
               </Col>
@@ -60,59 +108,43 @@ export class Vacancies extends Component {
             
               </Col>
               </Row>
-             
-              </td>
-          </tr>
+          }
         );
-      });
+        });
 
-      content = (
-        <Table hover bordered striped responsive size="sm">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Division</th>
-              <th>Start Date</th>
-              <th>End Date</th>
-              <th>Publish Date</th>
-              <th>Location</th>
-              <th>Type</th>
-              <th> Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {list_vacancy}
-          </tbody>
-        </Table>
-      );
+        data.rows = [];
+        
+        for (var i = 0; i < list_vacancy.length; i++) {
+          data.rows.push(list_vacancy[i]);
+        }
+
+        content=(
+          <MDBDataTable borderless striped hover small btn data={data} />
+        );
     }
+   
 
     return (
       <div className="animated fadeIn">
-
         <div align="center">
           <h3>Vacancies</h3>
         </div>
-
-
         <Link to="/addVacancy">
-          <Button color="primary" className="btn-pill">Add Vacancy</Button>
+            <Button color="primary" className= "btn-pill" >Add Vacancy</Button>
         </Link>
         <br></br>
         <br></br>
-
         <Row>
           <Col>
             <Card>
               <CardHeader>
                 <i className="fa fa-align-justify"></i> Vacancy List
               </CardHeader>
-
               <CardBody>
                 {content}
               </CardBody>
             </Card>
-
+          
           </Col>
         </Row>
       </div>

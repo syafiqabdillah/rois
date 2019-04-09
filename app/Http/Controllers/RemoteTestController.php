@@ -78,7 +78,13 @@ class RemoteTestController extends Controller
 
         $result = DB::table('remote_test')
             ->where('id', $id)
-            ->update(['link_jawaban' => $link_jawaban, 'active' => 'no']);
+            ->update(['link_jawaban' => $link_jawaban, 'active'=>'no']);
+
+        DB::table('lamaran')
+            ->where('id', $id_lamaran)
+            ->update(['tahapan' => 'Remote Test',
+            'status' => 'Submitted']);
+            
         return $result;
     }
 

@@ -23,14 +23,29 @@ class RequirementController extends Controller
      * @return long $id id dari hasil penambahan requirement di database
      */
     public function createRequirement(Request $request){
-        $deskripsi = $request->deskripsi;
-        $id_lowongan = $request->id_lowongan;
 
-        $id = DB::table('requirement')->insertGetId(
-            ['deskripsi' => $deskripsi, 
-            'id_lowongan' => $id_lowongan]
-        );
-        return $id;
+        $id_lowongan = $request->id_lowongan;
+        $list_desc = $request ->deskripsi;
+       
+         $list_desc_name = array();
+
+         foreach($list_desc as $deskripsi){
+             array_push($list_desc_name, $deskripsi);
+           
+         }
+
+         foreach($list_desc_name as $name){
+            //  $count=0;
+             $id= DB :: table('requirement') -> insertGetId(
+                 [
+                 'id_lowongan' => $id_lowongan,
+                 'deskripsi' => $name
+                 ]
+                 );
+
+         }
+
+         return json_encode($list_desc_name);
     }
 
     /**
@@ -57,7 +72,6 @@ class RequirementController extends Controller
      */
     public function deleteRequirement(Request $request){
         $id = $request->id;
-        
         $response = DB::table('requirement')
         ->where('id', $id)
         ->delete();       

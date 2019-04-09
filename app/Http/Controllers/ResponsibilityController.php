@@ -23,16 +23,28 @@ class ResponsibilityController extends Controller
      * @return long $id id dari hasil penambahan responsibility di database
      */
     public function createResponsibility(Request $request){
-        $deskripsi = $request->deskripsi;
         $id_lowongan = $request->id_lowongan;
+        $list_desc = $request ->deskripsi;
+       
+         $list_desc_name = array();
 
-        $id = DB::table('responsibility')->insertGetId(
-            ['deskripsi' => $deskripsi, 
-            'id_lowongan' => $id_lowongan]
-        );
-        return $id;
+         foreach($list_desc as $deskripsi){
+             array_push($list_desc_name, $deskripsi);
+           
+         }
+
+         foreach($list_desc_name as $name){
+             $id= DB :: table('responsibility') -> insertGetId(
+                 [
+                 'id_lowongan' => $id_lowongan,
+                 'deskripsi' => $name
+                 ]
+                 );
+
+         }
+
+         return json_encode($list_desc_name);
     }
-
     /**
      * mengubah suatu responsibility
      * @param request  $request berisi $id, $nama, $id_lowongan
