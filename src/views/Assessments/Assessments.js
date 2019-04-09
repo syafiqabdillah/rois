@@ -37,6 +37,7 @@ const data = {
     {
       label: "Action",
       field: 'action',
+      sort: 'disabled'
     }
   ],
   rows: []
@@ -91,13 +92,26 @@ class Assessments extends Component {
             created_date: soal.created_date,
             
             action: 
-              <div>
-                <Button color="primary" onClick={() => this.onClick(soal)}>
-                  <i className="cui-pencil icons"></i>
-                </Button>
+            <div style={{width:110, overflow: 'hidden'}}>
+              <Row>
+                <Col>
+                  <Button color="primary" onClick={() => this.onClick(soal)} className=" btn btn-primary btn-pill">
+                    <i className="cui-pencil icons"></i>
+                  </Button>
+                    
+                </Col>
+                <Col>
+                  <Modals isDirujuk={soal.isDirujuk} name={soal.nama} id={soal.id} />
+                </Col>
+              </Row>
+            </div>
+              // <div>
+              //   <Button color="primary" onClick={() => this.onClick(soal)}>
+              //     <i className="cui-pencil icons"></i>
+              //   </Button>
                 
-                <Modals isDirujuk={soal.isDirujuk} name={soal.nama} id={soal.id} />
-              </div>, 
+              //   <Modals isDirujuk={soal.isDirujuk} name={soal.nama} id={soal.id} />
+              // </div>, 
           }
         );
       });
