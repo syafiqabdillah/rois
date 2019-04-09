@@ -166,17 +166,17 @@ class LamaranController extends Controller
         $pelamar = json_decode($pelamar);
         $pelamar = $pelamar[0];
 
-        $experience = DB::table('experience')->select()->where('id_lamaran', $id)->get();
-        $experience = json_decode($experience);
-        $experience = $experience[0];
+        // // $experience = DB::table('experience')->select()->where('id_lamaran', $id)->get();
+        // // $experience = json_decode($experience);
+        // // $experience = $experience[0];
 
-        $skill = DB::table('skill')->select()->where('id_lamaran', $id)->get();
-        $skill = json_decode($skill);
-        $skill = $skill[0];
+        // // $skill = DB::table('skill')->select()->where('id_lamaran', $id)->get();
+        // // $skill = json_decode($skill);
+        // // $skill = $skill[0];
 
         $lamaran->detail_pelamar = $pelamar;
-        $lamaran->experience = $experience;
-        $lamaran->skill = $skill;
+        // $lamaran->experience = $experience;
+        // $lamaran->skill = $skill;
 
         return json_encode($lamaran);
     }
