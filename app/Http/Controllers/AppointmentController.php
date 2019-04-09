@@ -61,7 +61,7 @@ class AppointmentController extends Controller
         );
 
         $data = array('date'=>$date, 'start'=>$end, 'end'=>$end, 'location'=>$lokasi);
-        $this->sendMailInvitation($data);
+        $this->sendMailInvitation();
         return $id;
     }
 

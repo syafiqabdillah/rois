@@ -26,8 +26,6 @@ class ApplicationsPelamar extends Component {
           loading: false,
           lamaran: response.data
         })
-        console.log(response.data)
-        console.log(this.state)
       })
   }
 

@@ -66,6 +66,8 @@ $router->get('pelamar/get-lamaran/{token}', ['middleware' => 'cors', 'uses' => '
 
 $router->get('pelamar/get-profile/{token}', ['middleware' => 'cors', 'uses' => 'PelamarController@getPelamar']);
 
+$router->get('pelamar/send-mail-lamaran', ['middleware' => 'cors', 'uses' => 'LamaranController@sendMailLamaran']);
+
 /**
  * UC - 03 : PO Menentukan Tahapan Seleksi Selanjutnya
  * Author : M Raffi A

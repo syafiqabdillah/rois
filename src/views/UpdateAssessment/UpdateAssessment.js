@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Button, Badge, Card, CardBody, CardHeader, Col,
-  Form, FormGroup, FormText, Input, Label, Pagination, PaginationItem, PaginationLink, Row, Table, } from 'reactstrap';
+import { Button, Card, CardBody, Col,
+  Form, FormGroup, FormText, Input, Label, Row} from 'reactstrap';
 import { isNull } from 'util';
+import 'antd/dist/antd.css';
+import { message } from 'antd';
 
 class UpdateAssessment extends Component {
   constructor(props){
@@ -54,12 +56,17 @@ class UpdateAssessment extends Component {
     {
       headers: {'Content-Type': 'application/x-www-form-urlencoded'}
     })
-    .then(function (response) {
-      //handle success, munculin data
-      console.log(response);
-      window.location.href = '#/assessments';
-      window.location.reload();
-    })
+    // .then(function (response) {
+    //   //handle success, munculin data
+    //   console.log(response);
+    //   window.location.href = '#/assessments';
+    //   window.location.reload();
+    // })
+    message.info('Message', 5.5)
+    message.loading('Saving...', 3)
+    .then(() => message.success(this.state.name + ' has successfully saved', 2.5))
+    .then(() => window.location.href = '#/assessments')
+    .then(() => window.location.reload())
   }
 
   handleInputChange = (e) => {
@@ -86,7 +93,10 @@ class UpdateAssessment extends Component {
             <Form onSubmit={this.handleSubmit}>
               <FormGroup>
                 <Label for="name">Name*</Label>
-                <Input type="text" name="name" id="name" placeholder="Enter Assessment Name.." required defaultValue={this.state.name} onChange={this.handleInputChange}/>
+                <Input type="text" name="name" id="name" placeholder="eg. UI/UX Assessment v.1" pattern="(?=.*[a-z]).{5,}" title="Can't contain numbers only, must contain at least 5 or more characters" defaultValue={this.state.name} onChange={this.handleInputChange} required/>
+                {/* <FormText color="muted">
+                  eg. UI/UX Assessment v1
+                </FormText>  */}
               </FormGroup>
               <FormGroup>
                 <Label for="vacancyID">Vacancy*</Label>
@@ -97,10 +107,10 @@ class UpdateAssessment extends Component {
               </FormGroup>
               <FormGroup>
                 <Label for="link">Link*</Label>
-                <Input type="text" id="link" name="link" placeholder="Enter Assessment Link.." required defaultValue={this.state.link} onChange={this.handleInputChange}/>
-                <FormText color="muted">
+                <Input type="text" id="link" name="link" placeholder="eg. https://www.google.com" pattern="https?://.+" defaultValue={this.state.link} onChange={this.handleInputChange} required/>
+                {/* <FormText color="muted">
                   eg. https://www.google.com
-                </FormText> 
+                </FormText>  */}
               </FormGroup>
               <Row>
                   <Col xs="4">
