@@ -85,11 +85,11 @@ class Applicants extends Component {
             </tr>
             <tr>
               <th scope="row">Experiences</th>
-              <td>: {this.state.lamaran.experience.deskripsi}</td>
+              <td>: {this.state.lamaran.experiences}</td>
             </tr>
             <tr>
               <th scope="row">Skills</th>
-              <td>: {this.state.lamaran.skill.deskripsi}</td>
+              <td>: {this.state.lamaran.skills}</td>
             </tr>
             <tr>
               <th scope="row">Expected Salary</th>

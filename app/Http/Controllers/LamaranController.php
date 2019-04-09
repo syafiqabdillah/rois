@@ -88,6 +88,8 @@ class LamaranController extends Controller
 
         $id_lamaran = (int) $id_lamaran;
 
+
+
         // $skills = explode(",", $skill);
         // foreach($skills as $s){
         //     DB::table('skill')->insertGetId(
@@ -122,7 +124,17 @@ class LamaranController extends Controller
 
         $this->sendMailLamaran($data);
 
-        return $id_lamaran;
+        //upload file
+        if($request->hasFile('file')){
+          $file = $request->file('file');
+          $extension = $file->getClientOriginalExtension();
+          $filename =$id_lamaran.'.'.$extension;
+          $file->move('uploads/', $filename);
+
+          return response()->json(['message'=>'success', 'status'=>200]);
+        } else {
+          return response()->json(['message'=>'failed', 'status'=>500]);
+        }
     }
 
     /**
