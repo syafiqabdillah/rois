@@ -159,6 +159,7 @@ class Applicants extends Component {
         );
       } else if (localStorage.getItem('role') === 'pelamar' && this.state.lamaran.tahapan === 'Remote Test' &&  this.state.lamaran.status === 'Assigned') {
         this.getIdRemoteTest();
+        console.log(this.state.idActiveRemoteTest);
         stage = (
           <Link to={"/addanswer/" + this.state.idActiveRemoteTest}>
             <Widget02 header="Coding Test" mainText="Click here to start test" icon="fa fa-code" color="info" />

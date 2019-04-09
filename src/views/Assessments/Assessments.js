@@ -116,6 +116,7 @@ class Assessments extends Component {
         );
       });
       
+      data.rows = []
       for (var i = 0; i < list_soal.length; i++) {
         data.rows.push(list_soal[i]);
       }
