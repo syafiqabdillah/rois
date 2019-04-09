@@ -17,6 +17,7 @@ $router->get('/', function () {
 });
 
 $router->get('testmail', ['middleware' => 'cors', 'uses' => 'LamaranController@sendMailLamaran']);
+$router->get('invitation', ['middleware' => 'cors', 'uses' => 'AppointmentController@sendMailInvitation']);
 
 /**
  * Modul Recruitment
@@ -81,6 +82,8 @@ $router->get('po/remote-test/{id}', ['middleware' => 'cors', 'uses' => 'RemoteTe
 $router->post('po/create-remote-test', ['middleware' => 'cors', 'uses' => 'RemoteTestController@createRemoteTest']);
 
 $router->get('po/download-cv/{id}', ['middleware' => 'cors', 'uses' => 'LamaranController@downloadCV']);
+
+$router->get('po/get-detail-applicant/{id}', ['middleware' => 'cors', 'uses' => 'LamaranController@getDetailApplicant']);
 /**
  * UC - 04 : PO Mengelola Soal
  * Author : Hauri S Z

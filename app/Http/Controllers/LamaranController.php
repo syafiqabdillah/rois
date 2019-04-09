@@ -38,20 +38,21 @@ class LamaranController extends Controller
             ->setBody($data['text']);
             $message->from('second.umarghanis@gmail.com', 'Career SIRCLO');
         });
+
     }
 
     public function uploadCV(Request $request){
         if($request->hasFile('file')){
             $file = $request->file('file');
             $id_lamaran = $request->input('id_lamaran');
-            $extension = $file->getClientOriginalExtension(); 
+            $extension = $file->getClientOriginalExtension();
             $filename =$id_lamaran.'.'.$extension;
 
             $file->move('uploads/', $filename);
             return response()->json(['message'=>'success', 'status'=>200]);
         } else {
             return response()->json(['message'=>'failed', 'status'=>500]);
-        }  
+        }
     }
 
     public function downloadCV($id){
@@ -195,6 +196,15 @@ class LamaranController extends Controller
         $lamaran->pelamar = $nama_pelamar[0]->nama;
 
         return $lamaran;
+    }
+
+    public function getDetailApplicant($id){
+      $lamaran = DB::table('lamaran')->select()->where('id', $id)->get();
+      $lamaran = json_decode($lamaran);
+      $lamaran = $lamaran[0];
+      $lamaran = $this->addNamaLowonganNamaPelamar($lamaran);
+      $lamaran = array("lowongan" => $lamaran->lowongan, "nama_pelamar"=> $lamaran->pelamar);
+      return json_encode($lamaran);
     }
 
 }
