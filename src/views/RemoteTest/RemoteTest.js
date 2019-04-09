@@ -21,7 +21,7 @@ class RemoteTest extends Component {
       loading: true,
       duration: 0,
       tester_email: '',
-      id_soal: 0,
+      id_soal: null,
       start_date: null,
       status: '',
       link_jawaban: '',
@@ -59,6 +59,7 @@ class RemoteTest extends Component {
     this.setState({
       [e.target.name]: e.target.value
     })
+    console.log(this.state.id_soal);
   }
 
   handleSubmit = (e) => {

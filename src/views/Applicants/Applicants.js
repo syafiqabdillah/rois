@@ -165,8 +165,11 @@ class Applicants extends Component {
             <Widget02 header="Coding Test" mainText="Click here to start test" icon="fa fa-code" color="info" />
           </Link>
         );
+      } else if (localStorage.getItem('role') === 'pelamar' && this.state.lamaran.tahapan === 'Remote Test' &&  this.state.lamaran.status === 'Submitted') {
+        stage = (
+          <Widget02 header="Coding Test" mainText="Your coding answer under review" icon="fa fa-code" color="info" />
+        );
       }
-
     }
 
     return (

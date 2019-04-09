@@ -63,7 +63,7 @@ class RemoteTestController extends Controller
             'tester_email' => $tester_email,
             'expired_date' => $expired_date,
             'id_soal' => $id_soal,
-            'active' => $active]
+            'active' => 'yes']
         );
         return $id;
     }
@@ -79,7 +79,13 @@ class RemoteTestController extends Controller
 
         $result = DB::table('remote_test')
             ->where('id', $id)
-            ->update(['link_jawaban' => $link_jawaban]);
+            ->update(['link_jawaban' => $link_jawaban, 'active'=>'no']);
+
+        DB::table('lamaran')
+            ->where('id', $id_lamaran)
+            ->update(['tahapan' => 'Remote Test',
+            'status' => 'Submitted']);
+
         return $result;
     }
 
