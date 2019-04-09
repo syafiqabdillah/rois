@@ -57,8 +57,8 @@ class ApplicationForm extends Component {
       .then(function (response) {
         console.log(response.data);
         // redirect sambil nunggu cvnya diupload
-        // window.location.href = '#/myapplications'
-        // window.location.reload()
+        window.location.href = '#/myapplications'
+        window.location.reload()
         window.alert("Your Application Has Been Successfully Submitted !")
       })
   }
@@ -95,8 +95,8 @@ class ApplicationForm extends Component {
       .then(function (response) {
         console.log(response.data)
 
-        // window.location.href = '#/myapplications'
-        // window.location.reload()
+        window.location.href = '#/myapplications'
+        window.location.reload()
         window.alert("Your Application Has Been Successfully Submitted !")
       })
   }

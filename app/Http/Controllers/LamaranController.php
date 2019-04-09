@@ -88,53 +88,32 @@ class LamaranController extends Controller
 
         $id_lamaran = (int) $id_lamaran;
 
-
-
-        // $skills = explode(",", $skill);
-        // foreach($skills as $s){
-        //     DB::table('skill')->insertGetId(
-        //         ['deskripsi'=>$s,
-        //         'id_lamaran'=>$id_lamaran]
-        //     );
-        // }
-
-        // $experiences = explode(",", $experience);
-        // foreach($experiences as $e){
-        //     //create experience
-        //     DB::table('experience')->insertGetId(
-        //         ['deskripsi'=>$e,
-        //         'id_lamaran'=>$id_lamaran]
-        //     );
-        // }
-
-        //kirim email
-        $pelamar = DB::table('pelamar')->select()->where('token', $token_pelamar)->get();
-        $pelamar = json_decode($pelamar);
-        $pelamar = $pelamar[0];
-
-        $lowongan = DB::table('lowongan')->select()->where('id', $id_lowongan)->get();
-        $lowongan = json_decode($lowongan);
-        $lowongan = $lowongan[0];
-
-        $nama = $pelamar->nama;
-        $email = $pelamar->email;
-        $lowongan = $lowongan->nama;
-
-        $data = array('nama'=>$nama, 'email'=>$email, 'lowongan'=>$lowongan);
-
-        $this->sendMailLamaran($data);
-
         //upload file
         if($request->hasFile('file')){
-          $file = $request->file('file');
-          $extension = $file->getClientOriginalExtension();
-          $filename =$id_lamaran.'.'.$extension;
-          $file->move('uploads/', $filename);
+        $file = $request->file('file');
+        $extension = $file->getClientOriginalExtension();
+        $filename =$id_lamaran.'.'.$extension;
+        $file->move('uploads/', $filename);
+        } 
 
-          return response()->json(['message'=>'success', 'status'=>200]);
-        } else {
-          return response()->json(['message'=>'failed', 'status'=>500]);
-        }
+        //kirim email
+        // $pelamar = DB::table('pelamar')->select()->where('token', $token_pelamar)->get();
+        // $pelamar = json_decode($pelamar);
+        // $pelamar = $pelamar[0];
+
+        // $lowongan = DB::table('lowongan')->select()->where('id', $id_lowongan)->get();
+        // $lowongan = json_decode($lowongan);
+        // $lowongan = $lowongan[0];
+
+        // $nama = $pelamar->nama;
+        // $email = $pelamar->email;
+        // $lowongan = $lowongan->nama;
+
+        // $data = array('nama'=>$nama, 'email'=>$email, 'lowongan'=>$lowongan);
+
+        // $this->sendMailLamaran($data);
+
+        return response()->json(['message'=>'success', 'status'=>200]);
     }
 
     /**
