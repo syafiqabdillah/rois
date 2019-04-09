@@ -69,6 +69,12 @@ export default class AppointmentForm extends React.Component {
     return minute;
   }
 
+  validateLocation = (e) => {
+    const location = e.target;
+    const validate = location.match(/^\d+$/);
+    console.log(validate);
+  }
+
   render() {
     const { getFieldDecorator } = this.props.form;
 
@@ -112,7 +118,7 @@ export default class AppointmentForm extends React.Component {
           {getFieldDecorator('location', {
             rules: [{ required: true, message: 'Please input location' }],
           })(
-            <Input placeholder="Enter Location"/>
+            <Input placeholder="Enter Location" onChange={this.validateLocation}/>
           )}
         </Form.Item>
         <Form.Item
