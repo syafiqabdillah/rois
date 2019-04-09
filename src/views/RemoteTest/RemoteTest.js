@@ -17,13 +17,11 @@ class RemoteTest extends Component {
     this.state = {
       lamaran: [],
       soal: [],
-      remote_test: [],
-      id: 0,
       id_lamaran: 0,
       loading: true,
       duration: 0,
       tester_email: '',
-      id_soal: 1,
+      id_soal: 0,
       start_date: null,
       status: '',
       link_jawaban: '',
@@ -79,6 +77,7 @@ class RemoteTest extends Component {
         'tester_email': this.state.tester_email,
         'expired_date': this.state.expired_date,
         'id_soal': this.state.id_soal,
+        'active' : 'yes',
       }),
       {
         headers: {'Content-Type': 'application/x-www-form-urlencoded'}
@@ -90,7 +89,7 @@ class RemoteTest extends Component {
       axios.post('http://localhost:8000/po/update-tahapan-lamaran', qs.stringify({
         'id': this.state.lamaran.id,
         'tahapan': 'Remote Test',
-        'status': 'Assinged',
+        'status': 'Assigned',
       }),
       {
         headers: {'Content-Type': 'application/x-www-form-urlencoded'}
@@ -106,7 +105,7 @@ class RemoteTest extends Component {
         }
       })
 
-      window.location.reload()
+      // window.location.reload()
 
     }
 

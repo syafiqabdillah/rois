@@ -55,14 +55,15 @@ class RemoteTestController extends Controller
         $tester_email = $request->tester_email;
         $expired_date = $request->expired_date;
         $id_soal = $request->id_soal;
-        $status = 'Assinged';
+        $active = $request->active;
 
         $id = DB::table('remote_test')->insertGetId(
             ['id_lamaran' => $id_lamaran,
             'duration' => $duration,
             'tester_email' => $tester_email,
-            'expired_in' => $expired_in,
-            'id_soal' => $id_soal]
+            'expired_date' => $expired_date,
+            'id_soal' => $id_soal,
+            'active' => $active]
         );
         return $id;
     }

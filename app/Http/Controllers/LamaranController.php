@@ -119,12 +119,12 @@ class LamaranController extends Controller
         $id_lamaran = (int) $id_lamaran;
 
         //upload file
-        if ($request->hasFile('file')){
-            $file = $request->file('file');
-            $extension = $file->getClientOriginalExtension();
-            $filename =$id_lamaran.'.'.$extension;
-            $file->move('uploads/', $filename);
-        } 
+        if($request->hasFile('file')){
+        $file = $request->file('file');
+        $extension = $file->getClientOriginalExtension();
+        $filename =$id_lamaran.'.'.$extension;
+        $file->move('uploads/', $filename);
+        }
 
         //kirim email
         $pelamar = DB::table('pelamar')->select()->where('token', $token_pelamar)->get();
@@ -202,6 +202,18 @@ class LamaranController extends Controller
         return json_encode($lamaran);
     }
 
+    public function getIdRemoteTest($id){
+      $lamaran = DB::table('lamaran')->select()->where('id', $id)->get();
+      $lamaran = json_decode($lamaran);
+      $lamaran = $lamaran[0];
+
+      $rt = DB::table('remote_test')->select()->where('id_lamaran', $lamaran->id)->where('active', 'yes')->get();
+      $rt = json_decode($rt);
+      $rt = $rt[0];
+      $rt = array('id_remote_test'=>$rt->id);
+      return json_encode($rt);
+    }
+
     /**
      * mengembalikan lamaran yang udah berisi nama lowongan
      */
@@ -223,8 +235,15 @@ class LamaranController extends Controller
       $lamaran = DB::table('lamaran')->select()->where('id', $id)->get();
       $lamaran = json_decode($lamaran);
       $lamaran = $lamaran[0];
-      $lamaran = $this->addNamaLowonganNamaPelamar($lamaran);
-      $lamaran = array("lowongan" => $lamaran->lowongan, "nama_pelamar"=> $lamaran->pelamar);
+
+      $nama_lowongan = DB::table('lowongan')->select('nama')->where('id', $lamaran->id_lowongan)->get();
+      $lamaran->lowongan = $nama_lowongan[0]->nama;
+
+      //nama pelamar
+      $pelamar = DB::table('pelamar')->select('nama', 'email')->where('token', $lamaran->token_pelamar)->get();
+      $lamaran->pelamar = $pelamar[0];
+
+      $lamaran = array("lowongan" => $lamaran->lowongan, "nama_pelamar"=> $lamaran->pelamar->nama, "email"=>$lamaran->pelamar->email);
       return json_encode($lamaran);
     }
 

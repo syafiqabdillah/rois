@@ -18,6 +18,7 @@ class Applicants extends Component {
       loading: true,
       toolTipPhase: false,
       toolTipStatus: false,
+      idActiveRemoteTest : null
     }
 
     this.togglePhase = this.togglePhase.bind(this);
@@ -32,6 +33,15 @@ class Applicants extends Component {
       this.setState({
         lamaran: lamaran,
         loading: false
+      })
+    })
+  }
+
+  getIdRemoteTest = () => {
+    axios.get(API + '/po/get-id-remote-test/' + this.props.match.params.id)
+    .then(res => {
+      this.setState({
+        idActiveRemoteTest: res.data.id_remote_test,
       })
     })
   }
@@ -147,8 +157,13 @@ class Applicants extends Component {
             <ChooseCurrentStage lamaran={this.state.lamaran} />
           </div>
         );
-      } else {
-        stage = '';
+      } else if (localStorage.getItem('role') === 'pelamar' && this.state.lamaran.tahapan === 'Remote Test' &&  this.state.lamaran.status === 'Assigned') {
+        this.getIdRemoteTest();
+        stage = (
+          <Link to={"/addanswer/" + this.state.idActiveRemoteTest}>
+            <Widget02 header="Coding Test" mainText="Click here to start test" icon="fa fa-code" color="info" />
+          </Link>
+        );
       }
 
     }

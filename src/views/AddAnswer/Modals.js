@@ -27,6 +27,8 @@ export default class Modals extends React.Component {
     this.setState(prevState => ({
       modal: !prevState.modal
     }));
+
+    console.log("props : ", this.props.link);
     message.info('Message', 5);
     var qs = require('qs');
     axios.post('http://localhost:8000/pelamar/submit-jawaban', qs.stringify({

@@ -112,6 +112,8 @@ export class Vacancies extends Component {
         );
         });
 
+        data.rows = [];
+        
         for (var i = 0; i < list_vacancy.length; i++) {
           data.rows.push(list_vacancy[i]);
         }

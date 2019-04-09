@@ -105,11 +105,7 @@ class VacancyDetail extends Component {
       .catch(error => {
         console.log(error.response)
       });
-<<<<<<< HEAD
-    let redirect = '#/vacancies/';
-=======
     let redirect = '#/vacancies';
->>>>>>> 30e7076a47a6edb9a318c9c7f76958dfc35fbb82
     window.location.href = redirect;
   }
 
@@ -330,14 +326,10 @@ class VacancyDetail extends Component {
 
 
             <div>
-<<<<<<< HEAD
-              {buttonAddResAddReq}
-=======
               <Row>
                 <Button color="info" onClick={this.toggleInfoRes} className="mr-1 btn-pill" color="primary">Add Responsibility</Button>
                 <Button color="info" onClick={this.toggleInfoReq} className="mr-1 btn-pill" color="primary">Add Requirement</Button>
               </Row>
->>>>>>> 30e7076a47a6edb9a318c9c7f76958dfc35fbb82
               {formAddResponsibilities}
               {formAddRequirement}
             </div>

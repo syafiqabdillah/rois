@@ -11,7 +11,7 @@ export default class AnswerForm extends React.Component {
     super(props);
     this.state = {
       hasErrors : null,
-      link : null,
+      link : '',
     }
   }
 
@@ -36,6 +36,7 @@ export default class AnswerForm extends React.Component {
       hasErrors : this.hasErrors(value),
       link : value
     })
+    console.log(this.state.link);
   }
 
   render() {
@@ -58,7 +59,7 @@ export default class AnswerForm extends React.Component {
           )}
         </Form.Item>
         <Form.Item>
-          <Col span={5} offset={19}><Modals error={this.state.hasErrors} link={this.state.link} remoteTest={3}/></Col>
+          <Col span={5} offset={19}><Modals error={this.state.hasErrors} link={this.state.link} remoteTest={this.props.idRemoteTest}/></Col>
         </Form.Item>
       </Form>
     );
