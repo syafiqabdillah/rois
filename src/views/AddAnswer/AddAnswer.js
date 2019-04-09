@@ -140,7 +140,7 @@ export default class AddAnswer extends React.Component{
         </Row>
         <Row>
           <Col span={5} offset={10}>
-            <ConfirmationStartTest idRemoteTest= {this.props.match.params.id}/>
+            <ConfirmationStartTest idRemoteTest={this.props.match.params.id}/>
           </Col>
         </Row>
 
