@@ -18,6 +18,7 @@ const Switches = React.lazy(() => import('./views/Base/Switches'));
 const Tables = React.lazy(() => import('./views/Base/Tables'));
 
 const Vacancies = React.lazy(() => import('./views/Vacancies'));
+const UpdateVacancy = React.lazy(() => import ('./views/UpdateVacancy/UpdateVacancy'));
 const VacancyDetail = React.lazy(() => import('./views/Vacancies/VacancyDetail'));
 const Applications = React.lazy(() => import('./views/Applications'));
 const Assessments = React.lazy(() => import('./views/Assessments'));
@@ -78,6 +79,7 @@ const routes = [
   { path: '/vacancies-applicant', name: 'Vacancies', component: VacanciesPelamar },
   { path: '/apply/:id', name: 'Application Form', component: ApplicationForm },
   { path: '/myapplications', name: 'My Applications', component: ApplicationsPelamar },
+  { path: '/vacancy/update/:id', name: 'Update Vacancy', component: UpdateVacancy },
   { path: '/vacancy/:id', name: 'Vacancy Detail', component: VacancyDetail },
   { path: '/profile/:token', name: 'Profile', component: Profile },
   { path: '/applicants/:id', exact: true, name: 'Applicants', component: Applicants },
