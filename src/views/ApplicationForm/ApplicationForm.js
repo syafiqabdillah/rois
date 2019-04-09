@@ -56,8 +56,8 @@ class ApplicationForm extends Component {
     axios.post(url, formData, config)
       .then(function (response) {
         console.log(response.data);
-        window.location.href = '#/myapplications'
-        window.location.reload()
+        // window.location.href = '#/myapplications'
+        // window.location.reload()
       })
   }
 
@@ -69,7 +69,7 @@ class ApplicationForm extends Component {
   }
 
   handleSubmit = () => {
-    // axios post 
+    // axios post
     var qs = require('qs');
     //post it to backend
     axios.post('http://localhost:8000/pelamar/create-lamaran', qs.stringify({
@@ -88,7 +88,7 @@ class ApplicationForm extends Component {
         localStorage.setItem('id_lamaran', id_lamaran);
       })
 
-    //upload cv nya 
+    //upload cv nya
     this.fileUpload();
   }
 

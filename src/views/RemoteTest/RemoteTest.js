@@ -9,8 +9,6 @@ import { Badge, Card, CardBody, CardHeader, Col, Pagination, PaginationItem,
 
 const API = 'http://localhost:8000';
 
-let today = new Date();
-
 class RemoteTest extends Component {
 
   constructor(props){
@@ -19,13 +17,17 @@ class RemoteTest extends Component {
     this.state = {
       lamaran: [],
       soal: [],
+      remote_test: [],
+      id: 0,
+      id_lamaran: 0,
       loading: true,
       duration: 0,
       tester_email: '',
-      expired_date: null,
       id_soal: 1,
-      start_date: today,
-      link_jawaban: ''
+      start_date: null,
+      status: '',
+      link_jawaban: '',
+      expired_date: null,
     }
 
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -51,6 +53,7 @@ class RemoteTest extends Component {
         loading: false
       })
     })
+
   }
 
   handleInputChange = (e) => {
@@ -139,7 +142,7 @@ class RemoteTest extends Component {
         content = (
           <div>
             <CardTitle>
-              The answers for the assessment remote test of the applicant above can be accessed at this <u>github link</u>.
+              The answers for the assessment remote test of the applicant above can be accessed at this <Link to="https://github.com/syafiqabdillah/rois"> github link. </Link>
             </CardTitle>
             <br />
             <Row>
