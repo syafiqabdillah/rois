@@ -65,7 +65,7 @@ class Modals extends React.Component {
       buttonDelete = (
         <Tooltip title="There's a remote test referring to this assessment" >
           <span>
-            <Button disabled={Boolean(this.props.isDirujuk)} color="danger" className="cui-trash icons">
+            <Button outline disabled={Boolean(this.props.isDirujuk)} color="danger" className="btn-pill cui-trash icons">
               {/* <i className="cui-trash icons"></i> */}
             </Button>
           </span>
@@ -73,7 +73,7 @@ class Modals extends React.Component {
       );
     } else {
       buttonDelete = (
-        <Button disabled={Boolean(this.props.isDirujuk)} color="danger" onClick={this.toggle} className="cui-trash icons">
+        <Button outline disabled={Boolean(this.props.isDirujuk)} color="danger" onClick={this.toggle} className="btn-pill cui-trash icons" >
           {/* <i className="cui-trash icons"></i> */}
         </Button>
       )
