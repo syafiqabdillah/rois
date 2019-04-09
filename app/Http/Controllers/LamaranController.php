@@ -5,6 +5,11 @@ namespace App\Http\Controllers;
 use \Illuminate\Http\Request;
 use \Illuminate\Support\Facades\DB;
 use \Illuminate\Support\Facades\Mail;
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+// Load Composer's autoloader
+//require 'vendor/autoload.php';
 
 setlocale(LC_MONETARY, 'id_ID');
 
@@ -21,13 +26,38 @@ class LamaranController extends Controller
     }
 
     public function sendMailLamaran($data){
-        // $nama = $request->input('nama');
-        // $email = $request->input('email');
-        // $lowongan = $request->input('lowongan');
-
         $nama = $data['nama'];
         $email = $data['email'];
         $lowongan = $data['lowongan'];
+
+        // // Instantiation and passing `true` enables exceptions
+        // $mail = new PHPMailer(true);
+
+        // //Server settings
+        // $mail->isSMTP();                                            // Set mailer to use SMTP
+        // $mail->Host       = 'smtp.gmail.com';  // Specify main and backup SMTP servers
+        // $mail->SMTPAuth   = true;                                   // Enable SMTP authentication
+        // $mail->Username   = 'second.umarghanis@gmail.com';                     // SMTP username
+        // $mail->Password   = 'propensic5';                               // SMTP password
+        // $mail->SMTPSecure = 'tls';                                  // Enable TLS encryption, `ssl` also accepted
+        // $mail->Port       = 587;                                    // TCP port to connect to
+
+        // //Recipients
+        // $mail->setFrom('second.umarghanis@gmail.com', 'SIRCLO Career');
+        // $mail->addAddress($email, 'Joe User');     // Add a recipient
+
+        // // Attachments
+        // // $mail->addAttachment('/var/tmp/file.tar.gz');         // Add attachments
+        // // $mail->addAttachment('/tmp/image.jpg', 'new.jpg');    // Optional name
+
+        // // Content
+        // $mail->isHTML(true);                                  // Set email format to HTML
+        // $mail->Subject = 'Application Success';
+        // $body = 'Dear ' . $nama . ', your application as '. $lowongan .' has been submitted. We will evaluate it soon. You can check the progress of your application(s) at our system.';
+        // $mail->Body    = $body;
+        // $mail->AltBody = strip_tags($body);
+
+        // $mail->send();
 
         $text = 'Dear ' . $nama . ', your application as '. $lowongan .' has been submitted. We will evaluate it soon. You can check the progress of your application(s) at our system.';
         $data = array('email'=>$email, 'text'=>$text);
@@ -89,29 +119,29 @@ class LamaranController extends Controller
         $id_lamaran = (int) $id_lamaran;
 
         //upload file
-        if($request->hasFile('file')){
-        $file = $request->file('file');
-        $extension = $file->getClientOriginalExtension();
-        $filename =$id_lamaran.'.'.$extension;
-        $file->move('uploads/', $filename);
+        if ($request->hasFile('file')){
+            $file = $request->file('file');
+            $extension = $file->getClientOriginalExtension();
+            $filename =$id_lamaran.'.'.$extension;
+            $file->move('uploads/', $filename);
         } 
 
         //kirim email
-        // $pelamar = DB::table('pelamar')->select()->where('token', $token_pelamar)->get();
-        // $pelamar = json_decode($pelamar);
-        // $pelamar = $pelamar[0];
+        $pelamar = DB::table('pelamar')->select()->where('token', $token_pelamar)->get();
+        $pelamar = json_decode($pelamar);
+        $pelamar = $pelamar[0];
 
-        // $lowongan = DB::table('lowongan')->select()->where('id', $id_lowongan)->get();
-        // $lowongan = json_decode($lowongan);
-        // $lowongan = $lowongan[0];
+        $lowongan = DB::table('lowongan')->select()->where('id', $id_lowongan)->get();
+        $lowongan = json_decode($lowongan);
+        $lowongan = $lowongan[0];
 
-        // $nama = $pelamar->nama;
-        // $email = $pelamar->email;
-        // $lowongan = $lowongan->nama;
+        $nama = $pelamar->nama;
+        $email = $pelamar->email;
+        $lowongan = $lowongan->nama;
 
-        // $data = array('nama'=>$nama, 'email'=>$email, 'lowongan'=>$lowongan);
+        $data = array('nama'=>$nama, 'email'=>$email, 'lowongan'=>$lowongan);
 
-        // $this->sendMailLamaran($data);
+        $this->sendMailLamaran($data);
 
         return response()->json(['message'=>'success', 'status'=>200]);
     }
