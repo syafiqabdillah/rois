@@ -26,6 +26,7 @@ export default class AddAppointment extends React.Component{
       loading : true,
       lowonganDidaftar : '',
       namaPelamar : '',
+      emailPelamar : ''
     };
   }
 
@@ -46,9 +47,11 @@ export default class AddAppointment extends React.Component{
       .then((response) => {
         const namaLowongan = response.data.lowongan;
         const namaPelamar = response.data.nama_pelamar;
+        const emailPelamar = response.data.email;
         this.setState({
           lowonganDidaftar : namaLowongan,
           namaPelamar : namaPelamar,
+          emailPelamar : emailPelamar,
           loading: false
         });
       });
@@ -78,7 +81,7 @@ export default class AddAppointment extends React.Component{
                 </div>
               </CardHeader>
               <CardBody>
-                <FormAppointment idLamaran={this.props.match.params.id}/>
+                <FormAppointment idLamaran={this.props.match.params.id} emailPelamar={this.state.emailPelamar}/>
               </CardBody>
             </Card>
           </Col>

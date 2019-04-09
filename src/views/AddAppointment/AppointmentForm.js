@@ -32,7 +32,8 @@ export default class AppointmentForm extends React.Component {
           'start': values['start-time'].format('HH:mm'),
           'end': values['finish-time'].format('HH:mm'),
           'lokasi' : values['location'],
-          'interviewer' : values['interviewer']
+          'interviewer' : values['interviewer'],
+          'email' : this.props.emailPelamar
         }),
         {
           headers: {'Content-Type': 'application/x-www-form-urlencoded'}
@@ -69,11 +70,6 @@ export default class AppointmentForm extends React.Component {
     return minute;
   }
 
-  validateLocation = (e) => {
-    const location = e.target;
-    const validate = location.match(/^\d+$/);
-    console.log(validate);
-  }
 
   render() {
     const { getFieldDecorator } = this.props.form;
@@ -118,7 +114,7 @@ export default class AppointmentForm extends React.Component {
           {getFieldDecorator('location', {
             rules: [{ required: true, message: 'Please input location' }],
           })(
-            <Input placeholder="Enter Location" onChange={this.validateLocation}/>
+            <Input placeholder="Enter Location" />
           )}
         </Form.Item>
         <Form.Item

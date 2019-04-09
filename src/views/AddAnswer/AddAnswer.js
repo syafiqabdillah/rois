@@ -1,4 +1,5 @@
 import React from 'react';
+import { Redirect } from 'react-router-dom';
 import {
   Card,
   CardBody,
@@ -121,6 +122,11 @@ export default class AddAnswer extends React.Component{
     const textStyle = {
       color : "#979797",
     };
+
+    if (localStorage.getItem('role') != 'pelamar') {
+      return <Redirect to="/vacancies-pelamar" />
+    }
+
     const FormAnswer = Form.create({ name: 'answer' })(AnswerForm);
     let body = null;
     let startTest =

@@ -205,8 +205,15 @@ class LamaranController extends Controller
       $lamaran = DB::table('lamaran')->select()->where('id', $id)->get();
       $lamaran = json_decode($lamaran);
       $lamaran = $lamaran[0];
-      $lamaran = $this->addNamaLowonganNamaPelamar($lamaran);
-      $lamaran = array("lowongan" => $lamaran->lowongan, "nama_pelamar"=> $lamaran->pelamar);
+
+      $nama_lowongan = DB::table('lowongan')->select('nama')->where('id', $lamaran->id_lowongan)->get();
+      $lamaran->lowongan = $nama_lowongan[0]->nama;
+
+      //nama pelamar
+      $pelamar = DB::table('pelamar')->select('nama', 'email')->where('token', $lamaran->token_pelamar)->get();
+      $lamaran->pelamar = $pelamar[0];
+
+      $lamaran = array("lowongan" => $lamaran->lowongan, "nama_pelamar"=> $lamaran->pelamar->nama, "email"=>$lamaran->pelamar->email);
       return json_encode($lamaran);
     }
 
