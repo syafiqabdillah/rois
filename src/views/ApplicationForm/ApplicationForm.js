@@ -153,7 +153,7 @@ class ApplicationForm extends Component {
 
                     <FormGroup>
                       <Label for="file">CV/Resume*</Label>
-                      <Input required type="file" onChange={this.handleInputFile} />
+                      <Input required type="file" accept="application/pdf" onChange={this.handleInputFile} />
                       <FormText color="muted">
                         File size should be less than 2MB.
                       </FormText>

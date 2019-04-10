@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 import {
   Card, CardBody, Col, Row, Spinner
 } from 'reactstrap';
@@ -48,6 +49,9 @@ class ApplicationsPelamar extends Component {
             tahapan: lamaran[1],
             status: lamaran[2],
             created_date: lamaran[4],
+            action: <Link to={"/applicants/" + lamaran[3] } className=" btn btn-primary btn-pill">
+                      <i className="cui-magnifying-glass icons " title="See Details"></i>
+                    </Link>,
             clickEvent: () => this.handleRowClick(lamaran[3]),
           }
         );
@@ -97,7 +101,7 @@ const data = {
       label: 'Phase',
       field: 'tahapan',
       sort: 'asc',
-      width: 270
+      width: 200
     },
     {
       label: 'Status',
@@ -110,7 +114,8 @@ const data = {
       field: 'created_date',
       sort: 'asc',
       width: 200
-    }
+    },
+    
   ],
   rows: []
 };

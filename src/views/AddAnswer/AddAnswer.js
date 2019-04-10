@@ -69,6 +69,7 @@ export default class AddAnswer extends React.Component{
           endDateAnswer : endDate,
           answerLink : answerLink,
           expiredDate : expiredDate,
+          duration : duration
         });
 
         this.getDetailApplicant(idLamaran);
@@ -136,6 +137,8 @@ export default class AddAnswer extends React.Component{
             <h4>Congratulation</h4>
             <h4>You have on remote test phase</h4>
             <p>Click button below to start coding test</p>
+            <p>Duration : {this.state.duration} days</p>
+            <p>Deadline : {this.state.expiredDate}</p>
           </Col>
         </Row>
         <Row>

@@ -97,7 +97,7 @@ class AppointmentController extends Controller
        $finish = $data['end'];
        $location = $data['location'];
 
-       $text = 'Dear Applicant,\n'.'We Invite you to interview session at : \n'.' Date: '.$date.'\n Time : '.$start. ' - '.$finish.'\n Location : '.$location;
+       $text = 'Dear Applicant,'.'We Invite you to interview session at : '.' Date: '.$date.' Time : '.$start. ' - '.$finish.' Location : '.$location;
        $data = array('email'=>$email, 'text'=>$text);
 
        Mail::send([], $data, function($message) use ($data) {

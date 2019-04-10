@@ -118,6 +118,7 @@ class LamaranController extends Controller{
         return response()->json(['message'=>'success', 'status'=>200]);
     }
 
+
     /**
      * mengubah tahapan suatu lamaran
      * @param request  $request berisi $id lamaran dan $id_tahapan
@@ -131,6 +132,7 @@ class LamaranController extends Controller{
             ->where('id', $id)
             ->update(['tahapan' => $tahapan,
             'status' => $status]);
+
         return $result;
     }
 

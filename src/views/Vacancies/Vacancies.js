@@ -85,44 +85,48 @@ export class Vacancies extends Component {
     if (this.state.loading) {
       content = <div align="center"><p>Loading . . .</p></div>;
     } else {
-     let list_vacancy = this.state.lowongan.map((lowongan, index) => {
+      let list_vacancy = this.state.lowongan.map((lowongan, index) => {
         return (
           {
             nama:
-            <Link to={"/vacancy/" + lowongan.id} >{lowongan.nama}</Link>,
-           
-            divisi:lowongan.divisi,
-            start_date:lowongan.start_date,
-            end_date:lowongan.end_date,
-            lokasi:lowongan.lokasi,
-            tipe:lowongan.tipe,
+              <Link to={"/vacancy/" + lowongan.id} >{lowongan.nama}</Link>,
+
+            divisi: lowongan.divisi,
+            start_date: lowongan.start_date,
+            end_date: lowongan.end_date,
+            lokasi: lowongan.lokasi,
+            tipe: lowongan.tipe,
             action:
-            <Row>
-              <Col>
-              <Link to = {"/vacancy/update/"+ lowongan.id}  className=" btn btn-primary btn-pill">
-              <i className="cui-pencil icons "></i>
-              </Link>
-              </Col>
-              <Col>
-              <ModalDelete isDirujuk={lowongan.isDirujuk} name={lowongan.nama} id={lowongan.id}/>
-            
-              </Col>
+              <Row>
+                <Col>
+                  <Link to={"/vacancy/" + lowongan.id} className=" btn btn-primary btn-pill">
+                    <i className="cui-magnifying-glass icons " title="See Details"></i>
+                  </Link>
+                </Col>
+                <Col>
+                  <Link to={"/vacancy/update/" + lowongan.id} className=" btn btn-primary btn-pill">
+                    <i className="cui-pencil icons " title="Update Vacancy"></i>
+                  </Link>
+                </Col>
+                <Col>
+                  <ModalDelete isDirujuk={lowongan.isDirujuk} name={lowongan.nama} id={lowongan.id} />
+                </Col>
               </Row>
           }
         );
-        });
+      });
 
-        data.rows = [];
-        
-        for (var i = 0; i < list_vacancy.length; i++) {
-          data.rows.push(list_vacancy[i]);
-        }
+      data.rows = [];
 
-        content=(
-          <MDBDataTable borderless striped hover small btn data={data} />
-        );
+      for (var i = 0; i < list_vacancy.length; i++) {
+        data.rows.push(list_vacancy[i]);
+      }
+
+      content = (
+        <MDBDataTable borderless striped hover small btn data={data} />
+      );
     }
-   
+
 
     return (
       <div className="animated fadeIn">
@@ -130,7 +134,7 @@ export class Vacancies extends Component {
           <h3>Vacancies</h3>
         </div>
         <Link to="/addVacancy">
-            <Button color="primary" className= "btn-pill" >Add Vacancy</Button>
+          <Button color="primary" className="btn-pill" >Add Vacancy</Button>
         </Link>
         <br></br>
         <br></br>
@@ -144,7 +148,7 @@ export class Vacancies extends Component {
                 {content}
               </CardBody>
             </Card>
-          
+
           </Col>
         </Row>
       </div>
