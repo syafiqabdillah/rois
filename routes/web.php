@@ -43,6 +43,8 @@ $router->post('po/create-requirement', ['middleware' => 'cors', 'uses' => 'Requi
 $router->post('po/update-requirement', ['middleware' => 'cors', 'uses' => 'RequirementController@updateRequirement']); //checked
 $router->post('po/delete-requirement', ['middleware' => 'cors', 'uses' => 'RequirementController@delete_req']);
 
+$router->get('po/requirement/{id_lowongan}', ['middleware' => 'cors', 'uses' => 'RequirementController@getRequirement']); //checked
+$router->get('po/responsibility/{id_lowongan}', ['middleware' => 'cors', 'uses' => 'ResponsibilityController@getResponsibility']); //checked
 $router->post('po/create-responsibility', ['middleware' => 'cors', 'uses' => 'ResponsibilityController@createResponsibility']); //checked
 $router->post('po/update-responsibility', ['middleware' => 'cors', 'uses' => 'ResponsibilityController@updateResponsibility']); //checked
 $router->post('po/delete-responsibility', ['middleware' => 'cors', 'uses' => 'ResponsibilityController@delete_res']);

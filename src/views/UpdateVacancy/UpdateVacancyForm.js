@@ -13,6 +13,7 @@ const { RangePicker } = DatePicker;
 const FormRequirement = Form.create({ name: 'requirement' })(RequirementForm);
 const FormResponsibility = Form.create({name:'responsibility'})(ResponsibilityForm);
 
+const API = 'http://localhost:8000';
 export default class UpdateVacancyForm extends React.Component {
   constructor(props) {
     super(props);
@@ -25,23 +26,35 @@ export default class UpdateVacancyForm extends React.Component {
       end_date:"",
       lokasi:"",
       tipe:"",
+      requirement:[],
+      responsibility:[],
       req_res_disabled: true,
-      form_req_res_visible: false
+      form_req_res_visible: true
 
     }
   }
 
   componentDidMount(){
-    let lowongan = this.props.lowongan;
-    this.setState({
-      id:lowongan.id,
-      nama:lowongan.nama,
-      divisi:lowongan.divisi,
-      start_date: lowongan.start_date,
-      end_date: lowongan.end_date,
-      lokasi:lowongan.lokasi,
-      tipe:lowongan.tipe
+    axios.get(API + '/po/lowongan/' + this.props.id_lowongan)
+    .then(res=>{
+      const lowongan = res.data;
+      this.setState({
+        requirement: lowongan.requirement,
+        responsibility: lowongan.responsibility,
+        id:lowongan.id,
+        nama:lowongan.nama,
+        divisi:lowongan.divisi,
+        start_date: lowongan.start_date,
+        end_date: lowongan.end_date,
+        lokasi:lowongan.lokasi,
+        tipe:lowongan.tipe,
     })
+    // let lowongan = this.props.lowongan;
+   
+      
+    });
+     console.log("hui");
+     console.log(this.state.id);
   }
 
 
@@ -53,7 +66,8 @@ export default class UpdateVacancyForm extends React.Component {
         console.log('Received values of form: ', values);
         var qs = require('qs');
         axios.post('http://localhost:8000/po/update-lowongan', qs.stringify({
-          'nama': values['name'],
+        'id':this.props.id_lowongan,
+        'nama': values['name'],
           'start_date': values['range-picker'][0].format('YYYY-MM-DD'),
           'end_date': values['range-picker'][1].format('YYYY-MM-DD'),
           'publish_date': values['range-picker'][0].format('YYYY-MM-DD'),
@@ -70,12 +84,11 @@ export default class UpdateVacancyForm extends React.Component {
           .catch(error => {
             console.log(error.response)
           });
-
-        this.setState({ 
-          submit: true,
-          req_res_disabled: false,
-          form_req_res_visible: !this.state.form_req_res_visible
-        });
+          message.info('Message', 9);
+          message.loading('Saving...', 4)
+          .then(() => message.success('Saving finished', 2.5))
+          .then(() => message.success('Vacancy updated', 2.5))
+          .then(() =>  window.location.href = '#/vacancy/'+this.props.id_lowongan);
       }
     });
   }
@@ -182,14 +195,16 @@ export default class UpdateVacancyForm extends React.Component {
         </Card>
         <br></br>
 
-        {
-          this.state.form_req_res_visible
-            ? <Card><FormRequirement  id_low={this.state.lowongan_id} />
-              <FormResponsibility  id_low={this.state.lowongan_id}/>
-              </Card>
-            : null
-        } 
-        
+{/*        
+             <Card><FormRequirement id_low={this.state.id} requirement={this.state.requirement} />
+               </Card>
+               <Card>
+               <FormResponsibility id_low={this.state.id} responsibility={this.state.responsibility}/>
+             
+               </Card>
+
+         
+         */}
 
 
       </div>

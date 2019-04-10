@@ -6,7 +6,7 @@ import {
 import moment from 'moment';
 import axios from 'axios';
 import RequirementForm from './RequirementForm';
-import ResponsibilityForm from './ResponsibilityForm';
+
 
 const { Option } = Select;
 const { RangePicker } = DatePicker;
@@ -18,7 +18,7 @@ export default class VacancyForm extends React.Component {
       submit: false,
       lowongan_id: '',
       req_res_disabled: false,
-      form_req_res_visible:false
+      form_req_visible:false
 
     }
   }
@@ -55,7 +55,7 @@ export default class VacancyForm extends React.Component {
         this.setState({ 
           submit: true,
           req_res_disabled: false,
-          form_req_res_visible: !this.state.form_req_res_visible
+          form_req_visible: !this.state.form_req_visible
         });
       }
     });
@@ -63,9 +63,8 @@ export default class VacancyForm extends React.Component {
 
 
   render() {
-    let submitButton;
-    let id_lowongan_new = this.state.lowongan_id;
-    const FormResponsibility = Form.create({ name: 'responsibility' })(ResponsibilityForm);
+    
+    
     const { getFieldDecorator } = this.props.form;
     const formItemLayout = {
 
@@ -155,17 +154,17 @@ export default class VacancyForm extends React.Component {
             )}
           </Form.Item>
           <Form.Item>
-          <Button disabled={this.state.submit} className="float-right" type="primary" htmlType="submit" shape="round" >Submit Vacancy</Button>
+          <Button disabled={this.state.submit} className="float-right" type="primary" htmlType="submit" shape="round" >Next</Button>
           </Form.Item>
         </Form>
         </Card>
         <br></br>
 
         {
-          this.state.form_req_res_visible
-            ? <Card><FormRequirement  id_low={this.state.lowongan_id} />
-              <FormResponsibility  id_low={this.state.lowongan_id}/>
-              </Card>
+          this.state.form_req_visible
+            ? <FormRequirement  id_low={this.state.lowongan_id} />
+             
+              
             : null
         }
         

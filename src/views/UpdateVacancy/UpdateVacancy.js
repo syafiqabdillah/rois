@@ -8,8 +8,6 @@ import {
 } from 'reactstrap';
 import { Form } from 'antd';
 
-const API = 'http://localhost:8000';
-
 class UpdateVacancy extends Component {
 
   constructor(props) {
@@ -18,18 +16,6 @@ class UpdateVacancy extends Component {
     lowongan:[]
     };
   }
-
-componentDidMount() {
-      axios.get(API + '/po/lowongan/' + this.props.match.params.id)
-      .then(res => {
-        // do something with both responses
-        const lowongan = res.data;
-        this.setState({
-          lowongan: lowongan,
-        })
-      });
-  }
-
 
   render() {
     const UpdateFormVacancy = Form.create({ name: 'vacancy' })(UpdateVacancyForm);
@@ -46,7 +32,7 @@ componentDidMount() {
           <Col sm="8">
             <Card >
               <CardBody>
-              <UpdateFormVacancy lowongan={this.state.lowongan}/>
+              <UpdateFormVacancy id_lowongan ={this.props.match.params.id}/>
             </CardBody>
           </Card>
           
