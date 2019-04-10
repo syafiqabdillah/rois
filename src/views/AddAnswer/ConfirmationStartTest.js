@@ -42,9 +42,6 @@ export default class ConfirmationStartTest extends React.Component {
   }
 
   render() {
-    const textStyle = {
-      color : "#979797",
-    };
     return (
       <div>
         <Button type="primary" onClick={this.toggle} shape="round" block>Start Test</Button>

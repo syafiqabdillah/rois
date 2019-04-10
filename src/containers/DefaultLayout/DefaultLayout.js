@@ -19,7 +19,6 @@ import navigation from '../../_nav';
 import navigationPelamar from '../../_nav_pelamar';
 // routes config
 import routes from '../../routes';
-import { createFalse } from 'typescript';
 
 const DefaultAside = React.lazy(() => import('./DefaultAside'));
 const DefaultFooter = React.lazy(() => import('./DefaultFooter'));
@@ -38,17 +37,17 @@ class DefaultLayout extends Component {
 
   render() {
     //kalau belum ada token -> belum login
-    if (localStorage.getItem('token') == undefined) {
+    if (localStorage.getItem('token') === undefined) {
       //diminta login
       return <Redirect to="/login" />
-    } 
+    }
 
     let header;
     let sidebar;
     let home;
 
     //jika pelamar
-    if (localStorage.getItem('role') == 'pelamar') {
+    if (localStorage.getItem('role') === 'pelamar') {
       //header pelamar
       header = (<ApplicantHeader onLogout={e => this.signOut(e)} />);
       //sidebar pelamar

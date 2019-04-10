@@ -62,8 +62,6 @@ class Hire extends Component {
         }
       })
 
-      window.location.reload()
-
     }
 
   }

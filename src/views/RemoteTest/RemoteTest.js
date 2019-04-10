@@ -17,7 +17,9 @@ class RemoteTest extends Component {
     this.state = {
       lamaran: [],
       soal: [],
-      id_lamaran: 0,
+      remote_test: [],
+      id: [],
+      id_lamaran: null,
       loading: true,
       duration: 0,
       tester_email: '',
@@ -52,6 +54,28 @@ class RemoteTest extends Component {
       })
     })
 
+    axios.get(API + '/po/get-id-remote-test/' + this.props.match.params.id)
+    .then(res => {
+      const id_remote_test = res.data;
+      console.log(id_remote_test);
+      this.setState({
+        id: id_remote_test,
+      })
+    })
+
+  }
+
+  componentDidUpdate(prevProps, prevState){
+    if (this.state.id !== prevState.id) {
+      axios.get(API + '/po/remote-test/' + this.state.id.id_remote_test)
+      .then(res => {
+        const remote_test = res.data;
+        console.log(remote_test);
+        this.setState({
+          remote_test: remote_test,
+        })
+      })
+    }
   }
 
   handleInputChange = (e) => {
@@ -67,12 +91,12 @@ class RemoteTest extends Component {
 
     if (window.confirm('Are you sure you have entered correct data ?')){
       console.log(this.state);
-
+      console.log("MASHOK PAK EKO");
       // axios post
       var qs = require('qs');
 
       //post it to backend
-      axios.post('http://localhost:8000/po/create-remote-test', qs.stringify({
+      axios.post(API + '/po/create-remote-test', qs.stringify({
         'id_lamaran': this.state.lamaran.id,
         'duration': this.state.duration,
         'tester_email': this.state.tester_email,
@@ -87,7 +111,7 @@ class RemoteTest extends Component {
           console.log(response.data);
       })
 
-      axios.post('http://localhost:8000/po/update-tahapan-lamaran', qs.stringify({
+      axios.post(API + '/po/update-tahapan-lamaran', qs.stringify({
         'id': this.state.lamaran.id,
         'tahapan': 'Remote Test',
         'status': 'Assigned',
@@ -113,6 +137,8 @@ class RemoteTest extends Component {
   }
 
   render() {
+
+
     let content;
 
     if (this.state.loading){
@@ -142,7 +168,7 @@ class RemoteTest extends Component {
         content = (
           <div>
             <CardTitle>
-              The answers for the assessment remote test of the applicant above can be accessed at this <Link to="https://github.com/syafiqabdillah/rois"> github link. </Link>
+              The answers for the assessment remote test of the applicant above can be accessed at this <a href={this.state.remote_test.link_jawaban}> github link. </a>
             </CardTitle>
             <br />
             <Row>
@@ -185,7 +211,7 @@ class RemoteTest extends Component {
               <FormGroup row>
                 <Label for="id_soal" sm={3}>Assessment File</Label>
                 <Col sm={9}>
-                  <Input type="select" name="id_soal" id="id_soal" onChange={this.handleInputChange} required>
+                  <Input type="select" default="Pilih" name="id_soal" id="id_soal" onChange={this.handleInputChange} required>
                     {list_soal}
                   </Input>
                 </Col>
@@ -217,7 +243,7 @@ class RemoteTest extends Component {
                   <Link to={"/applicants/" +  this.state.lamaran.id}> <Button className="btn-pill" outline color="danger" block>Cancel</Button> </Link>
                 </Col>
                 <Col lg={3}>
-                  <Button className="btn-pill" color="primary" block>Confirm</Button>
+                  <Button className="btn-pill" color="primary" type="submit" block>Confirm</Button>
                 </Col>
               </Row>
             </Form>

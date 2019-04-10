@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  Form, Icon, Input, Button,
+  Form, Icon, Input,
 } from 'antd';
 import Modals from './Modals';
 import { Col } from 'antd';

@@ -1,5 +1,4 @@
 import React from "react";
-import ReactDOM from "react-dom";
 import "antd/dist/antd.css";
 import axios from 'axios';
 import { Form, Input, Icon, Button,Card ,message} from "antd";
@@ -75,11 +74,11 @@ export default class ResponsibilityForm extends React.Component {
     };
     let disable= this.props.disable;
     getFieldDecorator("keys", { initialValue: [] });
-    const keys = getFieldValue("keys");  
-    
+    const keys = getFieldValue("keys");
+
     const formItems = keys.map((k, index) => (
-    
-      <Form.Item 
+
+      <Form.Item
       {...(index === 0 ? formItemLayout : formItemLayoutWithOutLabel)}
       label={index === 0 ? 'Responsibility' : ''}
       required={false}
@@ -129,4 +128,3 @@ export default class ResponsibilityForm extends React.Component {
     );
   }
 }
-

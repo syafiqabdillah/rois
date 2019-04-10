@@ -43,7 +43,7 @@ export default class AddAppointment extends React.Component{
   }
 
   getDetailApplicant = () => {
-    axios.get('http://localhost:8000' + '/po/get-detail-applicant/' + this.props.match.params.id)
+    axios.get('http://localhost:8000/po/get-detail-applicant/' + this.props.match.params.id)
       .then((response) => {
         const namaLowongan = response.data.lowongan;
         const namaPelamar = response.data.nama_pelamar;
@@ -58,7 +58,7 @@ export default class AddAppointment extends React.Component{
   }
 
   render() {
-    if (localStorage.getItem('role') != 'admin') {
+    if (localStorage.getItem('role') !== 'admin') {
       return <Redirect to="/vacancies-applicant" />
     }
 
