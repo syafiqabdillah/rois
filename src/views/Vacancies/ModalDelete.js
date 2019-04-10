@@ -63,18 +63,17 @@ class ModalDelete extends React.Component {
         );
       } else {
         deleteVacancy =(
-          <Button outline disabled={Boolean(this.props.isDirujuk)} color="danger" onClick={this.toggle} className="btn-pill">
+          <Button outline disabled={Boolean(this.props.isDirujuk)} color="danger" onClick={this.toggle} className="btn-pill ">
       <i className="cui-trash icons "></i>
       </Button>
         )
       }
     }else{
-      console.log("masoook")
       if(this.props.isDirujuk){
         deleteVacancy = (
           <Tooltip  placement="bottom" title="You don't have permission to delete this vacancy">
 
-            <Button outline disabled={Boolean(this.props.isDirujuk)} color="danger" onClick={this.toggle} className="btn-pill">
+            <Button outline disabled={Boolean(this.props.isDirujuk)} color="danger" onClick={this.toggle} className="btn-pill ">
       <i className="cui-trash icons "></i>
       Delete Vacancy
       </Button>

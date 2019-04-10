@@ -1,9 +1,10 @@
 import React from "react";
 import "antd/dist/antd.css";
-import { Form, Input, Icon, Button } from "antd";
+import axios from 'axios';
+import { Form, Input, Icon, Button,Card } from "antd";
 
 let id = 0;
-
+const id_lowongan=2;
 export default class ResponsibilityForm extends React.Component {
   remove = k => {
     const { form } = this.props;
@@ -31,37 +32,42 @@ export default class ResponsibilityForm extends React.Component {
       keys: nextKeys
     });
   };
+  
 
   handleSubmit = e => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
-      console.log(err)
       if (!err) {
-        const { keys, names } = values;
-        console.log("Received values of form: ", values);
-        console.log("Merged values:", keys.map(key => names[key]));
-      }
-    });
-  };
+        const {names,keys}  = values;
+        console.log(values.names.length);
+        var qs=(require('qs'));
+         axios.post('http://localhost:8000/po/create-responsibility', qs.stringify({
+           'id_lowongan':this.props.id_low,
+           'deskripsi':values.names,
+          }),
+          {
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+          })
+          .then(response => {
+            console.log(response)
+          })
+          .catch(error => {
+            console.log(error.response)
+          });
+        window.location.href = '#/vacancy/'+ this.props.id_low;
 
+    }
+});
+}
   render() {
     const { getFieldDecorator, getFieldValue } = this.props.form;
     const formItemLayout = {
-      // labelCol: {
-      //   xs: { span: 24 },
-      //   sm: { span: 4 }
-      // },
-      // wrapperCol: {
-      //   xs: { span: 24 },
-      //   sm: { span: 20 }
-      // }
+     
     };
     const formItemLayoutWithOutLabel = {
-    //   wrapperCol: {
-    //     xs: { span: 24, offset: 0 },
-    //     sm: { span: 20, offset: 4 }
-    //   }
+   
     };
+    let disable= this.props.disable;
     getFieldDecorator("keys", { initialValue: [] });
     const keys = getFieldValue("keys");
 
@@ -83,13 +89,13 @@ export default class ResponsibilityForm extends React.Component {
             }
           ]
         })(
-          <Input
+          <Input disabled={disable}
             placeholder="Responsibility Description"
             style={{ width: "92%", marginRight: 8 }}
           />
         )}
         {keys.length > 0 ? (
-          <Icon
+          <Icon disabled={disable}
             className="dynamic-delete-button"
             type="minus-circle-o"
             disabled={keys.length === 0}
@@ -99,16 +105,17 @@ export default class ResponsibilityForm extends React.Component {
       </Form.Item>
     ));
     return (
-      <Form onSubmit={this.handleSubmit}>
+    
+      <Form disabled={disable} onSubmit={this.handleSubmit}>
         {formItems}
-        <Form.Item {...formItemLayoutWithOutLabel}>
-          <Button type="dashed" onClick={this.add} style={{ width: "92%" }}>
+        <Form.Item disabled={disable} {...formItemLayoutWithOutLabel}>
+          <Button   disabled={disable} type="dashed" onClick={this.add} style={{ width: "92%" }}>
             <Icon type="plus" /> Add Responsibility
           </Button>
         </Form.Item>
-        <Form.Item {...formItemLayoutWithOutLabel}>
-          <Button type="primary" htmlType="submit">
-            Submit
+        <Form.Item disabled={disable} {...formItemLayoutWithOutLabel}>
+          <Button className="float-right" shape="round" disabled={disable} type="primary" htmlType="submit">
+            Submit Responsibility
           </Button>
         </Form.Item>
       </Form>

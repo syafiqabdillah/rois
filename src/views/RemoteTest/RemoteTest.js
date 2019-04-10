@@ -59,6 +59,7 @@ class RemoteTest extends Component {
     this.setState({
       [e.target.name]: e.target.value
     })
+    console.log(this.state.id_soal);
   }
 
   handleSubmit = (e) => {
@@ -77,6 +78,7 @@ class RemoteTest extends Component {
         'tester_email': this.state.tester_email,
         'expired_date': this.state.expired_date,
         'id_soal': this.state.id_soal,
+        'active' : 'yes',
       }),
       {
         headers: {'Content-Type': 'application/x-www-form-urlencoded'}
@@ -103,6 +105,8 @@ class RemoteTest extends Component {
           status: 'Assigned',
         }
       })
+
+      // window.location.reload()
 
     }
 

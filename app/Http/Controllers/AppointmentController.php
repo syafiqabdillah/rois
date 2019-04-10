@@ -50,6 +50,7 @@ class AppointmentController extends Controller
         $end = $request->end;
         $lokasi = $request->lokasi;
         $interviewer = $request->interviewer;
+        $email = $request->email;
 
         $id = DB::table('appointment')->insertGetId(
             ['id_lamaran' => $id_lamaran,
@@ -60,8 +61,13 @@ class AppointmentController extends Controller
             'interviewer' => $interviewer]
         );
 
-        $data = array('date'=>$date, 'start'=>$end, 'end'=>$end, 'location'=>$lokasi);
-        $this->sendMailInvitation();
+        $result = DB::table('lamaran')
+            ->where('id', $id_lamaran)
+            ->update(['tahapan' => 'Interview',
+            'status' => 'On going']);
+
+        $data = array('email'=>$email, 'date'=>$date, 'start'=>$start, 'end'=>$end, 'location'=>$lokasi);
+        $this->sendMailInvitation($data);
         return $id;
     }
 
@@ -84,14 +90,14 @@ class AppointmentController extends Controller
     /**
      * mengirim email invitation
      */
-    public function sendMailInvitation(){
-       $email = 'fairuzyassar7@gmail.com';
-       $date ='2019-08-30';
-       $start = '12:00';
-       $finish = '13:00';
-       $location = 'BSD';
+    public function sendMailInvitation($data){
+       $email = $data['email'];
+       $date = $data['date'];
+       $start = $data['start'];
+       $finish = $data['end'];
+       $location = $data['location'];
 
-       $text = 'Dear Applicant,'.'We Invite you to interview session at : '.'Date: '.$date.'Time : '.$start. ' - '.$finish.' Location : '.$location;
+       $text = 'Dear Applicant,\n'.'We Invite you to interview session at : \n'.' Date: '.$date.'\n Time : '.$start. ' - '.$finish.'\n Location : '.$location;
        $data = array('email'=>$email, 'text'=>$text);
 
        Mail::send([], $data, function($message) use ($data) {

@@ -5,6 +5,11 @@ namespace App\Http\Controllers;
 use \Illuminate\Http\Request;
 use \Illuminate\Support\Facades\DB;
 use \Illuminate\Support\Facades\Mail;
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+// Load Composer's autoloader
+//require 'vendor/autoload.php';
 
 setlocale(LC_MONETARY, 'id_ID');
 
@@ -21,13 +26,38 @@ class LamaranController extends Controller
     }
 
     public function sendMailLamaran($data){
-        // $nama = $request->input('nama');
-        // $email = $request->input('email');
-        // $lowongan = $request->input('lowongan');
-
         $nama = $data['nama'];
         $email = $data['email'];
         $lowongan = $data['lowongan'];
+
+        // // Instantiation and passing `true` enables exceptions
+        // $mail = new PHPMailer(true);
+
+        // //Server settings
+        // $mail->isSMTP();                                            // Set mailer to use SMTP
+        // $mail->Host       = 'smtp.gmail.com';  // Specify main and backup SMTP servers
+        // $mail->SMTPAuth   = true;                                   // Enable SMTP authentication
+        // $mail->Username   = 'second.umarghanis@gmail.com';                     // SMTP username
+        // $mail->Password   = 'propensic5';                               // SMTP password
+        // $mail->SMTPSecure = 'tls';                                  // Enable TLS encryption, `ssl` also accepted
+        // $mail->Port       = 587;                                    // TCP port to connect to
+
+        // //Recipients
+        // $mail->setFrom('second.umarghanis@gmail.com', 'SIRCLO Career');
+        // $mail->addAddress($email, 'Joe User');     // Add a recipient
+
+        // // Attachments
+        // // $mail->addAttachment('/var/tmp/file.tar.gz');         // Add attachments
+        // // $mail->addAttachment('/tmp/image.jpg', 'new.jpg');    // Optional name
+
+        // // Content
+        // $mail->isHTML(true);                                  // Set email format to HTML
+        // $mail->Subject = 'Application Success';
+        // $body = 'Dear ' . $nama . ', your application as '. $lowongan .' has been submitted. We will evaluate it soon. You can check the progress of your application(s) at our system.';
+        // $mail->Body    = $body;
+        // $mail->AltBody = strip_tags($body);
+
+        // $mail->send();
 
         $text = 'Dear ' . $nama . ', your application as '. $lowongan .' has been submitted. We will evaluate it soon. You can check the progress of your application(s) at our system.';
         $data = array('email'=>$email, 'text'=>$text);
@@ -88,24 +118,13 @@ class LamaranController extends Controller
 
         $id_lamaran = (int) $id_lamaran;
 
-
-
-        // $skills = explode(",", $skill);
-        // foreach($skills as $s){
-        //     DB::table('skill')->insertGetId(
-        //         ['deskripsi'=>$s,
-        //         'id_lamaran'=>$id_lamaran]
-        //     );
-        // }
-
-        // $experiences = explode(",", $experience);
-        // foreach($experiences as $e){
-        //     //create experience
-        //     DB::table('experience')->insertGetId(
-        //         ['deskripsi'=>$e,
-        //         'id_lamaran'=>$id_lamaran]
-        //     );
-        // }
+        //upload file
+        if($request->hasFile('file')){
+        $file = $request->file('file');
+        $extension = $file->getClientOriginalExtension();
+        $filename =$id_lamaran.'.'.$extension;
+        $file->move('uploads/', $filename);
+        }
 
         //kirim email
         $pelamar = DB::table('pelamar')->select()->where('token', $token_pelamar)->get();
@@ -124,17 +143,7 @@ class LamaranController extends Controller
 
         $this->sendMailLamaran($data);
 
-        //upload file
-        if($request->hasFile('file')){
-          $file = $request->file('file');
-          $extension = $file->getClientOriginalExtension();
-          $filename =$id_lamaran.'.'.$extension;
-          $file->move('uploads/', $filename);
-
-          return response()->json(['message'=>'success', 'status'=>200]);
-        } else {
-          return response()->json(['message'=>'failed', 'status'=>500]);
-        }
+        return response()->json(['message'=>'success', 'status'=>200]);
     }
 
     /**
@@ -197,6 +206,18 @@ class LamaranController extends Controller
         return json_encode($lamaran);
     }
 
+    public function getIdRemoteTest($id){
+      $lamaran = DB::table('lamaran')->select()->where('id', $id)->get();
+      $lamaran = json_decode($lamaran);
+      $lamaran = $lamaran[0];
+
+      $rt = DB::table('remote_test')->select()->where('id_lamaran', $lamaran->id)->where('active', 'yes')->get();
+      $rt = json_decode($rt);
+      $rt = $rt[0];
+      $rt = array('id_remote_test'=>$rt->id);
+      return json_encode($rt);
+    }
+
     /**
      * mengembalikan lamaran yang udah berisi nama lowongan
      */
@@ -218,8 +239,15 @@ class LamaranController extends Controller
       $lamaran = DB::table('lamaran')->select()->where('id', $id)->get();
       $lamaran = json_decode($lamaran);
       $lamaran = $lamaran[0];
-      $lamaran = $this->addNamaLowonganNamaPelamar($lamaran);
-      $lamaran = array("lowongan" => $lamaran->lowongan, "nama_pelamar"=> $lamaran->pelamar);
+
+      $nama_lowongan = DB::table('lowongan')->select('nama')->where('id', $lamaran->id_lowongan)->get();
+      $lamaran->lowongan = $nama_lowongan[0]->nama;
+
+      //nama pelamar
+      $pelamar = DB::table('pelamar')->select('nama', 'email')->where('token', $lamaran->token_pelamar)->get();
+      $lamaran->pelamar = $pelamar[0];
+
+      $lamaran = array("lowongan" => $lamaran->lowongan, "nama_pelamar"=> $lamaran->pelamar->nama, "email"=>$lamaran->pelamar->email);
       return json_encode($lamaran);
     }
 

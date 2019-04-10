@@ -107,7 +107,7 @@ class UpdateAssessment extends Component {
               </FormGroup>
               <FormGroup>
                 <Label for="link">Link*</Label>
-                <Input type="text" id="link" name="link" placeholder="eg. https://www.google.com" pattern="https?://.+" defaultValue={this.state.link} onChange={this.handleInputChange} required/>
+                <Input type="text" id="link" name="link" placeholder="eg. https://www.google.com" pattern="https?://.+" title="Include http://" defaultValue={this.state.link} onChange={this.handleInputChange} required/>
                 {/* <FormText color="muted">
                   eg. https://www.google.com
                 </FormText>  */}

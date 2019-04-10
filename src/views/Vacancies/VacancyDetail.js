@@ -84,7 +84,7 @@ class VacancyDetail extends Component {
         console.log(error.response)
       });
 
-    let redirect = '#/vacancies/';
+    let redirect = '#/vacancies';
     window.location.href = redirect;
   }
 
@@ -105,7 +105,7 @@ class VacancyDetail extends Component {
       .catch(error => {
         console.log(error.response)
       });
-    let redirect = '#/vacancies/';
+    let redirect = '#/vacancies';
     window.location.href = redirect;
   }
 
@@ -241,76 +241,52 @@ class VacancyDetail extends Component {
         </div>
       )
 
-      let formAddResponsibilities;
-      if (localStorage.getItem('role') === 'admin') {
-        formAddResponsibilities = (
-          <Modal isOpen={this.state.info_res} toggle={this.toggleInfoRes}
-            className={'modal-info ' + this.props.className}>
-            <ModalHeader toggle={this.toggleInfoRes}>Add Responsibilities</ModalHeader>
-            <ModalBody>
-              <Form onSubmit={this.handleSubmit}>
-                <Label htmlFor="nf-password">Responsibilities*</Label>
-                <Input type="text" id="responsibility" name="deskripsi" placeholder="Enter Responsibilities" onChange={this.handleChange} required />
+      formAddResponsibilities = (
+        <Modal isOpen={this.state.info_res} toggle={this.toggleInfoRes}
+          className={'modal-info ' + this.props.className}>
+          <ModalHeader toggle={this.toggleInfoRes}>Add Responsibilities</ModalHeader>
+          <ModalBody>
+            <Form onSubmit={this.handleSubmit}>
+              <Label htmlFor="nf-password">Responsibilities*</Label>
+              <Input type="text" id="responsibility" name="deskripsi" placeholder="Enter Responsibilities" onChange={this.handleChange} required />
 
-                <br></br>
+              <br></br>
 
 
-                <Button className="btn-pill" color="primary" type="submit">Submit</Button></Form>
-            </ModalBody>
-          </Modal>
-        )
-      } else {
-        formAddResponsibilities = '';
-      }
-
-      let formAddRequirement;
-      if (localStorage.getItem('role') === 'admin') {
-        formAddRequirement = (
-          <Modal isOpen={this.state.info_req} toggle={this.toggleInfoReq}
-            className={'modal-info ' + this.props.className}>
-            <ModalHeader toggle={this.toggleInfoReq}>Add Requirement</ModalHeader>
-            <ModalBody>
-              <Form onSubmit={this.handleSubmit}>
-                <Label htmlFor="nf-password">Requirements*</Label>
-                <Input type="text" id="requirement" name="deskripsi" placeholder="Enter Requirement" onChange={this.handleChange} required />
-
-                <br></br>
+              <Button className="btn-pill" color="primary" type="submit">Submit</Button></Form>
+          </ModalBody>
+        </Modal>
 
 
-                <Button className="btn-pill" color="primary" type="submit">Submit</Button></Form>
-            </ModalBody>
-          </Modal>
-        )
-      } else {
-        formAddRequirement = '';
-      }
+      )
+
+      formAddRequirement = (
+        <Modal isOpen={this.state.info_req} toggle={this.toggleInfoReq}
+          className={'modal-info ' + this.props.className}>
+          <ModalHeader toggle={this.toggleInfoReq}>Add Requirement</ModalHeader>
+          <ModalBody>
+            <Form onSubmit={this.handleSubmit}>
+              <Label htmlFor="nf-password">Requirements*</Label>
+              <Input type="text" id="requirement" name="deskripsi" placeholder="Enter Requirement" onChange={this.handleChange} required />
+
+              <br></br>
 
 
-      //       modalConfirmDelete = (
-      // <Modal isOpen={this.state.danger} toggle={this.toggleDanger}
-      //                        className={'modal-danger ' + this.props.className}>
-      //                   <ModalHeader toggle={this.toggleDanger}>Delete Vacancy</ModalHeader>
-      //                   <ModalBody>
-      //                    You just clicked delete button, do you really want to delete this vacancy?
-      //                   </ModalBody>
-      //                   <ModalFooter>
-      //                     <Button color="danger" onClick={this.handleDelete}>Yes, I Do </Button>
-      //                     <Button color="secondary" onClick={this.toggleDanger}>Cancel</Button>
-      //                   </ModalFooter>
-      //                 </Modal>
-
-      //       )
+              <Button className="btn-pill" color="primary" type="submit">Submit</Button></Form>
+          </ModalBody>
+        </Modal>
+      )
 
       if (localStorage.getItem('role') !== 'pelamar') {
         content_button_edit = (
-          <Link to="/editVacancy">
+          <Link to={"/vacancy/update/"+  lowongan.id} >
             <Button className="btn-pill" color="primary">Edit Vacancy</Button>
           </Link>
 
 
         )
         content_button_delete = (
-          <ModalDelete className="float-right" isDirujuk={isDirujuk} name={name} id={id} />
+          <ModalDelete isDirujuk={isDirujuk} name={name} id={id} />
 
         )
       }
@@ -350,7 +326,10 @@ class VacancyDetail extends Component {
 
 
             <div>
-              {buttonAddResAddReq}
+              <Row>
+                <Button color="info" onClick={this.toggleInfoRes} className="mr-1 btn-pill" color="primary">Add Responsibility</Button>
+                <Button color="info" onClick={this.toggleInfoReq} className="mr-1 btn-pill" color="primary">Add Requirement</Button>
+              </Row>
               {formAddResponsibilities}
               {formAddRequirement}
             </div>

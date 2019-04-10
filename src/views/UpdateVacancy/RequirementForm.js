@@ -1,11 +1,12 @@
 import React from "react";
+import ReactDOM from "react-dom";
 import "antd/dist/antd.css";
 import axios from 'axios';
 import { Form, Input, Icon, Button,Card } from "antd";
 
 let id = 0;
 export default class RequirementForm extends React.Component {
-
+  
 
   remove = k => {
     const { form } = this.props;
@@ -62,20 +63,20 @@ export default class RequirementForm extends React.Component {
   render() {
     const { getFieldDecorator, getFieldValue } = this.props.form;
     const formItemLayout = {
-
+     
     };
     const formItemLayoutWithOutLabel = {
-
+   
     };
 
     let disable= this.props.disable;
 
     getFieldDecorator("keys", { initialValue: [] });
     const keys = getFieldValue("keys");
-
+   
 
     const formItems = keys.map((k, index) => (
-      <Form.Item
+      <Form.Item 
       {...(index === 0 ? formItemLayout : formItemLayoutWithOutLabel)}
       label={index === 0 ? 'Requirement' : ''}
       required={false}
@@ -105,7 +106,7 @@ export default class RequirementForm extends React.Component {
           />
         ) : null}
       </Form.Item>
-
+      
     ));
     return (
       <Form onSubmit={this.handleSubmit}>
@@ -118,9 +119,10 @@ export default class RequirementForm extends React.Component {
         <Form.Item disabled={disable} {...formItemLayoutWithOutLabel}>
            <Button className="float-right" shape="round" disabled={disable} type="primary" htmlType="submit">
             Submit Requirement
-          </Button>
+          </Button> 
         </Form.Item>
       </Form>
     );
   }
 }
+

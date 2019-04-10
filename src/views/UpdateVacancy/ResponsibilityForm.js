@@ -1,12 +1,12 @@
 import React from "react";
+import ReactDOM from "react-dom";
 import "antd/dist/antd.css";
 import axios from 'axios';
 import { Form, Input, Icon, Button,Card } from "antd";
 
 let id = 0;
-export default class RequirementForm extends React.Component {
-
-
+const id_lowongan=2;
+export default class ResponsibilityForm extends React.Component {
   remove = k => {
     const { form } = this.props;
     // can use data-binding to get
@@ -24,7 +24,6 @@ export default class RequirementForm extends React.Component {
 
   add = () => {
     const { form } = this.props;
-    console.log(this.props);
     // can use data-binding to get
     const keys = form.getFieldValue("keys");
     const nextKeys = keys.concat(id++);
@@ -34,14 +33,16 @@ export default class RequirementForm extends React.Component {
       keys: nextKeys
     });
   };
+  
 
   handleSubmit = e => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
         const {names,keys}  = values;
+        console.log(values.names.length);
         var qs=(require('qs'));
-         axios.post('http://localhost:8000/po/create-requirement', qs.stringify({
+         axios.post('http://localhost:8000/po/create-responsibility', qs.stringify({
            'id_lowongan':this.props.id_low,
            'deskripsi':values.names,
           }),
@@ -54,7 +55,7 @@ export default class RequirementForm extends React.Component {
           .catch(error => {
             console.log(error.response)
           });
-        this.props.disable = "true";
+        window.location.href = '#/vacancy/'+ this.props.id_low;
 
     }
 });
@@ -62,22 +63,20 @@ export default class RequirementForm extends React.Component {
   render() {
     const { getFieldDecorator, getFieldValue } = this.props.form;
     const formItemLayout = {
-
+     
     };
     const formItemLayoutWithOutLabel = {
-
+   
     };
-
     let disable= this.props.disable;
-
     getFieldDecorator("keys", { initialValue: [] });
-    const keys = getFieldValue("keys");
-
-
+    const keys = getFieldValue("keys");  
+    
     const formItems = keys.map((k, index) => (
-      <Form.Item
+    
+      <Form.Item 
       {...(index === 0 ? formItemLayout : formItemLayoutWithOutLabel)}
-      label={index === 0 ? 'Requirement' : ''}
+      label={index === 0 ? 'Responsibility' : ''}
       required={false}
       key={k}
       >
@@ -87,12 +86,12 @@ export default class RequirementForm extends React.Component {
             {
               required: true,
               whitespace: true,
-              message: "Please input requirement's description or delete this field."
+              message: "Please input responsibility's description or delete this field."
             }
           ]
         })(
           <Input disabled={disable}
-            placeholder="Requirement Description"
+            placeholder="Responsibility Description"
             style={{ width: "92%", marginRight: 8 }}
           />
         )}
@@ -105,22 +104,23 @@ export default class RequirementForm extends React.Component {
           />
         ) : null}
       </Form.Item>
-
     ));
     return (
-      <Form onSubmit={this.handleSubmit}>
+    
+      <Form disabled={disable} onSubmit={this.handleSubmit}>
         {formItems}
         <Form.Item disabled={disable} {...formItemLayoutWithOutLabel}>
-          <Button disabled={disable} type="dashed" onClick={this.add} style={{ width: "92%" }}>
-            <Icon type="plus" /> Add Requirement
+          <Button   disabled={disable} type="dashed" onClick={this.add} style={{ width: "92%" }}>
+            <Icon type="plus" /> Add Responsibility
           </Button>
         </Form.Item>
         <Form.Item disabled={disable} {...formItemLayoutWithOutLabel}>
-           <Button className="float-right" shape="round" disabled={disable} type="primary" htmlType="submit">
-            Submit Requirement
+          <Button className="float-right" shape="round" disabled={disable} type="primary" htmlType="submit">
+            Submit Responsibility
           </Button>
         </Form.Item>
       </Form>
     );
   }
 }
+
