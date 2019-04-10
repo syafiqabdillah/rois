@@ -5,7 +5,7 @@ import ChooseCurrentStage from './ChooseCurrentStage';
 import ChooseStages from './ChooseStages';
 import Widget02 from '../Widgets/Widget02';
 import Widget04 from '../Widgets/Widget04';
-import { Badge, Card, CardBody, CardHeader, Col, Pagination, PaginationItem, PaginationLink, Row, Table, CardTitle, CardText, Progress, Tooltip } from 'reactstrap';
+import { Badge, Card, CardBody, CardHeader, Col, Pagination, PaginationItem, PaginationLink, Row, Table, CardTitle, CardText, Progress, Tooltip, Button } from 'reactstrap';
 
 const API = 'http://localhost:8000';
 
@@ -21,7 +21,6 @@ class Applicants extends Component {
     }
 
     this.togglePhase = this.togglePhase.bind(this);
-    this.toggleStatus = this.toggleStatus.bind(this);
   }
 
   componentDidMount(){
@@ -39,12 +38,6 @@ class Applicants extends Component {
   togglePhase() {
     this.setState({
       toolTipPhase: !this.state.toolTipPhase
-    });
-  }
-
-  toggleStatus() {
-    this.setState({
-      toolTipStatus: !this.state.toolTipStatus
     });
   }
 
@@ -97,7 +90,7 @@ class Applicants extends Component {
             </tr>
             <tr>
               <th scope="row">Resume</th>
-              <td>: -</td>
+              <td>: <a href={API + "/po/download-cv/" + this.state.lamaran.id}> Resume - {this.state.lamaran.pelamar}</a> </td>
             </tr>
             <tr>
               <th scope="row">About Me</th>

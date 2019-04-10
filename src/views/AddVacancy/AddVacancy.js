@@ -65,7 +65,7 @@ class AddVacancy extends Component {
 
   addResponsibility(){
 
-    var list_responsibilities=this.state.responsibilities;  
+    var list_responsibilities=this.state.responsibilities;
     list_responsibilities.push('');
     this.setState({
     responsibiliities:list_responsibilities
@@ -75,8 +75,8 @@ class AddVacancy extends Component {
 
   render() {
     const FormVacancy = Form.create({ name: 'vacancy' })(VacancyForm);
-   
-   
+
+
     // const prefixSelector = getFieldDecorator('prefix', {
     //   initialValue: '86',
     // })(
@@ -85,14 +85,14 @@ class AddVacancy extends Component {
     //     <Option value="87">+87</Option>
     //   </Select>
     // );
-   
+
     return (
       <div className="animated fadeIn">
         <div align="center">
           <h3 fontFamily="Metropolis">Add Vacancy</h3>
           <br></br>
         </div>
-        
+
         <Row>
           <Col sm="2">
           </Col>

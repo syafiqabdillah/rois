@@ -178,6 +178,9 @@ class LamaranController extends Controller
         $pelamar = json_decode($pelamar);
         $pelamar = $pelamar[0];
 
+        $rt = DB::table('remote_test')->select()->where('id_lamaran', $id)->get();
+        $rt = json_decode($rt);
+
         // // $experience = DB::table('experience')->select()->where('id_lamaran', $id)->get();
         // // $experience = json_decode($experience);
         // // $experience = $experience[0];
@@ -187,6 +190,7 @@ class LamaranController extends Controller
         // // $skill = $skill[0];
 
         $lamaran->detail_pelamar = $pelamar;
+        $lamaran->rt = $rt;
         // $lamaran->experience = $experience;
         // $lamaran->skill = $skill;
 

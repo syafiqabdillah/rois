@@ -1,5 +1,4 @@
 import React from "react";
-import ReactDOM from "react-dom";
 import "antd/dist/antd.css";
 import axios from 'axios';
 import { Form, Input, Icon, Button } from "antd";
@@ -74,7 +73,7 @@ export default class RequirementForm extends React.Component {
     getFieldDecorator("keys", { initialValue: [] });
     const keys = getFieldValue("keys");
     const formItems = keys.map((k, index) => (
-      <Form.Item 
+      <Form.Item
       {...(index === 0 ? formItemLayout : formItemLayoutWithOutLabel)}
       label={index === 0 ? 'Requirement' : ''}
       required={false}
@@ -116,10 +115,9 @@ export default class RequirementForm extends React.Component {
         <Form.Item {...formItemLayoutWithOutLabel}>
            <Button type="primary" htmlType="submit">
             Submit
-          </Button> 
+          </Button>
         </Form.Item>
       </Form>
     );
   }
 }
-

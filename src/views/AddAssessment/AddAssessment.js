@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Button, Card, CardBody, Col, Form, FormGroup, FormText, Input, Label, Row } from 'reactstrap';
+import { Button, Card, CardBody, Col, Form, FormGroup, Input, Label, Row } from 'reactstrap';
 import { isNull } from 'util';
 import 'antd/dist/antd.css';
 import { message } from 'antd';
@@ -80,7 +80,7 @@ class AddAssessment extends Component {
         <option value={lowongan.id}>{lowongan.nama}</option>
       );
     });
-    
+
     return (
       <div className="animated fadeIn">
         <div align="center">
@@ -98,7 +98,7 @@ class AddAssessment extends Component {
               </FormGroup>
               <FormGroup>
                 <Label for="vacancyID">Vacancy*</Label>
-                <Input type="select" name="vacancyID" id="vacancyID" onChange={this.handleInputChange} required> 
+                <Input type="select" name="vacancyID" id="vacancyID" onChange={this.handleInputChange} required>
                   <option value={isNull} selected disabled>-- Select Vacancy --</option>
                   {list_vacancy}
                 </Input>

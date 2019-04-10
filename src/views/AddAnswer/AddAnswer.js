@@ -10,7 +10,7 @@ import 'antd/dist/antd.css';
 import { Icon, Row, Col, Form } from 'antd';
 import axios from 'axios';
 import CountDown from './CountDown';
-import  AnswerForm from './AnswerForm';
+import AnswerForm from './AnswerForm';
 import ConfirmationStartTest from './ConfirmationStartTest';
 
 

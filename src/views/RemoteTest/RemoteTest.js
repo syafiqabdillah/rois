@@ -17,13 +17,11 @@ class RemoteTest extends Component {
     this.state = {
       lamaran: [],
       soal: [],
-      remote_test: [],
-      id: 0,
       id_lamaran: 0,
       loading: true,
       duration: 0,
       tester_email: '',
-      id_soal: 1,
+      id_soal: 0,
       start_date: null,
       status: '',
       link_jawaban: '',
@@ -68,12 +66,12 @@ class RemoteTest extends Component {
 
     if (window.confirm('Are you sure you have entered correct data ?')){
       console.log(this.state);
-
+      console.log("MASHOK PAK EKO");
       // axios post
       var qs = require('qs');
 
       //post it to backend
-      axios.post('http://localhost:8000/po/create-remote-test', qs.stringify({
+      axios.post(API + '/po/create-remote-test', qs.stringify({
         'id_lamaran': this.state.lamaran.id,
         'duration': this.state.duration,
         'tester_email': this.state.tester_email,
@@ -87,10 +85,10 @@ class RemoteTest extends Component {
           console.log(response.data);
       })
 
-      axios.post('http://localhost:8000/po/update-tahapan-lamaran', qs.stringify({
+      axios.post(API + '/po/update-tahapan-lamaran', qs.stringify({
         'id': this.state.lamaran.id,
         'tahapan': 'Remote Test',
-        'status': 'Assinged',
+        'status': 'Assigned',
       }),
       {
         headers: {'Content-Type': 'application/x-www-form-urlencoded'}
@@ -105,8 +103,6 @@ class RemoteTest extends Component {
           status: 'Assigned',
         }
       })
-
-      window.location.reload()
 
     }
 
@@ -185,7 +181,7 @@ class RemoteTest extends Component {
               <FormGroup row>
                 <Label for="id_soal" sm={3}>Assessment File</Label>
                 <Col sm={9}>
-                  <Input type="select" name="id_soal" id="id_soal" onChange={this.handleInputChange} required>
+                  <Input type="select" default="Pilih" name="id_soal" id="id_soal" onChange={this.handleInputChange} required>
                     {list_soal}
                   </Input>
                 </Col>
@@ -217,7 +213,7 @@ class RemoteTest extends Component {
                   <Link to={"/applicants/" +  this.state.lamaran.id}> <Button className="btn-pill" outline color="danger" block>Cancel</Button> </Link>
                 </Col>
                 <Col lg={3}>
-                  <Button className="btn-pill" color="primary" block>Confirm</Button>
+                  <Button className="btn-pill" color="primary" type="submit" block>Confirm</Button>
                 </Col>
               </Row>
             </Form>

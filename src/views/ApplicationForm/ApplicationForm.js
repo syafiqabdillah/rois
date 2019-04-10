@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Modal, ModalHeader, ModalBody, ModalFooter, Container, Button, Card, CardBody, FormText, Row, Col, Form, FormGroup, Input, Label } from 'reactstrap';
+import { Modal, ModalHeader, ModalBody, Container, Button, Card, CardBody, FormText, Row, Col, Form, FormGroup, Input, Label } from 'reactstrap';
 import axios from 'axios';
 
 class ApplicationForm extends Component {

@@ -61,9 +61,6 @@ class Reject extends Component {
           status: 'Rejected',
         }
       })
-
-      window.location.reload()
-
     }
 
   }
