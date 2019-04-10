@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "antd/dist/antd.css";
 import axios from 'axios';
-import { Form, Input, Icon, Button,Card } from "antd";
+import { Form, Input, Icon, Button,Card ,message} from "antd";
 
 let id = 0;
 const id_lowongan=2;
@@ -55,7 +55,12 @@ export default class ResponsibilityForm extends React.Component {
           .catch(error => {
             console.log(error.response)
           });
-        window.location.href = '#/vacancy/'+ this.props.id_low;
+          message.info('Message', 9);
+          message.loading('Saving...', 4)
+          .then(() => message.success('Saving finished', 2.5))
+          .then(() => message.success('Vacancy Saved', 2.5))
+          .then(() =>  window.location.href = '#/vacancies');
+        
 
     }
 });
@@ -84,6 +89,7 @@ export default class ResponsibilityForm extends React.Component {
           validateTrigger: ["onChange", "onBlur"],
           rules: [
             {
+              pattern: new RegExp("^[A-Za-z]"),
               required: true,
               whitespace: true,
               message: "Please input responsibility's description or delete this field."
@@ -116,7 +122,7 @@ export default class ResponsibilityForm extends React.Component {
         </Form.Item>
         <Form.Item disabled={disable} {...formItemLayoutWithOutLabel}>
           <Button className="float-right" shape="round" disabled={disable} type="primary" htmlType="submit">
-            Submit Responsibility
+            Submit 
           </Button>
         </Form.Item>
       </Form>

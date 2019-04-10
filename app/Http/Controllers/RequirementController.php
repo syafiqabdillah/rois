@@ -77,5 +77,21 @@ class RequirementController extends Controller
         ->delete();       
         return $response;
     }
+
+    public function getRequirement($id_lowongan){
+        $result  = array();
+        $get_req = DB::table('requirement')->select()
+        -> where('id_lowongan', $id_lowongan)
+        ->get();
+    
+
+        foreach($get_req as $requirement){
+            $requirement = (object) $requirement;
+            array_push($result, $requirement);
+        }
+        return $result;
+
+       
+    }
     
 }

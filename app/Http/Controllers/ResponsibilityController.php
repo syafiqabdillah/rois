@@ -75,4 +75,19 @@ class ResponsibilityController extends Controller
         ->delete();       
         return $response;
     }
+
+    public function getResponsibility($id_lowongan){
+        $result  = array();
+        $get_req = DB::table('responsibility')->select()
+        -> where('id_lowongan', $id_lowongan)
+        ->get();
+
+        foreach($get_req as $responsibility){
+            $responsibility = (object) $responsibility;
+            array_push($result, $responsibility);
+        }
+        return $result;
+
+       
+    }
 }

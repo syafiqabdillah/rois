@@ -3,9 +3,20 @@ import ReactDOM from "react-dom";
 import "antd/dist/antd.css";
 import axios from 'axios';
 import { Form, Input, Icon, Button,Card } from "antd";
+import ResponsibilityForm from './ResponsibilityForm';
 
 let id = 0;
 export default class RequirementForm extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      submit: false,
+      form_res_visible:false
+
+    }
+  }
+
   
 
   remove = k => {
@@ -55,12 +66,17 @@ export default class RequirementForm extends React.Component {
           .catch(error => {
             console.log(error.response)
           });
-        this.props.disable = "true";
+        this.setState({ 
+          submit: true,
+          form_res_visible: !this.state.form_res_visible
+        });
 
     }
 });
 }
   render() {
+    const FormResponsibility = Form.create({ name: 'responsibility' })(ResponsibilityForm);
+    let id_lowongan = this.props.id_low;
     const { getFieldDecorator, getFieldValue } = this.props.form;
     const formItemLayout = {
      
@@ -84,15 +100,17 @@ export default class RequirementForm extends React.Component {
       >
         {getFieldDecorator(`names[${k}]`, {
           validateTrigger: ["onChange", "onBlur"],
+
           rules: [
             {
+              pattern: new RegExp("^[A-Za-z]"),
               required: true,
               whitespace: true,
               message: "Please input requirement's description or delete this field."
             }
           ]
         })(
-          <Input disabled={disable}
+          <Input disabled={this.state.submit}
             placeholder="Requirement Description"
             style={{ width: "92%", marginRight: 8 }}
           />
@@ -109,19 +127,28 @@ export default class RequirementForm extends React.Component {
       
     ));
     return (
+      <Card>
       <Form onSubmit={this.handleSubmit}>
         {formItems}
-        <Form.Item disabled={disable} {...formItemLayoutWithOutLabel}>
-          <Button disabled={disable} type="dashed" onClick={this.add} style={{ width: "92%" }}>
+        <Form.Item  {...formItemLayoutWithOutLabel}>
+          <Button disabled={this.state.submit} type="dashed" onClick={this.add} style={{ width: "92%" }}>
             <Icon type="plus" /> Add Requirement
           </Button>
         </Form.Item>
-        <Form.Item disabled={disable} {...formItemLayoutWithOutLabel}>
-           <Button className="float-right" shape="round" disabled={disable} type="primary" htmlType="submit">
-            Submit Requirement
+        <Form.Item  {...formItemLayoutWithOutLabel}>
+           <Button disabled={this.state.submit} className="float-right" shape="round" disabled={disable} type="primary" htmlType="submit">
+            Next
           </Button> 
         </Form.Item>
       </Form>
+      {
+          this.state.form_res_visible
+            ? <FormResponsibility  id_low={id_lowongan} />
+             
+              
+            : null
+        }
+      </Card>
     );
   }
 }
