@@ -17,11 +17,13 @@ class RemoteTest extends Component {
     this.state = {
       lamaran: [],
       soal: [],
-      id_lamaran: 0,
+      remote_test: [],
+      id: [],
+      id_lamaran: null,
       loading: true,
       duration: 0,
       tester_email: '',
-      id_soal: 0,
+      id_soal: null,
       start_date: null,
       status: '',
       link_jawaban: '',
@@ -52,6 +54,28 @@ class RemoteTest extends Component {
       })
     })
 
+    axios.get(API + '/po/get-id-remote-test/' + this.props.match.params.id)
+    .then(res => {
+      const id_remote_test = res.data;
+      console.log(id_remote_test);
+      this.setState({
+        id: id_remote_test,
+      })
+    })
+
+  }
+
+  componentDidUpdate(prevProps, prevState){
+    if (this.state.id !== prevState.id) {
+      axios.get(API + '/po/remote-test/' + this.state.id.id_remote_test)
+      .then(res => {
+        const remote_test = res.data;
+        console.log(remote_test);
+        this.setState({
+          remote_test: remote_test,
+        })
+      })
+    }
   }
 
   handleInputChange = (e) => {
@@ -113,6 +137,8 @@ class RemoteTest extends Component {
   }
 
   render() {
+
+
     let content;
 
     if (this.state.loading){
@@ -142,7 +168,7 @@ class RemoteTest extends Component {
         content = (
           <div>
             <CardTitle>
-              The answers for the assessment remote test of the applicant above can be accessed at this <Link to="https://github.com/syafiqabdillah/rois"> github link. </Link>
+              The answers for the assessment remote test of the applicant above can be accessed at this <a href={this.state.remote_test.link_jawaban}> github link. </a>
             </CardTitle>
             <br />
             <Row>
