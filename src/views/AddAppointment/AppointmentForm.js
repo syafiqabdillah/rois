@@ -27,19 +27,21 @@ export default class AppointmentForm extends React.Component {
         console.log(values['date'].format('YYYY-MM-DD'));
         var qs = require('qs');
         axios.post('http://localhost:8000/po/create-appointment', qs.stringify({
-          'id_lamaran': 1,
+          'id_lamaran': this.props.idLamaran,
           'date': values['date'].format('YYYY-MM-DD'),
           'start': values['start-time'].format('HH:mm'),
           'end': values['finish-time'].format('HH:mm'),
           'lokasi' : values['location'],
+          'interviewer' : values['interviewer'],
+          'email' : this.props.emailPelamar
         }),
         {
           headers: {'Content-Type': 'application/x-www-form-urlencoded'}
         })
         message.info('Message', 9);
-        message.loading('Saving...', 4)
-        .then(() => message.success('Saving finished', 2.5))
-        .then(() => message.success('Appointment Saved', 2.5))
+        message.loading('Saving...', 3)
+        .then(() => message.success('Saving finished', 2))
+        .then(() => message.success('Invitation Sent', 2))
         .then(() => window.location.href = '/#/appointmens');
       }
     });
@@ -68,6 +70,17 @@ export default class AppointmentForm extends React.Component {
     return minute;
   }
 
+  validateLocationField = (rule, value, callback) => {
+   const form = this.props.form;
+   const valid = !value.match(/^\d+$/);
+   if (value && !valid) {
+     callback('Location cannot be only number');
+   } else {
+     callback();
+   }
+ }
+
+
   render() {
     const { getFieldDecorator } = this.props.form;
 
@@ -77,7 +90,7 @@ export default class AppointmentForm extends React.Component {
     }
 
     return (
-      <Form labelCol={{ span: 5 }} wrapperCol={{ span: 12 }} onSubmit={this.handleSubmit}>
+      <Form labelCol={{ span: 7 }} wrapperCol={{ span: 14 }} onSubmit={this.handleSubmit}>
         <Form.Item
           label="Date"
         >
@@ -109,9 +122,10 @@ export default class AppointmentForm extends React.Component {
           label="Location"
         >
           {getFieldDecorator('location', {
-            rules: [{ required: true, message: 'Please input location' }],
+            rules: [{ required: true, message: 'Please input location' },
+            { validator: this.validateLocationField, }],
           })(
-            <Input placeholder="Enter Location"/>
+            <Input placeholder="Enter Location" />
           )}
         </Form.Item>
         <Form.Item
@@ -129,9 +143,9 @@ export default class AppointmentForm extends React.Component {
           )}
         </Form.Item>
         <Form.Item
-          wrapperCol={{ span: 12, offset: 5 }}
+          wrapperCol={{ span: 5, offset: 16 }}
         >
-          <Button type="primary" htmlType="submit">
+          <Button type="primary" htmlType="submit" shape="round" block>
             Submit
           </Button>
         </Form.Item>

@@ -31,6 +31,9 @@ const VacanciesPelamar = React.lazy(() => import('./views/VacanciesPelamar'));
 const ApplicationForm = React.lazy(() => import('./views/ApplicationForm'));
 const ApplicationsPelamar = React.lazy(() => import('./views/ApplicationsPelamar'));
 const Applicants = React.lazy(() => import('./views/Applicants'));
+const Hire = React.lazy(() => import('./views/FinalStage'));
+const Reject = React.lazy(() => import('./views/FinalStage/Reject'));
+const RemoteTest = React.lazy(() => import('./views/RemoteTest'));
 const Profile = React.lazy(() => import('./views/Profile'));
 const UpdateAssessment = React.lazy(() => import('./views/UpdateAssessment'));
 
@@ -72,8 +75,8 @@ const routes = [
   { path: '/applications', name: 'Applications', component: Applications },
   { path: '/assessments', name: 'Assessments', component: Assessments },
   { path: '/appointmens', name: 'Appointments', component: Appointments },
-  { path: '/addappointment', name: 'Add Appointment', component: AddAppointment },
-  { path: '/addanswer', name: 'Add Answer', component: AddAnswer },
+  { path: '/addappointment/:id', name: 'Add Appointment', component: AddAppointment },
+  { path: '/addanswer/:id', name: 'Add Answer', component: AddAnswer },
   { path: '/addVacancy', name: 'Add Vacancy', component: AddVacancy },
   { path: '/addAssessment', name: 'Add Assessment', component: AddAssessment },
   { path: '/vacancies-applicant', name: 'Vacancies', component: VacanciesPelamar },
@@ -83,6 +86,9 @@ const routes = [
   { path: '/vacancy/:id', name: 'Vacancy Detail', component: VacancyDetail },
   { path: '/profile/:token', name: 'Profile', component: Profile },
   { path: '/applicants/:id', exact: true, name: 'Applicants', component: Applicants },
+  { path: '/hire/:id', exact: true, name: 'Hire', component: Hire },
+  { path: '/reject/:id', exact: true, name: 'Reject', component: Reject },
+  { path: '/remoteTest/:id', exact: true, name: 'RemoteTest', component: RemoteTest },
   { path: '/updateAssessment/:id', name: 'Update Assessment', component: UpdateAssessment },
 
   { path: '/base/tabs', name: 'Tabs', component: Tabs },

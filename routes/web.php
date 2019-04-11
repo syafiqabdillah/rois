@@ -17,6 +17,7 @@ $router->get('/', function () {
 });
 
 $router->get('testmail', ['middleware' => 'cors', 'uses' => 'LamaranController@sendMailLamaran']);
+$router->get('invitation', ['middleware' => 'cors', 'uses' => 'AppointmentController@sendMailInvitation']);
 
 /**
  * Modul Recruitment
@@ -67,6 +68,8 @@ $router->get('pelamar/get-lamaran/{token}', ['middleware' => 'cors', 'uses' => '
 
 $router->get('pelamar/get-profile/{token}', ['middleware' => 'cors', 'uses' => 'PelamarController@getPelamar']);
 
+$router->get('pelamar/send-mail-lamaran', ['middleware' => 'cors', 'uses' => 'LamaranController@sendMailLamaran']);
+
 /**
  * UC - 03 : PO Menentukan Tahapan Seleksi Selanjutnya
  * Author : M Raffi A
@@ -80,6 +83,11 @@ $router->get('po/all-remote-test', ['middleware' => 'cors', 'uses' => 'RemoteTes
 $router->get('po/remote-test/{id}', ['middleware' => 'cors', 'uses' => 'RemoteTestController@getRemoteTest']);
 $router->post('po/create-remote-test', ['middleware' => 'cors', 'uses' => 'RemoteTestController@createRemoteTest']);
 
+$router->get('po/download-cv/{id}', ['middleware' => 'cors', 'uses' => 'LamaranController@downloadCV']);
+
+$router->get('po/get-detail-applicant/{id}', ['middleware' => 'cors', 'uses' => 'LamaranController@getDetailApplicant']);
+
+$router->get('po/get-id-remote-test/{id}', ['middleware' => 'cors', 'uses' => 'LamaranController@getIdRemoteTest']);
 /**
  * UC - 04 : PO Mengelola Soal
  * Author : Hauri S Z
@@ -103,6 +111,5 @@ $router->post('po/create-appointment', ['middleware' => 'cors', 'uses' => 'Appoi
  * UC - 06 : Pelamar Membuat Jawaban
  * Author : Fairuz Y
  */
-
+$router->post('pelamar/record-start-test', ['middleware' => 'cors', 'uses' => 'RemoteTestController@startDateRecord']);
 $router->post('pelamar/submit-jawaban', ['middleware' => 'cors', 'uses' => 'RemoteTestController@submitJawaban']);
-

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Badge, Card, CardBody, CardHeader, Col, Pagination, PaginationItem, PaginationLink, Row, Table } from 'reactstrap';
+import { Card, CardBody, CardHeader, Col, Row } from 'reactstrap';
 import { MDBDataTable } from 'mdbreact';
 
 const API = 'http://localhost:8000';
@@ -84,6 +84,8 @@ class Applications extends Component {
           }
         );
       });
+
+      data.rows = [];
 
       for (var i = 0; i < list_lamaran.length; i++) {
         data.rows.push(list_lamaran[i]);

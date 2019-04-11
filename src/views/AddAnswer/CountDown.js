@@ -10,7 +10,7 @@ class CountDown extends React.Component{
 
     componentDidMount(){
         this.interval = setInterval(()=>{
-            const date = this.calculateCountDown(this.props.date);
+            const date = this.calculateCountDown(this.props.endDate);
             date ? this.setState(date) : clearInterval(this.interval);
         }, 1000);
     }
@@ -18,6 +18,7 @@ class CountDown extends React.Component{
     componentWillUnmount(){
         clearInterval(this.interval);
     }
+
     calculateCountDown = (endDate) => {
         let different = (Date.parse(new Date(endDate))-Date.parse(new Date()))/1000;
         if (different <= 0) return false;
@@ -84,7 +85,7 @@ class CountDown extends React.Component{
 }
 
 CountDown.propType = {
-    date : PropTypes.string.isRequired
+    endDate : PropTypes.string.isRequired
 };
 
 export default CountDown;

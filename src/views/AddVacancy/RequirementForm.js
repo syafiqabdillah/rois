@@ -1,5 +1,4 @@
 import React from "react";
-import ReactDOM from "react-dom";
 import "antd/dist/antd.css";
 import axios from 'axios';
 import { Form, Input, Icon, Button,Card } from "antd";
@@ -79,20 +78,20 @@ export default class RequirementForm extends React.Component {
     let id_lowongan = this.props.id_low;
     const { getFieldDecorator, getFieldValue } = this.props.form;
     const formItemLayout = {
-     
+
     };
     const formItemLayoutWithOutLabel = {
-   
+
     };
 
     let disable= this.props.disable;
 
     getFieldDecorator("keys", { initialValue: [] });
     const keys = getFieldValue("keys");
-   
+
 
     const formItems = keys.map((k, index) => (
-      <Form.Item 
+      <Form.Item
       {...(index === 0 ? formItemLayout : formItemLayoutWithOutLabel)}
       label={index === 0 ? 'Requirement' : ''}
       required={false}
@@ -124,7 +123,7 @@ export default class RequirementForm extends React.Component {
           />
         ) : null}
       </Form.Item>
-      
+
     ));
     return (
       <Card>
@@ -152,4 +151,3 @@ export default class RequirementForm extends React.Component {
     );
   }
 }
-

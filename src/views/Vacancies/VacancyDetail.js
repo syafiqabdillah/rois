@@ -292,6 +292,18 @@ class VacancyDetail extends Component {
       }
     }
 
+    let buttonAddResAddReq;
+    if (localStorage.getItem('role') !== 'pelamar') {
+      buttonAddResAddReq = ( ''
+        // <Row>
+        //   <Button color="info" onClick={this.toggleInfoRes} className="mr-1 btn-pill" color="primary">Add Responsibility</Button>
+        //   <Button color="info" onClick={this.toggleInfoReq} className="mr-1 btn-pill" color="primary">Add Requirement</Button>
+        // </Row>
+      );
+    } else {
+      buttonAddResAddReq = '';
+    }
+
     return (
       <div className="animated fadeIn">
         <Row>
@@ -314,10 +326,7 @@ class VacancyDetail extends Component {
 
 
             <div>
-              <Row>
-                <Button color="info" onClick={this.toggleInfoRes} className="mr-1 btn-pill" color="primary">Add Responsibility</Button>
-                <Button color="info" onClick={this.toggleInfoReq} className="mr-1 btn-pill" color="primary">Add Requirement</Button>
-              </Row>
+              {buttonAddResAddReq}
               {formAddResponsibilities}
               {formAddRequirement}
             </div>

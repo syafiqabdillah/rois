@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Button, Badge, Card, CardBody, CardHeader, Col,
-  Form, FormGroup, FormText, Input, Label, Pagination, PaginationItem, PaginationLink, Row, Table, } from 'reactstrap';
+import { Button, Card, CardBody, Col, Form, FormGroup, Input, Label, Row } from 'reactstrap';
 import { isNull } from 'util';
+import 'antd/dist/antd.css';
+import { message } from 'antd';
 
 class AddAssessment extends Component {
   constructor(props){
@@ -48,12 +49,22 @@ class AddAssessment extends Component {
     {
       headers: {'Content-Type': 'application/x-www-form-urlencoded'}
     })
-    .then(function (response) {
-      //handle success, munculin data
-      console.log(response);
-      window.location.href = '#/assessments';
-      window.location.reload();
-    })
+    message.info('Message', 5.5)
+    message.loading('Saving...', 3)
+    .then(() => message.success(this.state.name + ' has successfully saved', 2.5))
+    .then(() => window.location.href = '#/assessments')
+    .then(() => window.location.reload())
+
+    // .then(function (response) {
+    //   //handle success, munculin data
+    //   console.log(response);
+    //   message.info('Message', 9)
+    //   message.loading('Saving...', 4)
+    //   .then(() => message.success(this.state.name + ' succesfully created', 2.5))
+    //   .then(() => window.location.href = '#/assessments'
+    //   // window.location.reload();
+
+    // })
   }
 
   handleInputChange = (e) => {
@@ -69,7 +80,7 @@ class AddAssessment extends Component {
         <option value={lowongan.id}>{lowongan.nama}</option>
       );
     });
-    
+
     return (
       <div className="animated fadeIn">
         <div align="center">
@@ -80,21 +91,24 @@ class AddAssessment extends Component {
             <Form onSubmit={this.handleSubmit}>
               <FormGroup>
                 <Label for="name">Name*</Label>
-                <Input type="text" name="name" id="name" placeholder="Enter Assessment Name" required onChange={this.handleInputChange}/>
+                <Input type="text" name="name" id="name" placeholder="eg. UI/UX Assessment v.1" pattern="(?=.*[a-z]).{5,}" title="Can't contain numbers only, must contain at least 5 or more characters" onChange={this.handleInputChange} required/>
+                {/* <FormText color="muted">
+                  eg. UI/UX Assessment v1
+                </FormText>  */}
               </FormGroup>
               <FormGroup>
                 <Label for="vacancyID">Vacancy*</Label>
-                <Input type="select" name="vacancyID" id="vacancyID" required onChange={this.handleInputChange}> 
+                <Input type="select" name="vacancyID" id="vacancyID" onChange={this.handleInputChange} required>
                   <option value={isNull} selected disabled>-- Select Vacancy --</option>
                   {list_vacancy}
                 </Input>
               </FormGroup>
               <FormGroup>
                 <Label for="link">Link*</Label>
-                <Input type="text" id="link" name="link" placeholder="Enter Assessment Link" pattern="https?://.+" required onChange={this.handleInputChange}/>
-                <FormText color="muted">
+                <Input type="text" id="link" name="link" placeholder="eg. https://www.google.com" pattern="https?://.+" title="Include http://" onChange={this.handleInputChange} required/>
+                {/* <FormText color="muted">
                   eg. https://www.google.com
-                </FormText>              
+                </FormText>               */}
               </FormGroup>
               <Row>
                 <Col xs="4">

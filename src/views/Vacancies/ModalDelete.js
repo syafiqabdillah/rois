@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter, ButtonGroup, Col, Row } from 'reactstrap';
+import { Button, Modal, ModalHeader, ModalBody, Col, Row } from 'reactstrap';
 import Tooltip from '@material-ui/core/Tooltip';
 
 class ModalDelete extends React.Component {
@@ -50,7 +50,7 @@ class ModalDelete extends React.Component {
     };
     let deleteVacancy;
 
-    if(window.location.href == "http://localhost:3000/#/vacancies"){
+    if(window.location.href === "http://localhost:3000/#/vacancies"){
       if(this.props.isDirujuk){
         deleteVacancy = (
           <Tooltip  placement="bottom" title="You don't have permission to delete this vacancy">
@@ -72,12 +72,12 @@ class ModalDelete extends React.Component {
       if(this.props.isDirujuk){
         deleteVacancy = (
           <Tooltip  placement="bottom" title="You don't have permission to delete this vacancy">
-          
+
             <Button outline disabled={Boolean(this.props.isDirujuk)} color="danger" onClick={this.toggle} className="btn-pill ">
       <i className="cui-trash icons "></i>
       Delete Vacancy
       </Button>
-        
+
           </Tooltip>
         );
       } else {
@@ -88,10 +88,10 @@ class ModalDelete extends React.Component {
           </Button>
         )
       }
-      
+
     }
 
-    
+
     return (
       <div>
         {deleteVacancy}

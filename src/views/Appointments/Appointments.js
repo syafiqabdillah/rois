@@ -1,8 +1,63 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Card, CardBody, CardHeader, Col, Row, Table } from 'reactstrap';
+import { Card, CardBody, CardHeader, Col, Row} from 'reactstrap';
+import { MDBDataTable } from 'mdbreact';
 
 const API = 'http://localhost:8000';
+
+const data = {
+  columns: [
+    {
+      label: "Candidate's Name",
+      field: 'candidate',
+      sort: 'asc',
+      width: 150
+    },
+    {
+      label: 'Phone',
+      field: 'phone',
+      sort: 'asc',
+      width: 150
+    },
+    {
+      label: 'Email',
+      field: 'email',
+      sort: 'asc',
+      width: 150
+    },
+    {
+      label: 'Date',
+      field: 'date',
+      sort: 'asc',
+      width: 100
+    },
+    {
+      label: 'Start time',
+      field: 'start_time',
+      sort: 'asc',
+      width: 100
+    },
+    {
+      label: 'Finish_time',
+      field: 'finish_time',
+      sort: 'asc',
+      width: 100
+    },
+    {
+      label: 'Location',
+      field: 'location',
+      sort: 'asc',
+      width: 150
+    },
+    {
+      label: 'Interviewer',
+      field: 'interviewer',
+      sort: 'asc',
+      width: 150
+    },
+  ],
+  rows: []
+};
 
 class Appointments extends Component {
   constructor(props){
@@ -33,36 +88,25 @@ class Appointments extends Component {
     } else {
       let list_appointment = this.state.appointment.map((appointment, index) => {
         return (
-          <tr key={index}>
-            <td> {appointment.pelamar} </td>
-            <td> {appointment.phone} </td>
-            <td> {appointment.email} </td>
-            <td> {appointment.date} </td>
-            <td> {appointment.start} </td>
-            <td> {appointment.end} </td>
-            <td> {appointment.lokasi} </td>
-          </tr>
+          {
+          candidate : appointment.pelamar,
+          phone : appointment.phone,
+          email : appointment.email,
+          date : appointment.date,
+          start_time : appointment.start,
+          finish_time : appointment.end,
+          location : appointment.lokasi,
+          interviewer : appointment.interviewer
+          }
         );
       });
 
-      content = (
+      for (var i = 0; i < list_appointment.length; i++) {
+        data.rows.push(list_appointment[i]);
+      }
 
-        <Table hover bordered striped responsive size="sm">
-          <thead>
-          <tr>
-            <th>Candidate's Name</th>
-            <th>Phone</th>
-            <th>Email</th>
-            <th>Date</th>
-            <th>Start</th>
-            <th>End</th>
-            <th>Location</th>
-          </tr>
-          </thead>
-          <tbody>
-            {list_appointment}
-          </tbody>
-        </Table>
+      content = (
+        <MDBDataTable borderless striped hover small btn data={data} />
       );
     }
 

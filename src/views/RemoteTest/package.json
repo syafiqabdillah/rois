@@ -1,0 +1,6 @@
+{
+  "name": "RemoteTest",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./RemoteTest.js"
+}

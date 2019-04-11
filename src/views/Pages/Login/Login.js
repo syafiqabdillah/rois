@@ -92,7 +92,7 @@ class Login extends Component {
 
                     <Form onSubmit={ this.handleSubmit }>
                       <h1>Login</h1>
-                      <p className="text-muted">Sign In to your account</p>
+                      <p className="text-muted">Sign In to employee account</p>
 
                       <InputGroup className="mb-3">
                         <InputGroupAddon addonType="prepend">
@@ -130,7 +130,7 @@ class Login extends Component {
                 <Card className="text-white bg-primary py-5" style={{ width: '44%' }}>
                   <CardBody className="text-center">
                     <div>
-                      <h2>Sign in</h2>
+                      <h2>Apply for jobs</h2>
                       <p>Join our team!</p>
 
                       {/* <div align="center">
