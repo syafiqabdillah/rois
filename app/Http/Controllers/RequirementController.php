@@ -47,23 +47,31 @@ class RequirementController extends Controller
 
          return json_encode($list_desc_name);
     }
-
-    /**
-     * mengubah suatu requirement
+ /**
+     * mengubah suatu responsibility
      * @param request  $request berisi $id, $nama, $id_lowongan
-     * @return long $id id dari hasil perubahan requirement di database
+     * @return long $id id dari hasil perubahan responsibility di database
      */
     public function updateRequirement(Request $request){
-        $id = $request->id;
-        $deskripsi = $request->deskripsi;
         $id_lowongan = $request->id_lowongan;
+
+        $response_delete = DB::table('requirement')
+        ->where('id_lowongan',$id_lowongan)
+        ->delete();
+
+        // $id = $request->id;
+        // $deskripsi = $request->deskripsi;
+        // $id_lowongan = $request->id_lowongan;
         
-        $result = DB::table('requirement')
-            ->where('id', $id)
-            ->update(['deskripsi' => $deskripsi, 
-            'id_lowongan' => $id_lowongan]);
-        return $result;
+        // $result = DB::table('responsibility')
+        //     ->where('id', $id)
+        //     ->update(['deskripsi' => $deskripsi, 
+        //     'id_lowongan' => $id_lowongan]);
+       $creating_new= $this->createRequirement($request);
+
+        return $creating_new;
     }
+
 
     /**
      * menghapus suatu requirement
