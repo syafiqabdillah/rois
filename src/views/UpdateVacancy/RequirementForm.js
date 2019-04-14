@@ -115,8 +115,8 @@ export default class RequirementForm extends React.Component {
            .catch(error => {
              console.log(error.response)
            });
-         window.location.href = '#/vacancy/'+ this.props.id_low;
-
+           window.location.href = '#/vacancy/'+ this.props.id_low;
+          window.location.reload();
     }
 });
 }
@@ -130,11 +130,19 @@ componentDidMount(){
   .then(res=>{
     const requirement= res.data;
 
-    console.log(requirement);
-    for(var i=0;i<requirement.length;i++){
-      name_initial.push(requirement[i].deskripsi)
-      key_initial.push(i);
-    }    
+   
+      name_initial=[]
+       
+      
+        console.log(requirement);
+        for(var i=0;i<requirement.length;i++){
+          name_initial.push(requirement[i].deskripsi)
+          key_initial.push(i);
+        
+
+       }
+
+    
   
     id= key_initial.length+1;
   
@@ -149,12 +157,7 @@ componentDidMount(){
   
     
   })
-  this.setState({
-    key_initial:key_initial,
-    name_initial:name_initial,
-    merged_initial : merged_initial,
-    id:id
-  })
+ 
 };
 
 
@@ -230,13 +233,13 @@ componentDidMount(){
             {
               required: true,
               whitespace: true,
-              message: "Please input passenger's name or delete this field."
+              message: "Please input requirement's descriprion or delete this field."
             }
           ],
           initialValue: merged_initial[index]
         })(
           <Input
-            placeholder="passenger name"
+            placeholder="Requrirement description"
             style={{ width: "92%", marginRight: 8 }}
           />
         )}
