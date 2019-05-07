@@ -241,42 +241,6 @@ class VacancyDetail extends Component {
         </div>
       )
 
-      formAddResponsibilities = (
-        <Modal isOpen={this.state.info_res} toggle={this.toggleInfoRes}
-          className={'modal-info ' + this.props.className}>
-          <ModalHeader toggle={this.toggleInfoRes}>Add Responsibilities</ModalHeader>
-          <ModalBody>
-            <Form onSubmit={this.handleSubmit}>
-              <Label htmlFor="nf-password">Responsibilities*</Label>
-              <Input type="text" id="responsibility" name="deskripsi" placeholder="Enter Responsibilities" onChange={this.handleChange} required />
-
-              <br></br>
-
-
-              <Button className="btn-pill" color="primary" type="submit">Submit</Button></Form>
-          </ModalBody>
-        </Modal>
-
-
-      )
-
-      formAddRequirement = (
-        <Modal isOpen={this.state.info_req} toggle={this.toggleInfoReq}
-          className={'modal-info ' + this.props.className}>
-          <ModalHeader toggle={this.toggleInfoReq}>Add Requirement</ModalHeader>
-          <ModalBody>
-            <Form onSubmit={this.handleSubmit}>
-              <Label htmlFor="nf-password">Requirements*</Label>
-              <Input type="text" id="requirement" name="deskripsi" placeholder="Enter Requirement" onChange={this.handleChange} required />
-
-              <br></br>
-
-
-              <Button className="btn-pill" color="primary" type="submit">Submit</Button></Form>
-          </ModalBody>
-        </Modal>
-      )
-
       if (localStorage.getItem('role') !== 'pelamar') {
         content_button_edit = (
           <Link to={"/vacancy/update/"+  lowongan.id} >

@@ -115,6 +115,14 @@ class LowonganController extends Controller
         $divisi = $request->divisi;
         $lokasi = $request->lokasi;
         $tipe = $request->tipe;
+        $today = date('Y-m-d');
+        $status;
+        if($today >= $start_date && $today <= $end_date){
+            $status= "Active";
+        }
+        else{
+            $status = "Not Active";
+        }
         $id = DB::table('lowongan')->insertGetId(
             ['nama' => $nama, 
             'start_date' => $start_date, 
@@ -122,6 +130,7 @@ class LowonganController extends Controller
             'publish_date' => $publish_date,
             'divisi' => $divisi,
             'lokasi' => $lokasi,
+            'status' => $status,
             'tipe' => $tipe]
         );
         return $id;
@@ -183,6 +192,12 @@ class LowonganController extends Controller
         $reps = json_decode($resp_raw);
         $lowongan->responsibility = $reps;
         return $lowongan;
+    }
+
+    public function setStatus(Request $request){
+
+
+
     }
 
 }

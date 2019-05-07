@@ -33,7 +33,7 @@ $router->post('/login', ['middleware' => 'cors', 'uses' => 'AuthController@login
  * UC - 01 : PO Mengelola lowongan
  * Author : Shafira F
  */
- $router->get('po/all-lowongan', ['middleware' => 'cors', 'uses' => 'LowonganController@getAllLowongan']); //checked
+$router->get('po/all-lowongan', ['middleware' => 'cors', 'uses' => 'LowonganController@getAllLowongan']); //checked
 
 $router->get('po/lowongan/{id}', ['middleware' => 'cors', 'uses' => 'LowonganController@getLowongan']); //checked
 $router->post('po/create-lowongan', ['middleware' => 'cors', 'uses' => 'LowonganController@createLowongan']); //checked
@@ -113,3 +113,17 @@ $router->post('po/create-appointment', ['middleware' => 'cors', 'uses' => 'Appoi
  */
 $router->post('pelamar/record-start-test', ['middleware' => 'cors', 'uses' => 'RemoteTestController@startDateRecord']);
 $router->post('pelamar/submit-jawaban', ['middleware' => 'cors', 'uses' => 'RemoteTestController@submitJawaban']);
+
+
+
+/**
+ * UC - 09 : Supervisor Mengelola Tugas Onboarding
+ * Author : Shafira F
+ */
+$router->get('po/all-tugas/{id_karyawan}', ['middleware' => 'cors', 'uses' => 'TugasOnboardingController@getAllTugasOnboarding']); 
+
+$router->post('po/create-tugas', ['middleware' => 'cors', 'uses' => 'TugasOnboardingController@createTugasOnboarding']); 
+$router->post('po/update-tugas', ['middleware' => 'cors', 'uses' => 'TugasOnboardingController@updateTugasOnboarding']); 
+$router->post('po/delete-tugas', ['middleware' => 'cors', 'uses' => 'TugasOnboardingController@deleteTugasOnboarding']);
+
+

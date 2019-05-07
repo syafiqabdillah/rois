@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { Button, Card, CardBody, CardHeader, Col, Row, Table } from 'reactstrap';
+import { Button, Badge, Card, CardBody, CardHeader, Col, Row, Table } from 'reactstrap';
 import ModalDelete from './ModalDelete';
 import { MDBDataTable } from 'mdbreact';
 
@@ -19,7 +19,7 @@ const data = {
       label: "Division",
       field: 'divisi',
       sort: 'asc',
-      width: 150
+      width: 200
     },
     {
       label: "Start Date",
@@ -37,17 +37,23 @@ const data = {
       label: "Location",
       field: 'lokasi',
       sort: 'asc',
-      width: 150
+      width: 200
     },
     {
       label: "Type",
       field: 'tipe',
-      width: 150
+      width: 200
     },
+    {
+      label:"Status",
+      field:'status',
+      width: 100
+    },
+   
     {
       label: "Action",
       field: 'action',
-      width: 50
+      width: 100
     }
 
   ],
@@ -81,21 +87,26 @@ export class Vacancies extends Component {
 
   render() {
     let content;
+    
 
     if (this.state.loading) {
       content = <div align="center"><p>Loading . . .</p></div>;
     } else {
       let list_vacancy = this.state.lowongan.map((lowongan, index) => {
+       
         return (
           {
             nama:
-              <Link to={"/vacancy/" + lowongan.id} >{lowongan.nama}</Link>,
+              <Link to={"/vacancy/" + lowongan.id} >{lowongan.nama}</Link> ,
 
             divisi: lowongan.divisi,
             start_date: lowongan.start_date,
             end_date: lowongan.end_date,
             lokasi: lowongan.lokasi,
             tipe: lowongan.tipe,
+            status : 
+            //ini belom selese nampilin bagdge nya
+            <Badge pill color="success">{lowongan.status}</Badge>,
             action:
               <Row>
                 <Col>
