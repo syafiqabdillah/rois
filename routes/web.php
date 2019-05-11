@@ -29,6 +29,7 @@ $router->get('invitation', ['middleware' => 'cors', 'uses' => 'AppointmentContro
 $router->post('/register', ['middleware' => 'cors', 'uses' => 'AuthController@register']);
 $router->post('/login', ['middleware' => 'cors', 'uses' => 'AuthController@login']);
 
+
 /**
  * UC - 01 : PO Mengelola lowongan
  * Author : Shafira F
@@ -53,12 +54,10 @@ $router->post('po/delete-responsibility', ['middleware' => 'cors', 'uses' => 'Re
 $router->get('po/lowongan/related/{id}', ['middleware' => 'cors', 'uses' => 'LowonganController@getRelatedLowongan']);
 
 
-
 /**
  *  UC - 02 : Pelamar Melamar Pekerjaan
  * Author : Syafiq A U
  */
-
 $router->post('pelamar/create-pelamar', ['middleware' => 'cors', 'uses' => 'PelamarController@createPelamar']);
 
 $router->post('pelamar/create-lamaran', ['middleware' => 'cors', 'uses' => 'LamaranController@createLamaran']);
@@ -70,11 +69,11 @@ $router->get('pelamar/get-profile/{token}', ['middleware' => 'cors', 'uses' => '
 
 $router->get('pelamar/send-mail-lamaran', ['middleware' => 'cors', 'uses' => 'LamaranController@sendMailLamaran']);
 
+
 /**
  * UC - 03 : PO Menentukan Tahapan Seleksi Selanjutnya
  * Author : M Raffi A
  */
-
 $router->get('po/all-lamaran', ['middleware' => 'cors', 'uses' => 'LamaranController@getAllLamaran']);
 $router->get('po/lamaran/{id}', ['middleware' => 'cors', 'uses' => 'LamaranController@getLamaran']);
 $router->post('po/update-tahapan-lamaran', ['middleware' => 'cors', 'uses' => 'LamaranController@updateTahapanLamaran']);
@@ -88,24 +87,26 @@ $router->get('po/download-cv/{id}', ['middleware' => 'cors', 'uses' => 'LamaranC
 $router->get('po/get-detail-applicant/{id}', ['middleware' => 'cors', 'uses' => 'LamaranController@getDetailApplicant']);
 
 $router->get('po/get-id-remote-test/{id}', ['middleware' => 'cors', 'uses' => 'LamaranController@getIdRemoteTest']);
+
+
 /**
  * UC - 04 : PO Mengelola Soal
  * Author : Hauri S Z
  */
-
 $router->get('po/all-soal', ['middleware' => 'cors', 'uses' => 'SoalController@getAllSoal']);
 $router->get('po/soal/{id}', ['middleware' => 'cors', 'uses' => 'SoalController@getSoal']);
 $router->post('po/create-soal', ['middleware' => 'cors', 'uses' => 'SoalController@createSoal']);
 $router->post('po/update-soal', ['middleware' => 'cors', 'uses' => 'SoalController@updateSoal']);
 $router->post('po/delete-soal', ['middleware' => 'cors', 'uses' => 'SoalController@deleteSoal']); //checked
 
+
 /**
  * UC - 05 : PO Membuat Appointment Interview
  * Author : Fairuz Y
  */
-
 $router->get('po/all-appointment', ['middleware' => 'cors', 'uses' => 'AppointmentController@getAllAppointment']);
 $router->post('po/create-appointment', ['middleware' => 'cors', 'uses' => 'AppointmentController@createAppointment']);
+
 
 /**
  * UC - 06 : Pelamar Membuat Jawaban
@@ -113,3 +114,12 @@ $router->post('po/create-appointment', ['middleware' => 'cors', 'uses' => 'Appoi
  */
 $router->post('pelamar/record-start-test', ['middleware' => 'cors', 'uses' => 'RemoteTestController@startDateRecord']);
 $router->post('pelamar/submit-jawaban', ['middleware' => 'cors', 'uses' => 'RemoteTestController@submitJawaban']);
+
+
+/**
+ * UC - 11 : Memberikan Konfirmasi Penyelesaian Tugas
+ * Author : M Raffi A
+ */
+$router->get('ko/tasks-karyawan/{username}', ['middleware' => 'cors', 'uses' => 'KaryawanOnboardingController@getTasksKaryawan']);
+$router->get('ko/karyawan-onboarding/{username}', ['middleware' => 'cors', 'uses' => 'KaryawanOnboardingController@getKaryawanOnboarding']);
+$router->post('ko/update-task-karyawan', ['middleware' => 'cors', 'uses' => 'TaskController@updateStatusTask']);
