@@ -37,7 +37,7 @@ class DefaultLayout extends Component {
 
   render() {
     //kalau belum ada token -> belum login
-    if (localStorage.getItem('token') === undefined) {
+    if (!localStorage.hasOwnProperty('token')) {
       //diminta login
       return <Redirect to="/login" />
     }

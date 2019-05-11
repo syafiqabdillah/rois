@@ -113,3 +113,9 @@ $router->post('po/create-appointment', ['middleware' => 'cors', 'uses' => 'Appoi
  */
 $router->post('pelamar/record-start-test', ['middleware' => 'cors', 'uses' => 'RemoteTestController@startDateRecord']);
 $router->post('pelamar/submit-jawaban', ['middleware' => 'cors', 'uses' => 'RemoteTestController@submitJawaban']);
+
+/**
+ * UC - 14 : PO Melihat Laporan Ringkasan Hasil Penerimaan
+ * Author : Syafiq Abdillah Umarghanis
+ */
+$router->get('po/recruitment-report/{divisi}/{start}/{end}', ['middleware' => 'cors', 'uses' => 'LamaranController@getRecruitmentReport']);

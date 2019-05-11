@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 import { Card, CardBody, CardHeader, Col, Row } from 'reactstrap';
 import { MDBDataTable } from 'mdbreact';
 
@@ -80,6 +81,9 @@ class Applications extends Component {
             salary_exp: lamaran.salary_exp,
             tahapan: lamaran.tahapan,
             status: lamaran.status,
+            action: <Link to={"/applicants/" + lamaran.id } className=" btn btn-primary btn-pill">
+                      <i className="cui-magnifying-glass icons " title="See Details"></i>
+                    </Link>,
             clickEvent: () => this.handleRowClick(lamaran),
           }
         );
