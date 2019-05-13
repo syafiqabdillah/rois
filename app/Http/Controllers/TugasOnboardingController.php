@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use \Illuminate\Http\Request;
 use \Illuminate\Support\Facades\DB;
 
-class LowonganController extends Controller
+class TugasOnboardingController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -22,18 +22,10 @@ class LowonganController extends Controller
      * 
      * @return array $tugas 
      */
-    public function getAllTugasOnboarding(Request $request){
-        $getlowongan = DB::table('lowongan')->select()->get();
-        $lowongans = json_decode($getlowongan, true);
-        $result = array();
-        foreach($lowongans as $lowongan){
-            $lowongan = (object) $lowongan;
-            $isDirujuk = $this->isDirujuk($lowongan->id);
-            $lowongan = $this->addRequirementAndResponsibility($lowongan);
-            $lowongan->isDirujuk = $isDirujuk;
-            array_push($result, $lowongan);
-        }
-        return $result;
+    public function getAllTugasOnboarding($id_karyawan){
+        $getTugas = DB::table('tugas_onboarding')->select()->where('id_karyawan', $id_karyawan)->get();
+        $tugas = json_decode($getTugas, true);
+        return $tugas;
     }
 
     /**
@@ -42,31 +34,21 @@ class LowonganController extends Controller
      * @return long $id id dari hasil penambahan lowongan di database
      */
     public function createTugasOnboarding(Request $request){
-        $nama = $request->nama;
-        $start_date = $request->start_date;
-        $end_date = $request->end_date;
-        $publish_date = $request->publish_date;
-        $divisi = $request->divisi;
-        $lokasi = $request->lokasi;
-        $tipe = $request->tipe;
-        $today = date('Y-m-d');
-        $status;
-        if($today >= $start_date && $today <= $end_date){
-            $status= "Active";
-        }
-        else{
-            $status = "Not Active";
-        }
-        $id = DB::table('lowongan')->insertGetId(
-            ['nama' => $nama, 
-            'start_date' => $start_date, 
-            'end_date' => $end_date, 
-            'publish_date' => $publish_date,
-            'divisi' => $divisi,
-            'lokasi' => $lokasi,
+        $deskripsi= $request->deskripsi;
+        $deadline_date = $request->deadline_date;
+        $id_supervisor = $request->id_supervisor;
+        $id_karyawan = $request->id_karyawan;
+        $status = $request->status;
+        $assigned_date =  $request->assigned_date;
+       
+        $id = DB::table('tugas_onboarding')->insertGetId(
+            ['id_supervisor' => $id_supervisor, 
+            'id_karyawan' => $id_karyawan, 
+            'deskripsi'=> $deskripsi, 
             'status' => $status,
-            'tipe' => $tipe]
-        );
+            'assigned_date' => $assigned_date
+            
+            ]);
         return $id;
     }
 
@@ -77,23 +59,13 @@ class LowonganController extends Controller
      */
     public function updateTugasOnboarding(Request $request){
         $id_tugas = $request->id;
-        $nama = $request->nama;
-        $start_date = $request->start_date;
-        $end_date = $request->end_date;
-        $publish_date = $request->publish_date;
-        $divisi = $request->divisi;
-        $lokasi = $request->lokasi;
-        $tipe = $request->tipe;
+        $deskripsi = $request->deskripsi;
+       
 
         $result = DB::table('tugas_onboarding')
             ->where('id', $id_tugas)
-            ->update(['nama' => $nama, 
-            'start_date' => $start_date, 
-            'end_date' => $end_date, 
-            'publish_date' => $publish_date,
-            'divisi' => $divisi,
-            'lokasi' => $lokasi,
-            'tipe' => $tipe]);
+            ->update(['deskripsi' => $deskripsi
+            ]);
         return $result;
     }
 

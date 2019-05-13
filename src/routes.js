@@ -36,6 +36,10 @@ const Reject = React.lazy(() => import('./views/FinalStage/Reject'));
 const RemoteTest = React.lazy(() => import('./views/RemoteTest'));
 const Profile = React.lazy(() => import('./views/Profile'));
 const UpdateAssessment = React.lazy(() => import('./views/UpdateAssessment'));
+const ListOnboardingTask = React.lazy(() => import('./views/ListOnboardingTask'));
+
+// const UpdateVacancy = React.lazy(() => import ('./views/UpdateVacancy/UpdateVacancy'));
+// const VacancyDetail = React.lazy(() => import('./views/Vacancies/VacancyDetail'));
 
 const Tabs = React.lazy(() => import('./views/Base/Tabs'));
 const Tooltips = React.lazy(() => import('./views/Base/Tooltips'));
@@ -71,6 +75,7 @@ const routes = [
   { path: '/base/switches', name: 'Switches', component: Switches },
   { path: '/base/tables', name: 'Tables', component: Tables },
 
+  { path: '/tasks-list/:id', name: 'Task List', component: ListOnboardingTask },
   { path: '/vacancies', name: 'Vacancies', component: Vacancies },
   { path: '/applications', name: 'Applications', component: Applications },
   { path: '/assessments', name: 'Assessments', component: Assessments },

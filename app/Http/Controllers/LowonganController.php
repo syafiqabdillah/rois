@@ -23,7 +23,8 @@ class LowonganController extends Controller
      * @return array $lowongan lowongan yang telah terisi requirement dan responsibility 
      */
     public function getAllLowongan(Request $request){
-        $getlowongan = DB::table('lowongan')->select()->get();
+    $this->setStatus();
+        $getlowongan = DB::table('lowongan')->select()->where('status','!=','Deleted')->get();
         $lowongans = json_decode($getlowongan, true);
         $result = array();
         foreach($lowongans as $lowongan){
@@ -35,6 +36,21 @@ class LowonganController extends Controller
         }
         return $result;
     }
+
+    public function getAllActiveLowongan(Request $request){
+        $this->setStatus();
+            $getlowongan = DB::table('lowongan')->select()->where('status','Active')->get();
+            $lowongans = json_decode($getlowongan, true);
+            $result = array();
+            foreach($lowongans as $lowongan){
+                $lowongan = (object) $lowongan;
+                $isDirujuk = $this->isDirujuk($lowongan->id);
+                $lowongan = $this->addRequirementAndResponsibility($lowongan);
+                $lowongan->isDirujuk = $isDirujuk;
+                array_push($result, $lowongan);
+            }
+            return $result;
+        }
 
     public function isDirujuk($id_lowongan){
         $lamaran = DB::table('lamaran')->select()->where('id_lowongan', $id_lowongan)->get();
@@ -194,8 +210,15 @@ class LowonganController extends Controller
         return $lowongan;
     }
 
-    public function setStatus(Request $request){
+    public function setStatus(){
+        $today = date('Y-m-d');
+        DB::table('lowongan')
+        ->where([['status','Not Active'],['start_date','<=',$today],['end_date','>=',$today]])
+        ->update(['status' => 'Active']);
 
+        DB::table('lowongan')
+        ->where([['status','Active'],['start_date','>',$today],['end_date','<',$today]])
+        ->update(['status' => 'Not Active']);
 
 
     }

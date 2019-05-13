@@ -272,6 +272,7 @@ class VacancyDetail extends Component {
       <div className="animated fadeIn">
         <Row>
           {content_button_edit}
+          &nbsp;&nbsp;&nbsp;
           {content_button_delete}
         </Row>
 

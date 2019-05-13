@@ -125,6 +125,7 @@ export default class RequirementForm extends React.Component {
       </Form.Item>
 
     ));
+   
     return (
       <Card>
       <Form onSubmit={this.handleSubmit}>
@@ -135,7 +136,7 @@ export default class RequirementForm extends React.Component {
           </Button>
         </Form.Item>
         <Form.Item  {...formItemLayoutWithOutLabel}>
-           <Button disabled={this.state.submit} className="float-right" shape="round" disabled={disable} type="primary" htmlType="submit">
+           <Button disabled={this.state.submit} className="float-right" shape="round"  type="primary" htmlType="submit">
             Next
           </Button> 
         </Form.Item>

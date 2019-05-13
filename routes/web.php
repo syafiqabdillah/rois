@@ -76,6 +76,7 @@ $router->get('pelamar/send-mail-lamaran', ['middleware' => 'cors', 'uses' => 'La
  */
 
 $router->get('po/all-lamaran', ['middleware' => 'cors', 'uses' => 'LamaranController@getAllLamaran']);
+$router->get('po/all-active-lamaran', ['middleware' => 'cors', 'uses' => 'LamaranController@getAllActiveLamaran']);//ngambil lowongan yang active aja, silahkan pake ini untuk semua yang diakses pelamar
 $router->get('po/lamaran/{id}', ['middleware' => 'cors', 'uses' => 'LamaranController@getLamaran']);
 $router->post('po/update-tahapan-lamaran', ['middleware' => 'cors', 'uses' => 'LamaranController@updateTahapanLamaran']);
 
@@ -120,10 +121,9 @@ $router->post('pelamar/submit-jawaban', ['middleware' => 'cors', 'uses' => 'Remo
  * UC - 09 : Supervisor Mengelola Tugas Onboarding
  * Author : Shafira F
  */
-$router->get('po/all-tugas/{id_karyawan}', ['middleware' => 'cors', 'uses' => 'TugasOnboardingController@getAllTugasOnboarding']); 
-
-$router->post('po/create-tugas', ['middleware' => 'cors', 'uses' => 'TugasOnboardingController@createTugasOnboarding']); 
-$router->post('po/update-tugas', ['middleware' => 'cors', 'uses' => 'TugasOnboardingController@updateTugasOnboarding']); 
-$router->post('po/delete-tugas', ['middleware' => 'cors', 'uses' => 'TugasOnboardingController@deleteTugasOnboarding']);
+$router->get('supervisor/getTugasOnboarding/{id_karyawan}', ['middleware' => 'cors', 'uses' => 'TugasOnboardingController@getAllTugasOnboarding']); 
+$router->post('supervisor/create-tugas-onboarding', ['middleware' => 'cors', 'uses' => 'TugasOnboardingController@createTugasOnboarding']); 
+$router->post('supervisor/update-tugas-onboarding', ['middleware' => 'cors', 'uses' => 'TugasOnboardingController@updateTugasOnboarding']); 
+$router->post('supervisor/delete-tugas-onboarding', ['middleware' => 'cors', 'uses' => 'TugasOnboardingController@deleteTugasOnboarding']);
 
 
