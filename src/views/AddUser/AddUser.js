@@ -36,7 +36,7 @@ class AddUser extends Component {
     })
     message.info('Message', 5.5)
     message.loading('Saving...', 3)
-    .then(() => message.success(this.state.name + ' has successfully saved', 2.5))
+    //.then(() => message.success(this.state.name + ' has successfully saved', 2.5))
     .then(() => window.location.href = '#/users')
     .then(() => window.location.reload())
   }
