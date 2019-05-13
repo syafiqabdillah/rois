@@ -7,7 +7,6 @@ use \Illuminate\Support\Facades\DB;
 use \Illuminate\Support\Facades\Mail;
 
 
-
 class AppointmentController extends Controller
 {
     /**
@@ -107,6 +106,46 @@ class AppointmentController extends Controller
            $message->from('second.umarghanis@gmail.com', 'Career SIRCLO');
        });
 
+   }
+
+   public function getAllEmployee(){
+       $employee = DB::table('karyawan')->select(DB::raw('id, name, position,division'))->get();
+       $result = array();
+       $emp = json_decode($employee, true);
+       foreach ($emp as $epl) {
+         $profile = (object) $epl;
+         $progress = $this->getNumberTaskByStatus($profile->id);
+         $epl = array('profile'=>$profile, 'progress'=>$progress);
+         array_push($result, $epl);
+       }
+       return $result;
+   }
+
+   public function getEmployeeProfile($id){
+       $employee = DB::table('karyawan')->select(DB::raw('name, position,division'))->where('id', $id)->get();
+       return $employee;
+   }
+
+   public function taskItem($id){
+       $alltask = DB::table('task')->select(DB::raw('task_name, DATEDIFF(finish, start) as days'))->where('employee_id', $id)->where('progress_status', 'completed')->get();
+       return $alltask;
+   }
+
+   public function getAllTaskStatus($id){
+       $taskdone = DB::table('task')->select(DB::raw('task_name'))->where('employee_id', $id)->where('progress_status', 'completed')->get();
+       $taskonprogress = DB::table('task')->select(DB::raw('task_name'))->where('employee_id', $id)->where('progress_status', 'on progress')->get();
+       $taskassigned = DB::table('task')->select(DB::raw('task_name'))->where('employee_id', $id)->where('progress_status', 'assigned')->get();
+       $data = array('complete' => $taskdone, 'onprogress'=> $taskonprogress, 'assigned'=> $taskassigned);
+       return $data;
+   }
+
+   public function getNumberTaskByStatus($id){
+       $taskdone = DB::table('task')->select(DB::raw('task_name'))->where('employee_id', $id)->where('progress_status', 'completed')->count();
+       $taskonprogress = DB::table('task')->select(DB::raw('task_name'))->where('employee_id', $id)->where('progress_status', 'on progress')->count();
+       $taskassigned = DB::table('task')->select(DB::raw('task_name'))->where('employee_id', $id)->where('progress_status', 'assigned')->count();
+       $total = $taskdone + $taskonprogress +$taskassigned;
+       $data = array('complete' => $taskdone, 'onprogress'=> $taskonprogress, 'assigned'=> $taskassigned, 'total'=>$total);
+       return $data;
    }
 
 }

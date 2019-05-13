@@ -125,3 +125,13 @@ $router->get('sysadmin/all-users', ['middleware' => 'cors', 'uses' => 'UserContr
 $router->post('sysadmin/create-user', ['middleware' => 'cors', 'uses' => 'UserController@createUser']);
 $router->post('sysadmin/update-user', ['middleware' => 'cors', 'uses' => 'UserController@updateUser']);
 $router->post('sysadmin/delete-user', ['middleware' => 'cors', 'uses' => 'UserController@deleteUser']);
+
+/**
+ * UC - 12 : Laporan Kinerja Karyawan
+ * Author : Fairuz Y
+ */
+ $router->get('po/get-all-task/{id}', ['middleware' => 'cors', 'uses' => 'AppointmentController@taskItem']);
+ $router->get('po/get-all-task-status/{id}', ['middleware' => 'cors', 'uses' => 'AppointmentController@getAllTaskStatus']);
+ $router->get('po/get-onboarding-progress/{id}', ['middleware' => 'cors', 'uses' => 'AppointmentController@getNumberTaskByStatus']);
+ $router->get('po/get-employee-profile/{id}', ['middleware' => 'cors', 'uses' => 'AppointmentController@getEmployeeProfile']);
+ $router->get('po/get-all-employee', ['middleware' => 'cors', 'uses' => 'AppointmentController@getAllEmployee']);

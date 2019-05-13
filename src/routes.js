@@ -27,6 +27,8 @@ const AddAppointment = React.lazy(() => import('./views/AddAppointment'));
 const AddAnswer = React.lazy(() => import('./views/AddAnswer'));
 const AddVacancy = React.lazy(() => import('./views/AddVacancy'));
 const AddAssessment = React.lazy(() => import('./views/AddAssessment'));
+const EmployeePerformanceReport = React.lazy(() => import('./views/EmployeePerformanceReport'));
+const Employees = React.lazy(() => import('./views/Employee'));
 const VacanciesPelamar = React.lazy(() => import('./views/VacanciesPelamar'));
 const ApplicationForm = React.lazy(() => import('./views/ApplicationForm'));
 const ApplicationsPelamar = React.lazy(() => import('./views/ApplicationsPelamar'));
@@ -81,6 +83,10 @@ const routes = [
   { path: '/addanswer/:id', name: 'Add Answer', component: AddAnswer },
   { path: '/addVacancy', name: 'Add Vacancy', component: AddVacancy },
   { path: '/addAssessment', name: 'Add Assessment', component: AddAssessment },
+
+  { path: '/employeeDashboard/:id', name: 'Employee Dashboard', component: EmployeePerformanceReport },
+  { path: '/employees', name: 'List of Employee', component: Employees},
+
   { path: '/vacancies-applicant', name: 'Vacancies', component: VacanciesPelamar },
   { path: '/apply/:id', name: 'Application Form', component: ApplicationForm },
   { path: '/myapplications', name: 'My Applications', component: ApplicationsPelamar },
