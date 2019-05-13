@@ -110,6 +110,7 @@ class Dashboard extends Component {
       <Button color="primary" size="lg" block>ANALYZE</Button>
       <br/>
       </Form>);
+      
     if (this.state.loading){
       content = (
         <div>

@@ -28,6 +28,7 @@ $router->get('invitation', ['middleware' => 'cors', 'uses' => 'AppointmentContro
   */
 $router->post('/register', ['middleware' => 'cors', 'uses' => 'AuthController@register']);
 $router->post('/login', ['middleware' => 'cors', 'uses' => 'AuthController@login']);
+$router->post('/login-employee', ['middleware' => 'cors', 'uses' => 'AuthController@loginEmployee']);
 
 /**
  * UC - 01 : PO Mengelola lowongan
@@ -119,3 +120,8 @@ $router->post('pelamar/submit-jawaban', ['middleware' => 'cors', 'uses' => 'Remo
  * Author : Syafiq Abdillah Umarghanis
  */
 $router->get('po/recruitment-report/{divisi}/{start}/{end}', ['middleware' => 'cors', 'uses' => 'LamaranController@getRecruitmentReport']);
+
+$router->get('sysadmin/all-users', ['middleware' => 'cors', 'uses' => 'UserController@getUsers']);
+$router->post('sysadmin/create-user', ['middleware' => 'cors', 'uses' => 'UserController@createUser']);
+$router->post('sysadmin/update-user', ['middleware' => 'cors', 'uses' => 'UserController@updateUser']);
+$router->post('sysadmin/delete-user', ['middleware' => 'cors', 'uses' => 'UserController@deleteUser']);

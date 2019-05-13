@@ -48,11 +48,36 @@ class Login extends Component {
   handleSubmit = (e) => {
     e.preventDefault()
 
-    if (this.state.username === "admin" && this.state.password === "admin"){
-      localStorage.setItem('role', 'admin');
-      localStorage.setItem('token', 'tokensementara');
-      window.location.href = '#/dashboard';
-    }
+    // if (this.state.username === "admin" && this.state.password === "admin"){
+    //   localStorage.setItem('role', 'admin');
+    //   localStorage.setItem('token', 'tokensementara');
+    //   window.location.href = '#/dashboard';
+    // }
+
+    const url = 'http://localhost:8000/login-employee';
+    var qs = require('qs');
+    axios.post(url, qs.stringify({'username': this.state.username, 'password': this.state.password}),{
+      headers:{
+        'Content-Type': 'application/x-www-form-urlencoded'
+      }
+    })
+    .then(function (response) {
+      console.log(response.data.data)
+      if(response.data.data.length !== 0){
+        // datanya pelamar sudah ada di DB, masuk 
+        localStorage.setItem('role', response.data.data[0].role);
+        localStorage.setItem('token', 'tokensementara');
+        if (response.data.data[0].role == "admin"){
+          window.location.href = '#/dashboard'
+        } else {
+          window.location.href = '#/users'
+        }
+        
+      } else {
+        //tidak ada, ke register
+        alert('username atau password salah')
+      }
+    })
     
     // var qs = require('qs');
     // const data = qs.stringify(this.state)
