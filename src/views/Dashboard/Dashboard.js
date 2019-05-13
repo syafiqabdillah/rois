@@ -36,11 +36,12 @@ class Dashboard extends Component {
 
     var today = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
     var sixmonthago = sixmonthago.getFullYear()+'-'+(sixmonthago.getMonth()+1)+'-'+sixmonthago.getDate();
+    localStorage.setItem('start', sixmonthago)
+    localStorage.setItem('end', today)
 
     axios.get('http://localhost:8000/po/recruitment-report/All/' + sixmonthago + '/' + today)
     .then(res => {
       const data = res.data;
-      console.log(data);
       this.setState({
         data:data,
         start:sixmonthago,
@@ -77,32 +78,30 @@ class Dashboard extends Component {
     if (localStorage.getItem('role') != 'admin') {
       return <Redirect to="/vacancies-applicant" />
     }
-
     let content;
     let form = (
       <Form onSubmit={this.handleSubmit}>
         <Row form>
         <Col md={4}>
           <FormGroup>
-            <Label for="exampleCity">Start Date</Label>
-            <Input type="date" id="start" name="start" id="start" onChange={this.handleInputChange} required/>
+            <Label for="start">Start Date</Label>
+            <Input type="date" id="start" name="start" id="start" onChange={this.handleInputChange} value={this.state.start} required/>
           </FormGroup>
         </Col>
         <Col md={4}>
           <FormGroup>
-            <Label for="exampleState">End Date</Label>
-            <Input type="date" id="end" name="end" id="end" onChange={this.handleInputChange} required/>
+            <Label for="end">End Date</Label>
+            <Input type="date" id="end" name="end" id="end" onChange={this.handleInputChange} value={this.state.end} required/>
           </FormGroup>
         </Col>
         <Col md={4}>
           <FormGroup>
             <Label for="exampleZip">Division</Label>
-            <Input type="select" id="divisi" name="divisi" id="exampleZip" onChange={this.handleInputChange} required>
-              <option disable>- Division - </option>
-              <option>All</option>
-              <option>Technology</option>
-              <option>Sales</option>
-              <option>Other</option>
+            <Input type="select" id="divisi" name="divisi" id="exampleZip" onChange={this.handleInputChange} defaultValue="All" required>
+              <option value="All">All</option>
+              <option value="Technology">Technology</option>
+              <option value="Sales">Sales</option>
+              <option value="Other">Other</option>
             </Input>
           </FormGroup>  
         </Col>
@@ -129,7 +128,7 @@ class Dashboard extends Component {
                 <i className="fa fa-align-justify"></i> Recruitment Summary | {this.state.divisi} | {this.state.start} to {this.state.end}
               </CardHeader>
               <CardBody>
-                <div align="center">
+                <div align="center" height={1000}>
                   <BarChart
                     layout="vertical"
                     width={1000}

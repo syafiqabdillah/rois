@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Button, Card, CardBody, Col, Form, FormGroup, Input, Label, Row } from 'reactstrap';
-import 'antd/dist/antd.css';
+//import 'antd/dist/antd.css';
 import { message } from 'antd';
 
 class AddUser extends Component {
@@ -72,14 +72,14 @@ class AddUser extends Component {
               </FormGroup>
               <FormGroup>
                 <Label for="name">Role*</Label>
-                <Input type="select" name="role" id="role" onChange={this.handleInputChange} required>
+                <Input type="select" name="role" id="role" value={this.state.role} onChange={this.handleInputChange} required>
                   <option>admin</option>
                   <option>system admin</option>
                 </Input>
               </FormGroup>
               <FormGroup>
                 <Label for="name">Divisi*</Label>
-                <Input type="select" name="divisi" id="divisi" onChange={this.handleInputChange} required>
+                <Input type="select" name="divisi" id="divisi" value={this.state.divisi} onChange={this.handleInputChange} required>
                   <option>Managerial</option>
                   <option>Technology</option>
                   <option>Sales</option>
