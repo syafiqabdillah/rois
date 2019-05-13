@@ -73,8 +73,9 @@ class AddUser extends Component {
               <FormGroup>
                 <Label for="name">Role*</Label>
                 <Input type="select" name="role" id="role" value={this.state.role} onChange={this.handleInputChange} required>
-                  <option>admin</option>
-                  <option>system admin</option>
+                  <option>ADMIN</option>
+                  <option>SYSTEM ADMIN</option>
+                  <option>KARYAWAN ONBOARDING</option>
                 </Input>
               </FormGroup>
               <FormGroup>

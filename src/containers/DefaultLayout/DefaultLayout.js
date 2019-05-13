@@ -49,7 +49,7 @@ class DefaultLayout extends Component {
     let home;
 
     //jika pelamar
-    if (localStorage.getItem('role') === 'pelamar') {
+    if (localStorage.getItem('role') === 'PELAMAR') {
       //header pelamar
       header = (<ApplicantHeader onLogout={e => this.signOut(e)} />);
       //sidebar pelamar
@@ -67,7 +67,7 @@ class DefaultLayout extends Component {
       );
       //redirect home pelamar
       home = (<Redirect from='/' to="/vacancies-applicant" />);
-    } else if (localStorage.getItem('role') === 'admin'){
+    } else if (localStorage.getItem('role') === 'ADMIN'){
       //header admin po
       header = <DefaultHeader onLogout={e => this.signOut(e)} />;
       //sidebar admin po

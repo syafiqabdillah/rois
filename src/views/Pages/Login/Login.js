@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Button, Card, CardBody, CardGroup, Col, Container, Form, Input, InputGroup, InputGroupAddon, InputGroupText, Row } from 'reactstrap';
 import GoogleLogin from 'react-google-login';
 import axios from 'axios';
+import 'antd/dist/antd.css';
 
 class Login extends Component {
   constructor(props){
@@ -30,7 +31,7 @@ class Login extends Component {
       }
     })
     .then(function (response) {
-      localStorage.setItem('role', 'pelamar');
+      localStorage.setItem('role', 'PELAMAR');
       if(response.data.data.length !== 0){
         // datanya pelamar sudah ada di DB, masuk 
         window.location.href = '#/vacancies-applicant'
@@ -67,7 +68,7 @@ class Login extends Component {
         // datanya pelamar sudah ada di DB, masuk 
         localStorage.setItem('role', response.data.data[0].role);
         localStorage.setItem('token', 'tokensementara');
-        if (response.data.data[0].role == "admin"){
+        if (response.data.data[0].role == "ADMIN"){
           window.location.href = '#/dashboard'
         } else {
           window.location.href = '#/users'

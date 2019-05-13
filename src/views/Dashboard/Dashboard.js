@@ -6,7 +6,7 @@ import {
 import { Card, CardBody, CardHeader, Col, Row, Spinner, Form,FormGroup, Label, Input, Button } from 'reactstrap';
 import axios from 'axios';
 import {Doughnut} from 'react-chartjs-2';
-
+import 'antd/dist/antd.css';
 
 class Dashboard extends Component {
   constructor(props) {
@@ -75,7 +75,7 @@ class Dashboard extends Component {
   }
  
   render() {
-    if (localStorage.getItem('role') != 'admin') {
+    if (localStorage.getItem('role') != 'ADMIN') {
       return <Redirect to="/vacancies-applicant" />
     }
     let content;
@@ -85,7 +85,7 @@ class Dashboard extends Component {
         <Col md={4}>
           <FormGroup>
             <Label for="start">Start Date</Label>
-            <Input type="date" id="start" name="start" id="start" onChange={this.handleInputChange} value={this.state.start} required/>
+            <Input type="date" id="start" name="start" id="start" onChange={this.handleInputChange} required/>
           </FormGroup>
         </Col>
         <Col md={4}>
@@ -179,7 +179,7 @@ class Dashboard extends Component {
     return (
       <div className="animated fadeIn">
         <div align="center">
-          <h3>Dashboard</h3>
+          <h3>Recruitment Summary</h3>
         </div>
         <br />
         <Row>
