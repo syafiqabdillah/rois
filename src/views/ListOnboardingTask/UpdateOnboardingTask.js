@@ -22,6 +22,8 @@ const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
       } = this.props;
       const { getFieldDecorator } = form;
      
+      console.log(this.props.task.nama);
+      console.log(this.props.task.id);
       return (
         <Modal
           visible={visible}
@@ -50,7 +52,7 @@ const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
             label="Task Description"
           >
             {getFieldDecorator('description', {
-              initialValue: this.props.task.deskripsi,
+              initialValue: this.props.task.description,
               rules: [{
                 pattern: new RegExp("^[A-Za-z]"),
                 required: true, message: 'Please input the task description',
@@ -93,7 +95,7 @@ class UpdateOnboardingTask extends Component {
           console.log('Received values of form: ', values);
           var qs = require('qs');
           axios.post('http://localhost:8000/supervisor/update-tugas-onboarding/', qs.stringify({
-          'id':this.props.task.id,
+          'id':this.props.task.key,
           'deskripsi': values['description'],
           'nama' :values['name']
           }),
@@ -113,7 +115,7 @@ class UpdateOnboardingTask extends Component {
           visible:false,
         });
         window.location.reload();
-      }, 3000);
+      }, 2000);
         
      
         }else{
