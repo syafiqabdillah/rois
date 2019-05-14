@@ -145,7 +145,7 @@ class RemoteTest extends Component {
       content = <div align="center"><p>Loading . . .</p></div>;
     } else {
 
-      if (this.state.lamaran.tahapan === 'Remote Test' && this.state.lamaran.status === 'Assigned' && localStorage.getItem('role') === 'admin') {
+      if (this.state.lamaran.tahapan === 'Remote Test' && this.state.lamaran.status === 'Assigned' && localStorage.getItem('role') === 'ADMIN') {
 
         content = (
           <div>
@@ -163,7 +163,7 @@ class RemoteTest extends Component {
           </div>
         );
 
-      } else if (this.state.lamaran.tahapan === 'Remote Test' && this.state.lamaran.status === 'Answered' && localStorage.getItem('role') === 'admin') {
+      } else if (this.state.lamaran.tahapan === 'Remote Test' && this.state.lamaran.status === 'Answered' && localStorage.getItem('role') === 'ADMIN') {
 
         content = (
           <div>

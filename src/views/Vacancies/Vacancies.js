@@ -13,7 +13,7 @@ const data = {
       label: "Vacancy's Name",
       field: 'nama',
       sort: 'asc',
-      width: 200
+      width: 100
     },
     {
       label: "Division",
@@ -21,18 +21,18 @@ const data = {
       sort: 'asc',
       width: 100
     },
-    {
-      label: "Start Date",
-      field: 'start_date',
-      sort: 'asc',
-      width: 150
-    },
-    {
-      label: "End Date",
-      field: 'end_date',
-      sort: 'asc',
-      width: 150
-    },
+    // {
+    //   label: "Start Date",
+    //   field: 'start_date',
+    //   sort: 'asc',
+    //   width: 150
+    // },
+    // {
+    //   label: "End Date",
+    //   field: 'end_date',
+    //   sort: 'asc',
+    //   width: 150
+    // },
     {
       label: "Location",
       field: 'lokasi',
@@ -51,9 +51,9 @@ const data = {
     },
    
     {
-      label: "Needed",
+      label: "Quota",
       field: 'needed',
-      width: 150
+      width: 100
     },
     {
       label: "Action",
@@ -110,14 +110,14 @@ export class Vacancies extends Component {
           {
             nama:lowongan.nama,
             divisi: lowongan.divisi,
-            start_date: lowongan.start_date,
-            end_date: lowongan.end_date,
+            // start_date: lowongan.start_date,
+            // end_date: lowongan.end_date,
             lokasi: lowongan.lokasi,
             tipe: lowongan.tipe,
-            needed: lowongan.posisi_tersedia,
             status : 
             //ini belom selese nampilin bagdge nya
             <Badge pill color={color_badge}>{lowongan.status}</Badge>,
+            needed: lowongan.posisi_tersedia,
             action:
               <Row>
                 

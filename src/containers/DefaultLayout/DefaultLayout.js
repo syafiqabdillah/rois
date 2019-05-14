@@ -107,7 +107,8 @@ class DefaultLayout extends Component {
         </AppSidebar>
       )
       //redirect admin po
-      home = (<Redirect from="/" to="/dashboard" />);
+      var qwe = "/taskskaryawan/" + id_karyawan
+      home = (<Redirect from="/" to={qwe} />);
     } else if (localStorage.getItem('role') === 'SUPERVISOR'){
       //header admin po
       header = <SupervisorHeader onLogout={e => this.signOut(e)} />;

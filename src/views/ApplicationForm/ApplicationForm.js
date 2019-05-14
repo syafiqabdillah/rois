@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Modal, ModalHeader, ModalBody, Container, Button, Card, CardBody, FormText, Row, Col, Form, FormGroup, Input, Label } from 'reactstrap';
 import axios from 'axios';
+import { message } from 'antd';
 
 class ApplicationForm extends Component {
   constructor(props) {
@@ -94,10 +95,11 @@ class ApplicationForm extends Component {
     axios.post(url, formData, config)
       .then(function (response) {
         console.log(response.data)
-
-        window.location.href = '#/myapplications'
-        window.location.reload()
-        window.alert("Your Application Has Been Successfully Submitted !")
+        message.info('Message', 5.5)
+        message.loading('Saving...', 5)
+        .then(() => message.success('Application has successfully submitted', 2.5))
+        .then(() => window.location.href = '#/myapplications')
+        .then(() => window.location.reload())
       })
   }
 

@@ -65,6 +65,7 @@ class Login extends Component {
     .then(function (response) {
       console.log(response.data.data)
       if(response.data.data.length !== 0){
+        var id_karyawan = response.data.data[0].id
         localStorage.setItem('id_karyawan', response.data.data[0].id)
         // datanya pelamar sudah ada di DB, masuk 
         localStorage.setItem('role', response.data.data[0].role);
@@ -73,6 +74,8 @@ class Login extends Component {
           window.location.href = '#/dashboard'
         } else if (response.data.data[0].role == "SUPERVISOR") {
           window.location.href = '#/employee'
+        }else if (response.data.data[0].role == "KARYAWAN ONBOARDING") {
+          window.location.href = '#/taskskaryawan/' + id_karyawan
         } else {
           window.location.href = '#/users'
         }
