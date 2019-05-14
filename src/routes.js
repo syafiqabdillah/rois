@@ -41,6 +41,8 @@ const UpdateAssessment = React.lazy(() => import('./views/UpdateAssessment'));
 const AddUser = React.lazy(() => import('./views/AddUser'));
 const UpdateUser = React.lazy(() => import('./views/UpdateUser'));
 
+const TasksKaryawan = React.lazy(() => import('./views/TasksKaryawan'));
+
 const Tabs = React.lazy(() => import('./views/Base/Tabs'));
 const Tooltips = React.lazy(() => import('./views/Base/Tooltips'));
 const BrandButtons = React.lazy(() => import('./views/Buttons/BrandButtons'));
@@ -61,6 +63,8 @@ const Typography = React.lazy(() => import('./views/Theme/Typography'));
 const Widgets = React.lazy(() => import('./views/Widgets/Widgets'));
 const Users = React.lazy(() => import('./views/Users/Users'));
 const User = React.lazy(() => import('./views/Users/User'));
+
+
 
 // https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config
 const routes = [
@@ -100,6 +104,8 @@ const routes = [
   { path: '/updateAssessment/:id', name: 'Update Assessment', component: UpdateAssessment },
   { path: '/addUser', name: 'Add User', component: AddUser },
   { path: '/updateUser/:id', name: 'Update User', component: UpdateUser },
+
+  { path: '/taskskaryawan/:username', name: 'Tasks Karyawan', component: TasksKaryawan },
 
   { path: '/base/tabs', name: 'Tabs', component: Tabs },
   { path: '/base/breadcrumbs', name: 'Breadcrumbs', component: Breadcrumbs },

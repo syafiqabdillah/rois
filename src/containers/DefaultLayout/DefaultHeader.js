@@ -55,6 +55,10 @@ class DefaultHeader extends Component {
             <Link to="/appointmens" className="nav-link">Appointments</Link>
           </NavItem>
 
+          <NavItem className="px-3">
+            <Link to="/appointmens" className="nav-link">Appointments</Link>
+          </NavItem>
+
         </Nav>
         <Nav className="ml-auto" navbar>
 

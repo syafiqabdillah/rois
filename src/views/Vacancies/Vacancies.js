@@ -45,6 +45,11 @@ const data = {
       width: 150
     },
     {
+      label: "Needed",
+      field: 'needed',
+      width: 150
+    },
+    {
       label: "Action",
       field: 'action',
       width: 50
@@ -88,14 +93,13 @@ export class Vacancies extends Component {
       let list_vacancy = this.state.lowongan.map((lowongan, index) => {
         return (
           {
-            nama:
-              <Link to={"/vacancy/" + lowongan.id} >{lowongan.nama}</Link>,
-
+            nama:lowongan.nama,
             divisi: lowongan.divisi,
             start_date: lowongan.start_date,
             end_date: lowongan.end_date,
             lokasi: lowongan.lokasi,
             tipe: lowongan.tipe,
+            needed: lowongan.posisi_tersedia,
             action:
               <Row>
                 <Col>

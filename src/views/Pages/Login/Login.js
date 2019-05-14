@@ -126,7 +126,7 @@ class Login extends Component {
                             <i className="icon-user"></i>
                           </InputGroupText>
                         </InputGroupAddon>
-                        <Input type="text" placeholder="Name" autoComplete="name" name="username" onChange={this.handleInputChange} required/>
+                        <Input type="text" placeholder="Username" autoComplete="name" name="username" onChange={this.handleInputChange} required/>
                       </InputGroup>
 
                       <InputGroup className="mb-3">
