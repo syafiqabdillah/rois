@@ -57,11 +57,6 @@ class ModalDelete extends React.Component {
       </Button>
            
         );
-     
-
-    
-
-
     return (
       <div>
         {deleteVacancy}

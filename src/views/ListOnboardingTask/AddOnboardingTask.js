@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import {
   Button, Card, CardBody,
-  FormGroup, Input, Label, Col, Row
+  FormGroup, Label, Col, Row
 } from 'reactstrap';
 import 'antd/dist/antd.css';
 import moment from 'moment';
 
-import { Form, Modal, message} from 'antd';
+import { Form, Modal, message, Input} from 'antd';
+const { TextArea } = Input;
 
 
 
@@ -33,6 +34,18 @@ const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
           <Form layout="vertical">
          
           <Form.Item
+            label="Task Name"
+          >
+            {getFieldDecorator('name', {
+              rules: [{
+                pattern: new RegExp("^[A-Za-z]"),
+                required: true, message: 'Please input the task name',
+              }],
+            })(
+                <Input placeholder="Start typing here.." autosize />
+            )}
+          </Form.Item>
+          <Form.Item
             label="Task Description"
           >
             {getFieldDecorator('description', {
@@ -41,7 +54,7 @@ const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
                 required: true, message: 'Please input the task description',
               }],
             })(
-                <Input placeholder="Start typing here.." autosize />
+                <TextArea placeholder="Start typing here.." autosize />
             )}
           </Form.Item>
           </Form>
@@ -82,6 +95,7 @@ class AddOnboardingTask extends Component {
             'id_supervisor': '2',
             'status':'assigned',
             'assigned_date' : today.format('YYYY-MM-DD'),
+            'nama':values['name']
           }),
             {
               headers: { 'Content-Type': 'application/x-www-form-urlencoded' }

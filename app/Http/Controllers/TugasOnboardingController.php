@@ -40,13 +40,15 @@ class TugasOnboardingController extends Controller
         $id_karyawan = $request->id_karyawan;
         $status = $request->status;
         $assigned_date =  $request->assigned_date;
+        $nama = $request->nama;
        
         $id = DB::table('tugas_onboarding')->insertGetId(
             ['id_supervisor' => $id_supervisor, 
             'id_karyawan' => $id_karyawan, 
             'deskripsi'=> $deskripsi, 
             'status' => $status,
-            'assigned_date' => $assigned_date
+            'assigned_date' => $assigned_date,
+            'nama' => $nama
             
             ]);
         return $id;
@@ -60,11 +62,13 @@ class TugasOnboardingController extends Controller
     public function updateTugasOnboarding(Request $request){
         $id_tugas = $request->id;
         $deskripsi = $request->deskripsi;
-       
+        $nama = $request->nama;
 
         $result = DB::table('tugas_onboarding')
             ->where('id', $id_tugas)
-            ->update(['deskripsi' => $deskripsi
+            ->update(['deskripsi' => $deskripsi,
+            'nama' => $nama
+            
             ]);
         return $result;
     }
