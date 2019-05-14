@@ -132,7 +132,7 @@ $router->post('sysadmin/delete-user', ['middleware' => 'cors', 'uses' => 'UserCo
  * UC - 12 : Laporan Kinerja Karyawan
  * Author : Fairuz Y
  */
- $router->get('po/get-all-task/{id}', ['middleware' => 'cors', 'uses' => 'AppointmentController@taskItem']);
+ $router->get('po/get-all-task-complete/{id}', ['middleware' => 'cors', 'uses' => 'AppointmentController@taskComplete']);
  $router->get('po/get-all-task-status/{id}', ['middleware' => 'cors', 'uses' => 'AppointmentController@getAllTaskStatus']);
  $router->get('po/get-onboarding-progress/{id}', ['middleware' => 'cors', 'uses' => 'AppointmentController@getNumberTaskByStatus']);
  $router->get('po/get-employee-profile/{id}', ['middleware' => 'cors', 'uses' => 'AppointmentController@getEmployeeProfile']);
