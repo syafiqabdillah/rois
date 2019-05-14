@@ -1,7 +1,7 @@
 import React from 'react';
 import 'antd/dist/antd.css';
-import { Card, Col, Row, Avatar, Progress, List, Tooltip, Select } from 'antd';
-import {Bar, Doughnut} from 'react-chartjs-2';
+import { Card, Col, Row, Avatar, Progress, List, Tooltip, Select, Empty } from 'antd';
+import {Bar, Doughnut, HorizontalBar} from 'react-chartjs-2';
 import axios from 'axios';
 import ListOfTask from './ListOfTask';
 import './CardStyle.css';
@@ -21,20 +21,11 @@ export default class EmployeePerformanceReport extends React.Component{
         scales: {
           xAxes: [
             {
-              display : true,
-              gridLines: {
-                display: false,
-              },
-            },
-          ],
-          yAxes: [
-            {
               type : 'linear',
-              gridLines: {
-                display: false,
-              },
+              display : true,
               ticks: {
-                beginAtZero: true
+                beginAtZero: true,
+                stepSize: 1
               },
               labels: {
                 show: true
@@ -48,6 +39,7 @@ export default class EmployeePerformanceReport extends React.Component{
       onBoardingInPercent : {},
       profile: {},
       avgTime: 0,
+      dataExist: null
     }
   }
 
@@ -60,34 +52,40 @@ export default class EmployeePerformanceReport extends React.Component{
   getAllTask = () => {
     const label = []
     const time = []
-    axios.get('http://localhost:8000' + '/po/get-all-task/' + this.props.employeeid)
+    axios.get('http://localhost:8000' + '/po/get-all-task-complete/' + this.props.employeeid)
       .then((response) => {
         const task = response.data;
-        task.map((value) => {
-          label.push(value['task_name'])
-          time.push(value['days'])
-        })
-
-        this.setState({
-            data: Object.assign({
-              labels: label
-            },
-            {
-              datasets: [
+        if(task.length == 0) {
+          this.setState({
+            dataExist: false
+          })
+        } else if(task.length > 0){
+          task.map((value) => {
+            label.push(value['nama'])
+            time.push(value['days'])
+          })
+          this.setState({
+              data: Object.assign({
+                labels: label
+              },
               {
-                label: 'Time Spent (days)',
-                backgroundColor: 'rgba(0, 137, 179,0.2)',
-                borderColor: 'rgba(0, 137, 179,1)',
-                borderWidth: 1,
-                hoverBackgroundColor: 'rgba(0, 137, 179,0.4)',
-                hoverBorderColor: 'rgba(0, 137, 179,1)',
-                data: time,
-              }
-            ]}
-          ),
-          dataMapper: task,
-        });
-        this.getAverageTimeCompleteTask();
+                datasets: [
+                {
+                  label: 'Time Spent (days)',
+                  backgroundColor: 'rgba(0, 137, 179,0.2)',
+                  borderColor: 'rgba(0, 137, 179,1)',
+                  borderWidth: 1,
+                  hoverBackgroundColor: 'rgba(0, 137, 179,0.4)',
+                  hoverBorderColor: 'rgba(0, 137, 179,1)',
+                  data: time,
+                }
+              ]}
+            ),
+            dataMapper: task,
+            dataExist: true
+          });
+          this.getAverageTimeCompleteTask();
+        }
       });
   }
 
@@ -147,7 +145,7 @@ export default class EmployeePerformanceReport extends React.Component{
     let arr = this.state.data.datasets[0].data;
     const arrAvg = arr.reduce((a,b) => a + b, 0) / arr.length;
     this.setState({
-      avgTime: arrAvg
+      avgTime: Math.round(arrAvg)
     })
 
   }
@@ -173,7 +171,7 @@ export default class EmployeePerformanceReport extends React.Component{
     }
 
     sortData.map((value) => {
-      newLabel.push(value['task_name'])
+      newLabel.push(value['nama'])
       newNumber.push(value['days'])
     })
 
@@ -184,6 +182,30 @@ export default class EmployeePerformanceReport extends React.Component{
             datasets: datasetsCopy
         })
     });
+  }
+
+  selectShowData=()=>{
+    let graph;
+    if(this.state.dataExist){
+      graph = ( <HorizontalBar
+        data={this.state.data}
+        height={400}
+        options={this.state.options}
+      />)
+    } else{
+      graph = <Empty />
+    }
+    return graph
+  }
+
+  selectShowAverage=()=>{
+    let average;
+    if(this.state.dataExist){
+      average = (<p style={{ fontSize : 33 }} align='center'>{this.state.avgTime} days / task</p> )
+    } else{
+      average = (<Empty imageStyle={{ height: 52,}}/>)
+    }
+    return average
   }
 
 
@@ -203,8 +225,7 @@ export default class EmployeePerformanceReport extends React.Component{
                   </Col>
                   <Col span={13}>
                     <Row justify='center'><h2><strong>{this.state.profile.name}</strong></h2></Row>
-                    <Row><h4 style={{ color: '#59A3FC' }}><strong>{this.state.profile.position}</strong></h4></Row>
-                    <Row><h5>{this.state.profile.division}</h5></Row>
+                    <Row><h4 style={{ color: '#59A3FC' }}><strong>{this.state.profile.divisi} Division</strong></h4></Row>
                   </Col>
                 </Row>
 
@@ -216,7 +237,7 @@ export default class EmployeePerformanceReport extends React.Component{
                   <h6 align='center'><strong>Average Time to Complete Task</strong></h6>
                 </Row>
                 <Row>
-                  <p style={{ fontSize : 33 }} align='center'>{this.state.avgTime} days / task</p>
+                  {this.selectShowAverage()}
                 </Row>
               </Card>
             </Col>
@@ -245,12 +266,7 @@ export default class EmployeePerformanceReport extends React.Component{
                 </Select>
               </Row>
               <Row>
-                <Bar
-                  data={this.state.data}
-                  width={100}
-                  height={250}
-                  options={this.state.options}
-                />
+                {this.selectShowData()}
               </Row>
             </Card>
           </Row>

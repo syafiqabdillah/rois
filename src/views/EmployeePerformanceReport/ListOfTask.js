@@ -42,17 +42,17 @@ export default class ListOfTask extends React.Component {
     if(this.props.status == 'complete'){
       listitem = <List.Item.Meta
         avatar={<Badge status="success" />}
-        title={<p>{item.task_name}</p>}
+        title={<p>{item.nama}</p>}
       />
     } else if (this.props.status == 'onprogress'){
       listitem = <List.Item.Meta
         avatar={<Badge status="warning" />}
-        title={<p>{item.task_name}</p>}
+        title={<p>{item.nama}</p>}
       />
     } else if (this.props.status == 'assigned') {
       listitem = <List.Item.Meta
         avatar={<Badge status="error" />}
-        title={<p>{item.task_name}</p>}
+        title={<p>{item.nama}</p>}
       />
     }
     return listitem;

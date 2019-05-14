@@ -16,8 +16,8 @@ const data = {
       width: 150
     },
     {
-      label: 'Position',
-      field: 'position',
+      label: 'Division',
+      field: 'division',
       width: 150
     },
     {
@@ -78,7 +78,7 @@ export default class EmployeesTable extends Component {
         return (
           {
           name : employee.profile.name,
-          position : employee.profile.position,
+          division : employee.profile.divisi,
           progress : <Progress percent={progress} strokeWidth={15}/>,
           complete : employee.progress.complete + ' / ' + employee.progress.total,
           action: <Button.Group>
@@ -89,6 +89,8 @@ export default class EmployeesTable extends Component {
         );
       });
 
+      data.rows = [];
+      
       for (var i = 0; i < list_appointment.length; i++) {
         data.rows.push(list_appointment[i]);
       }
