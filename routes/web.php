@@ -142,8 +142,8 @@ $router->post('sysadmin/delete-user', ['middleware' => 'cors', 'uses' => 'UserCo
  * UC - 11 : Memberikan Konfirmasi Penyelesaian Tugas
  * Author : M Raffi A
  */
-$router->get('ko/tasks-karyawan/{username}', ['middleware' => 'cors', 'uses' => 'KaryawanOnboardingController@getTasksKaryawan']);
-$router->get('ko/karyawan-onboarding/{username}', ['middleware' => 'cors', 'uses' => 'KaryawanOnboardingController@getKaryawanOnboarding']);
+$router->get('ko/tasks-karyawan/{id}', ['middleware' => 'cors', 'uses' => 'KaryawanOnboardingController@getTasksKaryawan']);
+$router->get('ko/karyawan-onboarding/{id}', ['middleware' => 'cors', 'uses' => 'KaryawanOnboardingController@getKaryawanOnboarding']);
 $router->post('ko/update-task-karyawan', ['middleware' => 'cors', 'uses' => 'TaskController@updateStatusTask']);
 
 

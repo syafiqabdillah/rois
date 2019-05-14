@@ -17,8 +17,8 @@ class KaryawanOnboardingController extends Controller
 
     }
 
-    public function getKaryawanOnboarding($username){
-        $karyawan_onboarding = DB::table('karyawan')->select()->where('username', $username)->get();
+    public function getKaryawanOnboarding($id){
+        $karyawan_onboarding = DB::table('karyawan')->select()->where('id', $id)->get();
         $karyawan_onboarding = json_decode($karyawan_onboarding);
         $karyawan_onboarding = $karyawan_onboarding[0];
         return json_encode($karyawan_onboarding);
@@ -29,8 +29,8 @@ class KaryawanOnboardingController extends Controller
      * @param long  $id id dari karyawan yang tasks listnya ingin diambil
      * @return array $tasks list
      */
-    public function getTasksKaryawan($username){
-        $tasks_karyawan = DB::table('tugas_onboarding')->select()->where('username_karyawan_onboarding', $username)->get();
+    public function getTasksKaryawan($id){
+        $tasks_karyawan = DB::table('tugas_onboarding')->select()->where('id_karyawan', $id)->get();
         $tasks_karyawan = json_decode($tasks_karyawan);
         return $tasks_karyawan;
     }
