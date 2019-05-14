@@ -149,10 +149,11 @@ import "antd/dist/antd.css";
 
 import { Table,Card,Popconfirm, Empty, Progress,  Skeleton, Switch, Icon, Avatar } from "antd";
 import { Component } from 'react';
-import {Button, Row, Col} from 'reactstrap';
+import {ButtonGroup, Button, Row, Col} from 'reactstrap';
 import ModalDelete from './ModalDelete';
 import UpdateOnboardingTask from './UpdateOnboardingTask';
 import AddOnboardingTask from './AddOnboardingTask';
+import ModalChangeStatus from './ModalChangeStatus';
 
 const API = 'http://localhost:8000';
 const { Meta } = Card;
@@ -189,7 +190,11 @@ const columns = [
             </Row>
  
     
-    )}
+    )},  
+    {
+      title: "Flag",
+      dataIndex: "flag"
+    },
 ];
 
 const data = [];
@@ -220,7 +225,7 @@ export class ListOnboardingTask extends Component {
     axios.get(API + '/ko/karyawan-onboarding/' + this.props.match.params.id)
     .then(res => {
       const karyawanOnboarding = res.data;
-      console.log(karyawanOnboarding);
+      //console.log(karyawanOnboarding);
       this.setState({
         karyawan_onboarding: karyawanOnboarding,
       })
@@ -241,7 +246,7 @@ export class ListOnboardingTask extends Component {
                 status:task.status,
                 assigned_date : task.assigned_date,
                 description: task.deskripsi,
-               
+                flag: task.flag
               })
               if(task.status=='Finished'){
                 finished = finished +1;
@@ -270,7 +275,7 @@ export class ListOnboardingTask extends Component {
     }, 1000);
   };
 
-  onSelectChange = selectedRowKeys => {
+  onSelectChange = (selectedRowKeys) => {
     console.log("selectedRowKeys changed: ", selectedRowKeys);
     this.setState({ selectedRowKeys });
   };
@@ -279,7 +284,10 @@ export class ListOnboardingTask extends Component {
     const { loading, selectedRowKeys } = this.state;
     const rowSelection = {
       selectedRowKeys,
-      onChange: this.onSelectChange
+      onChange: this.onSelectChange,
+      getCheckboxProps: record => ({
+        disabled: record.flag === 0, // Column configuration not to be checked
+      }),
     };
     const hasSelected = selectedRowKeys.length > 0;
 
@@ -317,6 +325,10 @@ export class ListOnboardingTask extends Component {
               </Row>
               <div>
         <div style={{ marginBottom: 16 }}>
+          <ButtonGroup>
+            <ModalChangeStatus selectedTasks={this.state.selectedRowKeys} items={this.state.selectedRowKeys.length} hasSelected={hasSelected}/>
+          </ButtonGroup>
+          <br></br> <br></br>
           <Button
             type="primary"
             onClick={this.start}
@@ -329,6 +341,9 @@ export class ListOnboardingTask extends Component {
           <span style={{ marginLeft: 8 }}>
             {hasSelected ? `Selected ${selectedRowKeys.length} items` : ""}
           </span>
+
+
+
         </div>
         <Table
           rowSelection={rowSelection}
