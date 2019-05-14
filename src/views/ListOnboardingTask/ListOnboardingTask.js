@@ -191,10 +191,6 @@ const columns = [
  
     
     )},  
-    {
-      title: "Flag",
-      dataIndex: "flag"
-    },
 ];
 
 const data = [];
