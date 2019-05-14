@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { Button, Card, CardBody, CardHeader, Col, Row, Table } from 'reactstrap';
+import { Button, Badge, Card, CardBody, CardHeader, Col, Row, Table } from 'reactstrap';
 import ModalDelete from './ModalDelete';
 import { MDBDataTable } from 'mdbreact';
 
@@ -19,31 +19,37 @@ const data = {
       label: "Division",
       field: 'divisi',
       sort: 'asc',
-      width: 150
+      width: 100
     },
     {
       label: "Start Date",
       field: 'start_date',
       sort: 'asc',
-      width: 200
+      width: 150
     },
     {
       label: "End Date",
       field: 'end_date',
       sort: 'asc',
-      width: 200
+      width: 150
     },
     {
       label: "Location",
       field: 'lokasi',
       sort: 'asc',
-      width: 150
+      width: 100
     },
     {
       label: "Type",
       field: 'tipe',
-      width: 150
+      width: 100
     },
+    {
+      label:"Status",
+      field:'status',
+      width: 100
+    },
+   
     {
       label: "Needed",
       field: 'needed',
@@ -52,7 +58,7 @@ const data = {
     {
       label: "Action",
       field: 'action',
-      width: 50
+      width: 100
     }
 
   ],
@@ -86,11 +92,20 @@ export class Vacancies extends Component {
 
   render() {
     let content;
+    let color_badge;
+    
 
     if (this.state.loading) {
       content = <div align="center"><p>Loading . . .</p></div>;
     } else {
       let list_vacancy = this.state.lowongan.map((lowongan, index) => {
+        if(lowongan.status=="Not Active"){
+          color_badge="warning"
+         
+        }
+        else{
+          color_badge="success"
+        }
         return (
           {
             nama:lowongan.nama,
@@ -100,21 +115,24 @@ export class Vacancies extends Component {
             lokasi: lowongan.lokasi,
             tipe: lowongan.tipe,
             needed: lowongan.posisi_tersedia,
+            status : 
+            //ini belom selese nampilin bagdge nya
+            <Badge pill color={color_badge}>{lowongan.status}</Badge>,
             action:
               <Row>
-                <Col>
+                
                   <Link to={"/vacancy/" + lowongan.id} className=" btn btn-primary btn-pill">
                     <i className="cui-magnifying-glass icons " title="See Details"></i>
                   </Link>
-                </Col>
-                <Col>
+                  &nbsp;&nbsp;&nbsp;
+                
                   <Link to={"/vacancy/update/" + lowongan.id} className=" btn btn-primary btn-pill">
                     <i className="cui-pencil icons " title="Update Vacancy"></i>
                   </Link>
-                </Col>
-                <Col>
+                
+                  &nbsp;&nbsp;&nbsp;
                   <ModalDelete isDirujuk={lowongan.isDirujuk} name={lowongan.nama} id={lowongan.id} />
-                </Col>
+               
               </Row>
           }
         );

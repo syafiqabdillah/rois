@@ -18,11 +18,7 @@ export default class ResponsibilityForm extends React.Component {
     super(props);
     this.state ={
       id_lowongan:"",
-      list_responsibility:[],
-      key_initial:[],
-      name_initial:[],
-      merged_initial:[],
-      id:""
+      list_responsibility:[]
 
     }
   }
@@ -115,7 +111,10 @@ export default class ResponsibilityForm extends React.Component {
            .catch(error => {
              console.log(error.response)
            });
-         window.location.href = '#/vacancy/'+ this.props.id_low;
+
+           
+           window.location.href = '#/vacancy/'+ this.props.id_low;
+           window.location.reload();
 
     }
 });
@@ -123,6 +122,9 @@ export default class ResponsibilityForm extends React.Component {
 
 
 componentDidMount(){
+  console.log(name_initial);
+  console.log("coba");
+  console.log(key_initial);
   
   console.log("ini id lowongan");
   console.log(this.props.id_low);
@@ -130,11 +132,18 @@ componentDidMount(){
   .then(res=>{
     const responsibility= res.data;
 
-    console.log(responsibility);
+    
+     name_initial=[]
+   
+      console.log("masuk")
+      console.log(responsibility);
     for(var i=0;i<responsibility.length;i++){
       name_initial.push(responsibility[i].deskripsi)
       key_initial.push(i);
-    }    
+      
+
+    }
+    
   
     id= key_initial.length+1;
   
@@ -148,12 +157,6 @@ componentDidMount(){
    console.log("end");
   
     
-  })
-  this.setState({
-    key_initial:key_initial,
-    name_initial:name_initial,
-    merged_initial : merged_initial,
-    id:id
   })
 };
 
@@ -253,7 +256,6 @@ componentDidMount(){
 
 
     return (
-    
       <Form  onSubmit={this.handleSubmit}>
       {formItemsInitial}
         {formItems}

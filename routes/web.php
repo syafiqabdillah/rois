@@ -35,7 +35,7 @@ $router->post('/login-employee', ['middleware' => 'cors', 'uses' => 'AuthControl
  * UC - 01 : PO Mengelola lowongan
  * Author : Shafira F
  */
- $router->get('po/all-lowongan', ['middleware' => 'cors', 'uses' => 'LowonganController@getAllLowongan']); //checked
+$router->get('po/all-lowongan', ['middleware' => 'cors', 'uses' => 'LowonganController@getAllLowongan']); //checked
 
 $router->get('po/lowongan/{id}', ['middleware' => 'cors', 'uses' => 'LowonganController@getLowongan']); //checked
 $router->post('po/create-lowongan', ['middleware' => 'cors', 'uses' => 'LowonganController@createLowongan']); //checked
@@ -76,6 +76,7 @@ $router->get('pelamar/send-mail-lamaran', ['middleware' => 'cors', 'uses' => 'La
  * Author : M Raffi A
  */
 $router->get('po/all-lamaran', ['middleware' => 'cors', 'uses' => 'LamaranController@getAllLamaran']);
+$router->get('po/all-active-lamaran', ['middleware' => 'cors', 'uses' => 'LamaranController@getAllActiveLamaran']);//ngambil lowongan yang active aja, silahkan pake ini untuk semua yang diakses pelamar
 $router->get('po/lamaran/{id}', ['middleware' => 'cors', 'uses' => 'LamaranController@getLamaran']);
 $router->post('po/update-tahapan-lamaran', ['middleware' => 'cors', 'uses' => 'LamaranController@updateTahapanLamaran']);
 
@@ -144,3 +145,15 @@ $router->post('sysadmin/delete-user', ['middleware' => 'cors', 'uses' => 'UserCo
 $router->get('ko/tasks-karyawan/{username}', ['middleware' => 'cors', 'uses' => 'KaryawanOnboardingController@getTasksKaryawan']);
 $router->get('ko/karyawan-onboarding/{username}', ['middleware' => 'cors', 'uses' => 'KaryawanOnboardingController@getKaryawanOnboarding']);
 $router->post('ko/update-task-karyawan', ['middleware' => 'cors', 'uses' => 'TaskController@updateStatusTask']);
+
+
+/**
+ * UC - 09 : Supervisor Mengelola Tugas Onboarding
+ * Author : Shafira F
+ */
+$router->get('supervisor/getTugasOnboarding/{id_karyawan}', ['middleware' => 'cors', 'uses' => 'TugasOnboardingController@getAllTugasOnboarding']); 
+$router->post('supervisor/create-tugas-onboarding', ['middleware' => 'cors', 'uses' => 'TugasOnboardingController@createTugasOnboarding']); 
+$router->post('supervisor/update-tugas-onboarding', ['middleware' => 'cors', 'uses' => 'TugasOnboardingController@updateTugasOnboarding']); 
+$router->post('supervisor/delete-tugas-onboarding', ['middleware' => 'cors', 'uses' => 'TugasOnboardingController@deleteTugasOnboarding']);
+
+
