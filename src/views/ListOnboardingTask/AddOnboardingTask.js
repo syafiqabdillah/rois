@@ -29,7 +29,7 @@ const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
           okText="Create"
           onCancel={onCancel}
           onOk={onCreate}
-          confirmLoading={confirmLoading}
+          confirmLoading= {confirmLoading}
         >
           <Form layout="vertical">
          
@@ -71,22 +71,27 @@ class AddOnboardingTask extends Component {
 
   state = {
     visible: false,
+    confirmLoading : false,
    
   };
 
   showModal = () => {
-    this.setState({ visible: true });
+    this.setState({ visible: true,
+    confirmLoading:false});
   }
 
   handleCancel = () => {
-    this.setState({ visible: false });
+    this.setState({ visible: false ,
+    confirmLoading:false});
   }
 
   handleCreate = () => {
+   
     const form = this.formRef.props.form;
     
       form.validateFields((err, values) => {
         if (!err) {
+          this.setState({confirmLoading: true});
           console.log('Received values of form: ', values);
           var qs = require('qs');
           axios.post('http://localhost:8000/supervisor/create-tugas-onboarding', qs.stringify({
@@ -110,14 +115,23 @@ class AddOnboardingTask extends Component {
            
             
       form.resetFields();
-      this.setState({ visible: false });
-      window.location.reload();
+      setTimeout(() => {
+        this.setState({
+          confirmLoading: false,
+          visible:false,
+        });
+        window.location.reload();
+      }, 3000);
+     
+     
+      
         }else{
           return;
         }
        
 
       });
+     
   }
 
   saveFormRef = (formRef) => {
@@ -134,6 +148,7 @@ class AddOnboardingTask extends Component {
           visible={this.state.visible}
           onCancel={this.handleCancel}
           onCreate={this.handleCreate}
+          confirmLoading={this.state.confirmLoading}
         />
          {/* <ListOnboardingTask/> */}
         

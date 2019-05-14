@@ -19,7 +19,7 @@ const data = {
       label: "Task's Name",
       field: 'deskripsi',
       sort: 'asc',
-      width: 400
+      width: 300
     },
     {
       label: "Status",
@@ -33,7 +33,6 @@ const data = {
       sort: 'asc',
       width: 300
     },
-    
      {
        label: "Action",
        field: 'action',
@@ -75,7 +74,7 @@ export class ListOnboardingTask extends Component {
       content = <div align="center"><p>Loading . . .</p></div>;
     } else {
       let list_task = this.state.task_list.map((task, index) => {
-        tugas = task.deskripsi
+        tugas = task
         id_tugas = task.id
 
         return (
@@ -85,11 +84,11 @@ export class ListOnboardingTask extends Component {
             assigned_date: task.assigned_date,
             action:
             <Row>
-           <UpdateOnboardingTask task={tugas} task_id = {id_tugas}/>
+           <UpdateOnboardingTask task={tugas}/>
             
             
                   &nbsp;&nbsp;&nbsp; &nbsp;
-                  <ModalDelete id={id_tugas} />
+                  <ModalDelete id= {id_tugas} />
 
            
             </Row>
@@ -115,20 +114,34 @@ export class ListOnboardingTask extends Component {
        <div align="center">
           <h3>Task List</h3>
         </div>
+        <br></br>
        
-        <br></br>
-        <AddOnboardingTask />
-        <br></br>
 
-        <Row>
+         <Row>
+          <Col sm="2">
+          </Col>
+          <Col sm="8">
+          <AddOnboardingTask />
+          <br></br>
+            <Card >
+              <CardBody>
+             {content}
+            </CardBody>
+          </Card>
+          </Col>
+            <Col sm="2">
+          </Col>
+        </Row>
+
+        {/* <Row>
           <Col>
-            <Card>
+            <Card style={{ width: '300px' }}>
               <CardBody>
                 {content}
               </CardBody>
             </Card>
           </Col>
-        </Row>
+        </Row> */}
        
       </div>
     );
