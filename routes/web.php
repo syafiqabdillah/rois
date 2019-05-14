@@ -36,7 +36,7 @@ $router->post('/login-employee', ['middleware' => 'cors', 'uses' => 'AuthControl
  * Author : Shafira F
  */
 $router->get('po/all-lowongan', ['middleware' => 'cors', 'uses' => 'LowonganController@getAllLowongan']); //checked
-
+$router->get('po/all-active-lowongan', ['middleware' => 'cors', 'uses' => 'LowonganController@getAllActiveLowongan']);//ngambil lowongan yang active aja, silahkan pake ini untuk semua yang diakses pelamar
 $router->get('po/lowongan/{id}', ['middleware' => 'cors', 'uses' => 'LowonganController@getLowongan']); //checked
 $router->post('po/create-lowongan', ['middleware' => 'cors', 'uses' => 'LowonganController@createLowongan']); //checked
 $router->post('po/update-lowongan', ['middleware' => 'cors', 'uses' => 'LowonganController@updateLowongan']); //checked
@@ -76,7 +76,7 @@ $router->get('pelamar/send-mail-lamaran', ['middleware' => 'cors', 'uses' => 'La
  * Author : M Raffi A
  */
 $router->get('po/all-lamaran', ['middleware' => 'cors', 'uses' => 'LamaranController@getAllLamaran']);
-$router->get('po/all-active-lamaran', ['middleware' => 'cors', 'uses' => 'LamaranController@getAllActiveLamaran']);//ngambil lowongan yang active aja, silahkan pake ini untuk semua yang diakses pelamar
+
 $router->get('po/lamaran/{id}', ['middleware' => 'cors', 'uses' => 'LamaranController@getLamaran']);
 $router->post('po/update-tahapan-lamaran', ['middleware' => 'cors', 'uses' => 'LamaranController@updateTahapanLamaran']);
 

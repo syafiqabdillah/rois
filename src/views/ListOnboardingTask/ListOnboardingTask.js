@@ -1,313 +1,355 @@
-import React, { Component } from 'react';
-import axios from 'axios';
-import {
-  Button, Card, CardBody,
-  FormGroup, Input, Label, Col, Row
-} from 'reactstrap';
-import 'antd/dist/antd.css';
-import AddOnboardingTask from './AddOnboardingTask';
-import ModalDelete from './ModalDelete';
-import UpdateOnboardingTask from './UpdateOnboardingTask'
+// import React, { Component } from 'react';
+// import axios from 'axios';
+// import {
+//   Button, Card, CardBody,
+//   FormGroup, Input, Label, Col, Row
+// } from 'reactstrap';
+// import 'antd/dist/antd.css';
+// import AddOnboardingTask from './AddOnboardingTask';
+// import ModalDelete from './ModalDelete';
+// import UpdateOnboardingTask from './UpdateOnboardingTask'
 
-import { MDBDataTable } from 'mdbreact';
+// import { MDBDataTable } from 'mdbreact';
 
-const API = 'http://localhost:8000';
+// const API = 'http://localhost:8000';
 
-const data = {
-  columns: [
-    {
-      label: "Task's Name",
-      field: 'deskripsi',
-      sort: 'asc',
-      width: 400
-    },
-    {
-      label: "Status",
-      field: 'status',
-      sort: 'asc',
-      width: 200
-    },
-    {
-      label: "Assigned Date",
-      field: 'assigned_date',
-      sort: 'asc',
-      width: 300
-    },
-    
-     {
-       label: "Action",
-       field: 'action',
-       width: 100
-     }
+// const data = {
+//   columns: [
+//     {
+//       label: "Task's Name",
+//       field: 'deskripsi',
+//       sort: 'asc',
+//       width: 300
+//     },
+//     {
+//       label: "Status",
+//       field: 'status',
+//       sort: 'asc',
+//       width: 200
+//     },
+//     {
+//       label: "Assigned Date",
+//       field: 'assigned_date',
+//       sort: 'asc',
+//       width: 300
+//     },
+//      {
+//        label: "Action",
+//        field: 'action',
+//        width: 100
+//      }
 
-  ],
-  rows: []
-}
+//   ],
+//   rows: []
+// }
 
-export class ListOnboardingTask extends Component {
-  constructor(props) {
-    super(props);
+// export class ListOnboardingTask extends Component {
+//   constructor(props) {
+//     super(props);
 
-    this.state = {
-      task_list: [],
-      loading: true,
-      id: '',
-      visible: false,
-    }
-  }
+//     this.state = {
+//       task_list: [],
+//       loading: true,
+//       id: '',
+//       visible: false,
+//     }
+//   }
 
-  componentDidMount() {
-    let current_url = window.location.href
-    var arr = current_url.split("/")
-    let id_karyawan_onboarding = parseInt(arr[5])
-    localStorage.setItem("id_karyawan_onboarding", id_karyawan_onboarding)
-    axios.get(API + '/supervisor/getTugasOnboarding/' + id_karyawan_onboarding)
-      .then(res => {
-        const task = res.data;
-        console.log(task)
-        this.setState({
-          task_list: task,
-          loading: false
-        })
-      })
-  }
-  render() {
-    let content;
-    let tugas;
-    let id_tugas;
-    console.log(this.state.task_list)
-    if (this.state.loading) {
-      content = <div align="center"><p>Loading . . .</p></div>;
-    } else {
-      let list_task = this.state.task_list.map((task, index) => {
-        tugas = task.deskripsi
-        id_tugas = task.id
+//   componentDidMount() {
+//     axios.get(API + '/supervisor/getTugasOnboarding/3')
+//       .then(res => {
+//         const task = res.data;
+//         this.setState({
+//           task_list: task,
+//           loading: false
+//         })
+//       })
+//   }
+//   render() {
+//     let content;
+//     let tugas;
+//     let id_tugas;
+//     console.log(this.state.task_list)
+//     if (this.state.loading) {
+//       content = <div align="center"><p>Loading . . .</p></div>;
+//     } else {
+//       let list_task = this.state.task_list.map((task, index) => {
+//         tugas = task
+//         id_tugas = task.id
 
-        return (
-          {
-            deskripsi: task.nama,
-            status: task.status,
-            assigned_date: task.assigned_date,
-            action:
-            <Row>
-           <UpdateOnboardingTask task={tugas} task_id = {id_tugas}/>
+//         return (
+//           {
+//             deskripsi: task.nama,
+//             status: task.status,
+//             assigned_date: task.assigned_date,
+//             action:
+//             <Row>
+//            <UpdateOnboardingTask task={tugas}/>
             
             
-                  &nbsp;&nbsp;&nbsp; &nbsp;
-                  <ModalDelete id={id_tugas} />
+//                   &nbsp;&nbsp;&nbsp; &nbsp;
+//                   <ModalDelete id= {id_tugas} />
 
            
-            </Row>
+//             </Row>
             
            
-          }
-        );
-      });
+//           }
+//         );
+//       });
 
-      data.rows = [];
-      for (var i = 0; i < list_task.length; i++) {
-        data.rows.push(list_task[i]);
-      }
+//       data.rows = [];
+//       for (var i = 0; i < list_task.length; i++) {
+//         data.rows.push(list_task[i]);
+//       }
 
-      content = (
-        <MDBDataTable borderless striped hover small btn data={data} />
-      );
-    }
+//       content = (
+//         <MDBDataTable borderless striped hover small btn data={data} />
+//       );
+//     }
 
 
-    return (
-      <div className="animated fadeIn">
-       <div align="center">
-          <h3>Task List</h3>
-        </div>
+//     return (
+//       <div className="animated fadeIn">
+//        <div align="center">
+//           <h3>Task List</h3>
+//         </div>
+//         <br></br>
        
-        <br></br>
-        <AddOnboardingTask />
-        <br></br>
 
-        <Row>
-          <Col>
-            <Card>
-              <CardBody>
-                {content}
-              </CardBody>
-            </Card>
-          </Col>
-        </Row>
-       
-      </div>
-    );
-  }
-}
-export default ListOnboardingTask;
+//          <Row>
+//           <Col sm="2">
+//           </Col>
+//           <Col sm="8">
+//           <AddOnboardingTask />
+//           <br></br>
+//             <Card >
+//               <CardBody>
+//              {content}
+//             </CardBody>
+//           </Card>
+//           </Col>
+//             <Col sm="2">
+//           </Col>
+//         </Row>
+//       </div>
+//     );
+//   }
+// }
+// export default ListOnboardingTask;
 
 
 
 //export default ListOnboardingTask;
 
-// import React from "react";
-// import axios from 'axios';
+import React from "react";
+import axios from 'axios';
 
-// import "antd/dist/antd.css";
+import "antd/dist/antd.css";
 
-// import { Table,Card } from "antd";
-// import { Component } from 'react';
-// import {Button, Row, Col} from 'reactstrap';
-// import ModalDelete from './ModalDelete';
-// import UpdateOnboardingTask from './UpdateOnboardingTask';
-// import AddOnboardingTask from './AddOnboardingTask';
+import { Table,Card,Popconfirm, Empty, Progress,  Skeleton, Switch, Icon, Avatar } from "antd";
+import { Component } from 'react';
+import {Button, Row, Col} from 'reactstrap';
+import ModalDelete from './ModalDelete';
+import UpdateOnboardingTask from './UpdateOnboardingTask';
+import AddOnboardingTask from './AddOnboardingTask';
 
-// const API = 'http://localhost:8000';
+const API = 'http://localhost:8000';
+const { Meta } = Card;
 
-// let tugas;
+let tugas;
 
-// const columns = [
-//   {
-//     title: "Name",
-//     dataIndex: "nama"
-//   },
-//   {
-//     title: "Status",
-//     dataIndex: "status"
-//   },
-//   {
-//     title: "Assigned Date",
-//     dataIndex: "assigned_date"
-//   },
-//   {
-//     title: "Action",
-//     dataIndex: "",
-//     key: "x",
+const columns = [
+  {
+    title: "Name",
+    dataIndex: "nama"
+  },
+  {
+    title: "Status",
+    dataIndex: "status"
+  },
+  {
+    title: "Assigned Date",
+    dataIndex: "assigned_date"
+  },
+  {
+    title: "Action",
+    dataIndex: "",
+    key: "x",
    
-//     render: (record) => (
-//       <Row>
-//          <UpdateOnboardingTask task={record}/>
+    render: (record) => (
+      <Row>
+         <UpdateOnboardingTask task={record}/>
            
             
             
-//                    &nbsp;&nbsp;&nbsp; &nbsp;
-//                   <ModalDelete id={record.id} />
+                   &nbsp;&nbsp;&nbsp; &nbsp;
+                  <ModalDelete id={record.key} />
            
-//             </Row>
+            </Row>
  
     
-//     )}
-// ];
+    )}
+];
 
-// const data = [];
+const data = [];
+let finished = 0;
+let progress;
+let num_task=0;
+let task;
 
-// export class ListOnboardingTask extends Component {
-//   constructor(props) {
-//          super(props);
+export class ListOnboardingTask extends Component {
+  constructor(props) {
+         super(props);
    
-//   this.state = {
-//     selectedRowKeys: [], // Check here to configure the default column
-//     loading: false,
-//     task_list: [],
-//     loading_page: true,
-//            id: '',
-//            visible: false,
-//          }
-//        }
+  this.state = {
+    selectedRowKeys: [], // Check here to configure the default column
+    loading: false,
+    task_list: [],
+    loading_page: true,
+           id: '',
+           visible: false,
+           karyawan_onboarding:'',
+         }
+       }
   
+  
+  componentDidMount() {
+   
 
-//   componentDidMount() {
-    
-//          axios.get(API + '/supervisor/getTugasOnboarding/3')
-//            .then(res => {
-//              const task = res.data;
-//              task.map((task, index) => {
+    axios.get(API + '/ko/karyawan-onboarding/' + this.props.match.params.id)
+    .then(res => {
+      const karyawanOnboarding = res.data;
+      console.log(karyawanOnboarding);
+      this.setState({
+        karyawan_onboarding: karyawanOnboarding,
+      })
+    })
+
+    let current_url = window.location.href
+    var arr = current_url.split("/")
+    let id_karyawan_onboarding = parseInt(arr[5])
+    localStorage.setItem("id_karyawan_onboarding", id_karyawan_onboarding)
+    axios.get(API + '/supervisor/getTugasOnboarding/' + id_karyawan_onboarding)
+           .then(res => {
+             const task = res.data;
+             task.map((task, index) => {
+              num_task = num_task+1;
+              data.push({
+                key: task.id,
+                nama:task.nama,
+                status:task.status,
+                assigned_date : task.assigned_date,
+                description: task.deskripsi,
                
-//               data.push({
-//                 key: task.id,
-//                 nama:task.nama,
-//                 status:task.status,
-//                 assigned_date : task.assigned_date,
-//                 description: task.deskripsi,
-               
-//               })
+              })
+              if(task.status=='Finished'){
+                finished = finished +1;
+              }
               
-//              this.setState({
-//                loading_page: false
-//              })
-//            })
+             this.setState({
+               loading_page: false
+             })
+           })
           
-//           })
+          })
+          progress = Math.round(finished/num_task*100)
+          finished=0;
+          num_task=0;
          
-//        };
+       };
 
-//   start = () => {
-//     this.setState({ loading: true });
-//     // ajax request after empty completing
-//     setTimeout(() => {
-//       this.setState({
-//         selectedRowKeys: [],
-//         loading: false
-//       });
-//     }, 1000);
-//   };
+  start = () => {
+    this.setState({ loading: true });
+    // ajax request after empty completing
+    setTimeout(() => {
+      this.setState({
+        selectedRowKeys: [],
+        loading: false
+      });
+    }, 1000);
+  };
 
-//   onSelectChange = selectedRowKeys => {
-//     console.log("selectedRowKeys changed: ", selectedRowKeys);
-//     this.setState({ selectedRowKeys });
-//   };
+  onSelectChange = selectedRowKeys => {
+    console.log("selectedRowKeys changed: ", selectedRowKeys);
+    this.setState({ selectedRowKeys });
+  };
 
-//   render() {
-//     const { loading, selectedRowKeys } = this.state;
-//     const rowSelection = {
-//       selectedRowKeys,
-//       onChange: this.onSelectChange
-//     };
-//     const hasSelected = selectedRowKeys.length > 0;
+  render() {
+    const { loading, selectedRowKeys } = this.state;
+    const rowSelection = {
+      selectedRowKeys,
+      onChange: this.onSelectChange
+    };
+    const hasSelected = selectedRowKeys.length > 0;
 
-//     return (
+    return (
 
-//       <div className="animated fadeIn">
-//              <div align="center">
-//                  <h3>Task List</h3>
-//                </div>
-             
-//                <br></br>
-//                <AddOnboardingTask />
-//                <br></br>
+      <div className="animated fadeIn">
+             <div align="center">
+                 <h3>Task List</h3>
+               </div>
+
+               <Row>
+          <Col lg={2}>
+          </Col>
+          <Col lg={8}>
+            <Card style={{ width: 830, marginTop: 16, marginBottom: 32 }} loading={this.state.loading}>
+              <Meta style={{ marginBottom: 16}}
+                avatar={ <Avatar size="large" src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" /> }
+                title={this.state.karyawan_onboarding}
+                description="Full Stack Engineer Intern"
+              />
+              <h6>My Onboarding Progress</h6>
+              <Progress
+                strokeColor={{
+                  from: '#108ee9',
+                  to: '#59A3FC',
+                }}
+                percent={progress}
+                status="active"
+              />
+            </Card>
+            <AddOnboardingTask />
+            <Card style={{ width: 830, marginTop: 16, marginBottom: 16 }} loading={this.state.loading}>
+            <Row>
+              <h4>My Task</h4>
+              </Row>
+              <div>
+        <div style={{ marginBottom: 16 }}>
+          <Button
+            type="primary"
+            onClick={this.start}
+            disabled={!hasSelected}
+            loading={loading}
+          >
+            Reload
+          </Button>
+
+          <span style={{ marginLeft: 8 }}>
+            {hasSelected ? `Selected ${selectedRowKeys.length} items` : ""}
+          </span>
+        </div>
+        <Table
+          rowSelection={rowSelection}
+          columns={columns}
+          dataSource={data}
+          expandedRowRender={record => (
+            <p style={{ margin: 0 }}>{record.description}</p>
+          )}
+        />
+      </div>
+      </Card>
+      </Col>
+      </Row>
+      </div>
       
-//                <Row>
-//                  <Col>
-//                    <Card>
-                     
-//                      <div>
-//         <div style={{ marginBottom: 16 }}>
-//           <Button
-//             type="primary"
-//             onClick={this.start}
-//             disabled={!hasSelected}
-//             loading={loading}
-//           >
-//             Reload
-//           </Button>
 
-//           <span style={{ marginLeft: 8 }}>
-//             {hasSelected ? `Selected ${selectedRowKeys.length} items` : ""}
-//           </span>
-//         </div>
-//         <Table
-//           rowSelection={rowSelection}
-//           columns={columns}
-//           dataSource={data}
-//           expandedRowRender={record => (
-//             <p style={{ margin: 0 }}>{record.description}</p>
-//           )}
-//         />
-//       </div>
-                  
-//                   </Card>
-//                 </Col>
-//               </Row>
-             
-//             </div>
+           
+          
       
-//     );
-//   }
-// }
+    );
+  }
+}
 
-// export default ListOnboardingTask;
+export default ListOnboardingTask;

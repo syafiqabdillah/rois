@@ -14,12 +14,16 @@ const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
   // eslint-disable-next-line
   
   class extends React.Component {
+
    
     render() {
       const {
-        visible, onCancel, onCreate, form, confirmLoading
+        visible, onCancel, onCreate, form, confirmLoading,task
       } = this.props;
       const { getFieldDecorator } = form;
+     
+      console.log(this.props.task.nama);
+      console.log(this.props.task.id);
       return (
         <Modal
           visible={visible}
@@ -35,7 +39,7 @@ const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
             label="Task Name"
           >
             {getFieldDecorator('name', {
-              initialValue: this.props.task_description,
+              initialValue: this.props.task.nama,
               rules: [{
                 pattern: new RegExp("^[A-Za-z]"),
                 required: true, message: 'Please input the task name',
@@ -48,7 +52,7 @@ const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
             label="Task Description"
           >
             {getFieldDecorator('description', {
-              initialValue: this.props.task_description,
+              initialValue: this.props.task.description,
               rules: [{
                 pattern: new RegExp("^[A-Za-z]"),
                 required: true, message: 'Please input the task description',
@@ -68,15 +72,18 @@ const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
 class UpdateOnboardingTask extends Component {
   state = {
     visible: false,
+    confirmLoading : false,
    
   };
 
   showModal = () => {
-    this.setState({ visible: true });
+    this.setState({ visible: true,
+      confirmLoading:false});
   }
 
   handleCancel = () => {
-    this.setState({ visible: false });
+    this.setState({ visible: false ,
+      confirmLoading:false});
   }
 
   handleUpdate = () => {
@@ -84,10 +91,11 @@ class UpdateOnboardingTask extends Component {
     
       form.validateFields((err, values) => {
         if (!err) {
+          this.setState({confirmLoading: true});
           console.log('Received values of form: ', values);
           var qs = require('qs');
           axios.post('http://localhost:8000/supervisor/update-tugas-onboarding/', qs.stringify({
-          'id':this.props.task_id,
+          'id':this.props.task.key,
           'deskripsi': values['description'],
           'nama' :values['name']
           }),
@@ -101,8 +109,13 @@ class UpdateOnboardingTask extends Component {
               console.log(error.response)
             });
       form.resetFields();
-      this.setState({ visible: false });
-      window.location.reload();
+      setTimeout(() => {
+        this.setState({
+          confirmLoading: false,
+          visible:false,
+        });
+        window.location.reload();
+      }, 2000);
         
      
         }else{
@@ -119,6 +132,8 @@ class UpdateOnboardingTask extends Component {
   
   render() {
     let desc = this.props.task
+    console.log("this.props.task")
+    console.log(desc);
 
     return (
       <div>
@@ -131,7 +146,8 @@ class UpdateOnboardingTask extends Component {
           visible={this.state.visible}
           onCancel={this.handleCancel}
           onCreate={this.handleUpdate}
-          task_description = {desc}
+          task = {desc}
+          confirmLoading={this.state.confirmLoading}
         />
        
       </div>

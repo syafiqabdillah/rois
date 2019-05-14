@@ -27,7 +27,7 @@ class VacanciesPelamar extends Component {
   }
 
   componentDidMount() {
-    axios.get(API + '/po/all-lowongan')
+    axios.get(API + '/po/all-active-lowongan')
       .then(res => {
         const lowongan = res.data;
         this.setState({
