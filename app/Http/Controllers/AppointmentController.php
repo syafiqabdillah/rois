@@ -108,8 +108,8 @@ class AppointmentController extends Controller
 
    }
 
-   public function getAllEmployee(){
-       $employee = DB::table('karyawan')->select(DB::raw('id, name, divisi'))->where('id_supervisor', 7)->get();
+   public function getAllEmployee($id){
+       $employee = DB::table('karyawan')->select(DB::raw('id, name, divisi'))->where('id_supervisor', $id)->get();
        $result = array();
        $emp = json_decode($employee, true);
        foreach ($emp as $epl) {

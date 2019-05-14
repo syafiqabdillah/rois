@@ -57,9 +57,14 @@ export class ListOnboardingTask extends Component {
   }
 
   componentDidMount() {
-    axios.get(API + '/supervisor/getTugasOnboarding/3')
+    let current_url = window.location.href
+    var arr = current_url.split("/")
+    let id_karyawan_onboarding = parseInt(arr[5])
+    localStorage.setItem("id_karyawan_onboarding", id_karyawan_onboarding)
+    axios.get(API + '/supervisor/getTugasOnboarding/' + id_karyawan_onboarding)
       .then(res => {
         const task = res.data;
+        console.log(task)
         this.setState({
           task_list: task,
           loading: false

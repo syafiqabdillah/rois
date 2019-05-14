@@ -89,10 +89,10 @@ class AddOnboardingTask extends Component {
         if (!err) {
           console.log('Received values of form: ', values);
           var qs = require('qs');
+          var id_karyawan_onboarding = localStorage.getItem('id_karyawan_onboarding')
           axios.post('http://localhost:8000/supervisor/create-tugas-onboarding', qs.stringify({
             'deskripsi': values['description'],
-            'id_karyawan': '3',
-            'id_supervisor': '2',
+            'id_karyawan': id_karyawan_onboarding,
             'status':'assigned',
             'assigned_date' : today.format('YYYY-MM-DD'),
             'nama':values['name']

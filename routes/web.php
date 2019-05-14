@@ -136,7 +136,7 @@ $router->post('sysadmin/delete-user', ['middleware' => 'cors', 'uses' => 'UserCo
  $router->get('po/get-all-task-status/{id}', ['middleware' => 'cors', 'uses' => 'AppointmentController@getAllTaskStatus']);
  $router->get('po/get-onboarding-progress/{id}', ['middleware' => 'cors', 'uses' => 'AppointmentController@getNumberTaskByStatus']);
  $router->get('po/get-employee-profile/{id}', ['middleware' => 'cors', 'uses' => 'AppointmentController@getEmployeeProfile']);
- $router->get('po/get-all-employee', ['middleware' => 'cors', 'uses' => 'AppointmentController@getAllEmployee']);
+ $router->get('po/get-all-employee/{id}', ['middleware' => 'cors', 'uses' => 'AppointmentController@getAllEmployee']);
 
 /**
  * UC - 11 : Memberikan Konfirmasi Penyelesaian Tugas

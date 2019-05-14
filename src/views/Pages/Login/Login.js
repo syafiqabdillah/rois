@@ -65,11 +65,14 @@ class Login extends Component {
     .then(function (response) {
       console.log(response.data.data)
       if(response.data.data.length !== 0){
+        localStorage.setItem('id_karyawan', response.data.data[0].id)
         // datanya pelamar sudah ada di DB, masuk 
         localStorage.setItem('role', response.data.data[0].role);
         localStorage.setItem('token', 'tokensementara');
         if (response.data.data[0].role == "ADMIN"){
           window.location.href = '#/dashboard'
+        } else if (response.data.data[0].role == "SUPERVISOR") {
+          window.location.href = '#/employee'
         } else {
           window.location.href = '#/users'
         }

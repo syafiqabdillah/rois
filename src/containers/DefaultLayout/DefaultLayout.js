@@ -18,14 +18,19 @@ import {
 import navigation from '../../_nav';
 import navigationPelamar from '../../_nav_pelamar';
 import navigationSysAdmin from '../../_nav_sys_admin';
+import navigationSupervisor from '../../_nav_supervisor';
+import navigationKaryawanOnboarding from '../../_nav_karyawan_onboarding';
 // routes config
+
 import routes from '../../routes';
+import KaryawanOnboardingHeader from './KaryawanOnboardingHeader';
 
 const DefaultAside = React.lazy(() => import('./DefaultAside'));
 const DefaultFooter = React.lazy(() => import('./DefaultFooter'));
 const DefaultHeader = React.lazy(() => import('./DefaultHeader'));
 const ApplicantHeader = React.lazy(() => import('./ApplicantHeader'));
 const SysAdminHeader = React.lazy(() => import('./SysAdminHeader'));
+const SupervisorHeader = React.lazy(() => import('./SupervisorHeader'));
 
 class DefaultLayout extends Component {
 
@@ -47,6 +52,8 @@ class DefaultLayout extends Component {
     let header;
     let sidebar;
     let home;
+
+    let id_karyawan = localStorage.getItem('id_karyawan')
 
     //jika pelamar
     if (localStorage.getItem('role') === 'PELAMAR') {
@@ -84,6 +91,40 @@ class DefaultLayout extends Component {
       )
       //redirect admin po
       home = (<Redirect from="/" to="/dashboard" />);
+    } else if (localStorage.getItem('role') === 'KARYAWAN ONBOARDING'){
+      //header admin po
+      header = <KaryawanOnboardingHeader onLogout={e => this.signOut(e)} />;
+      //sidebar admin po
+      sidebar = (
+        <AppSidebar fixed display="lg" isOpen={false}>
+          <AppSidebarHeader />
+          <AppSidebarForm />
+          <Suspense>
+            <AppSidebarNav navConfig={navigationKaryawanOnboarding} {...this.props} />
+          </Suspense>
+          <AppSidebarFooter />
+          <AppSidebarMinimizer />
+        </AppSidebar>
+      )
+      //redirect admin po
+      home = (<Redirect from="/" to="/dashboard" />);
+    } else if (localStorage.getItem('role') === 'SUPERVISOR'){
+      //header admin po
+      header = <SupervisorHeader onLogout={e => this.signOut(e)} />;
+      //sidebar admin po
+      sidebar = (
+        <AppSidebar fixed display="lg" isOpen={false}>
+          <AppSidebarHeader />
+          <AppSidebarForm />
+          <Suspense>
+            <AppSidebarNav navConfig={navigationSupervisor} {...this.props} />
+          </Suspense>
+          <AppSidebarFooter />
+          <AppSidebarMinimizer />
+        </AppSidebar>
+      )
+      //redirect admin po
+      home = (<Redirect from="/" to="/employees" />);
     } else {
       //header admin po
       header = <SysAdminHeader onLogout={e => this.signOut(e)} />;

@@ -54,7 +54,8 @@ export default class EmployeesTable extends Component {
   }
 
   fetchData = () => {
-    axios.get('http://localhost:8000' + '/po/get-all-employee')
+    let id_karyawan = localStorage.getItem('id_karyawan')
+    axios.get('http://localhost:8000' + '/po/get-all-employee/' + id_karyawan)
       .then((response) => {
         const profile = response.data;
         console.log(profile);
@@ -74,6 +75,7 @@ export default class EmployeesTable extends Component {
       let list_appointment = this.state.employees.map((employee, index) => {
         console.log(employee.profile);
         const idemployee = "http://localhost:3000/#/employeeDashboard/" + employee.profile.id
+        const taskemployee = "http://localhost:3000/#/tasks-list/" + employee.profile.id
         let progress = Math.round(((employee.progress.onprogress + employee.progress.complete)/employee.progress.total)*100)
         return (
           {
@@ -83,7 +85,7 @@ export default class EmployeesTable extends Component {
           complete : employee.progress.complete + ' / ' + employee.progress.total,
           action: <Button.Group>
                     <Button type="primary" icon="line-chart" size='large' href={idemployee} ghost/>
-                    <Button type="primary" icon="edit" size='large'/>
+                    <Button type="primary" icon="edit" size='large' href={taskemployee}/>
                   </Button.Group>
           }
         );

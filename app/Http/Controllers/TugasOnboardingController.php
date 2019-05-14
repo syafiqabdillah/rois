@@ -35,21 +35,18 @@ class TugasOnboardingController extends Controller
      */
     public function createTugasOnboarding(Request $request){
         $deskripsi= $request->deskripsi;
-        $deadline_date = $request->deadline_date;
-        $id_supervisor = $request->id_supervisor;
         $id_karyawan = $request->id_karyawan;
         $status = $request->status;
         $assigned_date =  $request->assigned_date;
         $nama = $request->nama;
        
         $id = DB::table('tugas_onboarding')->insertGetId(
-            ['id_supervisor' => $id_supervisor, 
+            [
             'id_karyawan' => $id_karyawan, 
             'deskripsi'=> $deskripsi, 
             'status' => $status,
             'assigned_date' => $assigned_date,
             'nama' => $nama
-            
             ]);
         return $id;
     }
