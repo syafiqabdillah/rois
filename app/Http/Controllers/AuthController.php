@@ -50,4 +50,16 @@ class AuthController extends Controller
         return response()->json(['data'=>$pelamar]);
     }
 
+    public function loginEmployee(Request $request){
+        $username = $request->input('username');
+        $password = $request->input('password');
+        $karyawan = DB::table('karyawan')->select()
+        ->where([
+            ['username','=',$username],
+            ['password','=',$password]
+        ])->get();
+        $karyawan = json_decode($karyawan);
+        return response()->json(['data'=>$karyawan]);
+    }
+
 }

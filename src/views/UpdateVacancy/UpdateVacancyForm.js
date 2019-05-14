@@ -195,16 +195,17 @@ export default class UpdateVacancyForm extends React.Component {
         </Card>
         <br></br>
 
-{/*        
-             <Card><FormRequirement id_low={this.state.id} requirement={this.state.requirement} />
+        
+             <Card><FormRequirement id_low={this.props.id_lowongan} requirement={this.state.requirement} />
                </Card>
+               <br></br>
                <Card>
-               <FormResponsibility id_low={this.state.id} responsibility={this.state.responsibility}/>
+               <FormResponsibility id_low={this.props.id_lowongan} responsibility={this.state.responsibility}/>
              
                </Card>
 
          
-         */}
+         
 
 
       </div>

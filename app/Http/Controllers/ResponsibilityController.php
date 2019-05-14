@@ -51,15 +51,23 @@ class ResponsibilityController extends Controller
      * @return long $id id dari hasil perubahan responsibility di database
      */
     public function updateResponsibility(Request $request){
-        $id = $request->id;
-        $deskripsi = $request->deskripsi;
         $id_lowongan = $request->id_lowongan;
+
+        $response_delete = DB::table('responsibility')
+        ->where('id_lowongan',$id_lowongan)
+        ->delete();
+
+        // $id = $request->id;
+        // $deskripsi = $request->deskripsi;
+        // $id_lowongan = $request->id_lowongan;
         
-        $result = DB::table('responsibility')
-            ->where('id', $id)
-            ->update(['deskripsi' => $deskripsi, 
-            'id_lowongan' => $id_lowongan]);
-        return $result;
+        // $result = DB::table('responsibility')
+        //     ->where('id', $id)
+        //     ->update(['deskripsi' => $deskripsi, 
+        //     'id_lowongan' => $id_lowongan]);
+       $creating_new= $this->createResponsibility($request);
+
+        return $creating_new;
     }
 
     /**
@@ -90,4 +98,5 @@ class ResponsibilityController extends Controller
 
        
     }
+
 }

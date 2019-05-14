@@ -10,13 +10,20 @@ let merged_initial=[];
 let id;
 let id_lowongan;
 const API = 'http://localhost:8000';
+var pathname = window.location.pathname;
+console.log(pathname);
 
 export default class ResponsibilityForm extends React.Component {
   constructor(props){
     super(props);
     this.state ={
       id_lowongan:"",
-      list_responsibility:[]
+      list_responsibility:[],
+      key_initial:[],
+      name_initial:[],
+      merged_initial:[],
+      id:""
+
     }
   }
 
@@ -89,27 +96,26 @@ export default class ResponsibilityForm extends React.Component {
     this.props.form.validateFields((err, values) => {
       if (!err) {
         const {keys, names}  = values;
-        console.log(values.names.length);
+       
         const { key, name } = values;
         const merged_initial_after = key.map(key => name[key]);
         const merged = keys.map(key => names[key]);
-        console.log(merged_initial_after.concat(merged));
         
-        // var qs=(require('qs'));
-        //  axios.post('http://localhost:8000/po/create-responsibility', qs.stringify({
-        //    'id_lowongan':this.props.id_low,
-        //    'deskripsi':values.names,
-        //   }),
-        //   {
-        //     headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-        //   })
-        //   .then(response => {
-        //     console.log(response)
-        //   })
-        //   .catch(error => {
-        //     console.log(error.response)
-        //   });
-        // window.location.href = '#/vacancy/'+ this.props.id_low;
+         var qs=(require('qs'));
+          axios.post('http://localhost:8000/po/update-responsibility', qs.stringify({
+            'id_lowongan':this.props.id_low,
+            'deskripsi':merged_initial_after.concat(merged),
+           }),
+           {
+             headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+           })
+           .then(response => {
+             console.log(response)
+           })
+           .catch(error => {
+             console.log(error.response)
+           });
+         window.location.href = '#/vacancy/'+ this.props.id_low;
 
     }
 });
@@ -117,11 +123,13 @@ export default class ResponsibilityForm extends React.Component {
 
 
 componentDidMount(){
+  
   console.log("ini id lowongan");
-  console.log(id_lowongan);
-  axios.get(API + '/po/responsibility/1')
+  console.log(this.props.id_low);
+  axios.get(API + '/po/responsibility/'+this.props.id_low)
   .then(res=>{
     const responsibility= res.data;
+
     console.log(responsibility);
     for(var i=0;i<responsibility.length;i++){
       name_initial.push(responsibility[i].deskripsi)
@@ -141,6 +149,12 @@ componentDidMount(){
   
     
   })
+  this.setState({
+    key_initial:key_initial,
+    name_initial:name_initial,
+    merged_initial : merged_initial,
+    id:id
+  })
 };
 
 
@@ -150,7 +164,7 @@ componentDidMount(){
 
 
   render() {
-    id_lowongan=this.props.id_lowongan;
+    id_lowongan=this.props.id_low;
     // responsibility= this.props.responsibility;
    
 
@@ -223,7 +237,7 @@ componentDidMount(){
         })(
           <Input
             placeholder="passenger name"
-            style={{ width: "60%", marginRight: 8 }}
+            style={{ width: "92%", marginRight: 8 }}
           />
         )}
         {key.length >= 0 ? (

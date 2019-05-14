@@ -1,0 +1,7 @@
+{
+    "name": "UpdateUser",
+    "version": "0.0.0",
+    "private": true,
+    "main": "./UpdateUser.js"
+  }
+  

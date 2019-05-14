@@ -17,6 +17,7 @@ import {
 // sidebar nav config
 import navigation from '../../_nav';
 import navigationPelamar from '../../_nav_pelamar';
+import navigationSysAdmin from '../../_nav_sys_admin';
 // routes config
 import routes from '../../routes';
 
@@ -24,6 +25,7 @@ const DefaultAside = React.lazy(() => import('./DefaultAside'));
 const DefaultFooter = React.lazy(() => import('./DefaultFooter'));
 const DefaultHeader = React.lazy(() => import('./DefaultHeader'));
 const ApplicantHeader = React.lazy(() => import('./ApplicantHeader'));
+const SysAdminHeader = React.lazy(() => import('./SysAdminHeader'));
 
 class DefaultLayout extends Component {
 
@@ -37,7 +39,7 @@ class DefaultLayout extends Component {
 
   render() {
     //kalau belum ada token -> belum login
-    if (localStorage.getItem('token') === undefined) {
+    if (!localStorage.hasOwnProperty('token')) {
       //diminta login
       return <Redirect to="/login" />
     }
@@ -47,7 +49,7 @@ class DefaultLayout extends Component {
     let home;
 
     //jika pelamar
-    if (localStorage.getItem('role') === 'pelamar') {
+    if (localStorage.getItem('role') === 'PELAMAR') {
       //header pelamar
       header = (<ApplicantHeader onLogout={e => this.signOut(e)} />);
       //sidebar pelamar
@@ -65,7 +67,7 @@ class DefaultLayout extends Component {
       );
       //redirect home pelamar
       home = (<Redirect from='/' to="/vacancies-applicant" />);
-    } else {
+    } else if (localStorage.getItem('role') === 'ADMIN'){
       //header admin po
       header = <DefaultHeader onLogout={e => this.signOut(e)} />;
       //sidebar admin po
@@ -82,6 +84,23 @@ class DefaultLayout extends Component {
       )
       //redirect admin po
       home = (<Redirect from="/" to="/dashboard" />);
+    } else {
+      //header admin po
+      header = <SysAdminHeader onLogout={e => this.signOut(e)} />;
+      //sidebar admin po
+      sidebar = (
+        <AppSidebar fixed display="lg" isOpen={false}>
+          <AppSidebarHeader />
+          <AppSidebarForm />
+          <Suspense>
+            <AppSidebarNav navConfig={navigationSysAdmin} {...this.props} />
+          </Suspense>
+          <AppSidebarFooter />
+          <AppSidebarMinimizer />
+        </AppSidebar>
+      )
+      //redirect sys admin
+      home = (<Redirect from="/" to="/users" />);
     }
 
     return (

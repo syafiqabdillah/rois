@@ -110,11 +110,11 @@ class Applicants extends Component {
         </Table>
       );
 
-      if (this.state.lamaran.status === 'Passed' && localStorage.getItem('role') === 'admin') {
+      if (this.state.lamaran.status === 'Passed' && localStorage.getItem('role') === 'ADMIN') {
         stage = (
           <ChooseStages lamaran={this.state.lamaran} />
         );
-      } else if (this.state.lamaran.tahapan === 'Remote Test' &&  this.state.lamaran.status === 'Assigned' && localStorage.getItem('role') === 'admin') {
+      } else if (this.state.lamaran.tahapan === 'Remote Test' &&  this.state.lamaran.status === 'Assigned' && localStorage.getItem('role') === 'ADMIN') {
         stage = (
           <div>
             <ChooseCurrentStage lamaran={this.state.lamaran} />
@@ -123,7 +123,7 @@ class Applicants extends Component {
             </Link>
           </div>
         );
-      } else if (this.state.lamaran.tahapan === 'Remote Test' &&  this.state.lamaran.status === 'Answered' && localStorage.getItem('role') === 'admin') {
+      } else if (this.state.lamaran.tahapan === 'Remote Test' &&  this.state.lamaran.status === 'Answered' && localStorage.getItem('role') === 'ADMIN') {
         stage  = (
           <div>
             <ChooseCurrentStage lamaran={this.state.lamaran} />
@@ -132,25 +132,25 @@ class Applicants extends Component {
             </Link>
           </div>
         );
-      } else if (this.state.lamaran.tahapan === 'Hired' && localStorage.getItem('role') === 'admin') {
+      } else if (this.state.lamaran.tahapan === 'Hired' && localStorage.getItem('role') === 'ADMIN') {
         stage = (
           <Widget04 icon="fa fa-thumbs-up" color="success" header="Hired" value="0" invert>
             This applicant have passed all the SIRCLO's recruitment process
           </Widget04>
         );
-      } else if (this.state.lamaran.tahapan === 'Rejected' && localStorage.getItem('role') === 'admin') {
+      } else if (this.state.lamaran.tahapan === 'Rejected' && localStorage.getItem('role') === 'ADMIN') {
         stage = (
           <Widget04 icon="fa fa-thumbs-down" color="danger" header="Rejected" value="0" invert>
             This applicant have been rejected from the SIRCLO's recruitment process
           </Widget04>
         );
-      } else if (localStorage.getItem('role') === 'admin') {
+      } else if (localStorage.getItem('role') === 'ADMIN') {
         stage = (
           <div>
             <ChooseCurrentStage lamaran={this.state.lamaran} />
           </div>
         );
-      } else if (localStorage.getItem('role') === 'pelamar' && this.state.lamaran.tahapan === 'Remote Test' &&  this.state.lamaran.status === 'Assigned') {
+      } else if (localStorage.getItem('role') === 'PELAMAR' && this.state.lamaran.tahapan === 'Remote Test' &&  this.state.lamaran.status === 'Assigned') {
         this.getIdRemoteTest();
         console.log(this.state.idActiveRemoteTest);
         stage = (
@@ -158,7 +158,7 @@ class Applicants extends Component {
             <Widget02 header="Coding Test" mainText="Click here to start test" icon="fa fa-code" color="info" />
           </Link>
         );
-      } else if (localStorage.getItem('role') === 'pelamar' && this.state.lamaran.tahapan === 'Remote Test' &&  this.state.lamaran.status === 'Submitted') {
+      } else if (localStorage.getItem('role') === 'PELAMAR' && this.state.lamaran.tahapan === 'Remote Test' &&  this.state.lamaran.status === 'Submitted') {
         stage = (
           <Widget02 header="Coding Test" mainText="Your coding answer under review" icon="fa fa-code" color="info" />
         );

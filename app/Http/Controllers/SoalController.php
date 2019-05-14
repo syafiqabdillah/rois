@@ -14,12 +14,12 @@ class SoalController extends Controller
      */
     public function __construct()
     {
-        
+
     }
 
     /**
-     * mengembalikan semua soal yang ada 
-     * @return array $soal 
+     * mengembalikan semua soal yang ada
+     * @return array $soal
      */
     public function getAllSoal(Request $request){
         $getSoal = DB::table('soal')->select()->get();
@@ -47,9 +47,9 @@ class SoalController extends Controller
     }
 
     /**
-     * mengembalikan suatu soal dengan id tertentu 
-     * @param long  $id id dari soal yang ingin diambil 
-     * @return array $soal 
+     * mengembalikan suatu soal dengan id tertentu
+     * @param long  $id id dari soal yang ingin diambil
+     * @return array $soal
      */
     public function getSoal($id){
         $soal = DB::table('soal')->select()->where('id', $id)->get();
@@ -83,9 +83,9 @@ class SoalController extends Controller
         $created_date = date('Y-m-d H:i:s', time());
 
         $id = DB::table('soal')->insertGetId(
-            ['nama' => $nama, 
-            'id_lowongan' => $id_lowongan, 
-            'nama_karyawan' => $nama_karyawan, 
+            ['nama' => $nama,
+            'id_lowongan' => $id_lowongan,
+            'nama_karyawan' => $nama_karyawan,
             'created_date' => $created_date,
             'link' => $link]
         );
@@ -108,9 +108,9 @@ class SoalController extends Controller
 
         $result = DB::table('soal')
             ->where('id', $id)
-            ->update(['nama' => $nama, 
-            'id_lowongan' => $id_lowongan, 
-            'nama_karyawan' => $nama_karyawan, 
+            ->update(['nama' => $nama,
+            'id_lowongan' => $id_lowongan,
+            'nama_karyawan' => $nama_karyawan,
             'created_date' => $created_date,
             'link' => $link]);
         return $result;

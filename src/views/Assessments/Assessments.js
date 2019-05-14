@@ -57,6 +57,7 @@ class Assessments extends Component {
     axios.get(API + '/po/all-soal')
     .then(res => {
       const soal = res.data;
+      console.log(soal)
       this.setState({
         soal: soal,
         loading: false
@@ -79,26 +80,26 @@ class Assessments extends Component {
         return (
           {
             nama: soal.nama,
-                        
+
             lowongan: soal.lowongan,
 
-            link: 
+            link:
             <div style={{wordWrap: 'break-word', width:250, overflow: 'hidden'}}>
               <a href={soal.link}>{soal.link}</a>
-            </div>,    
-            
+            </div>,
+
             nama_karyawan: soal.nama_karyawan,
-            
+
             created_date: soal.created_date,
-            
-            action: 
+
+            action:
             <div style={{width:110, overflow: 'hidden'}}>
               <Row>
                 <Col>
                   <Button color="primary" onClick={() => this.onClick(soal)} className=" btn btn-primary btn-pill">
                     <i className="cui-pencil icons"></i>
                   </Button>
-                    
+
                 </Col>
                 <Col>
                   <Modals isDirujuk={soal.isDirujuk} name={soal.nama} id={soal.id} />
@@ -109,13 +110,13 @@ class Assessments extends Component {
               //   <Button color="primary" onClick={() => this.onClick(soal)}>
               //     <i className="cui-pencil icons"></i>
               //   </Button>
-                
+
               //   <Modals isDirujuk={soal.isDirujuk} name={soal.nama} id={soal.id} />
-              // </div>, 
+              // </div>,
           }
         );
       });
-      
+
       data.rows = []
       for (var i = 0; i < list_soal.length; i++) {
         data.rows.push(list_soal[i]);
@@ -124,8 +125,8 @@ class Assessments extends Component {
       content = (
         <MDBDataTable borderless
                       striped
-                      hover 
-                      small 
+                      hover
+                      small
                       btn
                       data={data} />
       );

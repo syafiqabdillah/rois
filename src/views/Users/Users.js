@@ -1,70 +1,144 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Badge, Card, CardBody, CardHeader, Col, Row, Table } from 'reactstrap';
+import axios from 'axios';
+import { Button, Card, CardBody, CardHeader, Col, Row} from 'reactstrap';
+import { MDBDataTable } from 'mdbreact';
+import Modals from './Modals';
 
-import usersData from './UsersData'
+const API = 'http://localhost:8000';
 
-function UserRow(props) {
-  const user = props.user
-  const userLink = `/users/${user.id}`
-
-  const getBadge = (status) => {
-    return status === 'Active' ? 'success' :
-      status === 'Inactive' ? 'secondary' :
-        status === 'Pending' ? 'warning' :
-        status === 'Idle' ? 'warning' :
-          status === 'Banned' ? 'danger' :
-            'primary'
-  }
-
-  return (
-    <tr key={user.id.toString()}>
-      <th scope="row"><Link to={userLink}>{user.id}</Link></th>
-      <td><Link to={userLink}>{user.name}</Link></td>
-      <td>{user.registered}</td>
-      <td>{user.role}</td>
-      <td><Link to={userLink}><Badge color={getBadge(user.status)}>{user.status}</Badge></Link></td>
-    </tr>
-  )
+const data = {
+  columns: [
+    {
+      label: "Name",
+      field: 'name',
+      sort: 'asc',
+    },
+    {
+      label: "Username",
+      field: 'username',
+      sort: 'asc',
+    },
+    {
+      label: "Role",
+      field: 'role',
+      sort: 'asc',
+    },
+    {
+      label: "Division",
+      field: 'divisi',
+      sort: 'asc',
+    },
+    {
+      label: "Action",
+      field: 'action',
+      sort: 'disabled'
+    }
+  ],
+  rows: []
 }
 
 class Users extends Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      users: [],
+      loading: true,
+      modals : false,
+    }
+  }
+
+  onClick (user){
+    localStorage.setItem('user', JSON.stringify(user));
+    window.location.href = '#/updateUser/' + user.id;
+  }
+
+  componentDidMount(){
+    axios.get(API + '/sysadmin/all-users')
+    .then(res => {
+      const users = res.data;
+      this.setState({
+        users: users,
+        loading: false
+      })
+    })
+  }
 
   render() {
+    let content;
 
-    const userList = usersData.filter((user) => user.id < 10)
+    if (this.state.loading){
+      content = <div align="center"><p>Loading . . .</p></div>;
+    } else {
+      let list_soal = this.state.users.map((user) => {
+        return (
+          {
+            name: user.name,
+                        
+            username: user.username,  
+            
+            role: user.role,
+
+            divisi: user.divisi,
+            
+            action: 
+            <div style={{width:110, overflow: 'hidden'}}>
+              <Row>
+                <Col>
+                  <Button color="primary" onClick={() => this.onClick(user)} className=" btn btn-primary btn-pill">
+                    <i className="cui-pencil icons"></i>
+                  </Button>
+                    
+                </Col>
+                <Col>
+                  <Modals name={user.name} id={user.id} />
+                </Col>
+              </Row>
+            </div>
+          }
+        );
+      });
+      
+      data.rows = []
+      for (var i = 0; i < list_soal.length; i++) {
+        data.rows.push(list_soal[i]);
+      }
+
+      content = (
+        <MDBDataTable borderless
+                      striped
+                      hover 
+                      small 
+                      btn
+                      data={data} />
+      );
+    }
 
     return (
       <div className="animated fadeIn">
+        <div align="center">
+          <h3>User Management</h3>
+        </div>
+        <br></br>
+        <Link to="/addUser">
+            <Button color="primary" className="btn-pill">Add User</Button>
+        </Link>
+        <br></br>
+        <br></br>
         <Row>
-          <Col xl={6}>
+          <Col>
             <Card>
               <CardHeader>
-                <i className="fa fa-align-justify"></i> Users <small className="text-muted">example</small>
+                <i className="fa fa-align-justify"></i> User List
               </CardHeader>
               <CardBody>
-                <Table responsive hover>
-                  <thead>
-                    <tr>
-                      <th scope="col">id</th>
-                      <th scope="col">name</th>
-                      <th scope="col">registered</th>
-                      <th scope="col">role</th>
-                      <th scope="col">status</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {userList.map((user, index) =>
-                      <UserRow key={index} user={user}/>
-                    )}
-                  </tbody>
-                </Table>
+                {content}
               </CardBody>
             </Card>
           </Col>
         </Row>
       </div>
-    )
+    );
   }
 }
 
