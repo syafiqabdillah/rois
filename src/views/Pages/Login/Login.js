@@ -67,6 +67,7 @@ class Login extends Component {
       if(response.data.data.length !== 0){
         var id_karyawan = response.data.data[0].id
         localStorage.setItem('id_karyawan', response.data.data[0].id)
+        localStorage.setItem('nama_karyawan', response.data.data[0].name)
         // datanya pelamar sudah ada di DB, masuk 
         localStorage.setItem('role', response.data.data[0].role);
         localStorage.setItem('token', 'tokensementara');

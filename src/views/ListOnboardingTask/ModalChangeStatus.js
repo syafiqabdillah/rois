@@ -23,10 +23,10 @@ class ModalChangeStatus extends React.Component {
     }));
     console.log(this.state.selected);
     console.log('dipilih:', e.target.id);
-    if(e.target.id==="reject"){
-      this.setState({status : "rejected", message : "Rejecting..."});
-    }else if (e.target.id==="approve"){
-      this.setState({status : "approved", message : "Approving..."});
+    if(e.target.id==="Reject"){
+      this.setState({status : "Rejected", message : "Rejecting..."});
+    }else if (e.target.id==="Approve"){
+      this.setState({status : "Approved", message : "Approving..."});
     }
   }
 
@@ -58,9 +58,9 @@ class ModalChangeStatus extends React.Component {
     };
 
     let buttonReject;
-    buttonReject = (<Button id="reject" color="danger" onClick={this.toggle} disabled={!this.props.hasSelected}> Reject </Button>)
+    buttonReject = (<Button id="Reject" color="danger" onClick={this.toggle} disabled={!this.props.hasSelected}> Reject </Button>)
     let buttonApprove;
-    buttonApprove = (<Button id="approve" color="primary" onClick={this.toggle} disabled={!this.props.hasSelected}> Approve </Button>)
+    buttonApprove = (<Button id="Approve" color="primary" onClick={this.toggle} disabled={!this.props.hasSelected}> Approve </Button>)
 
     return (
       <div>

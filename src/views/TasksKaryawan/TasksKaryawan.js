@@ -11,7 +11,6 @@ const { Meta } = Card;
 
 let columns = [
   { title: 'Task', dataIndex: 'nama', key: 'nama' },
-  { title: 'Deadline', dataIndex: 'deadline', key: 'deadline' },
   { title: 'Status', dataIndex: 'status', key: 'status'},
 ];
 
@@ -29,7 +28,8 @@ class TasksKaryawan extends Component {
       modalTitle: '',
       modalText: '',
       chosenTaskId: 0,
-      chosenTaskStatus: 0
+      chosenTaskStatus: 0,
+      progress:null
     }
   }
 
@@ -37,7 +37,7 @@ class TasksKaryawan extends Component {
     axios.get(API + '/ko/karyawan-onboarding/' + this.props.match.params.id)
     .then(res => {
       const karyawanOnboarding = res.data;
-      console.log(karyawanOnboarding);
+      //console.log(karyawanOnboarding);
       this.setState({
         karyawan_onboarding: karyawanOnboarding,
       })
@@ -46,10 +46,19 @@ class TasksKaryawan extends Component {
     axios.get(API + '/ko/tasks-karyawan/' + this.props.match.params.id)
     .then(res => {
       const tasks = res.data;
-      console.log(tasks);
+      //console.log(tasks);
       this.setState({
         tasks: tasks,
         loading: false
+      })
+    })
+
+    axios.get(API + '/po/get-onboarding-progress/' + this.props.match.params.id)
+    .then(res => {
+      const progress = res.data;
+      //console.log(progress);
+      this.setState({
+        progress:progress
       })
     })
   }
@@ -88,7 +97,7 @@ class TasksKaryawan extends Component {
           }
         })
         .then(function(response) {
-          console.log(response.data);
+          //console.log(response.data);
         })
       this.setState({
         modalText: 'Success! you are now progressing on this task',
@@ -116,7 +125,7 @@ class TasksKaryawan extends Component {
             }
           })
           .then(function(response) {
-            console.log(response.data);
+            //console.log(response.data);
           })
         this.setState({
           modalText: 'Success! Changes saved, we have notified your supervisor about this progress',
@@ -171,7 +180,7 @@ class TasksKaryawan extends Component {
         }
       }
 
-      progress = Math.round(finished / tasks_list.length * 100);
+      progress = Math.round(this.state.progress.approved / this.state.progress.total * 100);
 
     }
 

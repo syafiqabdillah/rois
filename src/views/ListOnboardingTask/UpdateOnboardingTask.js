@@ -22,8 +22,8 @@ const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
       } = this.props;
       const { getFieldDecorator } = form;
      
-      console.log(this.props.task.nama);
-      console.log(this.props.task.id);
+      // console.log(this.props.task.nama);
+      // console.log(this.props.task.id);
       return (
         <Modal
           visible={visible}
@@ -132,8 +132,8 @@ class UpdateOnboardingTask extends Component {
   
   render() {
     let desc = this.props.task
-    console.log("this.props.task")
-    console.log(desc);
+    //console.log("this.props.task")
+    //console.log(desc);
 
     return (
       <div>

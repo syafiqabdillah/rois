@@ -98,7 +98,7 @@ class AddOnboardingTask extends Component {
           axios.post('http://localhost:8000/supervisor/create-tugas-onboarding', qs.stringify({
             'deskripsi': values['description'],
             'id_karyawan': id_karyawan_onboarding,
-            'status':'assigned',
+            'status':'Assigned',
             'assigned_date' : today.format('YYYY-MM-DD'),
             'nama':values['name']
           }),

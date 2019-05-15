@@ -32,6 +32,16 @@ class KaryawanOnboardingController extends Controller
     public function getTasksKaryawan($id){
         $tasks_karyawan = DB::table('tugas_onboarding')->select()->where('id_karyawan', $id)->get();
         $tasks_karyawan = json_decode($tasks_karyawan);
+        
+        // $approved = DB::table('tugas_onboarding')->select(DB::raw('nama'))->where('id_karyawan', $id)->where('status', 'Approved')->count();
+        // $taskdone = DB::table('tugas_onboarding')->select(DB::raw('nama'))->where('id_karyawan', $id)->where('status', 'Finished')->count();
+        // $taskonprogress = DB::table('tugas_onboarding')->select(DB::raw('nama'))->where('id_karyawan', $id)->where('status', 'On Progress')->count();
+        // $taskassigned = DB::table('tugas_onboarding')->select(DB::raw('nama'))->where('id_karyawan', $id)->where('status', 'Assigned')->count();
+        // $total = $taskdone + $taskonprogress +$taskassigned + $approved;
+
+        // $data = array('approved'=>$approved, 'complete' => $taskdone, 'onprogress'=> $taskonprogress, 'assigned'=> $taskassigned, 'total'=>$total);
+        // $tasks_karyawan['data'] = $data;
+
         return $tasks_karyawan;
     }
 
