@@ -51,6 +51,11 @@ const data = {
     },
    
     {
+      label: "Needed",
+      field: 'needed',
+      width: 150
+    },
+    {
       label: "Action",
       field: 'action',
       width: 100
@@ -103,14 +108,13 @@ export class Vacancies extends Component {
         }
         return (
           {
-            nama:
-              <Link to={"/vacancy/" + lowongan.id} >{lowongan.nama}</Link> ,
-
+            nama:lowongan.nama,
             divisi: lowongan.divisi,
             start_date: lowongan.start_date,
             end_date: lowongan.end_date,
             lokasi: lowongan.lokasi,
             tipe: lowongan.tipe,
+            needed: lowongan.posisi_tersedia,
             status : 
             //ini belom selese nampilin bagdge nya
             <Badge pill color={color_badge}>{lowongan.status}</Badge>,

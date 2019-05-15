@@ -35,8 +35,6 @@ class TugasOnboardingController extends Controller
      */
     public function createTugasOnboarding(Request $request){
         $deskripsi= $request->deskripsi;
-        $deadline_date = $request->deadline_date;
-      
         $id_karyawan = $request->id_karyawan;
         $status = $request->status;
         $assigned_date =  $request->assigned_date;
@@ -49,7 +47,6 @@ class TugasOnboardingController extends Controller
             'status' => $status,
             'assigned_date' => $assigned_date,
             'nama' => $nama
-            
             ]);
         return $id;
     }

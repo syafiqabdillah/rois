@@ -14,13 +14,13 @@ class LowonganController extends Controller
      */
     public function __construct()
     {
-        
+
     }
 
     /**
-     * mengembalikan semua lowongan yang ada 
-     * dengan requirement dan responsiblity dari masing masing lowongan tersebut 
-     * @return array $lowongan lowongan yang telah terisi requirement dan responsibility 
+     * mengembalikan semua lowongan yang ada
+     * dengan requirement dan responsiblity dari masing masing lowongan tersebut
+     * @return array $lowongan lowongan yang telah terisi requirement dan responsibility
      */
     public function getAllLowongan(Request $request){
     $this->setStatus();
@@ -68,19 +68,19 @@ class LowonganController extends Controller
 
   /**
      * mengembalikan list of lowongan terkait yang memiliki divisi dan tipe tertentu.
-     * dengan requirement dan responsiblity dari lowongan tersebut 
+     * dengan requirement dan responsiblity dari lowongan tersebut
      * @param string  $id divisi yang ingin diambil related lowongannya
-     * @return      array $lowongan lowongan yang telah terisi requirement dan responsibility 
+     * @return      array $lowongan lowongan yang telah terisi requirement dan responsibility
      */
     public function getRelatedLowongan($id){
         $lowongan_now = $this->getLowongan($id);
         $lowongan_now = json_decode($lowongan_now);
-        
+
          $tipe = $lowongan_now->tipe;
          $divisi= $lowongan_now->divisi;
 
 
-         $getrelated_lowongan = DB::table('lowongan') 
+         $getrelated_lowongan = DB::table('lowongan')
          ->where('id', '!=', $id)
          ->where(function ($query) use ($tipe, $divisi) {
              $query->where('tipe',$tipe)
@@ -97,14 +97,14 @@ class LowonganController extends Controller
          }
          $firstThreeElements = array_slice($result, 1, 4);
        return $firstThreeElements;
-        
+
     }
 
     /**
-     * mengembalikan suatu lowongan dengan id tertentu 
-     * dengan requirement dan responsiblity dari lowongan tersebut 
-     * @param long  $id id dari lowongan yang ingin diambil 
-     * @return      array $lowongan lowongan yang telah terisi requirement dan responsibility 
+     * mengembalikan suatu lowongan dengan id tertentu
+     * dengan requirement dan responsiblity dari lowongan tersebut
+     * @param long  $id id dari lowongan yang ingin diambil
+     * @return      array $lowongan lowongan yang telah terisi requirement dan responsibility
      */
     public function getLowongan($id){
         $lowongan = DB::table('lowongan')->select()->where('id', $id)->get();
@@ -114,7 +114,7 @@ class LowonganController extends Controller
         $lowongan->isDirujuk = $isDirujuk;
         $lowongan = $this->addRequirementAndResponsibility($lowongan);
 
-        
+
         return json_encode($lowongan);
     }
 
@@ -140,9 +140,11 @@ class LowonganController extends Controller
             $status = "Not Active";
         }
         $id = DB::table('lowongan')->insertGetId(
-            ['nama' => $nama, 
-            'start_date' => $start_date, 
-            'end_date' => $end_date, 
+            ['nama' => $nama,
+            'start_date' => $start_date,
+            'end_date' => $end_date,
+            'status' => 'Published',
+            'posisi_tersedia' => 10,
             'publish_date' => $publish_date,
             'divisi' => $divisi,
             'lokasi' => $lokasi,
@@ -169,9 +171,9 @@ class LowonganController extends Controller
 
         $result = DB::table('lowongan')
             ->where('id', $id_lowongan)
-            ->update(['nama' => $nama, 
-            'start_date' => $start_date, 
-            'end_date' => $end_date, 
+            ->update(['nama' => $nama,
+            'start_date' => $start_date,
+            'end_date' => $end_date,
             'publish_date' => $publish_date,
             'divisi' => $divisi,
             'lokasi' => $lokasi,
@@ -190,12 +192,12 @@ class LowonganController extends Controller
         return $response;
     }
 
-  
+
 
     /**
-     * mengembalikan lowongan dengan requirement dan responsiblity yang bersangkutan 
-     * @param array  $arr lowongan yang akan ditampilkan requirement dan responsibilitynya 
-     * @return array $lowongan lowongan yang telah terisi requirement dan responsibility 
+     * mengembalikan lowongan dengan requirement dan responsiblity yang bersangkutan
+     * @param array  $arr lowongan yang akan ditampilkan requirement dan responsibilitynya
+     * @return array $lowongan lowongan yang telah terisi requirement dan responsibility
      */
     public function addRequirementAndResponsibility($arr){
         $lowongan = $arr;

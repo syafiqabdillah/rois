@@ -17,33 +17,123 @@ class LamaranController extends Controller{
     public function __construct(){
     }
 
+    public function getNamaLowongan($id_lowongan){
+        $result = DB::table('lowongan')->select('nama')->where('id', $id_lowongan)->get();
+        $result = json_decode($result);
+        $result = $result[0];
+
+        return $result->nama;
+    }
+
+    public function getRecruitmentReport($divisi, $start, $end){
+
+      $tsstart = strtotime($start);
+      $tsend = strtotime($end);
+
+      //$data = array('divisi'=>$divisi, 'start'=>$start, 'end'=>$end);
+
+      if($divisi=='All'){
+        $list_lamaran = DB::table('lamaran')->select()
+        ->where([
+            ['created_date','>=',$start],
+            ['created_date','<=',$end]
+        ])->get();
+        $list_lamaran = json_decode($list_lamaran);
+        
+        //siapin nama lowongan yang bakal muncul di ringkasan 
+        $result = array();
+        foreach($list_lamaran as $res){
+            $nama_lowongan = $this->getNamaLowongan($res->id_lowongan);
+            if (array_key_exists($nama_lowongan, $result)){
+                //nama lowongan ada
+                if (array_key_exists($res->tahapan, $result[$nama_lowongan])){
+                    //nama tahapan ada, tambah 1 ke yang udah ada 
+                    $result[$nama_lowongan][$res->tahapan]=$result[$nama_lowongan][$res->tahapan] + 1;
+                } else {
+                    //nama tahapan belum ada, buat baru nilainya 1 
+                    $result[$nama_lowongan][$res->tahapan]=1;
+                }
+            } else { 
+                //nama lowongan belum ada, buat baru
+                $result[$nama_lowongan] = array();
+
+                //jumlah tahapannya belum ada juga berarti, buat baru nilainya 1
+                $result[$nama_lowongan]['Administration']=0;
+                $result[$nama_lowongan]['Remote Test']=0;
+                $result[$nama_lowongan]['Interview']=0;
+                $result[$nama_lowongan]['Hired']=0;
+
+                $result[$nama_lowongan][$res->tahapan]=1;
+            }
+        }
+
+        $result_rapi = array();
+        foreach($result as $key=>$value){
+            $value['name'] = $key;
+            array_push($result_rapi, $value);
+        }
+
+        return json_encode($result_rapi);
+
+      } else {
+        $lowongan = DB::table('lowongan')->select('id')->where('divisi', $divisi)->get();
+        $lowongan = json_decode($lowongan);
+        $list_id_lowongan = array();
+        foreach ($lowongan as $low) {
+          array_push($list_id_lowongan, $low->id);
+        }
+        // $data['$list_id_lowongan'] = $list_id_lowongan;
+
+        $result = array();
+        $result['Administration']=0;
+        $result['Remote Test']=0;
+        $result['Interview']=0;
+        $result['Hired']=0;
+
+        $list_lamaran = DB::table('lamaran')->select()->whereIn('id_lowongan', $list_id_lowongan)->get();
+
+        foreach($list_lamaran as $lamaran){
+            $lamaran = (object) $lamaran;
+
+            $tahapan = $lamaran->tahapan;
+
+            $ts_created_date = strtotime($lamaran->created_date);
+
+            //cek apakah tanggal lamaran ini dibuat memenuhi constrain waktu
+            $is_sebelum = $ts_created_date < $tsend;
+            $is_sesudah = $ts_created_date > $tsstart;
+
+            $lamaran->is_sebelum = $is_sebelum;
+            $lamaran->is_sesudah = $is_sesudah;
+            $lamaran->ts_created_date = $ts_created_date;
+
+            if($is_sebelum && $is_sesudah){
+                $result[$tahapan] += 1;
+            }
+
+        }        
+
+        // $data['result'] = $result;
+        // $data['list lamaran']  = $list_lamaran;
+        $array_chart_js = array('labels'=>array(), 'datasets'=>array());
+        array_push($array_chart_js['datasets'],array('data'=>array(), 'backgroundColor'=>array(), 'hoverBackgroundColor'=>array()));
+        
+        foreach($result as $key=>$value){
+            array_push($array_chart_js['labels'], $key);
+            array_push($array_chart_js['datasets'][0]['data'], $value);
+        }
+
+        $array_chart_js['datasets'][0]['backgroundColor'] = array('#E1341E', '#24DB7E', '#DB2481', '#1ECBE1');
+        $array_chart_js['datasets'][0]['hoverBackgroundColor']=array('#E1341E', '#24DB7E', '#DB2481', '#1ECBE1');
+        return json_encode($array_chart_js);
+      }
+    }
+
     public function sendMailLamaran($data){
         $nama = $data['nama'];
         $email = $data['email'];
         $lowongan = $data['lowongan'];
-        // // Instantiation and passing `true` enables exceptions
-        // $mail = new PHPMailer(true);
-        // //Server settings
-        // $mail->isSMTP();                                            // Set mailer to use SMTP
-        // $mail->Host       = 'smtp.gmail.com';  // Specify main and backup SMTP servers
-        // $mail->SMTPAuth   = true;                                   // Enable SMTP authentication
-        // $mail->Username   = 'second.umarghanis@gmail.com';                     // SMTP username
-        // $mail->Password   = 'propensic5';                               // SMTP password
-        // $mail->SMTPSecure = 'tls';                                  // Enable TLS encryption, `ssl` also accepted
-        // $mail->Port       = 587;                                    // TCP port to connect to
-        // //Recipients
-        // $mail->setFrom('second.umarghanis@gmail.com', 'SIRCLO Career');
-        // $mail->addAddress($email, 'Joe User');     // Add a recipient
-        // // Attachments
-        // // $mail->addAttachment('/var/tmp/file.tar.gz');         // Add attachments
-        // // $mail->addAttachment('/tmp/image.jpg', 'new.jpg');    // Optional name
-        // // Content
-        // $mail->isHTML(true);                                  // Set email format to HTML
-        // $mail->Subject = 'Application Success';
-        // $body = 'Dear ' . $nama . ', your application as '. $lowongan .' has been submitted. We will evaluate it soon. You can check the progress of your application(s) at our system.';
-        // $mail->Body    = $body;
-        // $mail->AltBody = strip_tags($body);
-        // $mail->send();
+        
         $text = 'Dear ' . $nama . ', your application as '. $lowongan .' has been submitted. We will evaluate it soon. You can check the progress of your application(s) at our system.';
         $data = array('email'=>$email, 'text'=>$text);
         Mail::send([], $data, function($message) use ($data) {
@@ -157,15 +247,7 @@ class LamaranController extends Controller{
         $pelamar = DB::table('pelamar')->select()->where('token', $token)->get();
         $pelamar = json_decode($pelamar);
         $pelamar = $pelamar[0];
-        // // $experience = DB::table('experience')->select()->where('id_lamaran', $id)->get();
-        // // $experience = json_decode($experience);
-        // // $experience = $experience[0];
-        // // $skill = DB::table('skill')->select()->where('id_lamaran', $id)->get();
-        // // $skill = json_decode($skill);
-        // // $skill = $skill[0];
         $lamaran->detail_pelamar = $pelamar;
-        // $lamaran->experience = $experience;
-        // $lamaran->skill = $skill;
         return json_encode($lamaran);
     }
 

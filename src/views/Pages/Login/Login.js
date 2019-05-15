@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Button, Card, CardBody, CardGroup, Col, Container, Form, Input, InputGroup, InputGroupAddon, InputGroupText, Row } from 'reactstrap';
 import GoogleLogin from 'react-google-login';
 import axios from 'axios';
+import 'antd/dist/antd.css';
 
 class Login extends Component {
   constructor(props){
@@ -30,7 +31,7 @@ class Login extends Component {
       }
     })
     .then(function (response) {
-      localStorage.setItem('role', 'pelamar');
+      localStorage.setItem('role', 'PELAMAR');
       if(response.data.data.length !== 0){
         // datanya pelamar sudah ada di DB, masuk 
         window.location.href = '#/vacancies-applicant'
@@ -48,11 +49,39 @@ class Login extends Component {
   handleSubmit = (e) => {
     e.preventDefault()
 
-    if (this.state.username === "admin" && this.state.password === "admin"){
-      localStorage.setItem('role', 'admin');
-      localStorage.setItem('token', 'tokensementara');
-      window.location.href = '#/dashboard';
-    }
+    // if (this.state.username === "admin" && this.state.password === "admin"){
+    //   localStorage.setItem('role', 'admin');
+    //   localStorage.setItem('token', 'tokensementara');
+    //   window.location.href = '#/dashboard';
+    // }
+
+    const url = 'http://localhost:8000/login-employee';
+    var qs = require('qs');
+    axios.post(url, qs.stringify({'username': this.state.username, 'password': this.state.password}),{
+      headers:{
+        'Content-Type': 'application/x-www-form-urlencoded'
+      }
+    })
+    .then(function (response) {
+      console.log(response.data.data)
+      if(response.data.data.length !== 0){
+        localStorage.setItem('id_karyawan', response.data.data[0].id)
+        // datanya pelamar sudah ada di DB, masuk 
+        localStorage.setItem('role', response.data.data[0].role);
+        localStorage.setItem('token', 'tokensementara');
+        if (response.data.data[0].role == "ADMIN"){
+          window.location.href = '#/dashboard'
+        } else if (response.data.data[0].role == "SUPERVISOR") {
+          window.location.href = '#/employee'
+        } else {
+          window.location.href = '#/users'
+        }
+        
+      } else {
+        //tidak ada, ke register
+        alert('username atau password salah')
+      }
+    })
     
     // var qs = require('qs');
     // const data = qs.stringify(this.state)
@@ -100,7 +129,7 @@ class Login extends Component {
                             <i className="icon-user"></i>
                           </InputGroupText>
                         </InputGroupAddon>
-                        <Input type="text" placeholder="Name" autoComplete="name" name="username" onChange={this.handleInputChange} required/>
+                        <Input type="text" placeholder="Username" autoComplete="name" name="username" onChange={this.handleInputChange} required/>
                       </InputGroup>
 
                       <InputGroup className="mb-3">

@@ -27,6 +27,8 @@ const AddAppointment = React.lazy(() => import('./views/AddAppointment'));
 const AddAnswer = React.lazy(() => import('./views/AddAnswer'));
 const AddVacancy = React.lazy(() => import('./views/AddVacancy'));
 const AddAssessment = React.lazy(() => import('./views/AddAssessment'));
+const EmployeePerformanceReport = React.lazy(() => import('./views/EmployeePerformanceReport'));
+const Employees = React.lazy(() => import('./views/Employee'));
 const VacanciesPelamar = React.lazy(() => import('./views/VacanciesPelamar'));
 const ApplicationForm = React.lazy(() => import('./views/ApplicationForm'));
 const ApplicationsPelamar = React.lazy(() => import('./views/ApplicationsPelamar'));
@@ -36,6 +38,10 @@ const Reject = React.lazy(() => import('./views/FinalStage/Reject'));
 const RemoteTest = React.lazy(() => import('./views/RemoteTest'));
 const Profile = React.lazy(() => import('./views/Profile'));
 const UpdateAssessment = React.lazy(() => import('./views/UpdateAssessment'));
+const AddUser = React.lazy(() => import('./views/AddUser'));
+const UpdateUser = React.lazy(() => import('./views/UpdateUser'));
+
+const TasksKaryawan = React.lazy(() => import('./views/TasksKaryawan'));
 const ListOnboardingTask = React.lazy(() => import('./views/ListOnboardingTask'));
 
 // const UpdateVacancy = React.lazy(() => import ('./views/UpdateVacancy/UpdateVacancy'));
@@ -62,6 +68,8 @@ const Widgets = React.lazy(() => import('./views/Widgets/Widgets'));
 const Users = React.lazy(() => import('./views/Users/Users'));
 const User = React.lazy(() => import('./views/Users/User'));
 
+
+
 // https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config
 const routes = [
   { path: '/', exact: true, name: 'Home', component: DefaultLayout },
@@ -84,6 +92,10 @@ const routes = [
   { path: '/addanswer/:id', name: 'Add Answer', component: AddAnswer },
   { path: '/addVacancy', name: 'Add Vacancy', component: AddVacancy },
   { path: '/addAssessment', name: 'Add Assessment', component: AddAssessment },
+
+  { path: '/employeeDashboard/:id', name: 'Employee Dashboard', component: EmployeePerformanceReport },
+  { path: '/employees', name: 'List of Employee', component: Employees},
+
   { path: '/vacancies-applicant', name: 'Vacancies', component: VacanciesPelamar },
   { path: '/apply/:id', name: 'Application Form', component: ApplicationForm },
   { path: '/myapplications', name: 'My Applications', component: ApplicationsPelamar },
@@ -95,6 +107,10 @@ const routes = [
   { path: '/reject/:id', exact: true, name: 'Reject', component: Reject },
   { path: '/remoteTest/:id', exact: true, name: 'RemoteTest', component: RemoteTest },
   { path: '/updateAssessment/:id', name: 'Update Assessment', component: UpdateAssessment },
+  { path: '/addUser', name: 'Add User', component: AddUser },
+  { path: '/updateUser/:id', name: 'Update User', component: UpdateUser },
+
+  { path: '/taskskaryawan/:username', name: 'Tasks Karyawan', component: TasksKaryawan },
 
   { path: '/base/tabs', name: 'Tabs', component: Tabs },
   { path: '/base/breadcrumbs', name: 'Breadcrumbs', component: Breadcrumbs },
