@@ -208,12 +208,20 @@ export class ListOnboardingTask extends Component {
       id: '',
       visible: false,
       karyawan_onboarding: '',
-      progress:{approved:0, total:0}
+      progress: { approved: 0, total: 0 }
     }
   }
 
 
   componentDidMount() {
+    localStorage.setItem('id_karyawan_onboarding', this.props.match.params.id)
+
+    axios.get(API + '/supervisor/getNamaKaryawanOnboarding/' + this.props.match.params.id)
+    .then(res =>{
+      // console.log('nama onboarding ')
+      // console.log(res.data)
+      this.setState({karyawan_onboarding: res.data.name})
+    })
 
     axios.get(API + '/supervisor/getTugasOnboarding/' + this.props.match.params.id)
       .then(res => {
@@ -243,13 +251,13 @@ export class ListOnboardingTask extends Component {
     num_task = 0;
 
     axios.get(API + '/po/get-onboarding-progress/' + this.props.match.params.id)
-    .then(res => {
-      const progress = res.data;
-      //console.log(progress);
-      this.setState({
-        progress:progress
+      .then(res => {
+        const progress = res.data;
+        //console.log(progress);
+        this.setState({
+          progress: progress
+        })
       })
-    })
   };
 
   start = () => {
@@ -317,21 +325,11 @@ export class ListOnboardingTask extends Component {
                   <ButtonGroup>
                     <ModalChangeStatus selectedTasks={this.state.selectedRowKeys} items={this.state.selectedRowKeys.length} hasSelected={hasSelected} />
                   </ButtonGroup>
-                  <br></br> <br></br>
-                  <Button
-                    type="primary"
-                    onClick={this.start}
-                    disabled={!hasSelected}
-                  >
-                    Reload
-          </Button>
+                  <br></br> 
 
                   <span style={{ marginLeft: 8 }}>
                     {hasSelected ? `Selected ${selectedRowKeys.length} items` : ""}
                   </span>
-
-
-
                 </div>
                 <Table
                   rowSelection={rowSelection}

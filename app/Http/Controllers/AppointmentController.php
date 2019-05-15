@@ -143,10 +143,11 @@ class AppointmentController extends Controller
    public function getNumberTaskByStatus($id){
         $approved = DB::table('tugas_onboarding')->select(DB::raw('nama'))->where('id_karyawan', $id)->where('status', 'Approved')->count();
        $taskdone = DB::table('tugas_onboarding')->select(DB::raw('nama'))->where('id_karyawan', $id)->where('status', 'Finished')->count();
+       $waiting = DB::table('tugas_onboarding')->select(DB::raw('nama'))->where('id_karyawan', $id)->where('status', 'Waiting For Confirmation')->count();
        $taskonprogress = DB::table('tugas_onboarding')->select(DB::raw('nama'))->where('id_karyawan', $id)->where('status', 'On Progress')->count();
        $taskassigned = DB::table('tugas_onboarding')->select(DB::raw('nama'))->where('id_karyawan', $id)->where('status', 'Assigned')->count();
-       $total = $taskdone + $taskonprogress +$taskassigned + $approved;
-       $data = array('approved'=>$approved, 'complete' => $taskdone, 'onprogress'=> $taskonprogress, 'assigned'=> $taskassigned, 'total'=>$total);
+       $total = $taskdone + $taskonprogress +$taskassigned + $approved + $waiting;
+       $data = array('approved'=>$approved, 'complete' => $taskdone, 'onprogress'=> $taskonprogress, 'assigned'=> $taskassigned, 'waiting'=> $waiting, 'total'=>$total);
        return $data;
    }
 
