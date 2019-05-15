@@ -131,11 +131,11 @@ $router->post('sysadmin/delete-user', ['middleware' => 'cors', 'uses' => 'UserCo
  * UC - 12 : Laporan Kinerja Karyawan
  * Author : Fairuz Y
  */
- $router->get('po/get-all-task-complete/{id}', ['middleware' => 'cors', 'uses' => 'AppointmentController@taskComplete']);
- $router->get('po/get-all-task-status/{id}', ['middleware' => 'cors', 'uses' => 'AppointmentController@getAllTaskStatus']);
- $router->get('po/get-onboarding-progress/{id}', ['middleware' => 'cors', 'uses' => 'AppointmentController@getNumberTaskByStatus']);
- $router->get('po/get-employee-profile/{id}', ['middleware' => 'cors', 'uses' => 'AppointmentController@getEmployeeProfile']);
- $router->get('po/get-all-employee', ['middleware' => 'cors', 'uses' => 'AppointmentController@getAllEmployee']);
+ $router->get('su/get-all-task-complete/{id}', ['middleware' => 'cors', 'uses' => 'TaskController@taskComplete']);
+ $router->get('su/get-all-task-status/{id}', ['middleware' => 'cors', 'uses' => 'TaskController@getAllTaskStatus']);
+ $router->get('su/get-onboarding-progress/{id}', ['middleware' => 'cors', 'uses' => 'TaskController@getNumberTaskByStatus']);
+ $router->get('su/get-employee-profile/{id}', ['middleware' => 'cors', 'uses' => 'TaskController@getEmployeeProfile']);
+ $router->get('su/get-all-employee', ['middleware' => 'cors', 'uses' => 'TaskController@getAllEmployee']);
 
 /**
  * UC - 11 : Memberikan Konfirmasi Penyelesaian Tugas

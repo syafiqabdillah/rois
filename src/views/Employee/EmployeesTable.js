@@ -54,7 +54,7 @@ export default class EmployeesTable extends Component {
   }
 
   fetchData = () => {
-    axios.get('http://localhost:8000' + '/po/get-all-employee')
+    axios.get('http://localhost:8000' + '/su/get-all-employee')
       .then((response) => {
         const profile = response.data;
         console.log(profile);
@@ -90,7 +90,7 @@ export default class EmployeesTable extends Component {
       });
 
       data.rows = [];
-      
+
       for (var i = 0; i < list_appointment.length; i++) {
         data.rows.push(list_appointment[i]);
       }

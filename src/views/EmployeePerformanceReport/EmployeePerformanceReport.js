@@ -52,7 +52,7 @@ export default class EmployeePerformanceReport extends React.Component{
   getAllTask = () => {
     const label = []
     const time = []
-    axios.get('http://localhost:8000' + '/po/get-all-task-complete/' + this.props.employeeid)
+    axios.get('http://localhost:8000' + '/su/get-all-task-complete/' + this.props.employeeid)
       .then((response) => {
         const task = response.data;
         if(task.length == 0) {
@@ -121,7 +121,7 @@ export default class EmployeePerformanceReport extends React.Component{
   }
 
   getOnboardingProgress = () => {
-    axios.get('http://localhost:8000' + '/po/get-onboarding-progress/' + this.props.employeeid)
+    axios.get('http://localhost:8000' + '/su/get-onboarding-progress/' + this.props.employeeid)
       .then((response) => {
         const onboarding = response.data;
         this.setState({
@@ -132,7 +132,7 @@ export default class EmployeePerformanceReport extends React.Component{
   }
 
   getProfile = () => {
-    axios.get('http://localhost:8000' + '/po/get-employee-profile/' + this.props.employeeid)
+    axios.get('http://localhost:8000' + '/su/get-employee-profile/' + this.props.employeeid)
       .then((response) => {
         const profile = response.data[0];
         this.setState({

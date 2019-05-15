@@ -19,7 +19,7 @@ export default class ListOfTask extends React.Component {
   }
 
   fetchData = (taskStatus) => {
-    axios.get('http://localhost:8000' + '/po/get-all-task-status/'+ this.props.employeeid)
+    axios.get('http://localhost:8000' + '/su/get-all-task-status/'+ this.props.employeeid)
       .then((response) => {
         const task = response.data[taskStatus];
         console.log(task)
