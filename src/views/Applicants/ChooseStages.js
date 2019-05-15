@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Card, CardBody, Col, Row, Button } from 'reactstrap';
 
-const API = 'http://localhost:8000';
-
 class ChooseStages extends Component {
   constructor(props){
     super(props);

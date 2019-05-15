@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import {
-  Card, CardBody, CardHeader, Col, Row, Spinner
-} from 'reactstrap';
+import { Card, CardBody, Col, Row, Spinner } from 'reactstrap';
 import '../../css/jquery.dataTables.css'
 
 const API = 'http://localhost:8000';
@@ -41,7 +39,7 @@ class Profile extends Component {
       let profile = JSON.parse(localStorage.getItem('profile'));
       let pelamar = this.state.pelamar
       let image = (
-        <img id='profileImg' src={profile.imageUrl}></img>
+        <img id='profileImg' src={ profile.imageUrl } alt='Profile Pic'></img>
       )
 
       return (
@@ -76,4 +74,3 @@ class Profile extends Component {
 }
 
 export default Profile;
-

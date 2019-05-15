@@ -25,7 +25,6 @@ class Register extends Component {
   }
 
   handleSubmit = (e) => {
-    const data = this.state;
     e.preventDefault()
 
     let profile = JSON.parse(localStorage.getItem('profile'));

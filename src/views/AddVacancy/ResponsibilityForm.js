@@ -1,10 +1,10 @@
 import React from "react";
 import "antd/dist/antd.css";
 import axios from 'axios';
-import { Form, Input, Icon, Button,Card ,message} from "antd";
+import { Form, Input, Icon, Button ,message} from "antd";
 
 let id = 0;
-const id_lowongan=2;
+
 export default class ResponsibilityForm extends React.Component {
   remove = k => {
     const { form } = this.props;
@@ -32,13 +32,12 @@ export default class ResponsibilityForm extends React.Component {
       keys: nextKeys
     });
   };
-  
+
 
   handleSubmit = e => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        const {names,keys}  = values;
         console.log(values.names.length);
         var qs=(require('qs'));
          axios.post('http://localhost:8000/po/create-responsibility', qs.stringify({
@@ -59,7 +58,7 @@ export default class ResponsibilityForm extends React.Component {
           .then(() => message.success('Saving finished', 2.5))
           .then(() => message.success('Vacancy Saved', 2.5))
           .then(() =>  window.location.href = '#/vacancies');
-        
+
 
     }
 });
@@ -67,10 +66,10 @@ export default class ResponsibilityForm extends React.Component {
   render() {
     const { getFieldDecorator, getFieldValue } = this.props.form;
     const formItemLayout = {
-     
+
     };
     const formItemLayoutWithOutLabel = {
-   
+
     };
     let disable= this.props.disable;
     getFieldDecorator("keys", { initialValue: [] });
@@ -111,7 +110,7 @@ export default class ResponsibilityForm extends React.Component {
       </Form.Item>
     ));
     return (
-    
+
       <Form disabled={disable} onSubmit={this.handleSubmit}>
         {formItems}
         <Form.Item disabled={disable} {...formItemLayoutWithOutLabel}>
@@ -121,7 +120,7 @@ export default class ResponsibilityForm extends React.Component {
         </Form.Item>
         <Form.Item disabled={disable} {...formItemLayoutWithOutLabel}>
           <Button className="float-right" shape="round" disabled={disable} type="primary" htmlType="submit">
-            Submit 
+            Submit
           </Button>
         </Form.Item>
       </Form>

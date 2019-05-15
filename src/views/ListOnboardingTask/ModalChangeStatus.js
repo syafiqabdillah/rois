@@ -53,10 +53,6 @@ class ModalChangeStatus extends React.Component {
   }
 
   render() {
-    const textStyle = {
-      color : "#979797",
-    };
-
     let buttonReject;
     buttonReject = (<Button id="Reject" color="danger" onClick={this.toggle} disabled={!this.props.hasSelected}> Reject </Button>)
     let buttonApprove;

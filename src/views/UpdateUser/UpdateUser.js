@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Button, Card, CardBody, Col,
-  Form, FormGroup, FormText, Input, Label, Row} from 'reactstrap';
-import { isNull } from 'util';
+import { Button, Card, CardBody, Col, Form, FormGroup, Input, Label, Row} from 'reactstrap';
 //import 'antd/dist/antd.css';
 import { message } from 'antd';
 
@@ -29,7 +27,7 @@ class UpdateUser extends Component {
       divisi: user.divisi,
     })
   }
-  
+
   handleSubmit = (e) => {
     const data = this.state;
     e.preventDefault()

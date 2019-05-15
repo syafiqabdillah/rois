@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 
 import { AppHeaderDropdown, AppNavbarBrand, AppSidebarToggler } from '@coreui/react';
 import sirclo from '../../assets/img/brand/sirclo.png'
-import logo from '../../assets/img/brand/logo.svg'
 
 const propTypes = {
   children: PropTypes.node,
@@ -23,8 +22,6 @@ class KaryawanOnboardingHeader extends Component {
   render() {
 
     let imageUrl = 'https://cdn0.iconfinder.com/data/icons/elasto-online-store/26/00-ELASTOFONT-STORE-READY_user-circle-512.png';
-    
-    const { children, ...attributes } = this.props;
 
     return (
       <React.Fragment>

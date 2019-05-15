@@ -1,27 +1,20 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import {
-  Button, Card, CardBody,
-  FormGroup, Label, Col, Row
-} from 'reactstrap';
+import { Button } from 'reactstrap';
 import 'antd/dist/antd.css';
-import { Form, Modal, message, Input} from 'antd';
+import { Form, Modal, Input} from 'antd';
 const { TextArea } = Input;
-
-
 
 const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
   // eslint-disable-next-line
-  
+
   class extends React.Component {
 
-   
+
     render() {
-      const {
-        visible, onCancel, onCreate, form, confirmLoading,task
-      } = this.props;
+      const { visible, onCancel, onCreate, form, confirmLoading } = this.props;
       const { getFieldDecorator } = form;
-     
+
       // console.log(this.props.task.nama);
       // console.log(this.props.task.id);
       return (
@@ -34,7 +27,7 @@ const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
           confirmLoading={confirmLoading}
         >
           <Form layout="vertical">
-         
+
           <Form.Item
             label="Task Name"
           >
@@ -73,7 +66,7 @@ class UpdateOnboardingTask extends Component {
   state = {
     visible: false,
     confirmLoading : false,
-   
+
   };
 
   showModal = () => {
@@ -88,7 +81,7 @@ class UpdateOnboardingTask extends Component {
 
   handleUpdate = () => {
     const form = this.formRef.props.form;
-    
+
       form.validateFields((err, values) => {
         if (!err) {
           this.setState({confirmLoading: true});
@@ -116,8 +109,8 @@ class UpdateOnboardingTask extends Component {
         });
         window.location.reload();
       }, 2000);
-        
-     
+
+
         }else{
           return;
         }
@@ -129,7 +122,7 @@ class UpdateOnboardingTask extends Component {
   saveFormRef = (formRef) => {
     this.formRef = formRef;
   }
-  
+
   render() {
     let desc = this.props.task
     //console.log("this.props.task")
@@ -137,7 +130,7 @@ class UpdateOnboardingTask extends Component {
 
     return (
       <div>
-       
+
        <Button outline color="primary" className="btn-pill" onClick={this.showModal}>
                  <i className="cui-pencil icons " title="Update Task"></i>
                  </Button>
@@ -149,10 +142,9 @@ class UpdateOnboardingTask extends Component {
           task = {desc}
           confirmLoading={this.state.confirmLoading}
         />
-       
+
       </div>
     );
   }
 }
 export default UpdateOnboardingTask;
-

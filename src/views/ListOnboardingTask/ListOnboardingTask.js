@@ -147,7 +147,7 @@ import axios from 'axios';
 
 import "antd/dist/antd.css";
 
-import { Table, Card, Popconfirm, Empty, Progress, Skeleton, Switch, Icon, Avatar } from "antd";
+import { Table, Card, Progress, Avatar } from "antd";
 import { Component } from 'react';
 import { ButtonGroup, Button, Row, Col } from 'reactstrap';
 import ModalDelete from './ModalDelete';
@@ -157,8 +157,6 @@ import ModalChangeStatus from './ModalChangeStatus';
 
 const API = 'http://localhost:8000';
 const { Meta } = Card;
-
-let tugas;
 
 const columns = [
   {
@@ -196,9 +194,7 @@ const columns = [
 
 const data = [];
 let finished = 0;
-let progress;
 let num_task = 0;
-let task;
 
 export class ListOnboardingTask extends Component {
   constructor(props) {
@@ -273,7 +269,7 @@ export class ListOnboardingTask extends Component {
   };
 
   render() {
-    const { loading, selectedRowKeys } = this.state;
+    const { selectedRowKeys } = this.state;
     const rowSelection = {
       selectedRowKeys,
       onChange: this.onSelectChange,
@@ -283,7 +279,7 @@ export class ListOnboardingTask extends Component {
     };
     const hasSelected = selectedRowKeys.length > 0;
 
-    
+
     return (
 
       <div className="animated fadeIn">
