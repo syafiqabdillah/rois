@@ -29,7 +29,7 @@ class TasksKaryawan extends Component {
       modalText: '',
       chosenTaskId: 0,
       chosenTaskStatus: 0,
-      progress:null
+      progress:{approved:0, total:0}
     }
   }
 

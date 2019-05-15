@@ -127,6 +127,7 @@ $router->get('sysadmin/all-users', ['middleware' => 'cors', 'uses' => 'UserContr
 $router->post('sysadmin/create-user', ['middleware' => 'cors', 'uses' => 'UserController@createUser']);
 $router->post('sysadmin/update-user', ['middleware' => 'cors', 'uses' => 'UserController@updateUser']);
 $router->post('sysadmin/delete-user', ['middleware' => 'cors', 'uses' => 'UserController@deleteUser']);
+$router->get('sysadmin/get-supervisor', ['middleware' => 'cors', 'uses' => 'UserController@getSupervisor']);
 
 /**
  * UC - 12 : Laporan Kinerja Karyawan

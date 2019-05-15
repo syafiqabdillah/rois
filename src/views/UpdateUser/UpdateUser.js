@@ -14,12 +14,21 @@ class UpdateUser extends Component {
       name:'',
       username: '',
       role: '',
-      divisi: ''
+      divisi: '',
+      supervisor: null,
+      list_supervisor: []
     }
   }
 
   componentDidMount(){
     let user = JSON.parse(localStorage.getItem('user'));
+
+    axios.get('http://localhost:8000/sysadmin/get-supervisor/')
+    .then(res => {
+      const supervisor = res.data;
+      console.log(supervisor);
+      this.setState({list_supervisor: supervisor})
+    })
 
     this.setState({
       id: user.id,
@@ -27,6 +36,7 @@ class UpdateUser extends Component {
       username: user.username,
       role: user.role,
       divisi: user.divisi,
+      supervisor: user.id_supervisor
     })
   }
   
@@ -43,7 +53,8 @@ class UpdateUser extends Component {
       'name': this.state.name,
       'username': this.state.username,
       'role': this.state.role,
-      'divisi': this.state.divisi
+      'divisi': this.state.divisi,
+      'supervisor': this.state.supervisor
     }),
     {
       headers: {'Content-Type': 'application/x-www-form-urlencoded'}
@@ -84,6 +95,12 @@ class UpdateUser extends Component {
                 <Input type="select" name="role" id="role" onChange={this.handleInputChange} defaultValue={this.state.role} required>
                   <option value="admin">admin</option>
                   <option value="system admin">system admin</option>
+                </Input>
+              </FormGroup>
+              <FormGroup>
+                <Label for="name">Supervisor</Label>
+                <Input type="select" name="supervisor" id="supervisor" onChange={this.handleInputChange} defaultValue={this.state.supervisor}>
+                  { this.state.list_supervisor.map(sup => <option value={sup.id}>{sup.name}</option>) }
                 </Input>
               </FormGroup>
               <FormGroup>
