@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { Col, Row } from 'reactstrap';
 import 'antd/dist/antd.css';
-import { Badge, Modal, Popconfirm, Empty, Progress, Table, Skeleton, Switch, Card, Icon, Avatar } from 'antd';
+import { Modal, Progress, Table, Card, Avatar } from 'antd';
 
 const API = 'http://localhost:8000';
 
@@ -64,18 +63,18 @@ class TasksKaryawan extends Component {
   }
 
   showModal(task) {
-    if (task.status == 'Assigned') {
+    if (task.status === 'Assigned') {
       this.setState({
-        modalTitle: 'Starting the Task',
-        modalText: 'Are you sure you want to start the progress of the task?',
+        modalTitle: 'Start the Task',
+        modalText: 'Are you sure you want to start the progress of this task?',
         visible: true,
         chosenTaskId: task.id,
         chosenTaskStatus: task.status
       });
-    } else if (task.status == 'On Progress') {
+    } else if (task.status === 'On Progress') {
       this.setState({
-        modalTitle: 'Requesting for Approval',
-        modalText: 'Are you sure you want to confirm your changes on the finished task?',
+        modalTitle: 'Request for Approval',
+        modalText: 'Are you sure you want to confirm your changes on this finished task dan request for approval to your supervisor?',
         visible: true,
         chosenTaskId: task.id,
         chosenTaskStatus: task.status
@@ -84,9 +83,10 @@ class TasksKaryawan extends Component {
   };
 
   handleOk = () => {
-    if (this.state.chosenTaskStatus == 'Assigned') {
-      // axios post
-      let qs = require('qs');
+    // axios post
+    let qs = require('qs');
+
+    if (this.state.chosenTaskStatus === 'Assigned') {
       //post it to backend
       axios.post('http://localhost:8000/ko/update-task-karyawan/', qs.stringify({
           'id': this.state.chosenTaskId,
@@ -108,13 +108,10 @@ class TasksKaryawan extends Component {
           visible: false,
           confirmLoading: false,
         });
-      }, 2000);
-
+      }, 0);
       window.location.reload();
 
-    } else if (this.state.chosenTaskStatus == 'On Progress') {
-        // axios post
-        let qs = require('qs');
+    } else if (this.state.chosenTaskStatus === 'On Progress') {
         //post it to backend
         axios.post('http://localhost:8000/ko/update-task-karyawan/', qs.stringify({
             'id': this.state.chosenTaskId,
@@ -148,7 +145,7 @@ class TasksKaryawan extends Component {
   };
 
   render() {
-    let { visible, confirmLoading, modalText, modalTitle } = this.state;
+    let { visible, confirmLoading } = this.state;
 
     let content;
     let progress;
@@ -175,7 +172,7 @@ class TasksKaryawan extends Component {
 
       for (var i = 0; i < tasks_list.length; i++) {
         data.push(tasks_list[i]);
-        if (tasks_list[i].status == 'Finished'){
+        if (tasks_list[i].status === 'Finished'){
           finished = finished + 1;
         }
       }

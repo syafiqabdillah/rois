@@ -1,11 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import ChooseCurrentStage from '../Applicants';
-import ChooseStages from '../Applicants';
-import { Badge, Card, CardBody, CardHeader, Col, Pagination, PaginationItem,
-  Form, FormGroup, Label, Input, Button, PaginationLink, Row, Table, CardTitle,
-  CardText, Progress, FormText } from 'reactstrap';
+import { Badge, Card, CardBody, CardHeader, Col, Form, FormGroup, Label, Input, Button, Row, CardTitle, FormText } from 'reactstrap';
 import { message } from 'antd';
 
 const API = 'http://localhost:8000';

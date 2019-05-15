@@ -16,7 +16,7 @@ class Login extends Component {
   responseGoogle = (response) => {
     let profile = response.profileObj;
     localStorage.setItem('profile',JSON.stringify(profile));
-    
+
     let token = profile.googleId;
     localStorage.setItem('token', token);
     sessionStorage.setItem('token', token)
@@ -33,7 +33,7 @@ class Login extends Component {
     .then(function (response) {
       localStorage.setItem('role', 'PELAMAR');
       if(response.data.data.length !== 0){
-        // datanya pelamar sudah ada di DB, masuk 
+        // datanya pelamar sudah ada di DB, masuk
         window.location.href = '#/vacancies-applicant'
       } else {
         //tidak ada, ke register
@@ -68,25 +68,25 @@ class Login extends Component {
         var id_karyawan = response.data.data[0].id
         localStorage.setItem('id_karyawan', response.data.data[0].id)
         localStorage.setItem('nama_karyawan', response.data.data[0].name)
-        // datanya pelamar sudah ada di DB, masuk 
+        // datanya pelamar sudah ada di DB, masuk
         localStorage.setItem('role', response.data.data[0].role);
         localStorage.setItem('token', 'tokensementara');
-        if (response.data.data[0].role == "ADMIN"){
+        if (response.data.data[0].role === "ADMIN"){
           window.location.href = '#/dashboard'
-        } else if (response.data.data[0].role == "SUPERVISOR") {
+        } else if (response.data.data[0].role === "SUPERVISOR") {
           window.location.href = '#/employee'
-        }else if (response.data.data[0].role == "KARYAWAN ONBOARDING") {
+        }else if (response.data.data[0].role === "KARYAWAN ONBOARDING") {
           window.location.href = '#/taskskaryawan/' + id_karyawan
         } else {
           window.location.href = '#/users'
         }
-        
+
       } else {
         //tidak ada, ke register
         alert('username atau password salah')
       }
     })
-    
+
     // var qs = require('qs');
     // const data = qs.stringify(this.state)
 
@@ -102,7 +102,7 @@ class Login extends Component {
     // .then(function (response){
     //   console.log(response)
     // })
-    // cek username sama password untuk karyawan 
+    // cek username sama password untuk karyawan
 
   }
 
@@ -142,9 +142,9 @@ class Login extends Component {
                             <i className="icon-key"></i>
                           </InputGroupText>
                         </InputGroupAddon>
-                        <Input type="password" 
-                        placeholder="Password" 
-                        //pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" 
+                        <Input type="password"
+                        placeholder="Password"
+                        //pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
                         name="password"
                         title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" required
                         onChange={this.handleInputChange} />

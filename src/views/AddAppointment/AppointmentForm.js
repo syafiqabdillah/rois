@@ -71,7 +71,6 @@ export default class AppointmentForm extends React.Component {
   }
 
   validateLocationField = (rule, value, callback) => {
-   const form = this.props.form;
    const valid = !value.match(/^\d+$/);
    if (value && !valid) {
      callback('Location cannot be only number');

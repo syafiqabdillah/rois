@@ -1,8 +1,6 @@
 import React from 'react';
-import { Redirect } from 'react-router-dom';
 
 import 'antd/dist/antd.css';
-import { Form, Col, Row } from 'antd';
 import EmployeePerformanceReport from './EmployeePerformanceReport';
 
 

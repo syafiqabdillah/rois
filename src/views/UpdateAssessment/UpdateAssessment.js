@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Button, Card, CardBody, Col,
-  Form, FormGroup, FormText, Input, Label, Row} from 'reactstrap';
+import { Button, Card, CardBody, Col, Form, FormGroup, Input, Label, Row} from 'reactstrap';
 import { isNull } from 'util';
 import 'antd/dist/antd.css';
 import { message } from 'antd';
@@ -79,10 +78,10 @@ class UpdateAssessment extends Component {
   render() {
     let list_vacancy = this.state.lowongan.map((lowongan, index) => {
       return (
-        <option key={index} selected={this.state.vacancyID==lowongan.id} value={lowongan.id}>{lowongan.nama}</option>
+        <option key={index} selected={this.state.vacancyID === lowongan.id} value={lowongan.id}>{lowongan.nama}</option>
       );
     });
-    
+
     return (
       <div className="animated fadeIn">
         <div align="center">
@@ -100,7 +99,7 @@ class UpdateAssessment extends Component {
               </FormGroup>
               <FormGroup>
                 <Label for="vacancyID">Vacancy*</Label>
-                <Input type="select" name="vacancyID" id="vacancyID" required onChange={this.handleInputChange}> 
+                <Input type="select" name="vacancyID" id="vacancyID" required onChange={this.handleInputChange}>
                   <option value={isNull} disabled>Select Vacancy..</option>
                   {list_vacancy}
                 </Input>

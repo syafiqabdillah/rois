@@ -1,11 +1,7 @@
 import React, { Component } from 'react';
 //import { Link } from 'react-router-dom';
 import VacancyForm from './VacancyForm';
-import axios from 'axios';
-import {
-  Button, Card, CardBody,
-  FormGroup, Input, Label, Col, Row
-} from 'reactstrap';
+import { Card, CardBody, Col, Row } from 'reactstrap';
 import 'antd/dist/antd.css';
 import { Form } from 'antd';
 

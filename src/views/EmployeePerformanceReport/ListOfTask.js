@@ -1,7 +1,5 @@
 import React from 'react';
-import {
-  List, message, Avatar, Spin, Badge
-} from 'antd';
+import { List, Badge } from 'antd';
 
 import InfiniteScroll from 'react-infinite-scroller';
 import './TaskTable.css';
@@ -19,7 +17,7 @@ export default class ListOfTask extends React.Component {
   }
 
   fetchData = (taskStatus) => {
-    axios.get('http://localhost:8000' + '/po/get-all-task-status/'+ this.props.employeeid)
+    axios.get('http://localhost:8000/po/get-all-task-status/'+ this.props.employeeid)
       .then((response) => {
         const task = response.data[taskStatus];
         console.log(task)
@@ -29,9 +27,7 @@ export default class ListOfTask extends React.Component {
     });
   }
 
-
   handleInfiniteOnLoad = () => {
-    let data = this.state.data;
     this.setState({
       loading: true,
     });
@@ -39,17 +35,17 @@ export default class ListOfTask extends React.Component {
 
   selectRightStatusIcon= (item) => {
     let listitem = ""
-    if(this.props.status == 'complete'){
+    if(this.props.status === 'complete'){
       listitem = <List.Item.Meta
         avatar={<Badge status="success" />}
         title={<p>{item.nama}</p>}
       />
-    } else if (this.props.status == 'onprogress'){
+    } else if (this.props.status === 'onprogress'){
       listitem = <List.Item.Meta
         avatar={<Badge status="warning" />}
         title={<p>{item.nama}</p>}
       />
-    } else if (this.props.status == 'assigned') {
+    } else if (this.props.status === 'assigned') {
       listitem = <List.Item.Meta
         avatar={<Badge status="error" />}
         title={<p>{item.nama}</p>}

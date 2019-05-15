@@ -1,8 +1,7 @@
 import React from "react";
-import ReactDOM from "react-dom";
 import "antd/dist/antd.css";
 import axios from 'axios';
-import { Form, Input, Icon, Button,Card } from "antd";
+import { Form, Input, Icon, Button } from "antd";
 
 let name_initial=[];
 let key_initial=[];
@@ -73,8 +72,8 @@ export default class ResponsibilityForm extends React.Component {
     const { form } = this.props;
     // can use data-binding to get
     const keys = form.getFieldValue("keys");
- 
-    
+
+
     const nextKeys = keys.concat(id++);
     console.log("id dan keys")
     console.log(id);
@@ -85,18 +84,18 @@ export default class ResponsibilityForm extends React.Component {
       keys: nextKeys
     });
   };
-  
+
 
   handleSubmit = e => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
         const {keys, names}  = values;
-       
+
         const { key, name } = values;
         const merged_initial_after = key.map(key => name[key]);
         const merged = keys.map(key => names[key]);
-        
+
          var qs=(require('qs'));
           axios.post('http://localhost:8000/po/update-responsibility', qs.stringify({
             'id_lowongan':this.props.id_low,
@@ -112,7 +111,7 @@ export default class ResponsibilityForm extends React.Component {
              console.log(error.response)
            });
 
-           
+
            window.location.href = '#/vacancy/'+ this.props.id_low;
            window.location.reload();
 
@@ -125,70 +124,70 @@ componentDidMount(){
   console.log(name_initial);
   console.log("coba");
   console.log(key_initial);
-  
+
   console.log("ini id lowongan");
   console.log(this.props.id_low);
   axios.get(API + '/po/responsibility/'+this.props.id_low)
   .then(res=>{
     const responsibility= res.data;
 
-    
+
      name_initial=[]
-   
+
       console.log("masuk")
       console.log(responsibility);
     for(var i=0;i<responsibility.length;i++){
       name_initial.push(responsibility[i].deskripsi)
       key_initial.push(i);
-      
+
 
     }
-    
-  
+
+
     id= key_initial.length+1;
-  
-   
+
+
     merged_initial=key_initial.map(key => name_initial[key]);
     console.log("start")
    console.log(key_initial);
    console.log(name_initial);
    console.log(merged_initial);
-   console.log(id); 
+   console.log(id);
    console.log("end");
-  
-    
+
+
   })
 };
 
 
 
-  
+
 
 
 
   render() {
     id_lowongan=this.props.id_low;
     // responsibility= this.props.responsibility;
-   
+
 
     const { getFieldDecorator, getFieldValue } = this.props.form;
     const formItemLayout = {
-     
+
     };
     const formItemLayoutWithOutLabel = {
-   
+
     };
-   
+
     getFieldDecorator("keys", { initialValue: [] });
-    const keys = getFieldValue("keys");  
+    const keys = getFieldValue("keys");
     console.log("ini keys")
     console.log(keys)
     const formItems = keys.map((k, index) => (
-    
 
-      <Form.Item 
+
+      <Form.Item
       {...(index === 0 ? formItemLayout : formItemLayoutWithOutLabel)}
-      
+
       required={false}
       key={k}
       >
@@ -202,7 +201,7 @@ componentDidMount(){
             }
           ]
         })(
-          <Input 
+          <Input
             placeholder="Responsibility Description"
             style={{ width: "92%", marginRight: 8 }}
           />
@@ -273,4 +272,3 @@ componentDidMount(){
     );
   }
 }
-

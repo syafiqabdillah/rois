@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 
 import { AppHeaderDropdown, AppNavbarBrand, AppSidebarToggler } from '@coreui/react';
 import sirclo from '../../assets/img/brand/sirclo.png'
-import logo from '../../assets/img/brand/logo.svg'
 
 const propTypes = {
   children: PropTypes.node,

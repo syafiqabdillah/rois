@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Badge, DropdownItem, DropdownMenu, DropdownToggle, Nav, NavItem, NavLink } from 'reactstrap';
+import { DropdownItem, DropdownMenu, DropdownToggle, Nav, NavItem } from 'reactstrap';
 import PropTypes from 'prop-types';
 
-import { AppAsideToggler, AppHeaderDropdown, AppNavbarBrand, AppSidebarToggler } from '@coreui/react';
+import { AppHeaderDropdown, AppNavbarBrand, AppSidebarToggler } from '@coreui/react';
 import sirclo from '../../assets/img/brand/sirclo.png'
-import logo from '../../assets/img/brand/logo.svg'
 
 const propTypes = {
   children: PropTypes.node,
@@ -14,7 +13,7 @@ const propTypes = {
 const defaultProps = {};
 
 let imageUrl;
-if (localStorage.getItem('profile') != undefined) {
+if (localStorage.getItem('profile') !== undefined) {
   const profile = JSON.parse(localStorage.getItem('profile'));
   imageUrl = profile.imageUrl;
 } else {
@@ -72,7 +71,7 @@ class DefaultHeader extends Component {
             </DropdownMenu>
           </AppHeaderDropdown>
         </Nav>
-        
+
         {/*<AppAsideToggler className="d-lg-none" mobile />*/}
       </React.Fragment>
     );

@@ -40,9 +40,7 @@ export default class AnswerForm extends React.Component {
   }
 
   render() {
-    const {
-      getFieldDecorator, getFieldsError, getFieldError, isFieldTouched,
-    } = this.props.form;
+    const { getFieldDecorator, getFieldError, isFieldTouched } = this.props.form;
 
     // Only show error after a field is touched.
     const answerLinkError = isFieldTouched('answer-link') && getFieldError('answer-link');

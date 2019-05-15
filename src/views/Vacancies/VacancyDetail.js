@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { Button, CardBody, Label, Form, Input, Col, Card, Modal, ModalBody, ModalFooter, Row, ModalHeader } from 'reactstrap';
+import { Button, CardBody, Col, Card, Row } from 'reactstrap';
 import ModalDelete from './ModalDelete';
 
 const API = 'http://localhost:8000';
@@ -165,7 +165,7 @@ class VacancyDetail extends Component {
 
       });
 
-      //kalau pelamar, ada button apply 
+      //kalau pelamar, ada button apply
       if (localStorage.getItem('role') === 'pelamar') {
         content_button_apply = (
           <div align="center">

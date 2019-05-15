@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { Badge, Card, CardBody, CardHeader, Col, Pagination, PaginationItem, PaginationLink, Row, Table, CardTitle, CardText, Progress, Button } from 'reactstrap';
-
-const API = 'http://localhost:8000';
+import { Card, CardBody, Col, Row, Button } from 'reactstrap';
 
 class ChooseCurrentStage extends Component {
   constructor(props){
@@ -101,7 +99,7 @@ class ChooseCurrentStage extends Component {
       </div>
     );
   }
-  
+
 }
 
 export default ChooseCurrentStage;

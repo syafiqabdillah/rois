@@ -1,11 +1,7 @@
 import React, { Component } from 'react';
 //import { Link } from 'react-router-dom';
 import UpdateVacancyForm from './UpdateVacancyForm';
-import axios from 'axios';
-import {
-  Button, Card, CardBody,
-  FormGroup, Input, Label, Col, Row
-} from 'reactstrap';
+import { Card, CardBody, Col, Row } from 'reactstrap';
 import { Form } from 'antd';
 
 class UpdateVacancy extends Component {
@@ -25,7 +21,7 @@ class UpdateVacancy extends Component {
           <h3 fontFamily="Metropolis">Update Vacancy</h3>
           <br></br>
         </div>
-        
+
         <Row>
           <Col sm="2">
           </Col>
@@ -35,7 +31,7 @@ class UpdateVacancy extends Component {
               <UpdateFormVacancy id_lowongan ={this.props.match.params.id}/>
             </CardBody>
           </Card>
-          
+
           </Col>
             <Col sm="2">
           </Col>

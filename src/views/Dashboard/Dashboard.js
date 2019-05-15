@@ -1,4 +1,4 @@
-import React, { Component, lazy, Suspense } from 'react';
+import React, { Component } from 'react';
 import { Redirect} from 'react-router-dom';
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend
@@ -34,8 +34,8 @@ class Dashboard extends Component {
       new Date().getDate()
     );
 
-    var today = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-    var sixmonthago = sixmonthago.getFullYear()+'-'+(sixmonthago.getMonth()+1)+'-'+sixmonthago.getDate();
+    today = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+    sixmonthago = sixmonthago.getFullYear()+'-'+(sixmonthago.getMonth()+1)+'-'+sixmonthago.getDate();
     localStorage.setItem('start', sixmonthago)
     localStorage.setItem('end', today)
 
@@ -73,9 +73,9 @@ class Dashboard extends Component {
       console.log(this.state)
     })
   }
- 
+
   render() {
-    if (localStorage.getItem('role') != 'ADMIN') {
+    if (localStorage.getItem('role') !== 'ADMIN') {
       return <Redirect to="/vacancies-applicant" />
     }
     let content;
@@ -85,19 +85,19 @@ class Dashboard extends Component {
         <Col md={4}>
           <FormGroup>
             <Label for="start">Start Date</Label>
-            <Input type="date" id="start" name="start" id="start" onChange={this.handleInputChange} required/>
+            <Input type="date" id="start" name="start" onChange={this.handleInputChange} required/>
           </FormGroup>
         </Col>
         <Col md={4}>
           <FormGroup>
             <Label for="end">End Date</Label>
-            <Input type="date" id="end" name="end" id="end" onChange={this.handleInputChange} value={this.state.end} required/>
+            <Input type="date" id="end" name="end" onChange={this.handleInputChange} value={this.state.end} required/>
           </FormGroup>
         </Col>
         <Col md={4}>
           <FormGroup>
             <Label for="exampleZip">Division</Label>
-            <Input type="select" id="divisi" name="divisi" id="exampleZip" onChange={this.handleInputChange} defaultValue="All" required>
+            <Input type="select" id="divisi" name="divisi" onChange={this.handleInputChange} defaultValue="All" required>
               <option value="All">All</option>
               <option value="Managerial">Managerial</option>
               <option value="Technology">Technology</option>
@@ -108,13 +108,13 @@ class Dashboard extends Component {
               <option value="Finance and People Operation">Finance and People Operation</option>
               <option value="Other">Other</option>
             </Input>
-          </FormGroup>  
+          </FormGroup>
         </Col>
       </Row>
       <Button color="primary" size="lg" block>ANALYZE</Button>
       <br/>
       </Form>);
-      
+
     if (this.state.loading){
       content = (
         <div>
@@ -124,7 +124,7 @@ class Dashboard extends Component {
       );
     } else {
       let data = this.state.data;
-      if(this.state.divisi == "All"){
+      if(this.state.divisi === "All"){
         content = (
           <div align="left">
             {form}
@@ -178,7 +178,7 @@ class Dashboard extends Component {
         );
       }
 
-      
+
     }
 
     return (
