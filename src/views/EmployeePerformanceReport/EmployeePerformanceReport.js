@@ -36,7 +36,7 @@ export default class EmployeePerformanceReport extends React.Component{
       },
       dataMapper : {},
       onBoarding : {},
-      onBoardingInPercent : {},
+      successPercent : 0,
       profile: {},
       avgTime: 0,
       dataExist: null
@@ -124,6 +124,7 @@ export default class EmployeePerformanceReport extends React.Component{
     axios.get('http://localhost:8000/po/get-onboarding-progress/' + this.props.employeeid)
       .then((response) => {
         const onboarding = response.data;
+        console.log(onboarding)
         this.setState({
             onBoarding: onboarding
         });
@@ -151,10 +152,10 @@ export default class EmployeePerformanceReport extends React.Component{
   }
 
   getOnboardingProgressInPercent= () => {
-    const successPercent = this.state.onBoarding['complete']/this.state.onBoarding['total'];
-    const percent = (this.state.onBoarding['complete']+this.state.onBoarding['onprogress'])/this.state.onBoarding['total'];
+    const percent = this.state.onBoarding['taskdone']/this.state.onBoarding['total'];
+    console.log(percent)
     this.setState({
-        onBoardingInPercent: Object.assign({successPercent: Math.round(successPercent*100)},{percent: Math.round(percent*100)})
+        successPercent: Math.round(percent*100)
     });
   }
 
@@ -211,7 +212,7 @@ export default class EmployeePerformanceReport extends React.Component{
 
   render() {
     const Option = Select.Option;
-    let tasksummary = this.state.onBoarding['complete'] + ' done / ' +this.state.onBoarding['onprogress'] + ' in progress / ' + this.state.onBoarding['assigned']+' to do';
+    let tasksummary = this.state.onBoarding['taskdone'] + ' done / ' +this.state.onBoarding['onprogress'] + ' in progress / ' + this.state.onBoarding['assigned']+' to do';
     return (
         <div style={{ padding: '30px' }}>
           <Row gutter={16}>
@@ -249,7 +250,7 @@ export default class EmployeePerformanceReport extends React.Component{
                 <Row>
                   <div align='center'>
                     <Tooltip title={tasksummary}>
-                      <Progress percent={this.state.onBoardingInPercent['percent']} strokeLinecap='square' successPercent={this.state.onBoardingInPercent['successPercent']} type="circle" width={95}/>
+                      <Progress percent={this.state.successPercent} strokeLinecap='square' type="circle" width={95}/>
                     </Tooltip>
                   </div>
                 </Row>
@@ -295,10 +296,10 @@ export default class EmployeePerformanceReport extends React.Component{
             <Col span={8}>
               <Card bordered={false} className='card-component'>
                 <Row style={{ marginBottom: 7 }}>
-                  <h4 align='center'><strong>Completed</strong></h4>
+                  <h4 align='center'><strong>Approved</strong></h4>
                 </Row>
                 <Row>
-                  <ListOfTask status='complete' employeeid={this.props.employeeid}/>
+                  <ListOfTask status='taskdone' employeeid={this.props.employeeid}/>
                 </Row>
               </Card>
             </Col>

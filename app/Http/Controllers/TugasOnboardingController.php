@@ -118,11 +118,12 @@ class TugasOnboardingController extends Controller
     public function changeTaskStatus(Request $request){
         $tasksId = $request->tasksId;
         $status = $request->status;
+        $finished_date = $request->finished_date;
         
         foreach($tasksId as $id){
             DB::table('tugas_onboarding')
             ->where('id', $id)
-            ->update(['status' => $status]);
+            ->update(['status' => $status, 'finished_date'=> $finished_date]);
         }
     }
 }

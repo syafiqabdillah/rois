@@ -75,9 +75,10 @@ class TaskController extends Controller
     public function updateStatusTask(Request $request){
         $id = $request->id;
         $status = $request->status;
+        $start_date = $request->start_date;
         $result = DB::table('tugas_onboarding')
             ->where('id', $id)
-            ->update(['status' => $status]);
+            ->update(['status' => $status, 'start_date'=>$start_date]);
 
         return $result;
     }

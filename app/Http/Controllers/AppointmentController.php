@@ -127,27 +127,27 @@ class AppointmentController extends Controller
    }
 
    public function taskComplete($id){
-       $alltask = DB::table('tugas_onboarding')->select(DB::raw('nama, DATEDIFF(finished_date, start_date) as days'))->where('id_karyawan', $id)->where('status', 'finished')->get();
+       $alltask = DB::table('tugas_onboarding')->select(DB::raw('nama, DATEDIFF(finished_date, start_date) + 1 as days'))->where('id_karyawan', $id)->where('status', 'Approved')->get();
        return $alltask;
    }
 
    public function getAllTaskStatus($id){
-       $approved = DB::table('tugas_onboarding')->select(DB::raw('nama'))->where('id_karyawan', $id)->where('status', 'Approved')->get();
-       $taskdone = DB::table('tugas_onboarding')->select(DB::raw('nama'))->where('id_karyawan', $id)->where('status', 'Finished')->get();
+       $taskdone = DB::table('tugas_onboarding')->select(DB::raw('nama'))->where('id_karyawan', $id)->where('status', 'Approved')->get();
        $taskonprogress = DB::table('tugas_onboarding')->select(DB::raw('nama'))->where('id_karyawan', $id)->where('status', 'On Progress')->get();
        $taskassigned = DB::table('tugas_onboarding')->select(DB::raw('nama'))->where('id_karyawan', $id)->where('status', 'Assigned')->get();
-       $data = array('approved'=>$approved, 'complete' => $taskdone, 'onprogress'=> $taskonprogress, 'assigned'=> $taskassigned);
+       $data = array('taskdone' => $taskdone, 'onprogress'=> $taskonprogress, 'assigned'=> $taskassigned);
        return $data;
    }
 
    public function getNumberTaskByStatus($id){
-        $approved = DB::table('tugas_onboarding')->select(DB::raw('nama'))->where('id_karyawan', $id)->where('status', 'Approved')->count();
-       $taskdone = DB::table('tugas_onboarding')->select(DB::raw('nama'))->where('id_karyawan', $id)->where('status', 'Finished')->count();
-       $waiting = DB::table('tugas_onboarding')->select(DB::raw('nama'))->where('id_karyawan', $id)->where('status', 'Waiting For Confirmation')->count();
+        $taskdone = DB::table('tugas_onboarding')->select(DB::raw('nama'))->where('id_karyawan', $id)->where('status', 'Approved')->count();
+       $waiting = DB::table('tugas_onboarding')->select(DB::raw('nama'))->where('id_karyawan', $id)->where('status', 'Finished')->count();
        $taskonprogress = DB::table('tugas_onboarding')->select(DB::raw('nama'))->where('id_karyawan', $id)->where('status', 'On Progress')->count();
        $taskassigned = DB::table('tugas_onboarding')->select(DB::raw('nama'))->where('id_karyawan', $id)->where('status', 'Assigned')->count();
-       $total = $taskdone + $taskonprogress +$taskassigned + $approved + $waiting;
-       $data = array('approved'=>$approved, 'complete' => $taskdone, 'onprogress'=> $taskonprogress, 'assigned'=> $taskassigned, 'waiting'=> $waiting, 'total'=>$total);
+       
+       $total = $taskdone + $taskonprogress + $taskassigned + $waiting;
+       
+       $data = array( 'taskdone' => $taskdone, 'onprogress'=> $taskonprogress, 'assigned'=> $taskassigned, 'waiting'=> $waiting, 'total'=>$total);
        return $data;
    }
 

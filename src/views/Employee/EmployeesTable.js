@@ -75,13 +75,13 @@ export default class EmployeesTable extends Component {
         console.log(employee);
         const idemployee = "http://localhost:3000/#/employeeDashboard/" + employee.profile.id
         const taskemployee = "http://localhost:3000/#/tasks-list/" + employee.profile.id
-        let progress = Math.round(((employee.progress.approved)/employee.progress.total)*100)
+        let progress = Math.round(((employee.progress.taskdone)/employee.progress.total)*100)
         return (
           {
           name : employee.profile.name,
           division : employee.profile.divisi,
           progress : <Progress percent={progress} strokeWidth={15}/>,
-          complete : employee.progress.approved + ' / ' + employee.progress.total,
+          complete : employee.progress.taskdone + ' / ' + employee.progress.total,
           action: <Button.Group>
                     <Button type="primary" icon="line-chart" size='large' href={idemployee} ghost/>
                     <Button type="primary" icon="edit" size='large' href={taskemployee}/>
