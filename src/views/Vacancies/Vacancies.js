@@ -13,52 +13,40 @@ const data = {
       label: "Vacancy's Name",
       field: 'nama',
       sort: 'asc',
-      width: 100
+  
     },
     {
       label: "Division",
       field: 'divisi',
       sort: 'asc',
-      width: 100
+   
     },
     // {
-    //   label: "Start Date",
-    //   field: 'start_date',
+    //   label: "Location",
+    //   field: 'lokasi',
     //   sort: 'asc',
-    //   width: 150
+      
     // },
-    // {
-    //   label: "End Date",
-    //   field: 'end_date',
-    //   sort: 'asc',
-    //   width: 150
-    // },
-    {
-      label: "Location",
-      field: 'lokasi',
-      sort: 'asc',
-      width: 100
-    },
     {
       label: "Type",
       field: 'tipe',
-      width: 100
+     
     },
     {
       label:"Status",
       field:'status',
-      width: 100
+    
     },
 
     {
       label: "Quota",
       field: 'needed',
-      width: 100
+    
     },
     {
       label: "Action",
       field: 'action',
-      width: 100
+   
     }
 
   ],
@@ -112,10 +100,10 @@ export class Vacancies extends Component {
             divisi: lowongan.divisi,
             // start_date: lowongan.start_date,
             // end_date: lowongan.end_date,
-            lokasi: lowongan.lokasi,
+            // lokasi: lowongan.lokasi,
             tipe: lowongan.tipe,
             status :
-            //ini belom selese nampilin bagdge nya
+            
             <Badge pill color={color_badge}>{lowongan.status}</Badge>,
             needed: lowongan.posisi_tersedia,
             action:
@@ -124,13 +112,13 @@ export class Vacancies extends Component {
                   <Link to={"/vacancy/" + lowongan.id} className=" btn btn-primary btn-pill">
                     <i className="cui-magnifying-glass icons " title="See Details"></i>
                   </Link>
-                  &nbsp;&nbsp;&nbsp;
+                  &nbsp;&nbsp;
 
                   <Link to={"/vacancy/update/" + lowongan.id} className=" btn btn-primary btn-pill">
                     <i className="cui-pencil icons " title="Update Vacancy"></i>
                   </Link>
 
-                  &nbsp;&nbsp;&nbsp;
+                  &nbsp;&nbsp;
                   <ModalDelete isDirujuk={lowongan.isDirujuk} name={lowongan.nama} id={lowongan.id} />
 
               </Row>
