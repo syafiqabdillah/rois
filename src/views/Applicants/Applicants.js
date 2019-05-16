@@ -124,7 +124,7 @@ class Applicants extends Component {
             </Link>
           </div>
         );
-      } else if (this.state.lamaran.tahapan === 'Remote Test' &&  this.state.lamaran.status === 'Answered' && localStorage.getItem('role') === 'ADMIN') {
+      } else if (this.state.lamaran.tahapan === 'Remote Test' &&  this.state.lamaran.status === 'Submitted' && localStorage.getItem('role') === 'ADMIN') {
         stage  = (
           <div>
             <ChooseCurrentStage lamaran={this.state.lamaran} />
