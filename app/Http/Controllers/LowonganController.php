@@ -39,7 +39,7 @@ class LowonganController extends Controller
 
     public function getAllActiveLowongan(Request $request){
         $this->setStatus();
-            $getlowongan = DB::table('lowongan')->select()->where('status','Active')->get();
+            $getlowongan = DB::table('lowongan')->select()->where('status','Published')->get();
             $lowongans = json_decode($getlowongan, true);
             $result = array();
             foreach($lowongans as $lowongan){
