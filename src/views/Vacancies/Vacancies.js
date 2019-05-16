@@ -88,12 +88,9 @@ export class Vacancies extends Component {
       })
   }
 
-
-
   render() {
     let content;
     let color_badge;
-
 
     if (this.state.loading) {
       content = <div align="center"><p>Loading . . .</p></div>;
@@ -108,7 +105,7 @@ export class Vacancies extends Component {
         }
         return (
           {
-            nama:lowongan.nama,
+            nama: lowongan.nama,
             divisi: lowongan.divisi,
             // start_date: lowongan.start_date,
             // end_date: lowongan.end_date,
@@ -164,7 +161,7 @@ export class Vacancies extends Component {
           <Col>
             <Card>
               <CardHeader>
-                <i className="fa fa-align-justify"></i> Vacancy List
+                <i className="fa fa-align-justify"></i> Vacancies List
               </CardHeader>
               <CardBody>
                 {content}

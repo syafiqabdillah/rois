@@ -62,11 +62,7 @@ class Applications extends Component {
       })
     })
   }
-
-  handleRowClick(e){
-    window.location = "/#/applicants/" + e.id;
-  };
-
+  
   render() {
     let content;
 
@@ -84,7 +80,6 @@ class Applications extends Component {
             action: <Link to={"/applicants/" + lamaran.id } className=" btn btn-primary btn-pill">
                       <i className="cui-magnifying-glass icons " title="See Details"></i>
                     </Link>,
-            clickEvent: () => this.handleRowClick(lamaran),
           }
         );
       });
@@ -110,7 +105,7 @@ class Applications extends Component {
           <Col lg={12}>
             <Card>
               <CardHeader>
-                <i className="fa fa-align-justify"></i> Application List
+                <i className="fa fa-align-justify"></i> Applications List
               </CardHeader>
               <CardBody>
                 {content}

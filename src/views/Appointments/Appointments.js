@@ -115,11 +115,12 @@ class Appointments extends Component {
         <div align="center">
           <h3>Appointments</h3>
         </div>
+        <br />
         <Row>
           <Col>
             <Card>
               <CardHeader>
-                <i className="fa fa-align-justify"></i> Appointment List
+                <i className="fa fa-align-justify"></i> Appointments List
               </CardHeader>
               <CardBody>
                 {content}

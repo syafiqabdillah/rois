@@ -124,7 +124,7 @@ export default class AddAnswer extends React.Component{
       color : "#979797",
     };
 
-    if (localStorage.getItem('role') !== 'pelamar') {
+    if (localStorage.getItem('role') !== 'PELAMAR') {
       return <Redirect to="/vacancies-pelamar" />
     }
 
