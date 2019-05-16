@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import 'antd/dist/antd.css';
 import moment from 'moment';
-import { Modal, Progress, Table, Card, Avatar, Row, Col } from 'antd';
+import { message, Modal, Progress, Table, Card, Avatar, Row, Col } from 'antd';
 
 const API = 'http://localhost:8000';
 
@@ -75,7 +75,7 @@ class TasksKaryawan extends Component {
     } else if (task.status === 'On Progress') {
       this.setState({
         modalTitle: 'Request for Approval',
-        modalText: 'Are you sure you want to confirm your changes on this finished task dan request for approval to your supervisor?',
+        modalText: 'Are you sure you want to confirm your changes on this finished task and request for approval to your supervisor?',
         visible: true,
         chosenTaskId: task.id,
         chosenTaskStatus: task.status
@@ -100,18 +100,12 @@ class TasksKaryawan extends Component {
         })
         .then(function (response) {
           //console.log(response.data);
-          setTimeout(() => {
-            this.setState({
-              visible: false,
-              confirmLoading: false,
-            });
-          }, 0);
-          window.location.reload();
         })
-      this.setState({
-        modalText: 'Success! you are now progressing on this task',
-        confirmLoading: true,
-      });
+
+      message.info('Message', 5.5)
+      message.loading('Saving changes...', 2.5)
+      .then(() => message.success('Success! you are now progressing on this task', 3))
+      .then(() => window.location.reload())
 
     } else if (this.state.chosenTaskStatus === 'On Progress') {
       //post it to backend
@@ -126,18 +120,13 @@ class TasksKaryawan extends Component {
         .then(function (response) {
           //console.log(response.data);
         })
-      this.setState({
-        modalText: 'Success! Changes saved, we have notified your supervisor about this progress',
-        confirmLoading: true,
-      });
-      setTimeout(() => {
-        this.setState({
-          visible: false,
-          confirmLoading: false,
-        });
-      }, 0);
-      window.location.reload();
-    };
+
+      message.info('Message', 5.5)
+      message.loading('Saving changes...', 2.5)
+      .then(() => message.success('Success! Changes saved, we have notified your supervisor about this progress', 3))
+      .then(() => window.location.reload())
+
+    }
   }
 
   handleCancel = () => {
@@ -152,36 +141,31 @@ class TasksKaryawan extends Component {
     let content;
     let progress;
 
-    if (this.state.loading) {
-      content = <div align="center"><p>Loading . . .</p></div>;
-    } else {
-      let tasks_list = this.state.tasks.map((task, index) => {
-        return (
-          {
-            key: index,
-            id: task.id,
-            nama: task.nama,
-            deadline: task.deadline_date,
-            status: task.status,
-            description: task.deskripsi
-          }
-        );
-      });
-
-      let finished = 0;
-
-      data = [];
-
-      for (var i = 0; i < tasks_list.length; i++) {
-        data.push(tasks_list[i]);
-        if (tasks_list[i].status === 'Finished') {
-          finished = finished + 1;
+    let tasks_list = this.state.tasks.map((task, index) => {
+      return (
+        {
+          key: index,
+          id: task.id,
+          nama: task.nama,
+          deadline: task.deadline_date,
+          status: task.status,
+          description: task.deskripsi
         }
+      );
+    });
+
+    let finished = 0;
+
+    data = [];
+
+    for (var i = 0; i < tasks_list.length; i++) {
+      data.push(tasks_list[i]);
+      if (tasks_list[i].status === 'Finished') {
+        finished = finished + 1;
       }
-
-      progress = Math.round(this.state.progress.taskdone / this.state.progress.total * 100);
-
     }
+
+    progress = Math.round(this.state.progress.taskdone / this.state.progress.total * 100);
 
     return (
       <div className="animated fadeIn">
@@ -190,11 +174,11 @@ class TasksKaryawan extends Component {
         </div>
         <Row type="flex" justify="center">
           <Col>
-            <Card style={{ width: 830, marginTop: 16, marginBottom: 16 }} loading={this.state.loading}>
+            <Card hoverable style={{ width: 830, marginTop: 16, marginBottom: 16 }} loading={this.state.loading}>
               <Meta style={{ marginBottom: 16 }}
                 avatar={<Avatar size="large" src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
                 title={this.state.karyawan_onboarding.name}
-                description="Full Stack Engineer Intern"
+                description={this.state.karyawan_onboarding.divisi}
               />
               <h6>My Onboarding Progress</h6>
               <Progress
@@ -206,7 +190,7 @@ class TasksKaryawan extends Component {
                 status="active"
               />
             </Card>
-            <Card style={{ width: 830, marginTop: 16, marginBottom: 32 }} loading={this.state.loading}>
+            <Card hoverable style={{ width: 830, marginTop: 16, marginBottom: 32 }} loading={this.state.loading}>
               <h4>My Tasks</h4>
               <Table
                 columns={columns}

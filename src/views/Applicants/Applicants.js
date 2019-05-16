@@ -5,7 +5,12 @@ import ChooseCurrentStage from './ChooseCurrentStage';
 import ChooseStages from './ChooseStages';
 import Widget02 from '../Widgets/Widget02';
 import Widget04 from '../Widgets/Widget04';
-import { Badge, Card, CardBody, CardHeader, Col, Row, Table, Tooltip } from 'reactstrap';
+import { Badge, Table, Tooltip } from 'reactstrap';
+
+import 'antd/dist/antd.css';
+import { Modal, Progress, Card, Avatar, Row, Col } from 'antd';
+
+const { Meta } = Card;
 
 const API = 'http://localhost:8000';
 
@@ -61,7 +66,7 @@ class Applicants extends Component {
     } else {
 
       content = (
-        <Table borderless hover size="sm">
+        <Table borderless size="sm">
           <tbody>
             <tr>
               <th scope="row">Name</th>
@@ -113,7 +118,9 @@ class Applicants extends Component {
 
       if (this.state.lamaran.status === 'Passed' && localStorage.getItem('role') === 'ADMIN') {
         stage = (
-          <ChooseStages lamaran={this.state.lamaran} />
+          <div>
+            <ChooseStages lamaran={this.state.lamaran} />
+          </div>
         );
       } else if (this.state.lamaran.tahapan === 'Remote Test' &&  this.state.lamaran.status === 'Assigned' && localStorage.getItem('role') === 'ADMIN') {
         stage = (
@@ -126,23 +133,23 @@ class Applicants extends Component {
         );
       } else if (this.state.lamaran.tahapan === 'Remote Test' &&  this.state.lamaran.status === 'Submitted' && localStorage.getItem('role') === 'ADMIN') {
         stage  = (
-          <div>
+          <div >
             <ChooseCurrentStage lamaran={this.state.lamaran} />
             <Link to={"/remoteTest/" + this.state.lamaran.id}>
-              <Widget02 header="Answered" mainText="Click here to see the applicant's answer" icon="fa fa-check" color="info" />
+              <Widget02 header="Submitted" mainText="Click here to see the applicant's answer" icon="fa fa-check" color="info" />
             </Link>
           </div>
         );
       } else if (this.state.lamaran.status === 'Hired' && localStorage.getItem('role') === 'ADMIN') {
         stage = (
           <Widget04 icon="fa fa-thumbs-up" color="success" header="Hired" value="0" invert>
-            This applicant have passed all the SIRCLO's recruitment process
+            This applicant has passed all SIRCLO's recruitment process
           </Widget04>
         );
       } else if (this.state.lamaran.status === 'Rejected' && localStorage.getItem('role') === 'ADMIN') {
         stage = (
           <Widget04 icon="fa fa-thumbs-down" color="danger" header="Rejected" value="0" invert>
-            This applicant have been rejected from the SIRCLO's recruitment process
+            This applicant has been rejected from SIRCLO's recruitment process
           </Widget04>
         );
       } else if (localStorage.getItem('role') === 'ADMIN') {
@@ -166,33 +173,38 @@ class Applicants extends Component {
       }
     }
 
+    let candidate = "Candidate " + this.state.lamaran.lowongan
+
     return (
       <div className="animated fadeIn">
         <div align="center">
           <h3>Applicant's Profile</h3>
         </div>
         <br/>
-        <Row>
-          <Col lg={8}>
-            <Card >
-              <CardHeader>
-                <i className="fa fa-user pr-1"></i> {this.state.lamaran.pelamar} <Badge color="secondary">Candidate {this.state.lamaran.lowongan}</Badge> <Badge color="info" pill id="Phase">{this.state.lamaran.tahapan}: {this.state.lamaran.status}</Badge>
-                <Tooltip placement="top" isOpen={this.state.toolTipPhase} target="Phase" toggle={this.togglePhase}>
-                  Current phase and its status
-                </Tooltip>
-              </CardHeader>
-              <CardBody>
-                <Row>
-                  <Col lg={12}>
-                    <Card body>
-                      {content}
-                    </Card>
-                  </Col>
-                </Row>
-              </CardBody>
+        <Row type="flex" justify="center" style={{ marginBottom: 16 }}>
+          <Col span={15}>
+            <Card hoverable loading={this.state.loading}>
+              <Meta style={{ marginBottom: 16 }}
+                avatar={<Avatar size="large" src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
+                title={this.state.lamaran.pelamar}
+                description={candidate}
+              />
+              <h4><Badge color="info" pill id="Phase">{this.state.lamaran.tahapan}: {this.state.lamaran.status}</Badge></h4>
+              <Tooltip placement="right" isOpen={this.state.toolTipPhase} target="Phase" toggle={this.togglePhase}>
+                Current phase and its status
+              </Tooltip>
+              <Row>
+                <Col span={24}>
+                  <Card loading={this.state.loading}>
+                    {content}
+                  </Card>
+                </Col>
+              </Row>
             </Card>
           </Col>
-          <Col lg={4}>
+        </Row>
+        <Row type="flex" justify="center" style={{ marginBottom: 16 }}>
+          <Col span={15}>
             {stage}
           </Col>
         </Row>

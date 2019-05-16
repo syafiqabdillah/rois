@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { Badge, Card, CardBody, CardHeader, Col, Form, FormGroup, Label, Input, Button, Row, CardTitle } from 'reactstrap';
+import { Badge, Form, FormGroup, Label, Input, Button, FormText } from 'reactstrap';
+import 'antd/dist/antd.css';
+import { message, Modal, Progress, Card, Avatar, Row, Col } from 'antd';
+
+const { Meta } = Card;
 
 const API = 'http://localhost:8000';
 
@@ -24,10 +28,13 @@ class RemoteTest extends Component {
       status: '',
       link_jawaban: '',
       expired_date: null,
+      confirmLoading: false,
+      modalTitle: '',
+      modalText: '',
+      visible: false,
     }
 
     this.handleInputChange = this.handleInputChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentDidMount(){
@@ -46,23 +53,30 @@ class RemoteTest extends Component {
       console.log(soal);
       this.setState({
         soal: soal,
-        loading: false
+        loading: false,
+        id_soal: soal[0].id
       })
     })
 
-    axios.get(API + '/po/get-id-remote-test/' + this.props.match.params.id)
-    .then(res => {
-      const id_remote_test = res.data;
-      console.log(id_remote_test);
-      this.setState({
-        id: id_remote_test,
+    try {
+      axios.get(API + '/po/get-id-remote-test/' + this.props.match.params.id)
+      .then(res => {
+        const id_remote_test = res.data;
+        console.log(id_remote_test);
+        this.setState({
+          id: id_remote_test,
+        })
       })
-    })
+    } catch(err) {
+      this.setState({
+        id: [],
+      })
+    }
 
   }
 
   componentDidUpdate(prevProps, prevState){
-    if (this.state.id !== prevState.id) {
+    if (this.state.id != prevState.id) {
       axios.get(API + '/po/remote-test/' + this.state.id.id_remote_test)
       .then(res => {
         const remote_test = res.data;
@@ -82,172 +96,167 @@ class RemoteTest extends Component {
     console.log(this.state.id_soal);
   }
 
-  handleSubmit = (e) => {
-    e.preventDefault()
+  showModal = () => {
+    this.setState({
+      modalTitle: 'Create the Remote Test',
+      modalText: 'Are you sure you have entered the correct data?',
+      visible: true,
+    });
+  };
 
-    if (window.confirm('Are you sure you have entered correct data ?')){
-      console.log(this.state);
-      console.log("MASHOK PAK EKO");
-      // axios post
-      var qs = require('qs');
+  handleOk = () => {
+    // axios post
+    var qs = require('qs');
 
-      //post it to backend
-      axios.post(API + '/po/create-remote-test', qs.stringify({
+    //post it to backend
+    axios.post(API + '/po/create-remote-test', qs.stringify({
         'id_lamaran': this.state.lamaran.id,
         'duration': this.state.duration,
         'tester_email': this.state.tester_email,
         'expired_date': this.state.expired_date,
         'id_soal': this.state.id_soal,
-        'active' : 'yes',
-      }),
-      {
-        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+        'active': 'yes',
+      }), {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
       })
-      .then(function (response) {
-          console.log(response.data);
+      .then(function(response) {
+        console.log(response.data);
       })
 
-      axios.post(API + '/po/update-tahapan-lamaran', qs.stringify({
+    axios.post(API + '/po/update-tahapan-lamaran', qs.stringify({
         'id': this.state.lamaran.id,
         'tahapan': 'Remote Test',
         'status': 'Assigned',
-      }),
-      {
-        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-      })
-      .then(function (response) {
-          console.log(response.data);
-      })
-
-      this.setState({
-        lamaran: {
-          tahapan: 'Remote Test',
-          status: 'Assigned',
+      }), {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
         }
       })
+      .then(function(response) {
+        console.log(response.data);
+      })
 
-      // window.location.reload()
-
-    }
+    message.info('Message', 5.5)
+    message.loading('Saving changes...', 2.5)
+    .then(() => message.success('Success! The Applicant has been successfully hired', 3))
+    .then(() => window.location.reload())
 
   }
 
-  render() {
+  handleCancel = () => {
+    this.setState({
+      visible: false,
+    });
+  };
 
+  render() {
+    let { visible, confirmLoading } = this.state;
 
     let content;
 
-    if (this.state.loading){
-      content = <div align="center"><p>Loading . . .</p></div>;
+    if (this.state.lamaran.tahapan === 'Remote Test' && this.state.lamaran.status === 'Assigned' && localStorage.getItem('role') === 'ADMIN') {
+
+      content = (
+        <div>
+          <p>The answers for the assessment remote test of the applicant above is not available yet. Please be patient and <strong>wait for further notification.</strong></p>
+          <Row>
+            <Col span={15}>
+              <Link to={"/applicants/" + this.state.lamaran.id}> <p>go to applicant's profile</p> </Link>
+            </Col>
+          </Row>
+        </div>
+      );
+
+    } else if (this.state.lamaran.tahapan === 'Remote Test' && this.state.lamaran.status === 'Answered' && localStorage.getItem('role') === 'ADMIN') {
+
+      content = (
+        <div>
+          <p>The answers for the assessment remote test of the applicant above can be accessed at this <a href={this.state.remote_test.link_jawaban}> github link. </a></p>
+          <Row>
+            <Col span={15}>
+              <Link to={"/applicants/" + this.state.lamaran.id}> <p>go to applicant's profile</p> </Link>
+            </Col>
+          </Row>
+        </div>
+      );
+
     } else {
 
-      if (this.state.lamaran.tahapan === 'Remote Test' && this.state.lamaran.status === 'Assigned' && localStorage.getItem('role') === 'ADMIN') {
-
-        content = (
-          <div>
-            <CardTitle>
-              The answers for the assessment remote test of the applicant above is not available yet. <br/> Please be patient and <strong>wait for further notification.</strong>
-            </CardTitle>
-            <br />
-            <Row>
-              <Col lg={8}>
-              </Col>
-              <Col lg={4}>
-                <Link to={"/applicants/" + this.state.lamaran.id}> <p>go to applicant's profile</p> </Link>
-              </Col>
-            </Row>
-          </div>
+      let list_soal = this.state.soal.map((soal, index) => {
+        return (
+          <option key={index} value={soal.id}> {soal.nama} </option>
         );
+      })
 
-      } else if (this.state.lamaran.tahapan === 'Remote Test' && this.state.lamaran.status === 'Answered' && localStorage.getItem('role') === 'ADMIN') {
-
-        content = (
-          <div>
-            <CardTitle>
-              The answers for the assessment remote test of the applicant above can be accessed at this <a href={this.state.remote_test.link_jawaban}> github link. </a>
-            </CardTitle>
-            <br />
-            <Row>
-              <Col lg={8}>
+      content = (
+        <div>
+          <p>The applicant above will be given the remote test assessment below:</p>
+          <br/>
+          <Form method="post" >
+            <FormGroup row>
+              <Label for="duration" lg={3}>Duration (Days)</Label>
+              <Col span={15}>
+                <Input
+                  type="number"
+                  name="duration"
+                  id="duration"
+                  onChange={this.handleInputChange}
+                  required
+                />
               </Col>
-              <Col lg={4}>
-                <Link to={"/applicants/" + this.state.lamaran.id}> <p>go to applicant's profile</p> </Link>
+            </FormGroup>
+            <FormGroup row>
+              <Label for="id_soal" lg={3}>Assessment File</Label>
+              <Col span={15}>
+                <Input type="select" default="Pilih" name="id_soal" id="id_soal" onChange={this.handleInputChange} required>
+                  {list_soal}
+                </Input>
               </Col>
-            </Row>
-          </div>
-        );
-
-      } else {
-
-        let list_soal = this.state.soal.map((soal, index) => {
-          return (
-            <option key={index} value={soal.id}> {soal.nama} </option>
-          );
-        })
-
-        content = (
-          <div>
-            <CardTitle>
-              The applicant above will be given the assessments remote test below:
-            </CardTitle>
+            </FormGroup>
+            <FormGroup row>
+              <Label for="tester_email" lg={3}>Tester's Email</Label>
+              <Col span={15}>
+                <Input type="email" name="tester_email" id="tester_email" onChange={this.handleInputChange} required/>
+              </Col>
+            </FormGroup>
+            <FormGroup row>
+              <Label for="expired_date" lg={3}>Expire Date</Label>
+              <Col span={15}>
+                <Input
+                  type="date"
+                  name="expired_date"
+                  id="expired_date"
+                  onChange={this.handleInputChange}
+                  required
+                />
+              </Col>
+            </FormGroup>
             <br/>
-            <Form method="post" onSubmit={this.handleSubmit}>
-              <FormGroup row>
-                <Label for="duration" sm={3}>Duration (Days)</Label>
-                <Col sm={9}>
-                  <Input
-                    type="number"
-                    name="duration"
-                    id="duration"
-                    onChange={this.handleInputChange}
-                    required
-                  />
-                </Col>
-              </FormGroup>
-              <FormGroup row>
-                <Label for="id_soal" sm={3}>Assessment File</Label>
-                <Col sm={9}>
-                  <Input type="select" default="Pilih" name="id_soal" id="id_soal" onChange={this.handleInputChange} required>
-                    {list_soal}
-                  </Input>
-                </Col>
-              </FormGroup>
-              <FormGroup row>
-                <Label for="tester_email" sm={3}>Tester's Email</Label>
-                <Col sm={9}>
-                  <Input type="email" name="tester_email" id="tester_email" onChange={this.handleInputChange} required/>
-                </Col>
-              </FormGroup>
-              <FormGroup row>
-                <Label for="expired_date" sm={3}>Expire Date</Label>
-                <Col sm={9}>
-                  <Input
-                    type="date"
-                    name="expired_date"
-                    id="expired_date"
-                    onChange={this.handleInputChange}
-                    required
-                  />
-                </Col>
-              </FormGroup>
-              <br/>
-              <Row>
-                <Col lg={6}>
-                  <p><u>see preview email</u></p>
-                </Col>
-                <Col lg={3}>
-                  <Link to={"/applicants/" +  this.state.lamaran.id}> <Button className="btn-pill" outline color="danger" block>Cancel</Button> </Link>
-                </Col>
-                <Col lg={3}>
-                  <Button className="btn-pill" color="primary" type="submit" block>Confirm</Button>
-                </Col>
-              </Row>
-            </Form>
-          </div>
-        );
-
-      }
+            <Row type="flex" justify="center">
+              <Col span={7} style={{ margin: 5 }}>
+                <Link to={"/applicants/" +  this.state.lamaran.id}> <Button className="btn-pill" outline color="danger" block>Cancel</Button> </Link>
+              </Col>
+              <Col span={7} style={{ margin: 5 }}>
+                <Button className="btn-pill" color="primary" block onClick={this.showModal}>Confirm</Button>
+              </Col>
+            </Row>
+            <Modal
+              title={this.state.modalTitle}
+              visible={visible}
+              onOk={this.handleOk}
+              confirmLoading={confirmLoading}
+              onCancel={this.handleCancel}
+            >
+              <p>{this.state.modalText}</p>
+            </Modal>
+          </Form>
+        </div>
+      );
     }
+
+    let candidate = "Candidate " + this.state.lamaran.lowongan
 
     return (
       <div className="animated fadeIn">
@@ -255,20 +264,16 @@ class RemoteTest extends Component {
           <h3>Remote Test</h3>
         </div>
         <br />
-        <Row>
-          <Col lg={3}>
-          </Col>
-          <Col lg={6}>
-            <Card >
-              <CardHeader>
-                <i className="fa fa-user pr-1"></i>{this.state.lamaran.pelamar} <Badge color="secondary">Candidate {this.state.lamaran.lowongan}</Badge>
-              </CardHeader>
-              <CardBody>
-                {content}
-              </CardBody>
+        <Row type="flex" justify="center" style={{ marginBottom: 16 }}>
+          <Col span={15}>
+            <Card hoverable loading={this.state.loading}>
+              <Meta style={{ marginBottom: 16 }}
+                avatar={<Avatar size="large" src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
+                title={this.state.lamaran.pelamar}
+                description={candidate}
+              />
+              {content}
             </Card>
-          </Col>
-          <Col lg={3}>
           </Col>
         </Row>
       </div>
