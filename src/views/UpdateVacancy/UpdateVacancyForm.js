@@ -1,8 +1,6 @@
 import React from 'react';
 
-import {
-  Form, Select, Input, Button, DatePicker, Card, TimePicker, message
-} from 'antd';
+import { Form, Select, Input, Button, DatePicker, Card, message } from 'antd';
 import moment from 'moment';
 import axios from 'axios';
 import RequirementForm from './RequirementForm';
@@ -50,8 +48,8 @@ export default class UpdateVacancyForm extends React.Component {
         tipe:lowongan.tipe,
     })
     // let lowongan = this.props.lowongan;
-   
-      
+
+
     });
      console.log("hui");
      console.log(this.state.id);
@@ -92,7 +90,7 @@ export default class UpdateVacancyForm extends React.Component {
       }
     });
   }
-  
+
 
 
   render() {
@@ -100,7 +98,7 @@ export default class UpdateVacancyForm extends React.Component {
     const formItemLayout = {
 
     }
-   
+
     const rangeConfig = {
       initialValue:[ moment(this.state.start_date,"YYYY-MM-DD"), moment(this.state.end_date,"YYYY-MM-DD")],
       rules: [{ type: 'array', required: true, message: 'Please select time!' }],
@@ -119,7 +117,7 @@ export default class UpdateVacancyForm extends React.Component {
           <Form.Item
             label="Name"
           >
-            {getFieldDecorator('name', { 
+            {getFieldDecorator('name', {
               initialValue: this.state.nama,
               rules: [{
                 pattern: new RegExp("^[A-Za-z]"),
@@ -195,17 +193,17 @@ export default class UpdateVacancyForm extends React.Component {
         </Card>
         <br></br>
 
-        
+
              <Card><FormRequirement id_low={this.props.id_lowongan} requirement={this.state.requirement} />
                </Card>
                <br></br>
                <Card>
                <FormResponsibility id_low={this.props.id_lowongan} responsibility={this.state.responsibility}/>
-             
+
                </Card>
 
-         
-         
+
+
 
 
       </div>

@@ -32,6 +32,12 @@ class UserController extends Controller
         return $result;
     }
 
+    public function getSupervisor(Request $request){
+        $supervisor = DB::table('karyawan')->select()->where('role', 'SUPERVISOR')->get();
+        $supervisor = json_decode($supervisor);
+        return $supervisor;
+    }
+
     public function createuser(Request $request){
         $name = $request->name;
         $username = $request->username;
@@ -55,13 +61,15 @@ class UserController extends Controller
         $username = $request->username;
         $role = $request->role;
         $divisi = $request->divisi;
+        $supervisor = $request->supervisor;
 
         $result = DB::table('karyawan')
             ->where('id', $id)
             ->update(['name' => $name, 
             'username' => $username, 
             'role' => $role, 
-            'divisi' => $divisi]);
+            'divisi' => $divisi,
+            'id_supervisor' => $supervisor]);
         return $result;
     }
 

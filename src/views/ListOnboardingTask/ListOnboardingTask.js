@@ -311,7 +311,7 @@ export class ListOnboardingTask extends Component {
                 status="active"
               />
             </Card>
-            <AddOnboardingTask />
+            <AddOnboardingTask id_karyawan />
             <Card style={{ width: 830, marginTop: 16, marginBottom: 16 }} loading={this.state.loading}>
               <Row>
                 <h4>My Task</h4>

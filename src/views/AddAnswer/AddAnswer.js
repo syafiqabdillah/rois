@@ -48,7 +48,7 @@ export default class AddAnswer extends React.Component{
   }
 
   getDetailRemoteTest = () =>{
-    axios.get('http://localhost:8000' + '/po/remote-test/' + this.props.match.params.id)
+    axios.get('http://localhost:8000/po/remote-test/' + this.props.match.params.id)
       .then((response) => {
         let startDate = response.data.start_date;
 
@@ -78,7 +78,7 @@ export default class AddAnswer extends React.Component{
   }
 
   getDetailApplicant = (idLamaran) => {
-    axios.get('http://localhost:8000' + '/po/get-detail-applicant/' + idLamaran)
+    axios.get('http://localhost:8000/po/get-detail-applicant/' + idLamaran)
       .then((response) => {
         const namaLowongan = response.data.lowongan;
         const namaPelamar = response.data.nama_pelamar;
@@ -91,7 +91,7 @@ export default class AddAnswer extends React.Component{
   }
 
   getLinkSoal = (idSoal) => {
-    axios.get('http://localhost:8000' + '/po/soal/' + idSoal)
+    axios.get('http://localhost:8000/po/soal/' + idSoal)
       .then((response) => {
         const linkSoal = response.data.link;
         this.setState({
@@ -124,7 +124,7 @@ export default class AddAnswer extends React.Component{
       color : "#979797",
     };
 
-    if (localStorage.getItem('role') != 'pelamar') {
+    if (localStorage.getItem('role') !== 'pelamar') {
       return <Redirect to="/vacancies-pelamar" />
     }
 

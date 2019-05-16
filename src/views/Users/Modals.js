@@ -1,7 +1,6 @@
 import React from 'react';
 import axios from 'axios';
 import { Button, Modal, ModalHeader, ModalBody, Col, Row } from 'reactstrap';
-import Tooltip from '@material-ui/core/Tooltip';
 import 'antd/dist/antd.css';
 import { message } from 'antd';
 
@@ -55,7 +54,7 @@ class Modals extends React.Component {
           {/* <i className="cui-trash icons"></i> */}
         </Button>
       )
-    
+
     return (
       <div>
 

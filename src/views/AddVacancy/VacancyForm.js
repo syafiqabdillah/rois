@@ -1,8 +1,6 @@
 import React from 'react';
 import 'antd/dist/antd.css';
-import {
-  Form, Select, Input, Button, DatePicker, Card, TimePicker, message
-} from 'antd';
+import { Form, Select, Input, Button, DatePicker, Card } from 'antd';
 import moment from 'moment';
 import axios from 'axios';
 import RequirementForm from './RequirementForm';
@@ -52,7 +50,7 @@ export default class VacancyForm extends React.Component {
             console.log(error.response)
           });
 
-        this.setState({ 
+        this.setState({
           submit: true,
           req_res_disabled: false,
           form_req_visible: !this.state.form_req_visible
@@ -63,8 +61,8 @@ export default class VacancyForm extends React.Component {
 
 
   render() {
-    
-    
+
+
     const { getFieldDecorator } = this.props.form;
     const formItemLayout = {
 
@@ -163,11 +161,11 @@ export default class VacancyForm extends React.Component {
         {
           this.state.form_req_visible
             ? <FormRequirement  id_low={this.state.lowongan_id} />
-             
-              
+
+
             : null
         }
-        
+
 
 
       </div>

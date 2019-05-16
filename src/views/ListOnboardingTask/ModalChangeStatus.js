@@ -3,6 +3,7 @@ import axios from 'axios';
 import { ButtonGroup, Button, Modal, ModalHeader, ModalBody, Col, Row } from 'reactstrap';
 import 'antd/dist/antd.css';
 import { message } from 'antd';
+import moment from 'moment';
 
 class ModalChangeStatus extends React.Component {
   constructor(props) {
@@ -24,7 +25,7 @@ class ModalChangeStatus extends React.Component {
     console.log(this.state.selected);
     console.log('dipilih:', e.target.id);
     if(e.target.id==="Reject"){
-      this.setState({status : "Rejected", message : "Rejecting..."});
+      this.setState({status : "On Progress", message : "Rejecting..."});
     }else if (e.target.id==="Approve"){
       this.setState({status : "Approved", message : "Approving..."});
     }
@@ -34,14 +35,26 @@ class ModalChangeStatus extends React.Component {
     e.preventDefault();
     var qs = require('qs');
 
-    //post to backend
-    axios.post('http://localhost:8000/supervisor/change-task-status', qs.stringify({
-      'tasksId': this.props.selectedTasks,
-      'status': this.state.status
-    }),
-    {
-      headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-    })
+    if(this.state.status === "Approved"){
+       //post to backend
+      axios.post('http://localhost:8000/supervisor/change-task-status', qs.stringify({
+        'tasksId': this.props.selectedTasks,
+        'status': this.state.status,
+        'finished_date': moment(new Date()).format('YYYY-MM-DD'),
+      }),
+      {
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+      })
+    } else {
+      axios.post('http://localhost:8000/supervisor/change-task-status', qs.stringify({
+        'tasksId': this.props.selectedTasks,
+        'status': this.state.status
+      }),
+      {
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+      })
+    }
+   
 
     this.setState(prevState => ({
       modal: !prevState.modal
@@ -53,10 +66,6 @@ class ModalChangeStatus extends React.Component {
   }
 
   render() {
-    const textStyle = {
-      color : "#979797",
-    };
-
     let buttonReject;
     buttonReject = (<Button id="Reject" color="danger" onClick={this.toggle} disabled={!this.props.hasSelected}> Reject </Button>)
     let buttonApprove;

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { Button, Badge, Card, CardBody, CardHeader, Col, Row, Table } from 'reactstrap';
+import { Button, Badge, Card, CardBody, CardHeader, Col, Row } from 'reactstrap';
 import ModalDelete from './ModalDelete';
 import { MDBDataTable } from 'mdbreact';
 
@@ -49,7 +49,7 @@ const data = {
       field:'status',
       width: 100
     },
-   
+
     {
       label: "Quota",
       field: 'needed',
@@ -93,15 +93,15 @@ export class Vacancies extends Component {
   render() {
     let content;
     let color_badge;
-    
+
 
     if (this.state.loading) {
       content = <div align="center"><p>Loading . . .</p></div>;
     } else {
       let list_vacancy = this.state.lowongan.map((lowongan, index) => {
-        if(lowongan.status=="Not Active"){
+        if(lowongan.status === "Not Active"){
           color_badge="warning"
-         
+
         }
         else{
           color_badge="success"
@@ -114,25 +114,25 @@ export class Vacancies extends Component {
             // end_date: lowongan.end_date,
             lokasi: lowongan.lokasi,
             tipe: lowongan.tipe,
-            status : 
+            status :
             //ini belom selese nampilin bagdge nya
             <Badge pill color={color_badge}>{lowongan.status}</Badge>,
             needed: lowongan.posisi_tersedia,
             action:
               <Row>
-                
+
                   <Link to={"/vacancy/" + lowongan.id} className=" btn btn-primary btn-pill">
                     <i className="cui-magnifying-glass icons " title="See Details"></i>
                   </Link>
                   &nbsp;&nbsp;&nbsp;
-                
+
                   <Link to={"/vacancy/update/" + lowongan.id} className=" btn btn-primary btn-pill">
                     <i className="cui-pencil icons " title="Update Vacancy"></i>
                   </Link>
-                
+
                   &nbsp;&nbsp;&nbsp;
                   <ModalDelete isDirujuk={lowongan.isDirujuk} name={lowongan.nama} id={lowongan.id} />
-               
+
               </Row>
           }
         );

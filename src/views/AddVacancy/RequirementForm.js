@@ -16,8 +16,6 @@ export default class RequirementForm extends React.Component {
     }
   }
 
-  
-
   remove = k => {
     const { form } = this.props;
     // can use data-binding to get
@@ -50,11 +48,10 @@ export default class RequirementForm extends React.Component {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        const {names,keys}  = values;
         var qs=(require('qs'));
          axios.post('http://localhost:8000/po/create-requirement', qs.stringify({
-           'id_lowongan':this.props.id_low,
-           'deskripsi':values.names,
+           'id_lowongan': this.props.id_low,
+           'deskripsi': values.names,
           }),
           {
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
@@ -65,7 +62,7 @@ export default class RequirementForm extends React.Component {
           .catch(error => {
             console.log(error.response)
           });
-        this.setState({ 
+        this.setState({
           submit: true,
           form_res_visible: !this.state.form_res_visible
         });
@@ -125,7 +122,7 @@ export default class RequirementForm extends React.Component {
       </Form.Item>
 
     ));
-   
+
     return (
       <Card>
       <Form onSubmit={this.handleSubmit}>
@@ -138,14 +135,14 @@ export default class RequirementForm extends React.Component {
         <Form.Item  {...formItemLayoutWithOutLabel}>
            <Button disabled={this.state.submit} className="float-right" shape="round"  type="primary" htmlType="submit">
             Next
-          </Button> 
+          </Button>
         </Form.Item>
       </Form>
       {
           this.state.form_res_visible
             ? <FormResponsibility  id_low={id_lowongan} />
-             
-              
+
+
             : null
         }
       </Card>

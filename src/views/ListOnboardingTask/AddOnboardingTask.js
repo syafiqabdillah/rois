@@ -1,22 +1,17 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import {
-  Button, Card, CardBody,
-  FormGroup, Label, Col, Row
-} from 'reactstrap';
+import { Button } from 'reactstrap';
 import 'antd/dist/antd.css';
 import moment from 'moment';
 
-import { Form, Modal, message, Input} from 'antd';
+import { Form, Modal, Input} from 'antd';
 const { TextArea } = Input;
-
-
 
 const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
   // eslint-disable-next-line
-  
+
   class extends React.Component {
-   
+
     render() {
       const {
         visible, onCancel, onCreate, form, confirmLoading
@@ -32,7 +27,7 @@ const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
           confirmLoading= {confirmLoading}
         >
           <Form layout="vertical">
-         
+
           <Form.Item
             label="Task Name"
           >
@@ -73,7 +68,7 @@ class AddOnboardingTask extends Component {
   state = {
     visible: false,
     confirmLoading : false,
-   
+
   };
 
   showModal = () => {
@@ -87,10 +82,14 @@ class AddOnboardingTask extends Component {
   }
 
   handleCreate = () => {
+<<<<<<< HEAD
     console.log(this.props.match.params.id);
    
+=======
+
+>>>>>>> 0e193daabb88f0a6fc3580c9934ca131645cd2a4
     const form = this.formRef.props.form;
-    
+
       form.validateFields((err, values) => {
         if (!err) {
           this.setState({confirmLoading: true});
@@ -110,13 +109,13 @@ class AddOnboardingTask extends Component {
             })
             .then(response => {
               console.log(response)
-             
+
             })
             .catch(error => {
               console.log(error.response)
             });
-           
-            
+
+
       form.resetFields();
       setTimeout(() => {
         this.setState({
@@ -125,16 +124,16 @@ class AddOnboardingTask extends Component {
         });
         window.location.reload();
       }, 2000);
-     
-     
-      
+
+
+
         }else{
           return;
         }
-       
+
 
       });
-     
+
   }
 
   saveFormRef = (formRef) => {
@@ -145,7 +144,7 @@ class AddOnboardingTask extends Component {
     
     return (
       <div>
-       
+
      <Button color="primary"  className="btn-pill" onClick={this.showModal}>New Onboarding Task</Button>
         <CollectionCreateForm
           wrappedComponentRef={this.saveFormRef}
@@ -155,11 +154,10 @@ class AddOnboardingTask extends Component {
           confirmLoading={this.state.confirmLoading}
         />
          {/* <ListOnboardingTask/> */}
-        
-       
+
+
       </div>
     );
   }
 }
 export default AddOnboardingTask;
-

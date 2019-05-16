@@ -24,6 +24,13 @@ class KaryawanOnboardingController extends Controller
         return json_encode($karyawan_onboarding);
     }
 
+    public function getNamaKaryawanOnboarding($id_karyawan){
+        $karyawan_onboarding = DB::table('karyawan')->select('name')->where('id', $id_karyawan)->get();
+        $karyawan_onboarding = json_decode($karyawan_onboarding);
+        $karyawan_onboarding = $karyawan_onboarding[0];
+        return json_encode($karyawan_onboarding);
+    }
+
     /**
      * mengembalikan tasks list suatu karyawan dengan id karyawan onboarding tertentu
      * @param long  $id id dari karyawan yang tasks listnya ingin diambil

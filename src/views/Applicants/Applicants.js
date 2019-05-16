@@ -5,7 +5,7 @@ import ChooseCurrentStage from './ChooseCurrentStage';
 import ChooseStages from './ChooseStages';
 import Widget02 from '../Widgets/Widget02';
 import Widget04 from '../Widgets/Widget04';
-import { Badge, Card, CardBody, CardHeader, Col, Pagination, PaginationItem, PaginationLink, Row, Table, CardTitle, CardText, Progress, Tooltip, Button } from 'reactstrap';
+import { Badge, Card, CardBody, CardHeader, Col, Row, Table, Tooltip } from 'reactstrap';
 
 const API = 'http://localhost:8000';
 

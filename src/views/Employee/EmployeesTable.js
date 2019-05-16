@@ -2,10 +2,8 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import 'antd/dist/antd.css';
 import { Progress, Button } from 'antd';
-import { Card, CardBody, CardHeader, Col, Row} from 'reactstrap';
+import { Card, CardBody, Col, Row} from 'reactstrap';
 import { MDBDataTable } from 'mdbreact';
-
-const API = 'http://localhost:8000';
 
 const data = {
   columns: [
@@ -55,7 +53,7 @@ export default class EmployeesTable extends Component {
 
   fetchData = () => {
     let id_karyawan = localStorage.getItem('id_karyawan')
-    axios.get('http://localhost:8000' + '/po/get-all-employee/' + id_karyawan)
+    axios.get('http://localhost:8000/po/get-all-employee/' + id_karyawan)
       .then((response) => {
         const profile = response.data;
         console.log(profile);
@@ -77,13 +75,13 @@ export default class EmployeesTable extends Component {
         console.log(employee);
         const idemployee = "http://localhost:3000/#/employeeDashboard/" + employee.profile.id
         const taskemployee = "http://localhost:3000/#/tasks-list/" + employee.profile.id
-        let progress = Math.round(((employee.progress.approved)/employee.progress.total)*100)
+        let progress = Math.round(((employee.progress.taskdone)/employee.progress.total)*100)
         return (
           {
           name : employee.profile.name,
           division : employee.profile.divisi,
           progress : <Progress percent={progress} strokeWidth={15}/>,
-          complete : employee.progress.approved + ' / ' + employee.progress.total,
+          complete : employee.progress.taskdone + ' / ' + employee.progress.total,
           action: <Button.Group>
                     <Button type="primary" icon="line-chart" size='large' href={idemployee} ghost/>
                     <Button type="primary" icon="edit" size='large' href={taskemployee}/>
@@ -93,7 +91,7 @@ export default class EmployeesTable extends Component {
       });
 
       data.rows = [];
-      
+
       for (var i = 0; i < list_appointment.length; i++) {
         data.rows.push(list_appointment[i]);
       }
