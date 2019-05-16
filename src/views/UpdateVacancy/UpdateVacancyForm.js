@@ -1,15 +1,13 @@
 import React from 'react';
 
-import { Form, Select, Input, Button, DatePicker, Card, message } from 'antd';
+import { Form, Select, Input, Button, DatePicker, Card, message,InputNumber } from 'antd';
 import moment from 'moment';
 import axios from 'axios';
-import RequirementForm from './RequirementForm';
-import ResponsibilityForm from './ResponsibilityForm';
+
 
 const { Option } = Select;
 const { RangePicker } = DatePicker;
-const FormRequirement = Form.create({ name: 'requirement' })(RequirementForm);
-const FormResponsibility = Form.create({name:'responsibility'})(ResponsibilityForm);
+
 
 const API = 'http://localhost:8000';
 export default class UpdateVacancyForm extends React.Component {
@@ -46,13 +44,10 @@ export default class UpdateVacancyForm extends React.Component {
         end_date: lowongan.end_date,
         lokasi:lowongan.lokasi,
         tipe:lowongan.tipe,
+        position_available:lowongan.posisi_tersedia,
     })
-    // let lowongan = this.props.lowongan;
-
-
     });
-     console.log("hui");
-     console.log(this.state.id);
+    
   }
 
 
@@ -72,6 +67,7 @@ export default class UpdateVacancyForm extends React.Component {
           'divisi': values['division'],
           'lokasi': values['location'],
           'tipe': values['type'],
+          'position_available':values['position_available'],
         }),
           {
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
@@ -186,6 +182,19 @@ export default class UpdateVacancyForm extends React.Component {
            {getFieldDecorator('range-picker', rangeConfig)(
               <RangePicker disabled={this.state.submit} onChange={this.onChangeDateRange} format="YYYY-MM-DD" disabledDate={disabledDate} />
             )} </Form.Item>
+
+             <Form.Item
+          label = "Position available">
+           {getFieldDecorator('position_available', {
+             initialValue : this.state.position_available,
+             rules: [
+                { required: true },
+              ],
+            })(
+               <InputNumber disabled={this.state.submit} min={1} max={10}  /> 
+                )}
+         
+           </Form.Item>
           <Form.Item>
           <Button disabled={this.state.submit} className="float-right" type="primary" htmlType="submit" shape="round" >Update Vacancy</Button>
           </Form.Item>
@@ -193,14 +202,6 @@ export default class UpdateVacancyForm extends React.Component {
         </Card>
         <br></br>
 
-
-             <Card><FormRequirement id_low={this.props.id_lowongan} requirement={this.state.requirement} />
-               </Card>
-               <br></br>
-               <Card>
-               <FormResponsibility id_low={this.props.id_lowongan} responsibility={this.state.responsibility}/>
-
-               </Card>
 
 
 

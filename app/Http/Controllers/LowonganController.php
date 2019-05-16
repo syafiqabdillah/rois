@@ -169,6 +169,7 @@ class LowonganController extends Controller
         $divisi = $request->divisi;
         $lokasi = $request->lokasi;
         $tipe = $request->tipe;
+        $posisi_tersedia = $request->position_available;
 
         $result = DB::table('lowongan')
             ->where('id', $id_lowongan)
@@ -178,6 +179,7 @@ class LowonganController extends Controller
             'publish_date' => $publish_date,
             'divisi' => $divisi,
             'lokasi' => $lokasi,
+            'posisi_tersedia' => $posisi_tersedia,
             'tipe' => $tipe]);
         return $result;
     }
