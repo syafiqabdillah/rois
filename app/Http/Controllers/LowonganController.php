@@ -225,6 +225,18 @@ class LowonganController extends Controller
         ->where([['status','Active'],['start_date','>',$today],['end_date','<',$today]])
         ->update(['status' => 'Not Active']);
 
+        DB::table('lowongan')
+        ->where(['posisi_tersedia',0])
+        ->update(['status' => 'Not Active']);
+
+
+    }
+
+    public function updatePositionAvailable(Request $request){
+        $posisi_updated =  DB::table('lowongan')->select()->where('id_lowongan', $request->id)->get()-1;
+        DB::table('lowongan')
+        ->where('id', $id_lowongan)
+        ->update(['posisi_tersedia' => $posisi_updated]);
 
     }
 
