@@ -12,20 +12,13 @@ const propTypes = {
 
 const defaultProps = {};
 
-let imageUrl;
-if (localStorage.getItem('profile') !== undefined) {
-  const profile = JSON.parse(localStorage.getItem('profile'));
-  imageUrl = profile.imageUrl;
-} else {
-  imageUrl = 'https://cdn0.iconfinder.com/data/icons/elasto-online-store/26/00-ELASTOFONT-STORE-READY_user-circle-512.png';
-}
-
 class DefaultHeader extends Component {
   render() {
 
     // eslint-disable-next-line
     const { children, ...attributes } = this.props;
-
+	let imageUrl = 'https://cdn0.iconfinder.com/data/icons/elasto-online-store/26/00-ELASTOFONT-STORE-READY_user-circle-512.png';
+	
     return (
       <React.Fragment>
         <AppSidebarToggler className="d-lg-none" display="md" mobile />

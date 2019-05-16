@@ -127,7 +127,8 @@ class AppointmentController extends Controller
    }
 
    public function taskComplete($id){
-       $alltask = DB::table('tugas_onboarding')->select(DB::raw('nama, DATEDIFF(finished_date, start_date) + 1 as days'))->where('id_karyawan', $id)->where('status', 'Approved')->get();
+       //$alltask = DB::table('tugas_onboarding')->select(DB::raw('nama, DATEDIFF(finished_date, start_date) + 1 as days'))->where('id_karyawan', $id)->where('status', 'Approved')->get();
+	   $alltask = DB::table('tugas_onboarding')->select(DB::raw('nama, (finished_date - start_date) + 1 as day'))->where('id_karyawan', $id)->where('status', 'Approved')->get();
        return $alltask;
    }
 
