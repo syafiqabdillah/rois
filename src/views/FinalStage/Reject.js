@@ -6,6 +6,7 @@ import ChooseStages from '../Applicants';
 import { Badge, Card, CardBody, CardHeader, Col, Pagination, PaginationItem,
   Form, FormGroup, Label, Input, Button, PaginationLink, Row, Table, CardTitle,
   CardText, Progress, FormText } from 'reactstrap';
+import { message } from 'antd';
 
 const API = 'http://localhost:8000';
 
@@ -43,9 +44,10 @@ class Reject extends Component {
       var qs = require('qs');
 
       //post it to backend
+      var tahapan = localStorage.getItem('tahapan')
       axios.post('http://localhost:8000/po/update-tahapan-lamaran', qs.stringify({
         'id': this.state.lamaran.id,
-        'tahapan': 'Rejected',
+        'tahapan': tahapan,
         'status': 'Rejected',
       }),
       {
@@ -61,6 +63,12 @@ class Reject extends Component {
           status: 'Rejected',
         }
       })
+
+      message.info('Message', 5.5)
+      message.loading('Saving...', 3)
+      .then(() => message.success('Applicant has successfully rejected', 2.5))
+      .then(() => window.location.href = '#/applications')
+      .then(() => window.location.reload())
     }
 
   }

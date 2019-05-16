@@ -29,6 +29,7 @@ class Applicants extends Component {
     .then(res => {
       const lamaran = res.data;
       console.log(lamaran);
+      localStorage.setItem('tahapan', lamaran.tahapan)
       this.setState({
         lamaran: lamaran,
         loading: false

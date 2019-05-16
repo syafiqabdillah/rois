@@ -23,7 +23,7 @@ class SysAdminHeader extends Component {
   render() {
 
     let imageUrl = 'https://cdn0.iconfinder.com/data/icons/elasto-online-store/26/00-ELASTOFONT-STORE-READY_user-circle-512.png';
-    
+    let nama = localStorage.getItem('nama_karyawan')
     const { children, ...attributes } = this.props;
 
     return (
@@ -39,6 +39,7 @@ class SysAdminHeader extends Component {
           <NavItem className="px-3">
             <Link to="/" className="nav-link" >User Management</Link>
           </NavItem>
+
 
         </Nav>
         <Nav className="ml-auto" navbar>

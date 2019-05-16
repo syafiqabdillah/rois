@@ -110,7 +110,7 @@ const routes = [
   { path: '/addUser', name: 'Add User', component: AddUser },
   { path: '/updateUser/:id', name: 'Update User', component: UpdateUser },
 
-  { path: '/taskskaryawan/:username', name: 'Tasks Karyawan', component: TasksKaryawan },
+  { path: '/taskskaryawan/:id', name: 'My Tasks', component: TasksKaryawan },
 
   { path: '/base/tabs', name: 'Tabs', component: Tabs },
   { path: '/base/breadcrumbs', name: 'Breadcrumbs', component: Breadcrumbs },

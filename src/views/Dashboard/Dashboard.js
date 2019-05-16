@@ -99,8 +99,13 @@ class Dashboard extends Component {
             <Label for="exampleZip">Division</Label>
             <Input type="select" id="divisi" name="divisi" id="exampleZip" onChange={this.handleInputChange} defaultValue="All" required>
               <option value="All">All</option>
+              <option value="Managerial">Managerial</option>
               <option value="Technology">Technology</option>
               <option value="Sales">Sales</option>
+              <option value="Marketing">Marketing</option>
+              <option value="Support">Support</option>
+              <option value="Commerce">Commerce</option>
+              <option value="Finance and People Operation">Finance and People Operation</option>
               <option value="Other">Other</option>
             </Input>
           </FormGroup>  

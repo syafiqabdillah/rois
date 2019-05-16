@@ -6,6 +6,7 @@ import ChooseStages from '../Applicants';
 import { Badge, Card, CardBody, CardHeader, Col, Pagination, PaginationItem,
   Form, FormGroup, Label, Input, Button, PaginationLink, Row, Table, CardTitle,
   CardText, Progress, FormText } from 'reactstrap';
+import { message } from 'antd';
 
 const API = 'http://localhost:8000';
 
@@ -61,6 +62,12 @@ class Hire extends Component {
           status: 'Hired',
         }
       })
+
+      message.info('Message', 5.5)
+      message.loading('Saving...', 3)
+      .then(() => message.success('Applicant has successfully hired', 2.5))
+      .then(() => window.location.href = '#/applications')
+      .then(() => window.location.reload())
 
     }
 

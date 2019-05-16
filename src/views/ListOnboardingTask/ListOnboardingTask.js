@@ -85,15 +85,15 @@
 //             action:
 //             <Row>
 //            <UpdateOnboardingTask task={tugas}/>
-            
-            
+
+
 //                   &nbsp;&nbsp;&nbsp; &nbsp;
 //                   <ModalDelete id= {id_tugas} />
 
-           
+
 //             </Row>
-            
-           
+
+
 //           }
 //         );
 //       });
@@ -115,7 +115,7 @@
 //           <h3>Task List</h3>
 //         </div>
 //         <br></br>
-       
+
 
 //          <Row>
 //           <Col sm="2">
@@ -147,12 +147,13 @@ import axios from 'axios';
 
 import "antd/dist/antd.css";
 
-import { Table,Card,Popconfirm, Empty, Progress,  Skeleton, Switch, Icon, Avatar } from "antd";
+import { Table, Card, Popconfirm, Empty, Progress, Skeleton, Switch, Icon, Avatar } from "antd";
 import { Component } from 'react';
-import {Button, Row, Col} from 'reactstrap';
+import { ButtonGroup, Button, Row, Col } from 'reactstrap';
 import ModalDelete from './ModalDelete';
 import UpdateOnboardingTask from './UpdateOnboardingTask';
 import AddOnboardingTask from './AddOnboardingTask';
+import ModalChangeStatus from './ModalChangeStatus';
 
 const API = 'http://localhost:8000';
 const { Meta } = Card;
@@ -176,88 +177,84 @@ const columns = [
     title: "Action",
     dataIndex: "",
     key: "x",
-   
+
     render: (record) => (
       <Row>
-         <UpdateOnboardingTask task={record}/>
-           
-            
-            
-                   &nbsp;&nbsp;&nbsp; &nbsp;
+        <UpdateOnboardingTask task={record} />
+
+
+
+        &nbsp;&nbsp;&nbsp; &nbsp;
                   <ModalDelete id={record.key} />
-           
-            </Row>
- 
-    
-    )}
+
+      </Row>
+
+
+    )
+  },
 ];
 
 const data = [];
 let finished = 0;
 let progress;
-let num_task=0;
+let num_task = 0;
 let task;
 
 export class ListOnboardingTask extends Component {
   constructor(props) {
-         super(props);
-   
-  this.state = {
-    selectedRowKeys: [], // Check here to configure the default column
-    loading: false,
-    task_list: [],
-    loading_page: true,
-           id: '',
-           visible: false,
-           karyawan_onboarding:'',
-         }
-       }
-  
-  
-  componentDidMount() {
-   
+    super(props);
 
-    axios.get(API + '/ko/karyawan-onboarding/' + this.props.match.params.id)
+    this.state = {
+      selectedRowKeys: [], // Check here to configure the default column
+      loading: false,
+      task_list: [],
+      loading_page: true,
+      id: '',
+      visible: false,
+      karyawan_onboarding: '',
+      progress:{approved:0, total:0}
+    }
+  }
+
+
+  componentDidMount() {
+
+    axios.get(API + '/supervisor/getTugasOnboarding/' + this.props.match.params.id)
+      .then(res => {
+        console.log(res.data)
+        const task = res.data;
+        task.map((task, index) => {
+          num_task = num_task + 1;
+          data.push({
+            key: task.id,
+            nama: task.nama,
+            status: task.status,
+            assigned_date: task.assigned_date,
+            description: task.deskripsi,
+            flag: task.flag
+          })
+          if (task.status === 'Approved') {
+            finished = finished + 1;
+          }
+
+          this.setState({
+            loading_page: false
+          })
+        })
+      })
+
+    finished = 0;
+    num_task = 0;
+
+    axios.get(API + '/po/get-onboarding-progress/' + this.props.match.params.id)
     .then(res => {
-      const karyawanOnboarding = res.data;
-      console.log(karyawanOnboarding);
+      const progress = res.data;
+      //console.log(progress);
       this.setState({
-        karyawan_onboarding: karyawanOnboarding,
+        progress:progress
       })
     })
-
-    let current_url = window.location.href
-    var arr = current_url.split("/")
-    let id_karyawan_onboarding = parseInt(arr[5])
-    localStorage.setItem("id_karyawan_onboarding", id_karyawan_onboarding)
-    axios.get(API + '/supervisor/getTugasOnboarding/' + id_karyawan_onboarding)
-           .then(res => {
-             const task = res.data;
-             task.map((task, index) => {
-              num_task = num_task+1;
-              data.push({
-                key: task.id,
-                nama:task.nama,
-                status:task.status,
-                assigned_date : task.assigned_date,
-                description: task.deskripsi,
-               
-              })
-              if(task.status=='Finished'){
-                finished = finished +1;
-              }
-              
-             this.setState({
-               loading_page: false
-             })
-           })
-          
-          })
-          progress = Math.round(finished/num_task*100)
-          finished=0;
-          num_task=0;
-         
-       };
+  };
 
   start = () => {
     this.setState({ loading: true });
@@ -270,7 +267,7 @@ export class ListOnboardingTask extends Component {
     }, 1000);
   };
 
-  onSelectChange = selectedRowKeys => {
+  onSelectChange = (selectedRowKeys) => {
     console.log("selectedRowKeys changed: ", selectedRowKeys);
     this.setState({ selectedRowKeys });
   };
@@ -279,75 +276,85 @@ export class ListOnboardingTask extends Component {
     const { loading, selectedRowKeys } = this.state;
     const rowSelection = {
       selectedRowKeys,
-      onChange: this.onSelectChange
+      onChange: this.onSelectChange,
+      getCheckboxProps: record => ({
+        disabled: record.flag === 0, // Column configuration not to be checked
+      }),
     };
     const hasSelected = selectedRowKeys.length > 0;
 
+    
     return (
 
       <div className="animated fadeIn">
-             <div align="center">
-                 <h3>Task List</h3>
-               </div>
+        <div align="center">
+          <h3>Task List</h3>
+        </div>
 
-               <Row>
+        <Row>
           <Col lg={2}>
           </Col>
           <Col lg={8}>
             <Card style={{ width: 830, marginTop: 16, marginBottom: 32 }} loading={this.state.loading}>
-              <Meta style={{ marginBottom: 16}}
-                avatar={ <Avatar size="large" src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" /> }
+              <Meta style={{ marginBottom: 16 }}
+                avatar={<Avatar size="large" src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
                 title={this.state.karyawan_onboarding}
                 description="Full Stack Engineer Intern"
               />
-              <h6>My Onboarding Progress</h6>
+              <h6>Onboarding Progress</h6>
               <Progress
                 strokeColor={{
                   from: '#108ee9',
                   to: '#59A3FC',
                 }}
-                percent={progress}
+                percent={Math.round(this.state.progress.approved / this.state.progress.total * 100)}
                 status="active"
               />
             </Card>
             <AddOnboardingTask />
             <Card style={{ width: 830, marginTop: 16, marginBottom: 16 }} loading={this.state.loading}>
-            <Row>
-              <h4>My Task</h4>
+              <Row>
+                <h4>My Task</h4>
               </Row>
-              <div>
-        <div style={{ marginBottom: 16 }}>
-          <Button
-            type="primary"
-            onClick={this.start}
-            disabled={!hasSelected}
-            loading={loading}
-          >
-            Reload
+              {/* <div>
+                <div style={{ marginBottom: 16 }}>
+                  <ButtonGroup>
+                    <ModalChangeStatus selectedTasks={this.state.selectedRowKeys} items={this.state.selectedRowKeys.length} hasSelected={hasSelected} />
+                  </ButtonGroup>
+                  <br></br> <br></br>
+                  <Button
+                    type="primary"
+                    onClick={this.start}
+                    disabled={!hasSelected}
+                  >
+                    Reload
           </Button>
 
-          <span style={{ marginLeft: 8 }}>
-            {hasSelected ? `Selected ${selectedRowKeys.length} items` : ""}
-          </span>
-        </div>
-        <Table
-          rowSelection={rowSelection}
-          columns={columns}
-          dataSource={data}
-          expandedRowRender={record => (
-            <p style={{ margin: 0 }}>{record.description}</p>
-          )}
-        />
-      </div>
-      </Card>
-      </Col>
-      </Row>
-      </div>
-      
+                  <span style={{ marginLeft: 8 }}>
+                    {hasSelected ? `Selected ${selectedRowKeys.length} items` : ""}
+                  </span>
 
-           
-          
-      
+
+
+                </div> */}
+                <Table
+                  rowSelection={rowSelection}
+                  columns={columns}
+                  dataSource={data}
+                  expandedRowRender={record => (
+                    <p style={{ margin: 0 }}>{record.description}</p>
+                  )}
+                />
+              
+            </Card>
+          </Col>
+        </Row>
+      </div>
+
+
+
+
+
     );
   }
 }
