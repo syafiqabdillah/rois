@@ -82,12 +82,6 @@ class AddOnboardingTask extends Component {
   }
 
   handleCreate = () => {
-<<<<<<< HEAD
-    console.log(this.props.match.params.id);
-   
-=======
-
->>>>>>> 0e193daabb88f0a6fc3580c9934ca131645cd2a4
     const form = this.formRef.props.form;
 
       form.validateFields((err, values) => {
