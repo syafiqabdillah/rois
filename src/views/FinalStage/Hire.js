@@ -40,9 +40,10 @@ class Hire extends Component {
       var qs = require('qs');
 
       //post it to backend
+      var tahapan = localStorage.getItem('tahapan')
       axios.post('http://localhost:8000/po/update-tahapan-lamaran', qs.stringify({
         'id': this.state.lamaran.id,
-        'tahapan': 'Hired',
+        'tahapan': tahapan,
         'status': 'Hired',
       }),
       {

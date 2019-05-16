@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Col, Row } from 'reactstrap';
 import 'antd/dist/antd.css';
 import moment from 'moment';
-import { Modal, Progress, Table, Card, Avatar } from 'antd';
+import { Modal, Progress, Table, Card, Avatar, Row, Col } from 'antd';
 
 const API = 'http://localhost:8000';
 
@@ -189,12 +188,9 @@ class TasksKaryawan extends Component {
         <div align="center">
           <h3>Tasks List</h3>
         </div>
-        <br />
-        <Row>
-          <Col lg={2}>
-          </Col>
-          <Col lg={8}>
-            <Card style={{ width: 830, marginTop: 16, marginBottom: 32 }} loading={this.state.loading}>
+        <Row type="flex" justify="center">
+          <Col>
+            <Card style={{ width: 830, marginTop: 16, marginBottom: 16 }} loading={this.state.loading}>
               <Meta style={{ marginBottom: 16 }}
                 avatar={<Avatar size="large" src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
                 title={this.state.karyawan_onboarding.name}
@@ -210,8 +206,8 @@ class TasksKaryawan extends Component {
                 status="active"
               />
             </Card>
-            <Card style={{ width: 830, marginTop: 16, marginBottom: 16 }} loading={this.state.loading}>
-              <h4>My Task</h4>
+            <Card style={{ width: 830, marginTop: 16, marginBottom: 32 }} loading={this.state.loading}>
+              <h4>My Tasks</h4>
               <Table
                 columns={columns}
                 expandedRowRender={record => <p style={{ margin: 0 }}>{record.description}</p>}
@@ -233,8 +229,6 @@ class TasksKaryawan extends Component {
                 <p>{this.state.modalText}</p>
               </Modal>
             </Card>
-          </Col>
-          <Col lg={2}>
           </Col>
         </Row>
       </div>
