@@ -150,6 +150,7 @@ class VacancyDetail extends Component {
         );
       });
 
+
       let responsibilities = lowongan.responsibility.map((responsibility, index) => {
         return (
           <li key={index}>{responsibility.deskripsi}</li>
@@ -180,6 +181,8 @@ class VacancyDetail extends Component {
         <div>
           <dl>
             <h2 className="col-sm-10">{lowongan.nama}</h2>
+            <br></br>
+            <h5>Position Available: {lowongan.posisi_tersedia}</h5>
             <br></br>
             <div>
               <h5>Requirements</h5>

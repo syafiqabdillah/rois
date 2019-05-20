@@ -63,6 +63,7 @@ const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
 const today = moment();
 
 class AddOnboardingTask extends Component {
+  
 
   state = {
     visible: false,
@@ -81,7 +82,6 @@ class AddOnboardingTask extends Component {
   }
 
   handleCreate = () => {
-
     const form = this.formRef.props.form;
 
       form.validateFields((err, values) => {
@@ -90,9 +90,10 @@ class AddOnboardingTask extends Component {
           console.log('Received values of form: ', values);
           var qs = require('qs');
           var id_karyawan_onboarding = localStorage.getItem('id_karyawan_onboarding')
+          console.log(id_karyawan_onboarding);
           axios.post('http://localhost:8000/supervisor/create-tugas-onboarding', qs.stringify({
             'deskripsi': values['description'],
-            'id_karyawan': id_karyawan_onboarding,
+            'id_karyawan': this.props.match.params.id,
             'status':'Assigned',
             'assigned_date' : today.format('YYYY-MM-DD'),
             'nama':values['name']
@@ -134,6 +135,7 @@ class AddOnboardingTask extends Component {
   }
 
   render() {
+    
     return (
       <div>
 

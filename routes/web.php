@@ -42,6 +42,8 @@ $router->post('po/create-lowongan', ['middleware' => 'cors', 'uses' => 'Lowongan
 $router->post('po/update-lowongan', ['middleware' => 'cors', 'uses' => 'LowonganController@updateLowongan']); //checked
 $router->post('po/delete-lowongan', ['middleware' => 'cors', 'uses' => 'LowonganController@deleteLowongan']);
 
+$router->post('po/update-position_available', ['middleware' => 'cors', 'uses' => 'LowonganController@updatePositionAvailable']); //checked
+
 $router->post('po/create-requirement', ['middleware' => 'cors', 'uses' => 'RequirementController@createRequirement']); //checked
 $router->post('po/update-requirement', ['middleware' => 'cors', 'uses' => 'RequirementController@updateRequirement']); //checked
 $router->post('po/delete-requirement', ['middleware' => 'cors', 'uses' => 'RequirementController@delete_req']);

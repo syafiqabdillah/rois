@@ -39,7 +39,7 @@ export default class ConfirmationStartTest extends React.Component {
       console.log('start rt')
       console.log(response)
     })
-    //window.location.reload();
+    window.location.reload();
   }
 
   render() {

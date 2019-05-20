@@ -39,7 +39,7 @@ class LowonganController extends Controller
 
     public function getAllActiveLowongan(Request $request){
         $this->setStatus();
-            $getlowongan = DB::table('lowongan')->select()->where('status','Active')->get();
+            $getlowongan = DB::table('lowongan')->select()->where('status','Published')->get();
             $lowongans = json_decode($getlowongan, true);
             $result = array();
             foreach($lowongans as $lowongan){
@@ -131,6 +131,7 @@ class LowonganController extends Controller
         $divisi = $request->divisi;
         $lokasi = $request->lokasi;
         $tipe = $request->tipe;
+        $posisi_tersedia = $request->position_available;
         $today = date('Y-m-d');
         $status;
         if($today >= $start_date && $today <= $end_date){
@@ -143,8 +144,8 @@ class LowonganController extends Controller
             ['nama' => $nama,
             'start_date' => $start_date,
             'end_date' => $end_date,
-            'status' => 'Published',
-            'posisi_tersedia' => 10,
+            'status' => $status,
+            'posisi_tersedia' => $posisi_tersedia,
             'publish_date' => $publish_date,
             'divisi' => $divisi,
             'lokasi' => $lokasi,
@@ -168,6 +169,7 @@ class LowonganController extends Controller
         $divisi = $request->divisi;
         $lokasi = $request->lokasi;
         $tipe = $request->tipe;
+        $posisi_tersedia = $request->position_available;
 
         $result = DB::table('lowongan')
             ->where('id', $id_lowongan)
@@ -177,6 +179,7 @@ class LowonganController extends Controller
             'publish_date' => $publish_date,
             'divisi' => $divisi,
             'lokasi' => $lokasi,
+            'posisi_tersedia' => $posisi_tersedia,
             'tipe' => $tipe]);
         return $result;
     }
@@ -222,6 +225,18 @@ class LowonganController extends Controller
         ->where([['status','Active'],['start_date','>',$today],['end_date','<',$today]])
         ->update(['status' => 'Not Active']);
 
+        DB::table('lowongan')
+        ->where(['posisi_tersedia',0])
+        ->update(['status' => 'Not Active']);
+
+
+    }
+
+    public function updatePositionAvailable(Request $request){
+        $posisi_updated =  DB::table('lowongan')->select()->where('id_lowongan', $request->id)->get()-1;
+        DB::table('lowongan')
+        ->where('id', $id_lowongan)
+        ->update(['posisi_tersedia' => $posisi_updated]);
 
     }
 

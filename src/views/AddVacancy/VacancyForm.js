@@ -1,6 +1,6 @@
 import React from 'react';
 import 'antd/dist/antd.css';
-import { Form, Select, Input, Button, DatePicker, Card } from 'antd';
+import { Form, Select, Input, Button, DatePicker, Card, InputNumber } from 'antd';
 import moment from 'moment';
 import axios from 'axios';
 import RequirementForm from './RequirementForm';
@@ -37,6 +37,7 @@ export default class VacancyForm extends React.Component {
           'divisi': values['division'],
           'lokasi': values['location'],
           'tipe': values['type'],
+          'position_available':values['position_available']
         }),
           {
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
@@ -151,9 +152,22 @@ export default class VacancyForm extends React.Component {
               <RangePicker disabled={this.state.submit} onChange={this.onChangeDateRange} format="YYYY-MM-DD" disabledDate={disabledDate} />
             )}
           </Form.Item>
+
+          <Form.Item
+          label = "Position available">
+           {getFieldDecorator('position_available', {rules: [
+                { required: true },
+              ],
+            })(
+               <InputNumber disabled={this.state.submit} min={1} max={10}  /> 
+                )}
+         
+           </Form.Item>
+
           <Form.Item>
           <Button disabled={this.state.submit} className="float-right" type="primary" htmlType="submit" shape="round" >Next</Button>
           </Form.Item>
+          
         </Form>
         </Card>
         <br></br>
