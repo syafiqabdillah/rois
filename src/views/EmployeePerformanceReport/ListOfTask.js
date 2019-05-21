@@ -17,7 +17,7 @@ export default class ListOfTask extends React.Component {
   }
 
   fetchData = (taskStatus) => {
-    axios.get('http://localhost:8000/po/get-all-task-status/'+ this.props.employeeid)
+    axios.get('http://localhost:8000/su/get-all-task-status/'+ this.props.employeeid)
       .then((response) => {
         const task = response.data[taskStatus];
         console.log(task)
@@ -35,7 +35,7 @@ export default class ListOfTask extends React.Component {
 
   selectRightStatusIcon= (item) => {
     let listitem = ""
-    if(this.props.status === 'taskdone'){
+    if(this.props.status === 'complete'){
       listitem = <List.Item.Meta
         avatar={<Badge status="success" />}
         title={<p>{item.nama}</p>}

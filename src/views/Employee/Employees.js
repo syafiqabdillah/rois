@@ -1,8 +1,9 @@
 import React from 'react';
 
 import 'antd/dist/antd.css';
+import { Card, CardBody, Col, Row} from 'reactstrap';
 import EmployeesTable from './EmployeesTable';
-
+import NewTable from './NewTable';
 
 export default class Report extends React.Component{
   constructor(props) {
@@ -28,7 +29,10 @@ export default class Report extends React.Component{
   render() {
     return (
       <div className="animated fadeIn">
-        <EmployeesTable/>
+        <div align="center">
+          <h3>List of Employee</h3>
+        </div>
+        <NewTable/>
       </div>
       );
     }

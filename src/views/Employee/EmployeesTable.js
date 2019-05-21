@@ -53,7 +53,7 @@ export default class EmployeesTable extends Component {
 
   fetchData = () => {
     let id_karyawan = localStorage.getItem('id_karyawan')
-    axios.get('http://localhost:8000/po/get-all-employee/' + id_karyawan)
+    axios.get('http://localhost:8000/su/get-all-employee/' + id_karyawan)
       .then((response) => {
         const profile = response.data;
         console.log(profile);
@@ -75,13 +75,13 @@ export default class EmployeesTable extends Component {
         console.log(employee);
         const idemployee = "http://localhost:3000/#/employeeDashboard/" + employee.profile.id
         const taskemployee = "http://localhost:3000/#/tasks-list/" + employee.profile.id
-        let progress = Math.round(((employee.progress.taskdone)/employee.progress.total)*100)
+        let progress = Math.round(((employee.progress.complete)/employee.progress.total)*100)
         return (
           {
           name : employee.profile.name,
           division : employee.profile.divisi,
           progress : <Progress percent={progress} strokeWidth={15}/>,
-          complete : employee.progress.taskdone + ' / ' + employee.progress.total,
+          complete : employee.progress.complete + ' / ' + employee.progress.total,
           action: <Button.Group>
                     <Button type="primary" icon="line-chart" size='large' href={idemployee} ghost/>
                     <Button type="primary" icon="edit" size='large' href={taskemployee}/>

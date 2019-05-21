@@ -140,12 +140,12 @@ $router->get('sysadmin/get-supervisor', ['middleware' => 'cors', 'uses' => 'User
  $router->get('po/get-onboarding-progress/{id}', ['middleware' => 'cors', 'uses' => 'AppointmentController@getNumberTaskByStatus']);
  $router->get('po/get-employee-profile/{id}', ['middleware' => 'cors', 'uses' => 'AppointmentController@getEmployeeProfile']);
  $router->get('po/get-all-employee/{id}', ['middleware' => 'cors', 'uses' => 'AppointmentController@getAllEmployee']);
- 
+
  $router->get('su/get-all-task-complete/{id}', ['middleware' => 'cors', 'uses' => 'TaskController@taskComplete']);
  $router->get('su/get-all-task-status/{id}', ['middleware' => 'cors', 'uses' => 'TaskController@getAllTaskStatus']);
  $router->get('su/get-onboarding-progress/{id}', ['middleware' => 'cors', 'uses' => 'TaskController@getNumberTaskByStatus']);
  $router->get('su/get-employee-profile/{id}', ['middleware' => 'cors', 'uses' => 'TaskController@getEmployeeProfile']);
- $router->get('su/get-all-employee', ['middleware' => 'cors', 'uses' => 'TaskController@getAllEmployee']);
+ $router->get('su/get-all-employee/{id}', ['middleware' => 'cors', 'uses' => 'TaskController@getAllEmployee']);
 
 /**
  * UC - 11 : Memberikan Konfirmasi Penyelesaian Tugas
@@ -160,11 +160,11 @@ $router->post('ko/update-task-karyawan', ['middleware' => 'cors', 'uses' => 'Tas
  * UC - 09 : Supervisor Mengelola Tugas Onboarding
  * Author : Shafira F
  */
-$router->get('supervisor/getNamaKaryawanOnboarding/{id_karyawan}', ['middleware' => 'cors', 'uses' => 'KaryawanOnboardingController@getNamaKaryawanOnboarding']); 
+$router->get('supervisor/getNamaKaryawanOnboarding/{id_karyawan}', ['middleware' => 'cors', 'uses' => 'KaryawanOnboardingController@getNamaKaryawanOnboarding']);
 
-$router->get('supervisor/getTugasOnboarding/{id_karyawan}', ['middleware' => 'cors', 'uses' => 'TugasOnboardingController@getAllTugasOnboarding']); 
-$router->post('supervisor/create-tugas-onboarding', ['middleware' => 'cors', 'uses' => 'TugasOnboardingController@createTugasOnboarding']); 
-$router->post('supervisor/update-tugas-onboarding', ['middleware' => 'cors', 'uses' => 'TugasOnboardingController@updateTugasOnboarding']); 
+$router->get('supervisor/getTugasOnboarding/{id_karyawan}', ['middleware' => 'cors', 'uses' => 'TugasOnboardingController@getAllTugasOnboarding']);
+$router->post('supervisor/create-tugas-onboarding', ['middleware' => 'cors', 'uses' => 'TugasOnboardingController@createTugasOnboarding']);
+$router->post('supervisor/update-tugas-onboarding', ['middleware' => 'cors', 'uses' => 'TugasOnboardingController@updateTugasOnboarding']);
 $router->post('supervisor/delete-tugas-onboarding', ['middleware' => 'cors', 'uses' => 'TugasOnboardingController@deleteTugasOnboarding']);
 
 /**

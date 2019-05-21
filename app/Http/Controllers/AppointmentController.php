@@ -145,10 +145,10 @@ class AppointmentController extends Controller
        $waiting = DB::table('tugas_onboarding')->select(DB::raw('nama'))->where('id_karyawan', $id)->where('status', 'Finished')->count();
        $taskonprogress = DB::table('tugas_onboarding')->select(DB::raw('nama'))->where('id_karyawan', $id)->where('status', 'On Progress')->count();
        $taskassigned = DB::table('tugas_onboarding')->select(DB::raw('nama'))->where('id_karyawan', $id)->where('status', 'Assigned')->count();
-       
+
        $total = $taskdone + $taskonprogress + $taskassigned + $waiting;
-       
-       $data = array( 'taskdone' => $taskdone, 'onprogress'=> $taskonprogress, 'assigned'=> $taskassigned, 'waiting'=> $waiting, 'total'=>$total);
+
+       $data = array('taskdone' => $taskdone, 'onprogress'=> $taskonprogress, 'assigned'=> $taskassigned, 'waiting'=> $waiting, 'total'=>$total);
        return $data;
    }
 

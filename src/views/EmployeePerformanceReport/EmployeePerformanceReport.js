@@ -52,7 +52,7 @@ export default class EmployeePerformanceReport extends React.Component{
   getAllTask = () => {
     const label = []
     const time = []
-    axios.get('http://localhost:8000/po/get-all-task-complete/' + this.props.employeeid)
+    axios.get('http://localhost:8000/su/get-all-task-complete/' + this.props.employeeid)
       .then((response) => {
         const task = response.data;
         if(task.length === 0) {
@@ -121,7 +121,7 @@ export default class EmployeePerformanceReport extends React.Component{
   }
 
   getOnboardingProgress = () => {
-    axios.get('http://localhost:8000/po/get-onboarding-progress/' + this.props.employeeid)
+    axios.get('http://localhost:8000/su/get-onboarding-progress/' + this.props.employeeid)
       .then((response) => {
         const onboarding = response.data;
         console.log(onboarding)
@@ -133,7 +133,7 @@ export default class EmployeePerformanceReport extends React.Component{
   }
 
   getProfile = () => {
-    axios.get('http://localhost:8000/po/get-employee-profile/' + this.props.employeeid)
+    axios.get('http://localhost:8000/su/get-employee-profile/' + this.props.employeeid)
       .then((response) => {
         const profile = response.data[0];
         this.setState({
@@ -152,7 +152,7 @@ export default class EmployeePerformanceReport extends React.Component{
   }
 
   getOnboardingProgressInPercent= () => {
-    const percent = this.state.onBoarding['taskdone']/this.state.onBoarding['total'];
+    const percent = this.state.onBoarding['complete']/this.state.onBoarding['total'];
     console.log(percent)
     this.setState({
         successPercent: Math.round(percent*100)
@@ -299,7 +299,7 @@ export default class EmployeePerformanceReport extends React.Component{
                   <h4 align='center'><strong>Approved</strong></h4>
                 </Row>
                 <Row>
-                  <ListOfTask status='taskdone' employeeid={this.props.employeeid}/>
+                  <ListOfTask status='complete' employeeid={this.props.employeeid}/>
                 </Row>
               </Card>
             </Col>
