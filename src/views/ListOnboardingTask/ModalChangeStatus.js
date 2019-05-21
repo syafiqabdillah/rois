@@ -24,9 +24,9 @@ class ModalChangeStatus extends React.Component {
     console.log(this.state.selected);
     console.log('dipilih:', e.target.id);
     if(e.target.id==="reject"){
-      this.setState({status : "rejected", message : "Rejecting..."});
+      this.setState({status : "On Progress", message : "Rejecting..."});
     }else if (e.target.id==="approve"){
-      this.setState({status : "approved", message : "Approving..."});
+      this.setState({status : "Approve", message : "Approving..."});
     }
   }
 
