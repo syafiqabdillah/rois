@@ -268,7 +268,7 @@ class RemoteTest extends Component {
           <Col span={15}>
             <Card hoverable loading={this.state.loading}>
               <Meta style={{ marginBottom: 16 }}
-                avatar={<Avatar size="large" src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
+                avatar={<Avatar size="large" src="https://media.licdn.com/dms/image/C5103AQFW-mGVUjhbng/profile-displayphoto-shrink_800_800/0?e=1564012800&v=beta&t=c_mIO5Lj6NKJdvYGFGejzaTSfvcZ7MJwYwiwdWth8-U" />}
                 title={this.state.lamaran.pelamar}
                 description={candidate}
               />

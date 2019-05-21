@@ -96,15 +96,6 @@ class Hire extends Component {
         <br/>
         <Form method="post" >
           <FormGroup row>
-            <Label for="offeringLetter" lg={3}>Offering Letter</Label>
-            <Col span={15}>
-              <Input type="file" name="file" id="offeringLetter" />
-              <FormText color="muted">
-                File size must not exceed 2MB.
-              </FormText>
-            </Col>
-          </FormGroup>
-          <FormGroup row>
             <Label for="additionalMessage" lg={3}>Additional Message</Label>
             <Col span={15}>
               <Input type="textarea" name="additionalMessage" id="additionalMessage" onChange={this.handleInputChange} />
@@ -143,7 +134,7 @@ class Hire extends Component {
           <Col span={15}>
             <Card hoverable loading={this.state.loading}>
               <Meta style={{ marginBottom: 16 }}
-                avatar={<Avatar size="large" src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
+                avatar={<Avatar size="large" src="https://media.licdn.com/dms/image/C5103AQFW-mGVUjhbng/profile-displayphoto-shrink_800_800/0?e=1564012800&v=beta&t=c_mIO5Lj6NKJdvYGFGejzaTSfvcZ7MJwYwiwdWth8-U" />}
                 title={this.state.lamaran.pelamar}
                 description={candidate}
               />

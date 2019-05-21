@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import 'antd/dist/antd.css';
 import moment from 'moment';
-import { message, Modal, Progress, Table, Card, Avatar, Row, Col } from 'antd';
+import { message, Modal, Progress, Table, Card, Avatar, Row, Col, Popover, Button, Badge, Tag, Tooltip } from 'antd';
 
 const API = 'http://localhost:8000';
 
@@ -11,6 +11,24 @@ const { Meta } = Card;
 let columns = [
   { title: 'Task', dataIndex: 'nama', key: 'nama' },
   { title: 'Status', dataIndex: 'status', key: 'status' },
+  { title: '',
+    dataIndex: '',
+    key: '',
+    render: (record) =>
+    {
+      let status = "processing"
+      let text = "Can be edited"
+      if(record.status === 'Finished' || record.status === 'Approved') {
+        status = "default"
+        text = "Can NOT be edited"
+      }
+      return (
+        <Tooltip placement="right" title={text}>
+          <Badge status={status} />
+        </Tooltip>
+      )
+    }
+  }
 ];
 
 let data = [];
@@ -31,6 +49,8 @@ class TasksKaryawan extends Component {
       progress: { taskdone: 0, total: 0 }
     }
   }
+
+
 
   componentDidMount() {
     axios.get(API + '/ko/karyawan-onboarding/' + this.props.match.params.id)
@@ -80,6 +100,13 @@ class TasksKaryawan extends Component {
         chosenTaskId: task.id,
         chosenTaskStatus: task.status
       });
+    }
+  };
+
+  showTooltip(task) {
+    if (task.status === 'Finished' || task.status === 'Approved') {
+    } else {
+
     }
   };
 
@@ -167,6 +194,16 @@ class TasksKaryawan extends Component {
 
     progress = Math.round(this.state.progress.taskdone / this.state.progress.total * 100);
 
+    let contentPop = (
+      <div>
+        <Badge status="processing" text="Klik tugas dengan status Assigned untuk memulai progress tugas tersebut" />
+        <br/>
+        <Badge status="processing" text="Klik tugas dengan status On Progress untuk meminta approval penyelesaian tugas tersebut kepada supervisor anda" />
+        <br/>
+        <Badge status="default" text="Tugas dengan status Approved/Finished tidak dapat diubah statusnya" />
+      </div>
+    );
+
     return (
       <div className="animated fadeIn">
         <div align="center">
@@ -192,6 +229,9 @@ class TasksKaryawan extends Component {
             </Card>
             <Card hoverable style={{ width: 830, marginTop: 16, marginBottom: 32 }} loading={this.state.loading}>
               <h4>My Tasks</h4>
+              <Popover placement="topLeft" content={contentPop} title="About Onboarding Tasks">
+                <Button type="primary">More info</Button>
+              </Popover>
               <Table
                 columns={columns}
                 expandedRowRender={record => <p style={{ margin: 0 }}>{record.description}</p>}
@@ -199,7 +239,8 @@ class TasksKaryawan extends Component {
                 size="middle"
                 onRow={(record, rowIndex) => {
                   return {
-                    onClick: () => this.showModal(record)
+                    onClick: () => this.showModal(record),
+                    onMouseEnter: () => this.showTooltip(record)
                   };
                 }}
               />
