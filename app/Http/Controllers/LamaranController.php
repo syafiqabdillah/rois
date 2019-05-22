@@ -39,21 +39,21 @@ class LamaranController extends Controller{
             ['created_date','<=',$end]
         ])->get();
         $list_lamaran = json_decode($list_lamaran);
-        
-        //siapin nama lowongan yang bakal muncul di ringkasan 
+
+        //siapin nama lowongan yang bakal muncul di ringkasan
         $result = array();
         foreach($list_lamaran as $res){
             $nama_lowongan = $this->getNamaLowongan($res->id_lowongan);
             if (array_key_exists($nama_lowongan, $result)){
                 //nama lowongan ada
                 if (array_key_exists($res->tahapan, $result[$nama_lowongan])){
-                    //nama tahapan ada, tambah 1 ke yang udah ada 
+                    //nama tahapan ada, tambah 1 ke yang udah ada
                     $result[$nama_lowongan][$res->tahapan]=$result[$nama_lowongan][$res->tahapan] + 1;
                 } else {
-                    //nama tahapan belum ada, buat baru nilainya 1 
+                    //nama tahapan belum ada, buat baru nilainya 1
                     $result[$nama_lowongan][$res->tahapan]=1;
                 }
-            } else { 
+            } else {
                 //nama lowongan belum ada, buat baru
                 $result[$nama_lowongan] = array();
 
@@ -111,13 +111,13 @@ class LamaranController extends Controller{
                 $result[$tahapan] += 1;
             }
 
-        }        
+        }
 
         // $data['result'] = $result;
         // $data['list lamaran']  = $list_lamaran;
         $array_chart_js = array('labels'=>array(), 'datasets'=>array());
         array_push($array_chart_js['datasets'],array('data'=>array(), 'backgroundColor'=>array(), 'hoverBackgroundColor'=>array()));
-        
+
         foreach($result as $key=>$value){
             array_push($array_chart_js['labels'], $key);
             array_push($array_chart_js['datasets'][0]['data'], $value);
@@ -133,7 +133,7 @@ class LamaranController extends Controller{
         $nama = $data['nama'];
         $email = $data['email'];
         $lowongan = $data['lowongan'];
-        
+
         $text = 'Dear ' . $nama . ', your application as '. $lowongan .' has been submitted. We will evaluate it soon. You can check the progress of your application(s) at our system.';
         $data = array('email'=>$email, 'text'=>$text);
         Mail::send([], $data, function($message) use ($data) {
@@ -288,4 +288,47 @@ class LamaranController extends Controller{
       $lamaran = array("lowongan" => $lamaran->lowongan, "nama_pelamar"=> $lamaran->pelamar->nama, "email"=>$lamaran->pelamar->email);
       return json_encode($lamaran);
     }
+
+   /**
+    * mengirim email hire
+    * @param request  $request berisi $email
+    * @return String $email email dari pelamar
+    */
+    public function sendMailHire(Request $request){
+      $nama = $request->nama;
+      $email = $request->email;
+      $additionalMessage = $request->additionalMessage;
+
+      $text = 'Dear ' . $nama . ', We are happy and excited to annouce that you have been successfully hired on our recruitment phase! ' . $additionalMessage . '. Please contact us immediately by replying to this email for further update on the hiring process.';
+      $data = array('email'=>$email, 'text'=>$text);
+
+      Mail::send([], $data, function($message) use ($data) {
+         $message->to($data['email'], '')
+         ->subject('SIRCLO | An Update on Your Application')
+         ->setBody($data['text']);
+         $message->from('second.umarghanis@gmail.com', 'Career SIRCLO');
+      });
+   }
+
+   /**
+    * mengirim email reject
+    * @param request  $request berisi $email
+    * @return String $email email dari pelamar
+    */
+   public function sendMailReject(Request $request){
+      $nama = $request->nama;
+      $email = $request->email;
+      $additionalMessage = $request->additionalMessage;
+
+      $text = 'Dear ' . $nama . ', We are sorry to annouce that you have not succeded on our recruitment phase. ' . $additionalMessage . '. But, we will gladly accept your submission on future vacancy openings that might be more suitable for you.';
+      $data = array('email'=>$email, 'text'=>$text);
+
+      Mail::send([], $data, function($message) use ($data) {
+          $message->to($data['email'], '')
+          ->subject('SIRCLO | An Update on Your Application')
+          ->setBody($data['text']);
+          $message->from('second.umarghanis@gmail.com', 'Career SIRCLO');
+      });
+  }
+
 }

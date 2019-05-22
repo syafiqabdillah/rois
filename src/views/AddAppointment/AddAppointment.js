@@ -1,17 +1,15 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 import {
-  Card,
-  CardBody,
-  CardHeader,
   Badge
 } from 'reactstrap';
 
 import 'antd/dist/antd.css';
-import { Form, Col, Row } from 'antd';
+import { Card, Form, Col, Row, Avatar } from 'antd';
 import axios from 'axios';
 import  AppointmentForm from './AppointmentForm';
 
+const { Meta } = Card;
 
 export default class AddAppointment extends React.Component{
   constructor(props) {
@@ -57,36 +55,36 @@ export default class AddAppointment extends React.Component{
       });
   }
 
+
   render() {
-    if (localStorage.getItem('role') !== 'admin') {
+    if (localStorage.getItem('role') !== 'ADMIN') {
       return <Redirect to="/vacancies-applicant" />
     }
 
+    let candidate = "Candidate " + this.state.lowonganDidaftar
+
     const FormAppointment = Form.create({ name: 'appointment' })(AppointmentForm);
+
     return (
       <div className="animated fadeIn">
-          <Row>
-            <Col align="center">
-              <h2><strong>Add Appointment</strong></h2>
-            </Col>
-          </Row>
-          <Row>
-          <Col span={12} offset={6}>
-            <Card>
-              <CardHeader>
-                <div>
-                  <i className="fa fa-user pr-1"></i>
-                  <Badge color="light">{this.state.namaPelamar}</Badge>
-                  <Badge color="secondary">{this.state.lowonganDidaftar}</Badge>
-                </div>
-              </CardHeader>
-              <CardBody>
-                <FormAppointment idLamaran={this.props.match.params.id} emailPelamar={this.state.emailPelamar}/>
-              </CardBody>
+        <div align="center">
+          <h3>Add Appointment</h3>
+          <br/>
+        </div>
+        <Row type="flex" justify="center" style={{ marginBottom: 16 }}>
+          <Col span={15}>
+            <Card hoverable loading={this.state.loading}>
+              <Meta style={{ marginBottom: 16 }}
+                avatar={<Avatar size="large" src="https://media.licdn.com/dms/image/C5103AQFW-mGVUjhbng/profile-displayphoto-shrink_800_800/0?e=1564012800&v=beta&t=c_mIO5Lj6NKJdvYGFGejzaTSfvcZ7MJwYwiwdWth8-U" />}
+                title={this.state.namaPelamar}
+                description={candidate}
+              />
+              <br/>
+              <FormAppointment idLamaran={this.props.match.params.id} emailPelamar={this.state.emailPelamar}/>
             </Card>
           </Col>
-          </Row>
-        </div>
+        </Row>
+      </div>
       );
     }
 }

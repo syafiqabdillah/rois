@@ -1,9 +1,7 @@
 
 import React from 'react';
 import 'antd/dist/antd.css';
-import {
-  Form, Select, Input, Button, DatePicker, TimePicker, message
-} from 'antd';
+import { Form, Select, Input, Button, DatePicker, TimePicker, message } from 'antd';
 import moment from 'moment';
 import axios from 'axios';
 

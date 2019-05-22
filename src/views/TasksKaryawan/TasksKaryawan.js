@@ -17,10 +17,15 @@ let columns = [
     render: (record) =>
     {
       let status = "processing"
-      let text = "Can be edited"
-      if(record.status === 'Finished' || record.status === 'Approved') {
+      let text = "Click to start the progress"
+      if (record.status === 'Finished') {
         status = "default"
-        text = "Can NOT be edited"
+        text = "Waiting for approval"
+      } else if (record.status === 'Approved') {
+        status = "default"
+        text = "Already approved"
+      } else if (record.status === 'On Progress') {
+        text = "Click to request for approval"
       }
       return (
         <Tooltip placement="right" title={text}>
@@ -95,7 +100,7 @@ class TasksKaryawan extends Component {
     } else if (task.status === 'On Progress') {
       this.setState({
         modalTitle: 'Request for Approval',
-        modalText: 'Are you sure you want to confirm your changes on this finished task and request for approval to your supervisor?',
+        modalText: 'Are you sure you have finished this task and want to request for approval to your supervisor?',
         visible: true,
         chosenTaskId: task.id,
         chosenTaskStatus: task.status
@@ -196,11 +201,17 @@ class TasksKaryawan extends Component {
 
     let contentPop = (
       <div>
-        <Badge status="processing" text="Klik tugas dengan status Assigned untuk memulai progress tugas tersebut" />
+        <p>
+          Assigned: Tugas baru saja diberikan oleh supervisor<br/>
+          On Progress: Tugas sudah anda mulai pengerjaannya<br/>
+          Finished: Tugas telah anda selesaikan namun belum mendapat approval dari supervisor anda<br/>
+          Approved: Tugas telah selesai dan mendapat approval dari supervisor
+        </p>
+        <Badge status="processing" text="Klik tugas dengan status Assigned untuk memulai progress tugas" />
         <br/>
-        <Badge status="processing" text="Klik tugas dengan status On Progress untuk meminta approval penyelesaian tugas tersebut kepada supervisor anda" />
+        <Badge status="processing" text="Klik tugas dengan status On Progress untuk meminta approval penyelesaian tugas kepada supervisor anda" />
         <br/>
-        <Badge status="default" text="Tugas dengan status Approved/Finished tidak dapat diubah statusnya" />
+        <Badge status="default" text="Tugas dengan status Finished dan Approved tidak dapat diubah statusnya" />
       </div>
     );
 
@@ -228,10 +239,16 @@ class TasksKaryawan extends Component {
               />
             </Card>
             <Card hoverable style={{ width: 830, marginTop: 16, marginBottom: 32 }} loading={this.state.loading}>
-              <h4>My Tasks</h4>
-              <Popover placement="topLeft" content={contentPop} title="About Onboarding Tasks">
-                <Button type="primary">More info</Button>
-              </Popover>
+              <Row type="flex">
+                <Col span={21}>
+                  <h4>My Tasks</h4>
+                </Col>
+                <Col span={3}>
+                  <Popover placement="topLeft" content={contentPop} title="About Tasks Status">
+                    <Button type="primary">More Info</Button>
+                  </Popover>
+                </Col>
+              </Row>
               <Table
                 columns={columns}
                 expandedRowRender={record => <p style={{ margin: 0 }}>{record.description}</p>}

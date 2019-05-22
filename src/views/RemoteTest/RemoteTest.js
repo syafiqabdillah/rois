@@ -115,32 +115,20 @@ class RemoteTest extends Component {
         'tester_email': this.state.tester_email,
         'expired_date': this.state.expired_date,
         'id_soal': this.state.id_soal,
-        'active': 'yes',
+        'email': this.state.lamaran.detail_pelamar.email,
+        'nama': this.state.lamaran.pelamar,
       }), {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         }
       })
       .then(function(response) {
-        console.log(response.data);
-      })
-
-    axios.post(API + '/po/update-tahapan-lamaran', qs.stringify({
-        'id': this.state.lamaran.id,
-        'tahapan': 'Remote Test',
-        'status': 'Assigned',
-      }), {
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded'
-        }
-      })
-      .then(function(response) {
-        console.log(response.data);
+        // console.log(response.data);
       })
 
     message.info('Message', 5.5)
     message.loading('Saving changes...', 2.5)
-    .then(() => message.success('Success! The Applicant has been successfully hired', 3))
+    .then(() => message.success('Success! The Remote Test has been successfully assigned to the applicant', 3))
     .then(() => window.location.reload())
 
   }
@@ -210,7 +198,7 @@ class RemoteTest extends Component {
             <FormGroup row>
               <Label for="id_soal" lg={3}>Assessment File</Label>
               <Col span={15}>
-                <Input type="select" default="Pilih" name="id_soal" id="id_soal" onChange={this.handleInputChange} required>
+                <Input type="select" name="id_soal" id="id_soal" onChange={this.handleInputChange} required>
                   {list_soal}
                 </Input>
               </Col>

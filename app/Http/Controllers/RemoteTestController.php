@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use \Illuminate\Http\Request;
 use \Illuminate\Support\Facades\DB;
+use \Illuminate\Support\Facades\Mail;
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
 class RemoteTestController extends Controller
 {
@@ -55,6 +58,8 @@ class RemoteTestController extends Controller
         $tester_email = $request->tester_email;
         $expired_date = $request->expired_date;
         $id_soal = $request->id_soal;
+        $email = $request->email;
+        $nama = $request->nama;
 
         $id = DB::table('remote_test')->insertGetId(
             ['id_lamaran' => $id_lamaran,
@@ -64,6 +69,14 @@ class RemoteTestController extends Controller
             'id_soal' => $id_soal,
             'active' => 'yes']
         );
+
+        $result = DB::table('lamaran')
+            ->where('id', $id_lamaran)
+            ->update(['tahapan' => 'Remote Test',
+            'status' => 'Assigned']);
+
+        $data = array('email'=>$email, 'duration'=>$duration, 'tester_email'=>$tester_email, 'expired_date'=>$expired_date, 'nama'=>$nama);
+        $this->sendMailRemoteTest($data);
         return $id;
     }
 
@@ -84,7 +97,7 @@ class RemoteTestController extends Controller
             ->where('id', $id_lamaran)
             ->update(['tahapan' => 'Remote Test',
             'status' => 'Submitted']);
-            
+
         return $result;
     }
 
@@ -102,5 +115,26 @@ class RemoteTestController extends Controller
             ->update(['start_date' => $start_date]);
         return $result;
     }
+
+    /**
+     * mengirim email info remote test
+     */
+    public function sendMailRemoteTest($data){
+       $email = $data['email'];
+       $duration = $data['duration'];
+       $tester_email = $data['tester_email'];
+       $expired_date = $data['expired_date'];
+       $nama = $data['nama'];
+
+       $text = 'Dear ' . $nama . ', We have assigned you a remote test assignment that is due until ' . $expired_date . '. You can check it on the SIRCLOs Recruitment website. Once you start the assigment, you have ' . $duration . ' day(s) to finish it and submit the answer link to us at the website. If you have any questions, feel free to ask '. $tester_email . ' (your evaluator) for further details regarding the remote test.';
+       $data = array('email'=>$email, 'text'=>$text);
+
+       Mail::send([], $data, function($message) use ($data) {
+           $message->to($data['email'], '')
+           ->subject('SIRCLO | Remote Test Assignment')
+           ->setBody($data['text']);
+           $message->from('second.umarghanis@gmail.com', 'Career SIRCLO');
+       });
+   }
 
 }

@@ -58,6 +58,20 @@ class Reject extends Component {
 
     //post it to backend
     var tahapan = localStorage.getItem('tahapan')
+
+    axios.post('http://localhost:8000/po/send-mail-reject', qs.stringify({
+        'nama': this.state.lamaran.pelamar,
+        'email': this.state.lamaran.detail_pelamar.email,
+        'additionalMessage': this.state.additionalMessage,
+      }), {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      })
+      .then(function(response) {
+        //console.log(response.data);
+      })
+
     axios.post('http://localhost:8000/po/update-tahapan-lamaran', qs.stringify({
         'id': this.state.lamaran.id,
         'tahapan': tahapan,
@@ -73,7 +87,7 @@ class Reject extends Component {
 
     message.info('Message', 5.5)
     message.loading('Saving changes...', 2.5)
-    .then(() => message.success('Success! Applicant has been successfully rejected', 3))
+    .then(() => message.success('Success! The Applicant has been successfully rejected', 3))
     .then(() => window.location.href = '#/applications')
     .then(() => window.location.reload())
 
