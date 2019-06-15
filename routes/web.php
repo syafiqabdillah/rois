@@ -147,6 +147,11 @@ $router->get('sysadmin/get-supervisor', ['middleware' => 'cors', 'uses' => 'User
  $router->get('su/get-employee-profile/{id}', ['middleware' => 'cors', 'uses' => 'TaskController@getEmployeeProfile']);
  $router->get('su/get-all-employee/{id}', ['middleware' => 'cors', 'uses' => 'TaskController@getAllEmployee']);
 
+ $router->post('su/create-task', ['middleware' => 'cors', 'uses' => 'TaskController@addTask']);
+ $router->get('su/get-all-task', ['middleware' => 'cors', 'uses' => 'TaskController@getAllOnboardingTask']);
+ $router->get('su/get-task/{id}', ['middleware' => 'cors', 'uses' => 'TaskController@getOnboardingTask']);
+ $router->post('su/update-task', ['middleware' => 'cors', 'uses' => 'TaskController@updateTask']);
+
 /**
  * UC - 11 : Memberikan Konfirmasi Penyelesaian Tugas
  * Author : M Raffi A

@@ -1,11 +1,9 @@
 import React from 'react';
-
+import { Button } from 'antd';
 import 'antd/dist/antd.css';
-import { Card, CardBody, Col, Row} from 'reactstrap';
-import EmployeesTable from './EmployeesTable';
-import NewTable from './NewTable';
+import TaskTable from './TaskTable';
 
-export default class Employees extends React.Component{
+export default class ListOfTask extends React.Component{
   constructor(props) {
     super(props);
 
@@ -30,9 +28,14 @@ export default class Employees extends React.Component{
     return (
       <div className="animated fadeIn">
         <div align="center">
-          <h3>List of Employee</h3>
+          <h3>List of Tasks</h3>
         </div>
-        <NewTable/>
+        <div>
+          <Button type="primary" href="http://localhost:3000/#/addTask">Add Task</Button>
+        </div>
+        <div>
+          <TaskTable/>
+        </div>
       </div>
       );
     }

@@ -83,6 +83,8 @@ class TaskController extends Controller
         return $result;
     }
 
+
+
     /**
      * menghapus suatu task
      * @param request  $request berisi $id dari task yang ingin dihapus
@@ -93,6 +95,56 @@ class TaskController extends Controller
         $response = DB::table('tugas_onboarding')->delete($id);
         return $response;
     }
+
+    //new function
+    public function getAllOnboardingTask(Request $request){
+      $get_tasks = DB::table('onboarding_task')->select()->get();
+      $tasks = json_decode($get_tasks, true);
+      $result = array();
+      foreach($tasks as $tasks){
+          $tasks = (object) $tasks;
+          array_push($result, $tasks);
+      }
+      return $result;
+    }
+
+
+    //new function
+    public function getOnboardingTask($id){
+      $task = DB::table('onboarding_task')->select()->where('id', $id)->get();
+      $task = json_decode($task);
+      $task = $task[0];
+      return json_encode($task);
+    }
+
+    //new function
+    public function addTask(Request $request){
+        $name = $request->name;
+        $division = $request->division;
+        $description = $request->description;
+
+        $id = DB::table('onboarding_task')->insertGetId(
+            ['name' => $name,
+            'division' => $division,
+            'description' => $description]
+        );
+        return $id;
+    }
+
+    //new function
+    public function updateTask(Request $request){
+        $id = $request->id;
+        $name = $request->name;
+        $division = $request->division;
+        $description = $request->description;
+
+        $result = DB::table('onboarding_task')
+            ->where('id', $id)
+            ->update(['name'=> $name, 'division' => $division, 'description'=>$description]);
+
+        return $result;
+    }
+
 
     public function getAllEmployee($id){
         $employee = DB::table('karyawan')->select(DB::raw('id, name, divisi'))->where('id_supervisor', $id)->get();

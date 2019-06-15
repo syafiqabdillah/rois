@@ -1,11 +1,8 @@
 import React from 'react';
+import { Form, Card, Col } from 'antd';
+import  UpdateTaskForm from './UpdateTaskForm';
 
-import 'antd/dist/antd.css';
-import { Card, CardBody, Col, Row} from 'reactstrap';
-import EmployeesTable from './EmployeesTable';
-import NewTable from './NewTable';
-
-export default class Employees extends React.Component{
+export default class AddTask extends React.Component{
   constructor(props) {
     super(props);
 
@@ -27,12 +24,18 @@ export default class Employees extends React.Component{
   }
 
   render() {
+    const UpdateForm = Form.create({ name: 'update task' })(UpdateTaskForm);
+
     return (
       <div className="animated fadeIn">
         <div align="center">
-          <h3>List of Employee</h3>
+          <h3>Update Task</h3>
         </div>
-        <NewTable/>
+        <div align="center">
+            <Col offset={2}>
+              <UpdateForm taskid={this.props.match.params.id}/>
+            </Col>
+        </div>
       </div>
       );
     }

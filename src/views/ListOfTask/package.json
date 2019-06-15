@@ -1,0 +1,6 @@
+{
+  "name": "List of Task",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./ListOfTask.js"
+}

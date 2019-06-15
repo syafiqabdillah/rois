@@ -43,6 +43,9 @@ const UpdateUser = React.lazy(() => import('./views/UpdateUser'));
 
 const TasksKaryawan = React.lazy(() => import('./views/TasksKaryawan'));
 const ListOnboardingTask = React.lazy(() => import('./views/ListOnboardingTask'));
+const AddTask = React.lazy(() => import('./views/AddTask'));
+const UpdateTask = React.lazy(() => import('./views/UpdateTask'));
+const ListOfTask = React.lazy(() => import('./views/ListOfTask'));
 
 // const UpdateVacancy = React.lazy(() => import ('./views/UpdateVacancy/UpdateVacancy'));
 // const VacancyDetail = React.lazy(() => import('./views/Vacancies/VacancyDetail'));
@@ -92,6 +95,9 @@ const routes = [
   { path: '/addanswer/:id', name: 'Add Answer', component: AddAnswer },
   { path: '/addVacancy', name: 'Add Vacancy', component: AddVacancy },
   { path: '/addAssessment', name: 'Add Assessment', component: AddAssessment },
+  { path: '/addTask', name: 'Add Task', component: AddTask },
+  { path: '/updateTask/:id', name: 'Update Task', component: UpdateTask },
+  { path: '/tasks', name: 'List of Task', component: ListOfTask },
 
   { path: '/employeeDashboard/:id', name: 'Employee Dashboard', component: EmployeePerformanceReport },
   { path: '/employees', name: 'List of Employee', component: Employees},
