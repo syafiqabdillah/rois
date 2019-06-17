@@ -59,7 +59,7 @@ class Reject extends Component {
     //post it to backend
     var tahapan = localStorage.getItem('tahapan')
 
-    axios.post('http://localhost:8000/po/send-mail-reject', qs.stringify({
+    axios.post(API + '/po/send-mail-reject', qs.stringify({
         'nama': this.state.lamaran.pelamar,
         'email': this.state.lamaran.detail_pelamar.email,
         'additionalMessage': this.state.additionalMessage,
@@ -72,7 +72,7 @@ class Reject extends Component {
         //console.log(response.data);
       })
 
-    axios.post('http://localhost:8000/po/update-tahapan-lamaran', qs.stringify({
+    axios.post(API + '/po/update-tahapan-lamaran', qs.stringify({
         'id': this.state.lamaran.id,
         'tahapan': tahapan,
         'status': 'Rejected',

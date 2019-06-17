@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use \Illuminate\Http\Request;
 use \Illuminate\Support\Facades\DB;
+use \Illuminate\Support\Facades\Mail;
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
 class KaryawanOnboardingController extends Controller
 {
@@ -21,6 +24,10 @@ class KaryawanOnboardingController extends Controller
         $karyawan_onboarding = DB::table('karyawan')->select()->where('id', $id)->get();
         $karyawan_onboarding = json_decode($karyawan_onboarding);
         $karyawan_onboarding = $karyawan_onboarding[0];
+        $email_supervisor = DB::table('karyawan')->select('email')->where('id', $karyawan_onboarding->id_supervisor)->get();
+        $nama_supervisor = DB::table('karyawan')->select('name')->where('id', $karyawan_onboarding->id_supervisor)->get();
+        $karyawan_onboarding->email_supervisor = $email_supervisor[0]->email;
+        $karyawan_onboarding->nama_supervisor = $nama_supervisor[0]->name;
         return json_encode($karyawan_onboarding);
     }
 
@@ -51,5 +58,27 @@ class KaryawanOnboardingController extends Controller
 
         return $tasks_karyawan;
     }
+
+    /**
+    * mengirim email notif ke supervisor
+    * @param request  $request berisi $email
+    * @return String $email email dari lamaran
+    */
+    public function sendMailRequestForApproval(Request $request){
+        $namaKaryawan = $request->namaKaryawan;
+        $divisiKaryawan = $request->divisiKaryawan;
+        $namaSupervisor = $request->namaSupervisor;
+        $emailSupervisor = $request->emailSupervisor;
+  
+        $text = 'Dear ' . $namaSupervisor . ', One of the onboarding staffs under your supervision, ' . $namaKaryawan . ' from the ' . $divisiKaryawan . ' divison, has just finished a task and have requested for your approval. You can check it on the SIRCLOs onboarding system.';
+        $data = array('email'=>$emailSupervisor, 'text'=>$text);
+  
+        Mail::send([], $data, function($message) use ($data) {
+           $message->to($data['email'], '')
+           ->subject('SIRCLO | An Onboarding Staff Have Requested for An Approval')
+           ->setBody($data['text']);
+           $message->from('second.umarghanis@gmail.com', 'Onboarding SIRCLO');
+        });
+     }
 
 }

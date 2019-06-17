@@ -145,6 +145,7 @@ $router->get('ko/tasks-karyawan/{id}', ['middleware' => 'cors', 'uses' => 'Karya
 $router->get('ko/karyawan-onboarding/{id}', ['middleware' => 'cors', 'uses' => 'KaryawanOnboardingController@getKaryawanOnboarding']);
 
 $router->post('ko/update-task-karyawan', ['middleware' => 'cors', 'uses' => 'TaskController@updateStatusTask']);
+$router->post('ko/send-mail-request-for-approval', ['middleware' => 'cors', 'uses' => 'KaryawanOnboardingController@sendMailRequestForApproval']);
 
 /**
  * UC - 12 : Laporan Kinerja Karyawan

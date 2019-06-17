@@ -80,8 +80,8 @@ class TasksKaryawan extends Component {
     axios.get(API + '/po/get-onboarding-progress/' + this.props.match.params.id)
       .then(res => {
         const progress = res.data;
-        console.log('progress')
-        console.log(progress);
+        //console.log('progress')
+        //console.log(progress);
         this.setState({
           progress: progress
         })
@@ -121,7 +121,7 @@ class TasksKaryawan extends Component {
 
     if (this.state.chosenTaskStatus === 'Assigned') {
       //post it to backend
-      axios.post('http://localhost:8000/ko/update-task-karyawan/', qs.stringify({
+      axios.post(API + '/ko/update-task-karyawan/', qs.stringify({
         'id': this.state.chosenTaskId,
         'status': 'On Progress',
         'start_date': moment(new Date()).format('YYYY-MM-DD'),
@@ -140,8 +140,22 @@ class TasksKaryawan extends Component {
       .then(() => window.location.reload())
 
     } else if (this.state.chosenTaskStatus === 'On Progress') {
+      axios.post(API + '/ko/send-mail-request-for-approval', qs.stringify({
+        'namaKaryawan': this.state.karyawan_onboarding.name,
+        'divisiKaryawan': this.state.karyawan_onboarding.divisi,
+        'emailSupervisor': this.state.karyawan_onboarding.email_supervisor,
+        'namaSupervisor': this.state.karyawan_onboarding.nama_supervisor,
+      }), {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      })
+      .then(function(response) {
+        //console.log(response.data);
+      })
+
       //post it to backend
-      axios.post('http://localhost:8000/ko/update-task-karyawan/', qs.stringify({
+      axios.post(API + '/ko/update-task-karyawan/', qs.stringify({
         'id': this.state.chosenTaskId,
         'status': 'Finished',
       }), {
@@ -156,7 +170,6 @@ class TasksKaryawan extends Component {
       message.info('Message', 5.5)
       message.loading('Saving changes...', 2.5)
       .then(() => message.success('Success! Changes saved, we have notified your supervisor about this progress', 3))
-      .then(() => window.location.reload())
 
     }
   }
