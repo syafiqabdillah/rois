@@ -48,7 +48,6 @@ class AppointmentController extends Controller
         $start = $request->start;
         $end = $request->end;
         $lokasi = $request->lokasi;
-        $interviewer = $request->interviewer;
         $email = $request->email;
 
         $id = DB::table('appointment')->insertGetId(
@@ -57,7 +56,7 @@ class AppointmentController extends Controller
             'start' => $start,
             'end' => $end,
             'lokasi' => $lokasi,
-            'interviewer' => $interviewer]
+            ]
         );
 
         $result = DB::table('lamaran')
@@ -96,7 +95,7 @@ class AppointmentController extends Controller
        $finish = $data['end'];
        $location = $data['location'];
 
-       $text = 'Dear Applicant,'.'We Invite you to interview session at : '.' Date: '.$date.' Time : '.$start. ' - '.$finish.' Location : '.$location;
+       $text = 'Dear Applicant, We Invite you to interview session at : '.' Date: '.$date.' Time : '.$start. ' - '.$finish.' Location : '.$location;
        $data = array('email'=>$email, 'text'=>$text);
 
        Mail::send([], $data, function($message) use ($data) {
@@ -105,8 +104,7 @@ class AppointmentController extends Controller
            ->setBody($data['text']);
            $message->from('second.umarghanis@gmail.com', 'Career SIRCLO');
        });
-
-   }
+    }
 
    public function getAllEmployee($id){
        $employee = DB::table('karyawan')->select(DB::raw('id, name, divisi'))->where('id_supervisor', $id)->get();

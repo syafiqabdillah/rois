@@ -172,3 +172,5 @@ $router->post('supervisor/delete-tugas-onboarding', ['middleware' => 'cors', 'us
  * Author: Hauri S Z
  */
 $router->post('supervisor/change-task-status', ['middleware' => 'cors', 'uses' => 'TugasOnboardingController@changeTaskStatus']);
+
+$router->get('supervisor/get-template-task', ['middleware' => 'cors', 'uses' => 'TugasOnboardingController@getTemplateTask']); 

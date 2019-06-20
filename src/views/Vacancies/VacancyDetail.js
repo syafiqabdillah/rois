@@ -71,7 +71,7 @@ class VacancyDetail extends Component {
   handleDelete = (event) => {
     event.preventDefault()
     var qs = require('qs');
-    axios.post('http://localhost:8000/po/delete-lowongan', qs.stringify({
+    axios.post(process.env.API_HOST + 'po/delete-lowongan', qs.stringify({
       'id': this.props.match.params.id,
     }),
       {
@@ -115,9 +115,15 @@ class VacancyDetail extends Component {
     event.preventDefault()
     this.setState({
       [event.target.name]: event.target.value,
-      link_post: 'http://localhost:8000/po/create-' + event.target.id
+      link_post: process.env.API_HOST + 'po/create-' + event.target.id
     })
 
+  }
+
+  handleOnClick(id) {
+    let id_lowongan = id;
+    localStorage.setItem('id_lowongan', id_lowongan);
+    window.location.href = '#/apply/' + id_lowongan;
   }
 
 
@@ -175,7 +181,16 @@ class VacancyDetail extends Component {
         );
       }
 
-
+      let apply_button;
+      if(localStorage.getItem.role !== "PELAMAR"){
+        apply_button = ''
+      } else {
+        apply_button = (
+          <div align="center">
+            <Button color="primary" size="lg" className="btn-pill" onClick={() => this.handleOnClick(lowongan.id)}>APPLY NOW</Button>
+          </div>
+        )
+      }
 
       content_vacancy = (
         <div>
@@ -199,6 +214,8 @@ class VacancyDetail extends Component {
 
             {content_button_apply}
           </dl>
+
+          { apply_button }
         </div>
 
       );
@@ -246,7 +263,7 @@ class VacancyDetail extends Component {
 
       if (localStorage.getItem('role') !== 'pelamar') {
         content_button_edit = (
-          <Link to={"/vacancy/update/"+  lowongan.id} >
+          <Link to={"/vacancy/update/" + lowongan.id} >
             <Button className="btn-pill" color="primary">Edit Vacancy</Button>
           </Link>
 
@@ -261,7 +278,7 @@ class VacancyDetail extends Component {
 
     let buttonAddResAddReq;
     if (localStorage.getItem('role') !== 'pelamar') {
-      buttonAddResAddReq = ( ''
+      buttonAddResAddReq = (''
         // <Row>
         //   <Button color="info" onClick={this.toggleInfoRes} className="mr-1 btn-pill" color="primary">Add Responsibility</Button>
         //   <Button color="info" onClick={this.toggleInfoReq} className="mr-1 btn-pill" color="primary">Add Requirement</Button>
@@ -271,15 +288,22 @@ class VacancyDetail extends Component {
       buttonAddResAddReq = '';
     }
 
-    return (
-      <div className="animated fadeIn">
+    let edit_delete_po;
+    if (localStorage.getItem('role') !== 'PELAMAR') {
+      edit_delete_po = (
         <Row>
           {content_button_edit}
           &nbsp;&nbsp;&nbsp;
           {content_button_delete}
         </Row>
+      )
+    } else {
+      edit_delete_po = '';
+    }
 
-
+    return (
+      <div className="animated fadeIn">
+        {edit_delete_po}
 
         <br></br>
         <Row>

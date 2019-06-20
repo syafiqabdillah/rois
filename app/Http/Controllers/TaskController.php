@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use \Illuminate\Http\Request;
 use \Illuminate\Support\Facades\DB;
+use \Illuminate\Support\Facades\Mail;
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
 class TaskController extends Controller
 {
@@ -79,8 +82,40 @@ class TaskController extends Controller
         $result = DB::table('tugas_onboarding')
             ->where('id', $id)
             ->update(['status' => $status, 'start_date'=>$start_date]);
-
+        
+        if ($status == 'Finished'){
+            //send email ke supervisor untuk notif bahwa butuh approval 
+            $tugas_onboarding = DB::table('tugas_onboarding')->select()->where('id', $id)->get();
+            $tugas_onboarding = json_decode($tugas_onboarding);
+            $tugas_onboarding = $tugas_onboarding[0];
+            $id_karyawan = $tugas_onboarding->id_karyawan;
+            $karyawan_onboarding = DB::table('karyawan')->select()->where('id', $id_karyawan)->get();
+            $karyawan_onboarding = json_decode($karyawan_onboarding);
+            $karyawan_onboarding = $karyawan_onboarding[0];
+            $id_supervisor = $karyawan_onboarding->id_supervisor;
+            $supervisor = DB::table('karyawan')->select()->where('id', $id_supervisor)->get();
+            $supervisor = json_decode($supervisor);
+            $supervisor = $supervisor[0];
+            $nama = $supervisor->name;
+            $email = $supervisor->email;
+            $data = array('nama'=>$nama, 'email'=>$email);
+            $this->sendMailNotifNeedApproval($data);
+        }
         return $result;
+    }
+
+    public function sendMailNotifNeedApproval($data){
+        $nama = $data['nama'];
+        $email = $data['email'];
+        
+        $text = 'Hi ' . $nama . ', there is a new task that needs your approval. Please go to the website to check it out.';
+        $data = array('email'=>$email, 'text'=>$text);
+        Mail::send([], $data, function($message) use ($data) {
+            $message->to($data['email'], '')
+            ->subject('SIRCLO | Approval Needed !')
+            ->setBody($data['text']);
+            $message->from('second.umarghanis@gmail.com', 'SIRCLO');
+        });
     }
 
     /**

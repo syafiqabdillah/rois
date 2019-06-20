@@ -58,15 +58,25 @@ class RemoteTest extends Component {
       })
     })
 
+    
+
     try {
       axios.get(API + '/po/get-id-remote-test/' + this.props.match.params.id)
       .then(res => {
-        const id_remote_test = res.data;
-        console.log(id_remote_test);
+        const id_remote_test = res.data.id;
+        console.log('id remote test: '+ id_remote_test);
         this.setState({
           id: id_remote_test,
         })
-      })
+        axios.get(API + '/po/remote-test/' + id_remote_test)
+        .then(res => {
+          const remote_test = res.data;
+          console.log(remote_test);
+          this.setState({
+            remote_test: remote_test,
+          })
+        })
+      })    
     } catch(err) {
       this.setState({
         id: [],
@@ -75,18 +85,18 @@ class RemoteTest extends Component {
 
   }
 
-  componentDidUpdate(prevProps, prevState){
-    if (this.state.id != prevState.id) {
-      axios.get(API + '/po/remote-test/' + this.state.id.id_remote_test)
-      .then(res => {
-        const remote_test = res.data;
-        console.log(remote_test);
-        this.setState({
-          remote_test: remote_test,
-        })
-      })
-    }
-  }
+  // componentDidUpdate(prevProps, prevState){
+  //   if (this.state.id != prevState.id) {
+  //     axios.get(API + '/po/remote-test/' + this.state.id.id_remote_test)
+  //     .then(res => {
+  //       const remote_test = res.data;
+  //       console.log(remote_test);
+  //       this.setState({
+  //         remote_test: remote_test,
+  //       })
+  //     })
+  //   }
+  // }
 
   handleInputChange = (e) => {
     e.preventDefault()
@@ -140,8 +150,8 @@ class RemoteTest extends Component {
 
     message.info('Message', 5.5)
     message.loading('Saving changes...', 2.5)
-    .then(() => message.success('Success! The Applicant has been successfully hired', 3))
-    //.then(() => window.location.reload())
+    .then(() => message.success('Success! The Applicant has been assigned a remote test', 3))
+    .then(() => window.location.reload())
 
   }
 
@@ -169,7 +179,7 @@ class RemoteTest extends Component {
         </div>
       );
 
-    } else if (this.state.lamaran.tahapan === 'Remote Test' && this.state.lamaran.status === 'Answered' && localStorage.getItem('role') === 'ADMIN') {
+    } else if (this.state.lamaran.tahapan === 'Remote Test' && this.state.lamaran.status === 'Submitted' && localStorage.getItem('role') === 'ADMIN') {
 
       content = (
         <div>

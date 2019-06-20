@@ -19,6 +19,11 @@ const data = {
       width: 150
     },
     {
+      label: 'Email',
+      field: 'email',
+      width: 270
+    },
+    {
       label: 'Onboarding Progress',
       field: 'progress',
       width: 270
@@ -80,6 +85,7 @@ export default class EmployeesTable extends Component {
           {
           name : employee.profile.name,
           division : employee.profile.divisi,
+          email : employee.profile.email, 
           progress : <Progress percent={progress} strokeWidth={15}/>,
           complete : employee.progress.taskdone + ' / ' + employee.progress.total,
           action: <Button.Group>

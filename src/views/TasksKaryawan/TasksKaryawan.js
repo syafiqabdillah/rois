@@ -123,7 +123,7 @@ class TasksKaryawan extends Component {
 
       message.info('Message', 5.5)
       message.loading('Saving changes...', 2.5)
-      .then(() => message.success('Success! Changes saved, we have notified your supervisor about this progress', 3))
+      .then(() => message.success('Success! Changes saved, we have send a notification to your supervisor about this progress', 3))
       .then(() => window.location.reload())
 
     }

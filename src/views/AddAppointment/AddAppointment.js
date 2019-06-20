@@ -58,7 +58,7 @@ export default class AddAppointment extends React.Component{
   }
 
   render() {
-    if (localStorage.getItem('role') !== 'admin') {
+    if (localStorage.getItem('role') !== 'ADMIN') {
       return <Redirect to="/vacancies-applicant" />
     }
 

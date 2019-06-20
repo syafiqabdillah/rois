@@ -223,8 +223,50 @@ class LamaranController extends Controller{
             ->update(['tahapan' => $tahapan,
             'status' => $status]);
 
+        // email bahwa pelamar diterima
+        if ($tahapan == 'Hired'){
+            $lamaran = DB::table('lamaran')->select()->where('id', $id)->get();
+            $lamaran = json_decode($lamaran);
+            $lamaran = $lamaran[0];
+            $id_lowongan = $lamaran->id_lowongan;
+
+            $lowongan = DB::table('lowongan')->select()->where('id', $id_lowongan)->get();
+            $lowongan = json_decode($lowongan);
+            $lowongan = $lowongan[0];
+            $nama_lowongan = $lowongan->nama; //
+
+            $token_pelamar = $lamaran->token_pelamar;
+            $pelamar = DB::table('pelamar')->select()->where('token', $token_pelamar)->get();
+            $pelamar = json_decode($pelamar);
+            $pelamar = $pelamar[0];
+            $nama = $pelamar->nama; //
+            $email = $pelamar->email; // 
+
+            $data = array('nama'=>$nama, 'nama_lowongan'=>$nama_lowongan, 'email'=>$email);
+            $this->sendMailHired($data);
+            return $result;
+        }
+
+        // email bahwa pelamar ditolak
+
         return $result;
     }
+
+    public function sendMailHired($data){
+        $email = $data['email'];
+        $nama = $data['nama'];
+        $nama_lowongan = $data['nama_lowongan'];
+ 
+        $text = 'Congratulation, ' . $nama . '! You are hired as ' . $nama_lowongan . ' at SIRCLO. We\'ll contact you soon.' ;
+        $data = array('email'=>$email, 'text'=>$text);
+ 
+        Mail::send([], $data, function($message) use ($data) {
+            $message->to($data['email'], '')
+            ->subject('SIRCLO | You\'re Hired!')
+            ->setBody($data['text']);
+            $message->from('second.umarghanis@gmail.com', 'Career SIRCLO');
+        });
+     }
 
     public function getAllLamaran(Request $request){
         $lamarans = DB::table('lamaran')->select()->get();
@@ -252,14 +294,22 @@ class LamaranController extends Controller{
     }
 
     public function getIdRemoteTest($id){
-      $lamaran = DB::table('lamaran')->select()->where('id', $id)->get();
-      $lamaran = json_decode($lamaran);
-      $lamaran = $lamaran[0];
-      $rt = DB::table('remote_test')->select()->where('id_lamaran', $lamaran->id)->where('active', 'yes')->get();
-      $rt = json_decode($rt);
-      $rt = $rt[0];
-      $rt = array('id_remote_test'=>$rt->id);
-      return json_encode($rt);
+        $rt = DB::table('remote_test')->select()->where('id_lamaran', $id)->get();
+        $rt = json_decode($rt);
+        $rt = $rt[0];
+        return json_encode($rt);
+        // $lamaran = DB::table('lamaran')->select()->where('id', $id)->get();
+        // $lamaran = json_decode($lamaran);
+        // $lamaran = $lamaran[0];
+        // $rt = DB::table('remote_test')->select()->where('id_lamaran', $lamaran->id)->where('active', 'yes')->get();
+        // $rt = json_decode($rt);
+        // if (!empty($rt)){
+        //     $rt = $rt[0];
+        //     $rt = array('id_remote_test'=>$rt->id);
+        //     return json_encode($rt);
+        // } else {
+        //     return json_encode(array());
+        // }
     }
 
     /**

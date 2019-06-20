@@ -12,6 +12,7 @@ class UpdateUser extends Component {
       name:'',
       username: '',
       role: '',
+      email: '',
       divisi: '',
       supervisor: null,
       list_supervisor: []
@@ -33,6 +34,7 @@ class UpdateUser extends Component {
       name: user.name,
       username: user.username,
       role: user.role,
+      email: user.email,
       divisi: user.divisi,
       supervisor: user.id_supervisor
     })
@@ -46,22 +48,43 @@ class UpdateUser extends Component {
     var qs = require('qs');
 
     //post to backend
-    axios.post('http://localhost:8000/sysadmin/update-user', qs.stringify({
-      'id':this.state.id,
-      'name': this.state.name,
-      'username': this.state.username,
-      'role': this.state.role,
-      'divisi': this.state.divisi,
-      'supervisor': this.state.supervisor
-    }),
-    {
-      headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-    })
-    message.info('Message', 5.5)
-    message.loading('Saving...', 3)
-    .then(() => message.success(this.state.name + ' has successfully saved', 2.5))
-    .then(() => window.location.href = '#/users')
-    .then(() => window.location.reload())
+    if (this.state.role !== 'KARYAWAN ONBOARDING'){
+      axios.post('http://localhost:8000/sysadmin/update-user', qs.stringify({
+        'id':this.state.id,
+        'name': this.state.name,
+        'username': this.state.username,
+        'role': this.state.role,
+        'email': this.state.email,
+        'divisi': this.state.divisi,
+      }),
+      {
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+      })
+      message.info('Message', 5.5)
+      message.loading('Saving...', 3)
+      .then(() => message.success(this.state.name + ' has successfully saved', 2.5))
+      .then(() => window.location.href = '#/users')
+      .then(() => window.location.reload())
+    } else {
+      axios.post('http://localhost:8000/sysadmin/update-user', qs.stringify({
+        'id':this.state.id,
+        'name': this.state.name,
+        'username': this.state.username,
+        'role': this.state.role,
+        'email': this.state.email,
+        'divisi': this.state.divisi,
+        'supervisor': this.state.supervisor
+      }),
+      {
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+      })
+      message.info('Message', 5.5)
+      message.loading('Saving...', 3)
+      .then(() => message.success(this.state.name + ' has successfully saved', 2.5))
+      .then(() => window.location.href = '#/users')
+      .then(() => window.location.reload())
+    }
+    
   }
 
   handleInputChange = (e) => {
@@ -72,6 +95,21 @@ class UpdateUser extends Component {
   }
 
   render() {
+    let fieldSupervisor;
+    if (this.state.role !== 'KARYAWAN ONBOARDING'){
+      fieldSupervisor = (
+        <Input type="select" name="supervisor" id="supervisor" onChange={this.handleInputChange} disabled>
+          
+        </Input>
+      );
+    } else {
+      fieldSupervisor = (
+        <Input type="select" name="supervisor" id="supervisor" onChange={this.handleInputChange} defaultValue={this.state.supervisor}>
+          { this.state.list_supervisor.map(sup => <option value={sup.id}>{sup.name}</option>) }
+        </Input>
+      )
+    }
+    
     return (
       <div className="animated fadeIn">
         <div align="center">
@@ -89,17 +127,21 @@ class UpdateUser extends Component {
                 <Input type="text" name="username" id="username" onChange={this.handleInputChange} defaultValue={this.state.username} required/>
               </FormGroup>
               <FormGroup>
+                <Label for="name">Email*</Label>
+                <Input type="email" name="email" id="email" onChange={this.handleInputChange} defaultValue={this.state.email} required/>
+              </FormGroup>
+              <FormGroup>
                 <Label for="name">Role*</Label>
                 <Input type="select" name="role" id="role" onChange={this.handleInputChange} defaultValue={this.state.role} required>
-                  <option value="admin">admin</option>
-                  <option value="system admin">system admin</option>
+                  <option>ADMIN</option>
+                  <option>SYSTEM ADMIN</option>
+                  <option>SUPERVISOR</option>
+                  <option>KARYAWAN ONBOARDING</option>
                 </Input>
               </FormGroup>
               <FormGroup>
                 <Label for="name">Supervisor</Label>
-                <Input type="select" name="supervisor" id="supervisor" onChange={this.handleInputChange} defaultValue={this.state.supervisor}>
-                  { this.state.list_supervisor.map(sup => <option value={sup.id}>{sup.name}</option>) }
-                </Input>
+                { fieldSupervisor }
               </FormGroup>
               <FormGroup>
                 <Label for="name">Divisi*</Label>

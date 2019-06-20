@@ -79,6 +79,19 @@ class Dashboard extends Component {
       return <Redirect to="/vacancies-applicant" />
     }
     let content;
+    let endfield;
+    if (this.state.start == null){
+      endfield = (<FormGroup>
+        <Label for="end">End Date</Label>
+        <Input type="date" id="end" name="end" onChange={this.handleInputChange} value={this.state.end} min={this.state.start}required disabled/>
+      </FormGroup>)
+    } else {
+      endfield = (<FormGroup>
+        <Label for="end">End Date</Label>
+        <Input type="date" id="end" name="end" onChange={this.handleInputChange} value={this.state.end} min={this.state.start}required/>
+      </FormGroup>)
+    }
+
     let form = (
       <Form onSubmit={this.handleSubmit}>
         <Row form>
@@ -89,10 +102,7 @@ class Dashboard extends Component {
           </FormGroup>
         </Col>
         <Col md={4}>
-          <FormGroup>
-            <Label for="end">End Date</Label>
-            <Input type="date" id="end" name="end" onChange={this.handleInputChange} value={this.state.end} required/>
-          </FormGroup>
+          {endfield}
         </Col>
         <Col md={4}>
           <FormGroup>

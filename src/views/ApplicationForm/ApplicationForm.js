@@ -42,7 +42,7 @@ class ApplicationForm extends Component {
 
   fileUpload = () => {
 
-    const url = 'http://localhost:8000/pelamar/upload-cv';
+    const url = process.env.API_HOST+'pelamar/upload-cv';
 
     const formData = new FormData();
     formData.append('file', this.state.file)

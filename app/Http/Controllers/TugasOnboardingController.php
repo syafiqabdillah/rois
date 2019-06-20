@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use \Illuminate\Http\Request;
 use \Illuminate\Support\Facades\DB;
+use \Illuminate\Support\Facades\Mail;
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
 class TugasOnboardingController extends Controller
 {
@@ -76,7 +79,38 @@ class TugasOnboardingController extends Controller
             'assigned_date' => $assigned_date,
             'nama' => $nama
             ]);
+
+        //email ke karyawan onboarding, notif bahwa ia dapat task baru
+        $karyawan = DB::table('karyawan')->select()->where('id', $id_karyawan)->get();
+        $karyawan = json_decode($karyawan);
+        $karyawan = $karyawan[0];
+
+        $nama = $karyawan->name;
+        $email = $karyawan->email;
+        $data = array('nama'=>$nama, 'email'=>$email);
+        $this->sendMailNotifNewTask($data);
+
         return $id;
+    }
+
+    public function sendMailNotifNewTask($data){
+        $nama = $data['nama'];
+        $email = $data['email'];
+        
+        $text = 'Hi ' . $nama . ', you have been assigned to a new onboarding task. Please go to our website to check it out.';
+        $data = array('email'=>$email, 'text'=>$text);
+        Mail::send([], $data, function($message) use ($data) {
+            $message->to($data['email'], '')
+            ->subject('SIRCLO | You Got New Task !')
+            ->setBody($data['text']);
+            $message->from('second.umarghanis@gmail.com', 'SIRCLO');
+        });
+    }
+
+    public function getTemplateTask(){
+        $template_task = DB::table('template_task')->select()->get();
+        $template_task = json_decode($template_task, true);
+        return json_encode($template_task);
     }
 
     /**
@@ -123,5 +157,6 @@ class TugasOnboardingController extends Controller
             ->where('id', $id)
             ->update(['status' => $status, 'finished_date'=> $finished_date]);
         }
+        return response()->json(['message'=>'success', 'status'=>200]);
     }
 }

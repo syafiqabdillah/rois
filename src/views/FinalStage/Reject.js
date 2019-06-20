@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { Badge, Form, FormGroup, Label, Input, Button, FormText } from 'reactstrap';
+import { Form, FormGroup, Label, Input, Button } from 'reactstrap';
 import 'antd/dist/antd.css';
 import { message, Modal, Progress, Card, Avatar, Row, Col } from 'antd';
 
@@ -58,7 +58,7 @@ class Reject extends Component {
 
     //post it to backend
     var tahapan = localStorage.getItem('tahapan')
-    axios.post('http://localhost:8000/po/update-tahapan-lamaran', qs.stringify({
+    axios.post(process.env.API_HOST+'po/update-tahapan-lamaran', qs.stringify({
         'id': this.state.lamaran.id,
         'tahapan': tahapan,
         'status': 'Rejected',

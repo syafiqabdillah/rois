@@ -97,6 +97,7 @@ export default class AddAnswer extends React.Component{
         this.setState({
           soalLink : linkSoal,
         })
+        localStorage.setItem('soal', linkSoal)
       });
   }
 

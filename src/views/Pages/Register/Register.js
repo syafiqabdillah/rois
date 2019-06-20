@@ -18,7 +18,6 @@ class Register extends Component {
 
   componentDidMount() {
     let profile = JSON.parse(localStorage.getItem('profile'));
-
     this.setState({
       name: profile.name
     })
@@ -30,9 +29,10 @@ class Register extends Component {
     let profile = JSON.parse(localStorage.getItem('profile'));
     let token = profile.googleId;
     let email = profile.email;
+    let url = 'http://localhost:8000/register';
 
     var qs = require('qs');
-    axios.post('http://localhost:8000/register', qs.stringify({
+    axios.post(url, qs.stringify({
       'token': token,
       'nama': this.state.name,
       'nik': this.state.nik,

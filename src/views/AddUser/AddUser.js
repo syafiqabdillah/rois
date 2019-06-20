@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Button, Card, CardBody, Col, Form, FormGroup, Input, Label, Row } from 'reactstrap';
-//import 'antd/dist/antd.css';
 import { message } from 'antd';
 
 class AddUser extends Component {
@@ -12,8 +11,18 @@ class AddUser extends Component {
       username: '',
       password: '',
       divisi: '',
-      role:''
+      role:'',
+      email:'',
+      list_supervisor: []
     }
+  }
+
+  componentDidMount(){
+    axios.get('http://localhost:8000/sysadmin/get-supervisor')
+    .then(res => {
+      const supervisor = res.data;
+      this.setState({list_supervisor: supervisor})
+    })
   }
 
   handleSubmit = (e) => {
@@ -30,13 +39,13 @@ class AddUser extends Component {
       'password': this.state.password,
       'role': this.state.role,
       'divisi': this.state.divisi,
+      'email': this.state.email
     }),
     {
       headers: {'Content-Type': 'application/x-www-form-urlencoded'}
     })
     message.info('Message', 5.5)
     message.loading('Saving...', 3)
-    //.then(() => message.success(this.state.name + ' has successfully saved', 2.5))
     .then(() => window.location.href = '#/users')
     .then(() => window.location.reload())
   }
@@ -49,6 +58,23 @@ class AddUser extends Component {
   }
 
   render() {
+    let fieldSupervisor;
+
+    if (this.state.role === 'KARYAWAN ONBOARDING') {
+        fieldSupervisor = (<FormGroup>
+          <Label for="name">Supervisor</Label>
+          <Input type="select" name="supervisor" id="supervisor" onChange={this.handleInputChange} >
+            { this.state.list_supervisor.map(sup => <option value={sup.id}>{sup.name}</option>) }
+          </Input>
+        </FormGroup>)
+    } else {
+      fieldSupervisor = (<FormGroup>
+        <Label for="name">Supervisor</Label>
+        <Input type="select" name="supervisor" id="supervisor" onChange={this.handleInputChange} disabled>
+
+        </Input>
+      </FormGroup>)
+    }
 
     return (
       <div className="animated fadeIn">
@@ -71,6 +97,10 @@ class AddUser extends Component {
                 <Input type="password" name="password" id="password" onChange={this.handleInputChange} required/>
               </FormGroup>
               <FormGroup>
+                <Label for="name">Email*</Label>
+                <Input type="email" name="email" id="email" onChange={this.handleInputChange} required/>
+              </FormGroup>
+              <FormGroup>
                 <Label for="name">Role*</Label>
                 <Input type="select" name="role" id="role" value={this.state.role} onChange={this.handleInputChange} required>
                   <option>ADMIN</option>
@@ -79,6 +109,7 @@ class AddUser extends Component {
                   <option>KARYAWAN ONBOARDING</option>
                 </Input>
               </FormGroup>
+              {fieldSupervisor}
               <FormGroup>
                 <Label for="name">Divisi*</Label>
                 <Input type="select" name="divisi" id="divisi" value={this.state.divisi} onChange={this.handleInputChange} required>

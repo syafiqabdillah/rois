@@ -48,13 +48,7 @@ class Login extends Component {
    */
   handleSubmit = (e) => {
     e.preventDefault()
-
-    // if (this.state.username === "admin" && this.state.password === "admin"){
-    //   localStorage.setItem('role', 'admin');
-    //   localStorage.setItem('token', 'tokensementara');
-    //   window.location.href = '#/dashboard';
-    // }
-
+    //const host = 'http://localhost:8000';
     const url = 'http://localhost:8000/login-employee';
     var qs = require('qs');
     axios.post(url, qs.stringify({'username': this.state.username, 'password': this.state.password}),{
@@ -80,29 +74,10 @@ class Login extends Component {
         } else {
           window.location.href = '#/users'
         }
-
       } else {
-        //tidak ada, ke register
         alert('username atau password salah')
       }
     })
-
-    // var qs = require('qs');
-    // const data = qs.stringify(this.state)
-
-    // const config = {
-    //   headers:{
-    //     'Content-Type': 'application/x-www-form-urlencoded'
-    //   }
-    // }
-
-    // const url = 'http://localhost:8000/login-admin'
-
-    // axios.post(url, data, config)
-    // .then(function (response){
-    //   console.log(response)
-    // })
-    // cek username sama password untuk karyawan
 
   }
 
@@ -114,6 +89,7 @@ class Login extends Component {
   }
 
   render() {
+    //console.log(process.env)
     return (
       <div className="app flex-row align-items-center animated fadeIn">
         <Container>

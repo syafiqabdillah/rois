@@ -44,11 +44,13 @@ class UserController extends Controller
         $password = $request->password;
         $role = $request->role;
         $divisi = $request->divisi;
+        $email = $request->email;
 
         $id = DB::table('karyawan')->insertGetId(
             ['name' => $name, 
             'username' => $username, 
-            'password' => $password, 
+            'password' => $password,
+            'email' => $email,
             'role' => $role, 
             'divisi' => $divisi]
         );
@@ -61,6 +63,7 @@ class UserController extends Controller
         $username = $request->username;
         $role = $request->role;
         $divisi = $request->divisi;
+        $email = $request->email;
         $supervisor = $request->supervisor;
 
         $result = DB::table('karyawan')
@@ -69,6 +72,7 @@ class UserController extends Controller
             'username' => $username, 
             'role' => $role, 
             'divisi' => $divisi,
+            'email' => $email,
             'id_supervisor' => $supervisor]);
         return $result;
     }

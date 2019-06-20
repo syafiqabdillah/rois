@@ -38,7 +38,7 @@ class LowonganController extends Controller
     }
 
     public function getAllActiveLowongan(Request $request){
-        $this->setStatus();
+            $this->setStatus();
             $getlowongan = DB::table('lowongan')->select()->where('status','Published')->get();
             $lowongans = json_decode($getlowongan, true);
             $result = array();
@@ -225,18 +225,28 @@ class LowonganController extends Controller
         ->where([['status','Active'],['start_date','>',$today],['end_date','<',$today]])
         ->update(['status' => 'Not Active']);
 
-        DB::table('lowongan')
-        ->where(['posisi_tersedia',0])
-        ->update(['status' => 'Not Active']);
-
+        // try {
+        //     DB::table('lowongan')
+        //     ->where(['posisi_tersedia',0])
+        //     ->update(['status' => 'Not Active']);
+        // } catch (Exception $e) {
+            
+        // }
 
     }
 
     public function updatePositionAvailable(Request $request){
         $posisi_updated =  DB::table('lowongan')->select()->where('id_lowongan', $request->id)->get()-1;
+
         DB::table('lowongan')
         ->where('id', $id_lowongan)
         ->update(['posisi_tersedia' => $posisi_updated]);
+
+        if($posisi_updated == 0){
+            DB::table('lowongan')
+            ->where('id', $id_lowongan)
+            ->update(['status' => 'Not Active']);
+        }
 
     }
 

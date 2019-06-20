@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { Badge, Form, FormGroup, Label, Input, Button, FormText } from 'reactstrap';
+import { Form, FormGroup, Label, Input, Button, FormText } from 'reactstrap';
 import 'antd/dist/antd.css';
-import { message, Modal, Progress, Card, Avatar, Row, Col } from 'antd';
+import { message, Modal, Card, Avatar, Row, Col } from 'antd';
 
 const { Meta } = Card;
 
@@ -57,7 +57,6 @@ class Hire extends Component {
     var qs = require('qs');
 
     //post it to backend
-    var tahapan = localStorage.getItem('tahapan')
     axios.post('http://localhost:8000/po/update-tahapan-lamaran', qs.stringify({
         'id': this.state.lamaran.id,
         'tahapan': 'Hired',
@@ -95,7 +94,7 @@ class Hire extends Component {
         <p>The applicant above will be <strong>hired</strong> from the recruitment process. A notification email will be sent to the applicant.</p>
         <br/>
         <Form method="post" >
-          <FormGroup row>
+          {/* <FormGroup row>
             <Label for="offeringLetter" lg={3}>Offering Letter</Label>
             <Col span={15}>
               <Input type="file" name="file" id="offeringLetter" />
@@ -109,7 +108,7 @@ class Hire extends Component {
             <Col span={15}>
               <Input type="textarea" name="additionalMessage" id="additionalMessage" onChange={this.handleInputChange} />
             </Col>
-          </FormGroup>
+          </FormGroup> */}
           <Row type="flex" justify="center">
             <Col span={7} style={{ margin: 5 }}>
               <Link to={"/applicants/" + this.state.lamaran.id}> <Button className="btn-pill" outline color="danger" block>Cancel</Button> </Link>

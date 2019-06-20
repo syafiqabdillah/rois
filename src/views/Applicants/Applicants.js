@@ -43,8 +43,9 @@ class Applicants extends Component {
 
     axios.get(API + '/po/get-id-remote-test/' + this.props.match.params.id)
     .then(res => {
+      console.log('remote test iddd : ' + res.data)
       this.setState({
-        idActiveRemoteTest: res.data.id_remote_test,
+        idActiveRemoteTest: res.data.id,
       })
     })
   }

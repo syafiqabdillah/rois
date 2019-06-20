@@ -20,6 +20,10 @@ const data = {
       sort: 'asc',
     },
     {
+      label: "Email",
+      field: 'email',
+    },
+    {
       label: "Role",
       field: 'role',
       sort: 'asc',
@@ -77,6 +81,8 @@ class Users extends Component {
                         
             username: user.username,  
             
+            email: user.email,
+
             role: user.role,
 
             divisi: user.divisi,

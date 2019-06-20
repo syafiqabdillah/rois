@@ -32,7 +32,6 @@ export default class AppointmentForm extends React.Component {
           'start': values['start-time'].format('HH:mm'),
           'end': values['finish-time'].format('HH:mm'),
           'lokasi' : values['location'],
-          'interviewer' : values['interviewer'],
           'email' : this.props.emailPelamar
         }),
         {
@@ -125,20 +124,6 @@ export default class AppointmentForm extends React.Component {
             { validator: this.validateLocationField, }],
           })(
             <Input placeholder="Enter Location" />
-          )}
-        </Form.Item>
-        <Form.Item
-          label="Interviewer"
-        >
-          {getFieldDecorator('interviewer', {
-            rules: [{ required: true, message: 'Please select Interviewer' }],
-          })(
-            <Select
-              placeholder="Select an interviewer"
-            >
-              <Option value="john">John</Option>
-              <Option value="doe">Doe</Option>
-            </Select>
           )}
         </Form.Item>
         <Form.Item

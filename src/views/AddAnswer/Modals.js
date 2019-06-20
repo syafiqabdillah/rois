@@ -34,6 +34,7 @@ export default class Modals extends React.Component {
     axios.post('http://localhost:8000/pelamar/submit-jawaban', qs.stringify({
       'id': this.state.remoteTest,
       'link_jawaban' : this.props.link,
+      'link_soal' : localStorage.getItem('soal')
     }),
     {
       headers: {'Content-Type': 'application/x-www-form-urlencoded'}

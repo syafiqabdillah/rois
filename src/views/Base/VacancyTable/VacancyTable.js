@@ -14,7 +14,7 @@ class VacancyTable extends Component {
   }
 
   componentDidMount(){
-    axios.get('http://localhost:8000/po/all-lowongan')
+    axios.get(process.env.API_HOST+'po/all-lowongan')
     .then(res => {
       const lowongan = res.data;
       this.setState({lowongan})
