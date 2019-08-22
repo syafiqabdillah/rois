@@ -65,7 +65,7 @@ class Login extends Component {
         // datanya pelamar sudah ada di DB, masuk
         localStorage.setItem('role', response.data.data[0].role);
         localStorage.setItem('token', 'tokensementara');
-        if (response.data.data[0].role === "ADMIN"){
+        if (response.data.data[0].role === "PEOPLE OPS"){
           window.location.href = '#/dashboard'
         } else if (response.data.data[0].role === "SUPERVISOR") {
           window.location.href = '#/employee'

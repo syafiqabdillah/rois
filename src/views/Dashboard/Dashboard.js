@@ -75,7 +75,7 @@ class Dashboard extends Component {
   }
 
   render() {
-    if (localStorage.getItem('role') !== 'ADMIN') {
+    if (localStorage.getItem('role') !== 'PEOPLE OPS') {
       return <Redirect to="/vacancies-applicant" />
     }
     let content;
