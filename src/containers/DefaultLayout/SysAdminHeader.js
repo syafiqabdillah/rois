@@ -41,14 +41,18 @@ class SysAdminHeader extends Component {
 
         </Nav>
         <Nav className="ml-auto" navbar>
-          <AppHeaderDropdown direction="down">
+          <NavItem className="px-3">
+            <Link to="#" onClick={e => this.props.onLogout(e)} className="nav-link">Logout</Link>
+          </NavItem>
+          {/* <AppHeaderDropdown direction="down">
             <DropdownToggle nav>
               <img src={imageUrl} className="img-avatar" alt="admin@bootstrapmaster.com" />
             </DropdownToggle>
             <DropdownMenu right style={{ right: 'auto' }}>
+              <DropdownItem onClick={this.toProfile}><i className="fa fa-user"></i>Profile</DropdownItem>
               <DropdownItem onClick={e => this.props.onLogout(e)}><i className="fa fa-lock"></i> Logout</DropdownItem>
             </DropdownMenu>
-          </AppHeaderDropdown>
+          </AppHeaderDropdown> */}
         </Nav>
       </React.Fragment>
     );

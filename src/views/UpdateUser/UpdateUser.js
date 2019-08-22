@@ -25,7 +25,7 @@ class UpdateUser extends Component {
     axios.get('http://localhost:8000/sysadmin/get-supervisor/')
     .then(res => {
       const supervisor = res.data;
-      console.log(supervisor);
+      //console.log(supervisor);
       this.setState({list_supervisor: supervisor})
     })
 
@@ -41,12 +41,11 @@ class UpdateUser extends Component {
   }
 
   handleSubmit = (e) => {
+    e.preventDefault();
     const data = this.state;
-    e.preventDefault()
-    console.log(data)
+    //alert(JSON.stringify(this.state));
 
     var qs = require('qs');
-
     //post to backend
     if (this.state.role !== 'KARYAWAN ONBOARDING'){
       axios.post('http://localhost:8000/sysadmin/update-user', qs.stringify({
@@ -104,7 +103,8 @@ class UpdateUser extends Component {
       );
     } else {
       fieldSupervisor = (
-        <Input type="select" name="supervisor" id="supervisor" onChange={this.handleInputChange} defaultValue={this.state.supervisor}>
+        <Input type="select" name="supervisor" id="supervisor" onChange={this.handleInputChange}>
+          <option selected value={this.state.supervisor}>-- Choose supervisor --</option>
           { this.state.list_supervisor.map(sup => <option value={sup.id}>{sup.name}</option>) }
         </Input>
       )
@@ -133,7 +133,8 @@ class UpdateUser extends Component {
               <FormGroup>
                 <Label for="name">Role*</Label>
                 <Input type="select" name="role" id="role" onChange={this.handleInputChange} defaultValue={this.state.role} required>
-                  <option>ADMIN</option>
+                  <option selected>{this.state.role}</option>
+                  <option>PEOPLE OPS</option>
                   <option>SYSTEM ADMIN</option>
                   <option>SUPERVISOR</option>
                   <option>KARYAWAN ONBOARDING</option>

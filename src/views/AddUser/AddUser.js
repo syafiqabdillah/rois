@@ -4,25 +4,25 @@ import { Button, Card, CardBody, Col, Form, FormGroup, Input, Label, Row } from 
 import { message } from 'antd';
 
 class AddUser extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
       name: '',
       username: '',
       password: '',
       divisi: '',
-      role:'',
-      email:'',
+      role: '',
+      email: '',
       list_supervisor: []
     }
   }
 
-  componentDidMount(){
+  componentDidMount() {
     axios.get('http://localhost:8000/sysadmin/get-supervisor')
-    .then(res => {
-      const supervisor = res.data;
-      this.setState({list_supervisor: supervisor})
-    })
+      .then(res => {
+        const supervisor = res.data;
+        this.setState({ list_supervisor: supervisor })
+      })
   }
 
   handleSubmit = (e) => {
@@ -41,13 +41,13 @@ class AddUser extends Component {
       'divisi': this.state.divisi,
       'email': this.state.email
     }),
-    {
-      headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-    })
+      {
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+      })
     message.info('Message', 5.5)
     message.loading('Saving...', 3)
-    .then(() => window.location.href = '#/users')
-    .then(() => window.location.reload())
+      .then(() => window.location.href = '#/users')
+      .then(() => window.location.reload())
   }
 
   handleInputChange = (e) => {
@@ -61,19 +61,19 @@ class AddUser extends Component {
     let fieldSupervisor;
 
     if (this.state.role === 'KARYAWAN ONBOARDING') {
-        fieldSupervisor = (<FormGroup>
-          <Label for="name">Supervisor</Label>
-          <Input type="select" name="supervisor" id="supervisor" onChange={this.handleInputChange} >
-            { this.state.list_supervisor.map(sup => <option value={sup.id}>{sup.name}</option>) }
-          </Input>
-        </FormGroup>)
-    } else {
       fieldSupervisor = (<FormGroup>
         <Label for="name">Supervisor</Label>
-        <Input type="select" name="supervisor" id="supervisor" onChange={this.handleInputChange} disabled>
-
+        <Input type="select" name="supervisor" id="supervisor" onChange={this.handleInputChange} >
+          {this.state.list_supervisor.map(sup => <option value={sup.id}>{sup.name}</option>)}
         </Input>
       </FormGroup>)
+    } else {
+      fieldSupervisor = (
+        <Input type="select" name="supervisor" id="supervisor" onChange={this.handleInputChange}>
+          <option selected value={this.state.supervisor}>-- Choose supervisor --</option>
+          { this.state.list_supervisor.map(sup => <option value={sup.id}>{sup.name}</option>) }
+        </Input>
+      )
     }
 
     return (
@@ -86,24 +86,24 @@ class AddUser extends Component {
             <Form onSubmit={this.handleSubmit}>
               <FormGroup>
                 <Label for="name">Name*</Label>
-                <Input type="text" name="name" id="name" onChange={this.handleInputChange} required/>
+                <Input type="text" name="name" id="name" onChange={this.handleInputChange} required />
               </FormGroup>
               <FormGroup>
                 <Label for="name">Username*</Label>
-                <Input type="text" name="username" id="username" onChange={this.handleInputChange} required/>
+                <Input type="text" name="username" id="username" onChange={this.handleInputChange} required />
               </FormGroup>
               <FormGroup>
                 <Label for="name">Password*</Label>
-                <Input type="password" name="password" id="password" onChange={this.handleInputChange} required/>
+                <Input type="password" name="password" id="password" onChange={this.handleInputChange} required />
               </FormGroup>
               <FormGroup>
                 <Label for="name">Email*</Label>
-                <Input type="email" name="email" id="email" onChange={this.handleInputChange} required/>
+                <Input type="email" name="email" id="email" onChange={this.handleInputChange} required />
               </FormGroup>
               <FormGroup>
                 <Label for="name">Role*</Label>
-                <Input type="select" name="role" id="role" value={this.state.role} onChange={this.handleInputChange} required>
-                  <option>ADMIN</option>
+                <Input type="select" name="role" id="role" defaultValue="" onChange={this.handleInputChange} required>
+                  <option>PEOPLE OPS</option>
                   <option>SYSTEM ADMIN</option>
                   <option>SUPERVISOR</option>
                   <option>KARYAWAN ONBOARDING</option>
@@ -112,7 +112,7 @@ class AddUser extends Component {
               {fieldSupervisor}
               <FormGroup>
                 <Label for="name">Divisi*</Label>
-                <Input type="select" name="divisi" id="divisi" value={this.state.divisi} onChange={this.handleInputChange} required>
+                <Input type="select" name="divisi" id="divisi" defaultValue="" onChange={this.handleInputChange} required>
                   <option>Managerial</option>
                   <option>Technology</option>
                   <option>Sales</option>

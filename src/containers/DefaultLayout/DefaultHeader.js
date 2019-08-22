@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { DropdownItem, DropdownMenu, DropdownToggle, Nav, NavItem } from 'reactstrap';
+import { Dropdown, DropdownItem, DropdownMenu, DropdownToggle, Nav, NavItem } from 'reactstrap';
 import PropTypes from 'prop-types';
 
 import { AppHeaderDropdown, AppNavbarBrand, AppSidebarToggler } from '@coreui/react';
@@ -13,12 +13,26 @@ const propTypes = {
 const defaultProps = {};
 
 class DefaultHeader extends Component {
+  constructor(props) {
+    super(props);
+
+    this.toggle = this.toggle.bind(this);
+    this.state = {
+      dropdownOpen: false
+    };
+  }
+
+  toggle() {
+    this.setState(prevState => ({
+      dropdownOpen: !prevState.dropdownOpen
+    }));
+  }
   render() {
 
     // eslint-disable-next-line
     const { children, ...attributes } = this.props;
-	let imageUrl = 'https://cdn0.iconfinder.com/data/icons/elasto-online-store/26/00-ELASTOFONT-STORE-READY_user-circle-512.png';
-	
+    let imageUrl = 'https://cdn0.iconfinder.com/data/icons/elasto-online-store/26/00-ELASTOFONT-STORE-READY_user-circle-512.png';
+
     return (
       <React.Fragment>
         <AppSidebarToggler className="d-lg-none" display="md" mobile />
@@ -38,31 +52,26 @@ class DefaultHeader extends Component {
           <NavItem className="px-3">
             <Link to="/applications" className="nav-link">Applications</Link>
           </NavItem>
-
           <NavItem className="px-3">
             <Link to="/assessments" className="nav-link">Assessments</Link>
           </NavItem>
-
           <NavItem className="px-3">
             <Link to="/appointmens" className="nav-link">Appointments</Link>
           </NavItem>
-
         </Nav>
         <Nav className="ml-auto" navbar>
-
-          <AppHeaderDropdown direction="down">
-
+          <NavItem className="px-3">
+            <Link to="#" onClick={e => this.props.onLogout(e)} className="nav-link">Logout</Link>
+          </NavItem>
+          {/* <AppHeaderDropdown direction="down">
             <DropdownToggle nav>
               <img src={imageUrl} className="img-avatar" alt="admin@bootstrapmaster.com" />
             </DropdownToggle>
-
             <DropdownMenu right style={{ right: 'auto' }}>
-
-
+              <DropdownItem onClick={this.toProfile}><i className="fa fa-user"></i>Profile</DropdownItem>
               <DropdownItem onClick={e => this.props.onLogout(e)}><i className="fa fa-lock"></i> Logout</DropdownItem>
-
             </DropdownMenu>
-          </AppHeaderDropdown>
+          </AppHeaderDropdown> */}
         </Nav>
 
         {/*<AppAsideToggler className="d-lg-none" mobile />*/}

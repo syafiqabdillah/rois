@@ -125,7 +125,6 @@ class Users extends Component {
         <div align="center">
           <h3>User Management</h3>
         </div>
-        <br></br>
         <Link to="/addUser">
             <Button color="primary" className="btn-pill">Add User</Button>
         </Link>

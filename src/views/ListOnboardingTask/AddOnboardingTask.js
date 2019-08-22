@@ -12,21 +12,19 @@ const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
   // eslint-disable-next-line
 
   class extends React.Component {
-    constructor(props){
+    constructor(props) {
       super(props);
       this.state = {
         template_task: []
       }
     }
 
-    componentDidMount(){
+    componentDidMount() {
       axios.get('http://localhost:8000/supervisor/get-template-task')
-      .then(res => {
-        const template_task = res.data;
-        //console.log(template_task);
-        this.setState({template_task: template_task})
-        //console.log(this.state)
-      })
+        .then(res => {
+          const template_task = res.data;
+          this.setState({ template_task: template_task });
+        })
     }
 
     render() {
@@ -35,7 +33,6 @@ const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
       } = this.props;
 
       let template_task = this.state.template_task;
-      console.log(template_task);
       const { getFieldDecorator } = form;
 
       return (
@@ -54,7 +51,7 @@ const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
                 rules: [{ required: true, message: 'Please select a task name!' }],
               })(
                 <Select placeholder="Please select a task name">
-                  { template_task.map(task => <Option key={task.id} value={task.nama}>{task.nama}</Option>)}
+                  {template_task.map(task => <Option key={task.id} value={task.nama}>{task.nama}</Option>)}
                 </Select>,
               )}
             </Form.Item>
@@ -88,14 +85,6 @@ class AddOnboardingTask extends Component {
     confirmLoading: false,
     template_task: []
   };
-
-  // componentWillMount(){
-  //   axios.get('http://localhost:8000/supervisor/get-template-task')
-  //     .then(res => {
-  //       console.log(res.data)
-  //       this.setState({ template_task: res.data })
-  //     })
-  // }
 
   showModal = () => {
     this.setState({
@@ -132,7 +121,6 @@ class AddOnboardingTask extends Component {
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
           })
           .then(response => {
-            //console.log(response)
             this.setState({
               confirmLoading: false,
               visible: false,
@@ -141,16 +129,17 @@ class AddOnboardingTask extends Component {
             window.location.reload();
           })
           .catch(error => {
-            console.log(error.response)
+            this.setState({
+               confirmLoading: false,
+               visible: false,
+            });
+			form.resetFields();
+            console.log(error);
           });
-
       } else {
         return;
       }
-
-
     });
-
   }
 
   saveFormRef = (formRef) => {

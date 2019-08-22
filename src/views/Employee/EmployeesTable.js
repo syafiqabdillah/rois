@@ -61,7 +61,6 @@ export default class EmployeesTable extends Component {
     axios.get('http://localhost:8000/po/get-all-employee/' + id_karyawan)
       .then((response) => {
         const profile = response.data;
-        console.log(profile);
         this.setState({
           employees: profile,
           loading: false
@@ -76,8 +75,6 @@ export default class EmployeesTable extends Component {
       content = <div align="center"><p>Loading . . .</p></div>;
     } else {
       let list_appointment = this.state.employees.map((employee, index) => {
-        console.log('employee');
-        console.log(employee);
         const idemployee = "http://localhost:3000/#/employeeDashboard/" + employee.profile.id
         const taskemployee = "http://localhost:3000/#/tasks-list/" + employee.profile.id
         let progress = Math.round(((employee.progress.taskdone)/employee.progress.total)*100)

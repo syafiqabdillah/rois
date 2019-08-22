@@ -74,7 +74,8 @@ class DefaultLayout extends Component {
       );
       //redirect home pelamar
       home = (<Redirect from='/' to="/vacancies-applicant" />);
-    } else if (localStorage.getItem('role') === 'ADMIN'){
+    } else if (localStorage.getItem('role') === 'PEOPLE OPS'){
+      console.log("masuk sebagai sys admin");
       //header admin po
       header = <DefaultHeader onLogout={e => this.signOut(e)} />;
       //sidebar admin po
